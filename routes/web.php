@@ -14,5 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard.contents.finance');
+});
+Route::get('/event', function () {
+    return view('dashboard.contents.event');
 });
