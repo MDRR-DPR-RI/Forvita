@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\RUU;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard.contents.finance');
+    return view('dashboard.contents.finance', [
+        'active' => 'finance',
+        'ruu' => RUU::all()
+    ]);
 });
 Route::get('/event', function () {
-    return view('dashboard.contents.event');
+    return view('dashboard.contents.event', [
+        'active' => 'event'
+    ]);
 });

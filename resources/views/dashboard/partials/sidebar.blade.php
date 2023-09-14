@@ -8,10 +8,10 @@
         <a href="#" class="nav-label">Dashboard</a>
         <ul class="nav nav-sidebar">
           <li class="nav-item">
-            <a href="/" class="nav-link active"><i class="ri-pie-chart-2-fill"></i> <span>Finance Monitoring</span></a>
+            <a href="/" class="nav-link {{ ($active) == "finance" ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>Finance Monitoring</span></a>
           </li>
           <li class="nav-item">
-            <a href="/event" class="nav-link"><i class="ri-calendar-todo-line"></i> <span>Events Management</span></a>
+            <a href="/event" class="nav-link {{ ($active) == "event" ? 'active' : '' }}"><i class="ri-calendar-todo-line"></i> <span>Events Management</span></a>
           </li>
           <li class="nav-item">
             <a href="../dashboard/sales.html" class="nav-link"><i class="ri-shopping-bag-3-line"></i> <span>Sales Monitoring</span></a>

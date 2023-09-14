@@ -23,7 +23,7 @@
       </div>
 
       <div class="row g-3">
-        <div class="col-xl-9">
+        {{-- <div class="col-xl-9">
           <div class="card card-one">
             <div class="card-body overflow-hidden px-0 pb-3">
               <div class="finance-info p-3 p-xl-4">
@@ -210,11 +210,11 @@
               </div><!-- row -->
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->
+        </div><!-- col --> --}}
         <div class="col-xl-8">
           <div class="card card-one">
             <div class="card-header">
-              <h6 class="card-title">Expense Analytics</h6>
+              <h6 class="card-title">Program Legislasi Nasional 2020-2024</h6>
               <nav class="nav nav-icon nav-icon-sm ms-auto">
                 <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
                 <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
@@ -224,8 +224,11 @@
               <div class="row g-4">
                 <div class="col-md-6">
                   <div id="apexChart8" class="apex-chart-three"></div>
+                  <script>
+                    var ruuData = @json($ruu);
+                  </script>
                 </div><!-- col -->
-                <div class="col-md-6">
+                {{-- <div class="col-md-6">
                   <div class="d-flex">
                     <i class="ri-hotel-line fs-48 lh-1 me-3"></i>
                     <div>
@@ -247,12 +250,12 @@
                       <p class="fs-sm text-secondary mb-0">Change as the quantity of good or service that produces changes.</p>
                     </div>
                   </div>
-                </div><!-- col -->
+                </div><!-- col --> --}}
               </div><!-- row -->
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->
-        <div class="col-xl-4">
+        {{-- <div class="col-xl-4">
           <div class="card card-one">
             <div class="card-header">
               <h6 class="card-title">Billed Opportunities</h6>
@@ -269,8 +272,8 @@
               </div>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->
-        <div class="col">
+        </div><!-- col --> --}}
+        {{-- <div class="col">
           <div class="card card-one">
             <div class="card-body p-3 p-xl-4">
               <div class="row justify-content-center g-3 mb-2 mb-xl-4">
@@ -357,7 +360,7 @@
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->
-      </div><!-- row -->
+      </div><!-- row --> --}}
 
       <div class="main-footer mt-5">
         <span>&copy; 2023. Dashbyte. All Rights Reserved.</span>

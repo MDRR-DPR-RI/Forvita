@@ -497,7 +497,7 @@ var chartSeven = new ApexCharts(document.querySelector('#apexChart7'), optionSev
 chartSeven.render();
 
 //--------------------------------------------------
-
+//default
 var optionEight = {
   series: [{
     type: 'column',
@@ -568,8 +568,112 @@ var optionEight = {
     show: false
   }
 };
+   // Initialize an array to store the chart data
+   var chartData = [];
 
-var chartEight = new ApexCharts(document.querySelector('#apexChart8'), optionEight);
+   // Use a for loop to iterate through each month
+   for (var i = 1; i <= 12; i++) {
+       var count = 0;
+
+       // Use another for loop to count RUUs for the current month
+       for (var j = 0; j < ruuData.length; j++) {
+           if (ruuData[j].bulan_id === i) {
+               count++; //count ruu
+           }
+       }
+
+       // Push the month and count as a pair to the chartData array
+       chartData.push([i, count]);
+   }
+//edited
+var optionEight2 = {
+  series: [{
+    type: 'column',
+    data: chartData
+  }, 
+  // {
+  //   type: 'column',
+  //   data: [[0,12],[1,7],[2,4],[3,5],[4,8],[5,10],[6,4],[7,7],[8,11],[9,9],[10,5]]
+  // }
+  ],
+  chart: {
+    height: '100%',
+    parentHeightOffset: 0,
+    stacked: true,
+    type: 'line',
+    toolbar: {
+      show: false
+    }
+  },
+  grid: {
+    borderColor: 'rgba(72,94,144, 0.07)',
+    padding: {
+      top: -20,
+      left: 5,
+      bottom: -15
+    }
+  },
+  states: {
+    hover: {
+      filter: {
+        type: 'none'
+      }
+    },
+    active: {
+      filter: {
+        type: 'none'
+      }
+    }
+  },
+  colors: ['#506fd9', '#e5e9f2'],
+  plotOptions: {
+    bar: {
+      columnWidth: '40%',
+      endingShape: 'rounded'
+    },
+  },
+  stroke: {
+    curve: 'straight',
+    lineCap: 'square',
+    width: 0
+  },
+  yaxis: {
+    min: 0,
+    max: 5,
+    tickAmount: 5
+  },
+  xaxis: {
+    categories: [
+            ['Jan'],
+            ['Feb'],
+            ['Mar'],
+            ['Apr'],
+            ['May'],
+            ['Jun'],
+            ['Jul'],
+            ['Agu'], 
+            ['Sep'], 
+            ['Okt'], 
+            ['Nov'], 
+            ['Des'], 
+          ],
+    labels: {
+      style: {
+        colors: '#6e7985',
+        fontSize: '10px',
+        fontWeight: '500'
+      }
+    },
+  },
+  tooltip: {
+    enabled: false
+  },
+  legend: {
+    show: false
+  }
+};
+
+var chartEight = new ApexCharts(document.querySelector('#apexChart8'), optionEight2);
 chartEight.render();
 
 //------------------------------------------------
