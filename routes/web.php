@@ -13,15 +13,26 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('dashboard.contents.finance', [
-        'active' => 'finance',
+Route::redirect('/', '/kelompok1');
+Route::get('/kelompok1', function () {
+    return view('dashboard.contents.kelompok1', [
+        'active' => 'kelompok1',
+    ]);
+});
+Route::get('/kelompok23', function () {
+    return view('dashboard.contents.kelompok23', [
+        'active' => 'kelompok23',
         'ruu' => RUU::all()
     ]);
 });
-Route::get('/event', function () {
-    return view('dashboard.contents.event', [
-        'active' => 'event'
+
+Route::get('/kelompok46', function () {
+    return view('dashboard.contents.kelompok46', [
+        'active' => 'kelompok46',
+    ]);
+});
+Route::get('/kelompok5', function () {
+    return view('dashboard.contents.kelompok5', [
+        'active' => 'kelompok5',
     ]);
 });

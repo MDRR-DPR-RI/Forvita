@@ -11,9 +11,9 @@
         <div>
           <ol class="breadcrumb fs-sm mb-1">
             <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Finance Monitoring</li>
+            <li class="breadcrumb-item active" aria-current="page">Kelompok 2 & 3</li>
           </ol>
-          <h4 class="main-title mb-0">Welcome to Dashboard</h4>
+          <h4 class="main-title mb-0">Kelompok 2 & 3</h4>
         </div>
         <div class="d-flex gap-2 mt-3 mt-md-0">
           <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-share-line fs-18 lh-1"></i>Share</button>
@@ -363,8 +363,7 @@
       </div><!-- row --> --}}
 
       <div class="main-footer mt-5">
-        <span>&copy; 2023. Dashbyte. All Rights Reserved.</span>
-        <span>Created by: <a href="http://themepixels.me" target="_blank">Themepixels</a></span>
+        <span>&copy; 2023. DPR RI</span>
       </div><!-- main-footer -->
     </div><!-- main -->
 @endsection
