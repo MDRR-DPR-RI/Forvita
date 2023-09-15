@@ -587,7 +587,8 @@ var optionEight = {
    }
 //edited
 var optionEight2 = {
-  series: [{
+  series: [
+    {
     type: 'column',
     data: chartData
   }, 

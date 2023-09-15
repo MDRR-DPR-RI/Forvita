@@ -369,7 +369,7 @@
 @endsection
 
 @section('custom_script')
-    <script src="/lib/jquery/jquery.min.js"></script>
+  <script src="/lib/jquery/jquery.min.js"></script>
   <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
   <script src="/lib/apexcharts/apexcharts.min.js"></script>
