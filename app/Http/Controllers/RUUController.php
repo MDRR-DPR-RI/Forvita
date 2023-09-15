@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RUU;
+use App\Models\Ruu;
 use App\Http\Requests\StoreRUURequest;
 use App\Http\Requests\UpdateRUURequest;
 
@@ -15,7 +15,7 @@ class RUUController extends Controller
     {
         return view('dashboard.contents.kelompok23', [
             'active' => 'kelompok23',
-            'ruu' => RUU::all()
+            'ruu' => Ruu::all()
         ]);
     }
 

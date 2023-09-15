@@ -2,7 +2,7 @@
 
 use App\Models\RUU;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RUUController;
+use App\Http\Controllers\RuuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ Route::get('/kelompok1', function () {
         'active' => 'kelompok1',
     ]);
 });
-Route::resource('/kelompok23', RUUController::class);
+Route::resource('/kelompok23', RuuController::class);
 
 Route::get('/kelompok46', function () {
     return view('dashboard.contents.kelompok46', [

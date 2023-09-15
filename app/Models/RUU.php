@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RUU extends Model
+class Ruu extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
