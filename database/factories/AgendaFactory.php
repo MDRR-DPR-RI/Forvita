@@ -18,7 +18,7 @@ class AgendaFactory extends Factory
     {
         return [
             'acara' => fake()->paragraph(),
-            'komisi_id' => mt_rand(1, 5),
+            'komisi_id' => mt_rand(1, 11),
         ];
     }
 }

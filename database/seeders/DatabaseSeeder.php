@@ -26,19 +26,37 @@ class DatabaseSeeder extends Seeder
         Ruu::factory(20)->create();
         Agenda::factory(20)->create();
         Komisi::create([
-            'name' => 'Komisi i',
+            'name' => 'Komisi I',
         ]);
         Komisi::create([
-            'name' => 'Komisi ii',
+            'name' => 'Komisi II',
         ]);
         Komisi::create([
-            'name' => 'Komisi iii',
+            'name' => 'Komisi III',
         ]);
         Komisi::create([
-            'name' => 'Komisi iv',
+            'name' => 'Komisi IV',
         ]);
         Komisi::create([
-            'name' => 'Komisi v',
+            'name' => 'Komisi V',
+        ]);
+        Komisi::create([
+            'name' => 'Komisi VI',
+        ]);
+        Komisi::create([
+            'name' => 'Komisi VII',
+        ]);
+        Komisi::create([
+            'name' => 'Komisi VIII',
+        ]);
+        Komisi::create([
+            'name' => 'Komisi IX',
+        ]);
+        Komisi::create([
+            'name' => 'Komisi X',
+        ]);
+        Komisi::create([
+            'name' => 'Komisi XI',
         ]);
         //     Bulan::create([
         //         'name' => 'Jan',
