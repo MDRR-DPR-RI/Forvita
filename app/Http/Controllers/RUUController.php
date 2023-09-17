@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ruu;
+use App\Models\Agenda;
 use App\Http\Requests\StoreRUURequest;
 use App\Http\Requests\UpdateRUURequest;
 
@@ -15,7 +16,8 @@ class RUUController extends Controller
     {
         return view('dashboard.contents.kelompok23', [
             'active' => 'kelompok23',
-            'ruu' => Ruu::all()
+            'ruu' => Ruu::all(),
+            'agenda' => Agenda::all()
         ]);
     }
 

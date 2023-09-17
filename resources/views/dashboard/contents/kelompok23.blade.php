@@ -6,6 +6,7 @@
 @endsection
 
 @section('page_content')
+
     <div class="main main-app p-3 p-lg-4">
       <div class="d-md-flex align-items-center justify-content-between mb-4">
         <div>
@@ -261,6 +262,7 @@
                 </div><!-- col --> 
               </div><!-- row -->
             </div><!-- card-body -->
+            
           </div><!-- card -->
         </div><!-- col -->
          <div class="col-xl-4">

@@ -11,6 +11,6 @@ class Komisi extends Model
     protected $guarded = ['id'];
     public function agenda()
     {
-        $this->hasMany(Agenda::class);
+        return $this->hasMany(Agenda::class);
     }
 }

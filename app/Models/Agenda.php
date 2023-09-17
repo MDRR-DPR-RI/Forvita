@@ -11,6 +11,6 @@ class Agenda extends Model
     protected $guarded = ['id'];
     public function komisi()
     {
-        $this->belongsTo(Komisi::class);
+        return $this->belongsTo(Komisi::class);
     }
 }

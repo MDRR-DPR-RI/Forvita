@@ -11,6 +11,6 @@ class bulan extends Model
     protected $guarded = ['id'];
     public function ruu()
     {
-        $this->hasMany(Ruu::class);
+        return $this->hasMany(Ruu::class);
     }
 }
