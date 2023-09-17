@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\RUU;
+use App\Models\Ruu;
+use App\Models\Agenda;
+use App\Models\Komisi;
 use App\Models\Bulan;
 
 class DatabaseSeeder extends Seeder
@@ -21,7 +23,23 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        RUU::factory(20)->create();
+        Ruu::factory(20)->create();
+        Agenda::factory(20)->create();
+        Komisi::create([
+            'name' => 'Komisi i',
+        ]);
+        Komisi::create([
+            'name' => 'Komisi ii',
+        ]);
+        Komisi::create([
+            'name' => 'Komisi iii',
+        ]);
+        Komisi::create([
+            'name' => 'Komisi iv',
+        ]);
+        Komisi::create([
+            'name' => 'Komisi v',
+        ]);
         //     Bulan::create([
         //         'name' => 'Jan',
         //     ]);
