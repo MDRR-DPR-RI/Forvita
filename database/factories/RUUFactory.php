@@ -16,9 +16,13 @@ class RUUFactory extends Factory
      */
     public function definition(): array
     {
+        $words = ['Dpr', 'Dpd', 'Pemerintah'];
+        $judul = ['RUU tentang Keamanan dan Ketahanan Siber', 'RUU tentang Perubahan atas Undang-Undang Nomor 32 Tahun 2002 tentang Penyiaran', 'RUU tentang Radio Televisi Republik Indonesia', '	RUU tentang Keamanan Laut'];
+
         return [
-            'judul' => fake()->text(),
+            'judul' => fake()->randomElement($judul),
             'bulan_id' =>  mt_rand(1, 12),
+            'pengusul' => fake()->randomElement($words),
         ];
     }
 }

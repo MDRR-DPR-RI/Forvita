@@ -23,7 +23,7 @@
       </div>
 
       <div class="row g-3">
-        {{-- <div class="col-xl-9">
+         <div class="col-xl-9">
           <div class="card card-one">
             <div class="card-body overflow-hidden px-0 pb-3">
               <div class="finance-info p-3 p-xl-4">
@@ -210,7 +210,7 @@
               </div><!-- row -->
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col --> --}}
+        </div><!-- col --> 
         <div class="col-xl-8">
           <div class="card card-one">
             <div class="card-header">
@@ -228,15 +228,23 @@
                     var ruuData = @json($ruu);
                   </script>
                 </div><!-- col -->
-                {{-- <div class="col-md-6">
-                  <div class="d-flex">
-                    <i class="ri-hotel-line fs-48 lh-1 me-3"></i>
-                    <div>
-                      <h6 class="fw-semibold text-dark mb-1">Fixed Expenses</h6>
-                      <p class="fs-sm text-secondary mb-0">Fixed expenses are generally fixed in both amount and interval.</p>
+                 <div class="col-md-6">
+                 <div class="text-center fw-semibold text-dark">Latest RUU</div>
+                 @foreach ($ruu as $index => $item)
+                     @if ($index<3)                       
+                    <div class="d-flex">
+                      <i class="{{ $item->pengusul == 'Dpr' ? 'ri-hotel-line' : ($item->pengusul == 'Dpd' ? 'ri-wallet-3-line' : 'ri-shopping-bag-3-line') }} fs-48 lh-1 me-3"></i>
+
+                      <div>
+                        <h6 class="fw-semibold text-dark mb-1">{{ $item->pengusul }}</h6>
+                        <p class="fs-sm text-secondary mb-0">{{ $item->judul }}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="d-flex mt-3">
+                    @else
+                         @break
+                     @endif
+                 @endforeach
+                  {{-- <div class="d-flex mt-3">
                     <i class="ri-wallet-3-line fs-48 lh-1 me-3"></i>
                     <div>
                       <h6 class="fw-semibold text-dark mb-1">Periodic Expenses</h6>
@@ -249,16 +257,16 @@
                       <h6 class="fw-semibold text-dark mb-1">Variable Expenses</h6>
                       <p class="fs-sm text-secondary mb-0">Change as the quantity of good or service that produces changes.</p>
                     </div>
-                  </div>
-                </div><!-- col --> --}}
+                  </div> --}}
+                </div><!-- col --> 
               </div><!-- row -->
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->
-        {{-- <div class="col-xl-4">
+         <div class="col-xl-4">
           <div class="card card-one">
             <div class="card-header">
-              <h6 class="card-title">Billed Opportunities</h6>
+              <h6 class="card-title">Pengusul RUU</h6>
               <nav class="nav nav-icon nav-icon-sm ms-auto">
                 <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
                 <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
@@ -266,14 +274,14 @@
             </div><!-- card-header -->
             <div class="card-body position-relative d-flex justify-content-center">
               <div id="chartDonut" class="apex-donut-two"></div>
-              <div class="finance-donut-value">
-                <h1>1.8B</h1>
-                <p>86.24%</p>
+              <div class="finance-donut-value "style="margin-bottom: 35px;">
+                <h1>{{ count($ruu) }}</h1>
+                {{-- <p>86.24%</p> --}}
               </div>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col --> --}}
-        {{-- <div class="col">
+        </div><!-- col --> 
+         <div class="col">
           <div class="card card-one">
             <div class="card-body p-3 p-xl-4">
               <div class="row justify-content-center g-3 mb-2 mb-xl-4">
@@ -360,7 +368,7 @@
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->
-      </div><!-- row --> --}}
+      </div><!-- row --> 
 
       <div class="main-footer mt-5">
         <span>&copy; 2023. DPR RI</span>

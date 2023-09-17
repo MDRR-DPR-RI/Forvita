@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('bulan_id')->default(1);
             $table->string('judul');
+            $table->string('pengusul');
             $table->timestamps();
         });
     }

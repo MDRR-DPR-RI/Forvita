@@ -594,7 +594,7 @@ var optionEight2 = {
   }, 
   // {
   //   type: 'column',
-  //   data: [[0,12],[1,7],[2,4],[3,5],[4,8],[5,10],[6,4],[7,7],[8,11],[9,9],[10,5]]
+  //   data: [[1,1],[2,4],[3,5],[4,8],[5,10],[6,4],[7,7],[8,11],[9,9],[10,5],[11,5],[12,5]]
   // }
   ],
   chart: {
@@ -678,17 +678,29 @@ var chartEight = new ApexCharts(document.querySelector('#apexChart8'), optionEig
 chartEight.render();
 
 //------------------------------------------------
-
+console.log(ruuData[1].pengusul)
+var dataRuu = [0, 0, 0];
+for(let i = 0; i<ruuData.length; i++){
+  if(ruuData[i].pengusul == 'Dpr'){
+    dataRuu[0]++
+  }else if(ruuData[i].pengusul == 'Dpd') {
+    dataRuu[1]++
+  }else{
+    dataRuu[2]++
+  }
+}
+console.log(dataRuu)
 var optionDonut = {
-  series: [35, 20, 20, 15],
+  series: dataRuu,
   chart: {
     type: 'donut',
     height: 'auto',
     parentHeightOffset: 0
   },
+  labels: ['Dpr', 'Dpd', 'Pemerintah',],
   colors: ['#506fd9', '#85b6ff', '#51596d', '#eff1f5'],
   dataLabels: {
-    enabled: false
+    enabled: true
   },
   grid: {
     padding: {
@@ -696,9 +708,19 @@ var optionDonut = {
       bottom: 0
     }
   },
-  legend: {
-    show: false
-  }
+   legend: {
+      show: true,
+      showForSingleSeries: false,
+      showForNullSeries: true,
+      showForZeroSeries: true,
+      position: 'bottom',
+      horizontalAlign: 'center', 
+      floating: false,
+      fontSize: '14px',
+      fontFamily: 'Helvetica, Arial',
+      fontWeight: 400,
+    
+  },
 };
 
 var chartDonut = new ApexCharts(document.querySelector('#chartDonut'), optionDonut);

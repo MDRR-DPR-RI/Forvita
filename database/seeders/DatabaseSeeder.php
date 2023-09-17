@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        RUU::factory(1)->create();
+        RUU::factory(20)->create();
         //     Bulan::create([
         //         'name' => 'Jan',
         //     ]);
