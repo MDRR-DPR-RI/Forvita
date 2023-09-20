@@ -14,7 +14,7 @@
   <!-- Favicon -->
   <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
 
-  <title>DashByte - Premium Dashboard Template</title>
+  <title>Satu Data</title>
  
     <!-- Vendor CSS -->
     <link rel="stylesheet" href="/lib/remixicon/fonts/remixicon.css">
