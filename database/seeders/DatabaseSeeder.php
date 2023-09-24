@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Ruu;
+use App\Models\Content;
 use App\Models\Agenda;
 use App\Models\Komisi;
 use App\Models\Bulan;
@@ -25,6 +26,18 @@ class DatabaseSeeder extends Seeder
 
         Ruu::factory(20)->create();
         Agenda::factory(20)->create();
+        Content::create([
+            'cluster' => 3,
+        ]);
+        Content::create([
+            'cluster' => 1,
+        ]);
+        Content::create([
+            'cluster' => 2,
+        ]);
+        Content::create([
+            'cluster' => 4,
+        ]);
         Komisi::create([
             'name' => 'Komisi I',
         ]);

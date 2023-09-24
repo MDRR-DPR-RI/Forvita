@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Models\RUU;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RuuController;
@@ -22,6 +23,7 @@ Route::get('/kelompok1', function () {
     ]);
 });
 Route::resource('/kelompok23', RuuController::class);
+Route::resource('/dashboard/content', DashboardController::class);
 
 Route::get('/kelompok46', function () {
     return view('dashboard.contents.kelompok46', [
