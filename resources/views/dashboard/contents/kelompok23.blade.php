@@ -440,7 +440,7 @@
 
 
     <script>
-    // JavaScript object to store HTML structures with IDs
+    // JavaScript object to store HTML structures with ID
     const htmlStructures = {
         1: [`<div class="col-xl-9">
           <div class="card card-one">
@@ -638,7 +638,6 @@
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`, `Nama 4`],
-        // ... other structures
     };
  // Declare variables outside the loop
     let contentId, htmlContent, containerContent, containerContentName, itemName;
