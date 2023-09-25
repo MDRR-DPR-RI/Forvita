@@ -17,7 +17,7 @@ class AgendaFactory extends Factory
     public function definition(): array
     {
         return [
-            'acara' => fake()->paragraph(),
+            'acara' => fake()->sentence(),
             'komisi_id' => mt_rand(1, 11),
         ];
     }
