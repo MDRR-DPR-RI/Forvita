@@ -6,7 +6,9 @@
 @endsection
 
 @section('page_content')
-
+  <script>
+    var ruuData = @json($ruu);
+  </script>
     <div class="main main-app p-3 p-lg-4">
       <div class="d-md-flex align-items-center justify-content-between mb-4">
         <div>
@@ -226,9 +228,24 @@
               <div class="row g-4">
                 <div class="col-md-6">
                   <div id="apexChart8" class="apex-chart-three"></div>
-                  <script>
-                    var ruuData = @json($ruu);
-                  </script>
+                  <label for="xSelect">Select X Column:</label>
+                    <select id="xSelect">
+                      @foreach ($columns as $column)
+                          <option value="{{ $column }}">{{ $column }}</option>
+                      @endforeach
+                    </select>
+
+                    <label for="ySelect">Select Y Column:</label>
+                    <select id="ySelect">
+                        @foreach ($columns as $column)
+                          <option value="{{ $column }}">{{ $column }}</option>
+                        @endforeach
+                    </select> 
+
+                    <button id="updateChart">Update Chart</button>
+
+                    <div id="chart"></div>
+      
                 </div><!-- col -->
                  <div class="col-md-6">
                  <div class="text-center fw-semibold text-dark">Latest RUU</div>
@@ -388,7 +405,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                @foreach ($contents as $content)
+                @foreach ($contents as $item)
                     <tr>
                       <th scope="row">{{ $loop->iteration }}</th>
                       <td id="itemName_{{ $loop->iteration }}"></td>
@@ -415,7 +432,7 @@
                     <tr>
                       <th scope="row">{{ $loop->iteration }}</th>
                       <td>{{ $content->cluster }}</td>
-                      <td style="display: flex;justify-content: center;  align-items: center;"><a href="/" class="btn btn-primary">Edit</a>
+                      <td style="display: flex; justify-content: center;  align-items: center;"><a href="/" class="btn btn-primary">Edit</a>
                         <form action="/dashboard/content/{{ $content->id }}" method="post">
                           @method('delete')
                           @csrf
@@ -638,8 +655,91 @@
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`, `Nama 4`],
+        5: [`<div class="col-sm-6 col-xl">
+          <div class="card card-one">
+            <div class="card-body">
+              <div id="apexChart4" class="mb-1"></div>
+              <h3 class="card-value">0.9:8</h3>
+              <div class="progress ht-5 mb-2">
+                <div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <label class="fw-semibold text-dark mb-1">Quick Ratio Goal: 1.0 or higher</label>
+              <p class="fs-sm text-secondary mb-0">Measures your Accounts Receivable / Current Liabilities</p>
+            </div><!-- card-body -->
+          </div><!-- card -->
+        </div><!-- col -->`, `Nama 5`],
+        6: [`<div class="col-sm-6 col-xl">
+          <div class="card card-one">
+            <div class="card-body">
+              <div id="apexChart5" class="mb-1"></div>
+              <h3 class="card-value">2.8:0</h3>
+              <div class="progress ht-5 mb-2">
+                <div class="progress-bar bg-ui-02 w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <label class="fw-semibold text-dark mb-1">Quick Ratio Goal: 2.0 or higher</label>
+              <p class="fs-sm text-secondary mb-0">Measures your Current Assets / Current Liabilities</p>
+            </div><!-- card-body -->
+          </div><!-- card -->
+        </div><!-- col -->`, `Nama 6`],
+        7: [`<div class="col-xl-8">
+          <div class="card card-one">
+            <div class="card-header">
+              <h6 class="card-title">Program Legislasi Nasional 2020-2024</h6>
+              <nav class="nav nav-icon nav-icon-sm ms-auto">
+                <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
+                <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+              </nav>
+            </div><!-- card-header -->
+            <div class="card-body p-4">
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div id="apexChart8" class="apex-chart-three"></div>
+                </div><!-- col -->
+                 <div class="col-md-6">
+                 <div class="text-center fw-semibold text-dark">Latest RUU</div>
+                 @foreach ($ruu as $index => $item)
+                     @if ($index<3)                       
+                    <div class="d-flex">
+                      <i class="{{ $item->pengusul == 'Dpr' ? 'ri-hotel-line' : ($item->pengusul == 'Dpd' ? 'ri-wallet-3-line' : 'ri-shopping-bag-3-line') }} fs-48 lh-1 me-3"></i>
+
+                      <div>
+                        <h6 class="fw-semibold text-dark mb-1">{{ $item->pengusul }}</h6>
+                        <p class="fs-sm text-secondary mb-0">{{ $item->judul }}</p>
+                      </div>
+                    </div>
+                    @else
+                         @break
+                     @endif
+                 @endforeach
+               
+                </div><!-- col --> 
+              </div><!-- row -->
+            </div><!-- card-body -->
+            
+          </div><!-- card -->
+        </div><!-- col -->`, 'Nama 7'],
+        8: [` <div class="col-xl-4">
+          <div class="card card-one">
+            <div class="card-header">
+              <h6 class="card-title">Pengusul RUU</h6>
+              <nav class="nav nav-icon nav-icon-sm ms-auto">
+                <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
+                <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+              </nav>
+            </div><!-- card-header -->
+            <div class="card-body position-relative d-flex justify-content-center">
+              <div id="chartDonut" class="apex-donut-two"></div>
+              <div class="finance-donut-value "style="margin-bottom: 35px;">
+                <h1>{{ count($ruu) }}</h1>
+                <!-- <p>86.24%</p> -->
+              </div>
+            </div><!-- card-body -->
+          </div><!-- card -->
+        </div><!-- col --> `, `Nama 8`],
+
     };
- // Declare variables outside the loop
+
+    // Declare variables outside the loop
     let contentId, htmlContent, containerContent, containerContentName, itemName;
 
     @foreach ($contents as $content)

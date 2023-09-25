@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="/css/style.min.css">
 </head>
 
+{{-- <script src="/js/charts/index.js"></script> --}}
 <body>
 {{-- Side Bar --}}
     @include('dashboard.partials.sidebar') 

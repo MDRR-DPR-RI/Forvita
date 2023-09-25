@@ -7,6 +7,7 @@ use App\Models\Agenda;
 use App\Models\Content;
 use App\Http\Requests\StoreRUURequest;
 use App\Http\Requests\UpdateRUURequest;
+use Illuminate\Support\Facades\Schema;
 
 class RUUController extends Controller
 {
@@ -19,7 +20,8 @@ class RUUController extends Controller
             'active' => 'kelompok23',
             'ruu' => Ruu::all(),
             'agenda' => Agenda::all(),
-            'contents' => Content::all()
+            'contents' => Content::all(),
+            'columns' => Schema::getColumnListing('anggotas'),
         ]);
     }
 
