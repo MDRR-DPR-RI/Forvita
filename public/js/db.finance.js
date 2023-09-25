@@ -585,13 +585,13 @@ var optionEight = {
        // Push the month and count as a pair to the chartData array
        chartData.push([i, count]);
    }
-   var updateChartButton = document.getElementById('updateChart');
-  updateChartButton.addEventListener('click', function () {
-    var xValue = xSelect.value
-    var yValue = ySelect.value
-
-    console.log(xValue)
-  });
+  //  var updateChartButton = document.getElementById('updateChart');
+  // updateChartButton.addEventListener('click', function () {
+  //   var xValue = xSelect.value
+  //   var yValue = ySelect.value
+    
+  //   console.log(xValue)
+  // });
 //edited
 var optionEight2 = {
   series: [

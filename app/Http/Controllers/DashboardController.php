@@ -35,7 +35,11 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Content::create([
+            'cluster' => $request->input('clusterId'),
+            // other fields as needed
+        ]);
+        return redirect('/kelompok23');
     }
 
     /**

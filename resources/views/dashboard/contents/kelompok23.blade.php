@@ -405,15 +405,18 @@
                     </tr>
                   </thead>
                   <tbody>
-                @foreach ($contents as $item)
-                    <tr>
-                      <th scope="row">{{ $loop->iteration }}</th>
-                      <td id="itemName_{{ $loop->iteration }}"></td>
-                      <td>1</td>
-                      <td><a href="/" class="btn btn-primary">Show</a></td>
-                    </tr>
-                @endforeach
-
+                    @foreach ($charts as $chart)
+                        <tr>
+                          <th scope="row">{{ $loop->iteration }}</th>
+                          <td id="itemName_{{ $loop->iteration }}"></td>
+                          <td>1</td>
+                          <form action="/dashboard/content" method="post">
+                              @csrf
+                            <input type="hidden" value="{{ $chart->id }}" name="clusterId">
+                            <td><button type="submit" class="btn btn-primary">add</button></td>
+                          </form>
+                        </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>
@@ -756,6 +759,7 @@
     containerContentName.innerHTML += itemName;
     @endforeach
 </script>
+
 @endsection
 
 @section('custom_script')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ruu;
 use App\Models\Agenda;
 use App\Models\Content;
+use App\Models\Chart;
 use App\Http\Requests\StoreRUURequest;
 use App\Http\Requests\UpdateRUURequest;
 use Illuminate\Support\Facades\Schema;
@@ -22,6 +23,7 @@ class RUUController extends Controller
             'agenda' => Agenda::all(),
             'contents' => Content::all(),
             'columns' => Schema::getColumnListing('anggotas'),
+            'charts' => Chart::all(),
         ]);
     }
 

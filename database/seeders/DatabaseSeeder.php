@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Ruu;
 use App\Models\Content;
+use App\Models\Chart;
 use App\Models\Agenda;
 use App\Models\Komisi;
 use App\Models\Bulan;
@@ -36,7 +37,31 @@ class DatabaseSeeder extends Seeder
             'cluster' => 2,
         ]);
         Content::create([
-            'cluster' => 4,
+            'cluster' => 7,
+        ]);
+        Chart::create([
+            'name' => "Nama 1",
+        ]);
+        Chart::create([
+            'name' => "Nama 2",
+        ]);
+        Chart::create([
+            'name' => "Nama 3",
+        ]);
+        Chart::create([
+            'name' => "Nama 4",
+        ]);
+        Chart::create([
+            'name' => "Nama 5",
+        ]);
+        Chart::create([
+            'name' => "Nama 6",
+        ]);
+        Chart::create([
+            'name' => "Nama 7",
+        ]);
+        Chart::create([
+            'name' => "Nama 8",
         ]);
         Komisi::create([
             'name' => 'Komisi I',
