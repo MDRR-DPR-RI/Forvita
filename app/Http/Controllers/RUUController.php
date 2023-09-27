@@ -6,6 +6,7 @@ use App\Models\Ruu;
 use App\Models\Agenda;
 use App\Models\Content;
 use App\Models\Chart;
+use App\Models\Anggota;
 use App\Http\Requests\StoreRUURequest;
 use App\Http\Requests\UpdateRUURequest;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,7 @@ class RUUController extends Controller
             'contents' => Content::all(),
             'columns' => Schema::getColumnListing('anggotas'),
             'charts' => Chart::all(),
+            'anggotas' => Anggota::all(),
         ]);
     }
 

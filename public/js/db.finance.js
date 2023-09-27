@@ -585,13 +585,7 @@ var optionEight = {
        // Push the month and count as a pair to the chartData array
        chartData.push([i, count]);
    }
-  //  var updateChartButton = document.getElementById('updateChart');
-  // updateChartButton.addEventListener('click', function () {
-  //   var xValue = xSelect.value
-  //   var yValue = ySelect.value
-    
-  //   console.log(xValue)
-  // });
+
 //edited
 var optionEight2 = {
   series: [
@@ -680,6 +674,124 @@ var optionEight2 = {
     show: false
   }
 };
+// console.log(anggotaData)
+// // Extract unique fraksi values
+// const uniqueFraksiValues = [...new Set(anggotaData.map(item => item.fraksi))];
+
+// // Create the categories array using unique fraksi values
+// const categories = uniqueFraksiValues.map(fraksi => [fraksi]);
+
+// // Now, categories will contain unique fraksi values
+// console.log(categories);
+
+//   var updateChartButton = document.getElementById('updateChart');
+//   updateChartButton.addEventListener('click', function () {
+//     var xValue = xSelect.value
+//     // var yValue = ySelect.value
+//      // Fetch data based on the selected value (you need to implement this part)
+//     const newData = fetchDataBasedOnSelection(xValue);
+
+//     // Update the chart with the new data
+//     updateChart(newData);
+//     console.log(xValue)
+//   });
+
+// // Add an event listener to the select element
+
+// // Function to fetch data based on the selected value (you need to implement this part)
+// function fetchDataBasedOnSelection(selectedValue) {
+//     // Implement your data fetching logic here based on the selected value
+//     // For example, fetch data for "dapil" Aceh 1 and return it as an array
+//     if (selectedValue === 'dapil') {
+//         return [[1, 1], [2, 4], [3, 5], /* ... */];
+//     }
+    
+//     // Fetch data for "fraksi" (implement logic for fraksi if needed)
+
+//     // If none of the conditions match, return an empty array or handle appropriately
+//     return [];
+// }
+
+// // Function to update the chart (you need to implement this part)
+// function updateChart(newData) {
+//     // Implement your chart update logic here
+//     // For example, if you're using Highcharts, you can use chart.series[0].setData(newData) to update the data
+// }
+
+// var optionEight3 = {
+//   series: [
+//   //   {
+//   //   type: 'column',
+//   //   data: chartData
+//   // },  
+//   {
+//     type: 'column',
+//     data: [[1,1],[2,4],[3,5],[4,8],[5,10],[6,4],[7,7],[8,11],[9,9],[10,5],[11,5],[12,5]]
+//   }
+//   ],
+//   chart: {
+//     height: '100%',
+//     parentHeightOffset: 0,
+//     stacked: true,
+//     type: 'line',
+//     toolbar: {
+//       show: false
+//     }
+//   },
+//   grid: {
+//     borderColor: 'rgba(72,94,144, 0.07)',
+//     padding: {
+//       top: -20,
+//       left: 5,
+//       bottom: -15
+//     }
+//   },
+//   states: {
+//     hover: {
+//       filter: {
+//         type: 'none'
+//       }
+//     },
+//     active: {
+//       filter: {
+//         type: 'none'
+//       }
+//     }
+//   },
+//   colors: ['#506fd9', '#e5e9f2'],
+//   plotOptions: {
+//     bar: {
+//       columnWidth: '40%',
+//       endingShape: 'rounded'
+//     },
+//   },
+//   stroke: {
+//     curve: 'straight',
+//     lineCap: 'square',
+//     width: 0
+//   },
+//   yaxis: {
+//     min: 0,
+//     max: 5,
+//     tickAmount: 5
+//   },
+//   xaxis: {
+//     categories: categories,
+//     labels: {
+//       style: {
+//         colors: '#6e7985',
+//         fontSize: '10px',
+//         fontWeight: '500'
+//       }
+//     },
+//   },
+//   tooltip: {
+//     enabled: false
+//   },
+//   legend: {
+//     show: false
+//   }
+// };
 
 var chartEight = new ApexCharts(document.querySelector('#apexChart8'), optionEight2);
 chartEight.render();

@@ -8,6 +8,7 @@
 @section('page_content')
   <script>
     var ruuData = @json($ruu);
+    var anggotaData = @json($anggotas);
   </script>
     <div class="main main-app p-3 p-lg-4">
       <div class="d-md-flex align-items-center justify-content-between mb-4">
@@ -231,7 +232,7 @@
                   <label for="xSelect">Select X Column:</label>
                     <select id="xSelect">
                       @foreach ($columns as $column)
-                          <option value="{{ $column }}">{{ $column }}</option>
+                          <option value="fraksi">Fraksi</option>
                       @endforeach
                     </select>
 
@@ -409,7 +410,7 @@
                         <tr>
                           <th scope="row">{{ $loop->iteration }}</th>
                           <td id="itemName_{{ $loop->iteration }}"></td>
-                          <td>1</td>
+                          <td id="grid_{{ $loop->iteration }}"></td>
                           <form action="/dashboard/content" method="post">
                               @csrf
                             <input type="hidden" value="{{ $chart->id }}" name="clusterId">
@@ -435,7 +436,7 @@
                     <tr>
                       <th scope="row">{{ $loop->iteration }}</th>
                       <td>{{ $content->cluster }}</td>
-                      <td style="display: flex; justify-content: center;  align-items: center;"><a href="/" class="btn btn-primary">Edit</a>
+                      <td style="display: flex; justify-content: center;  align-items: center;">
                         <form action="/dashboard/content/{{ $content->id }}" method="post">
                           @method('delete')
                           @csrf
@@ -511,7 +512,7 @@
               <div id="apexChart1" class="apex-chart-two"></div>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`, `line Chart`],
+        </div><!-- col -->`, `line Chart`, `9`],
         2: [`<div class="col-xl-3">
           <div class="row g-3">
             <div class="col-sm-6 col-xl-12">
@@ -535,7 +536,7 @@
               </div><!-- card -->
             </div><!-- col -->
           </div><!-- row -->
-        </div><!-- col -->`, `Nama 2`],
+        </div><!-- col -->`, `Nama 2`, `3`],
         3: [`<div class="col-xl-6">
           <div class="card card-one">
             <div class="card-header border-0 pb-2">
@@ -570,8 +571,8 @@
               </div><!-- row -->
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->` , `Nama 3`],
-        4: [`<div class="col">
+        </div><!-- col -->` , `Nama 3`, `6`],
+        4: [`<div class="col-xl-12">
           <div class="card card-one">
             <div class="card-body p-3 p-xl-4">
               <div class="row justify-content-center g-3 mb-2 mb-xl-4">
@@ -657,8 +658,8 @@
               </div><!-- row -->
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`, `Nama 4`],
-        5: [`<div class="col-sm-6 col-xl">
+        </div><!-- col -->`, `Nama 4`, `12`],
+        5: [`<div class="col-xl-6">
           <div class="card card-one">
             <div class="card-body">
               <div id="apexChart4" class="mb-1"></div>
@@ -670,8 +671,8 @@
               <p class="fs-sm text-secondary mb-0">Measures your Accounts Receivable / Current Liabilities</p>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`, `Nama 5`],
-        6: [`<div class="col-sm-6 col-xl">
+        </div><!-- col -->`, `Nama 5`, `6`],
+        6: [`<div class="col-xl-6">
           <div class="card card-one">
             <div class="card-body">
               <div id="apexChart5" class="mb-1"></div>
@@ -683,7 +684,7 @@
               <p class="fs-sm text-secondary mb-0">Measures your Current Assets / Current Liabilities</p>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`, `Nama 6`],
+        </div><!-- col -->`, `Nama 6`, `8`],
         7: [`<div class="col-xl-8">
           <div class="card card-one">
             <div class="card-header">
@@ -720,7 +721,7 @@
             </div><!-- card-body -->
             
           </div><!-- card -->
-        </div><!-- col -->`, 'Nama 7'],
+        </div><!-- col -->`, 'Bar Chart', `8`],
         8: [` <div class="col-xl-4">
           <div class="card card-one">
             <div class="card-header">
@@ -738,25 +739,31 @@
               </div>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col --> `, `Nama 8`],
+        </div><!-- col --> `, `Nama 8`, `4`],
 
     };
 
     // Declare variables outside the loop
-    let contentId, htmlContent, containerContent, containerContentName, itemName;
+    let contentId, htmlContent, containerContent, containerContentName, itemName, containerGrid, grid;
 
     @foreach ($contents as $content)
-    // Access the HTML structure based on the PHP value
-    contentId = {{ $content->cluster }};
-    htmlContent = htmlStructures[contentId][0];
-    itemName = htmlStructures[{{ $loop->iteration }}][1]
-    
-    // Create a containerContent element and set its innerHTML
-    containerContent = document.getElementById('content');
-    containerContent.innerHTML += htmlContent;
+      // Access the HTML structure based on the PHP value
+      contentId = {{ $content->cluster }};
+      htmlContent = htmlStructures[contentId][0];
+      
+      // Create a containerContent element and set its innerHTML
+      containerContent = document.getElementById('content');
+      containerContent.innerHTML += htmlContent;
 
-    containerContentName = document.getElementById('itemName_{{ $loop->iteration }}');
-    containerContentName.innerHTML += itemName;
+    @endforeach
+    @foreach ($charts as $chart)
+      itemName = htmlStructures[{{ $loop->iteration }}][1]
+      containerContentName = document.getElementById('itemName_{{ $loop->iteration }}');
+      containerContentName.innerHTML += itemName;
+
+      grid = htmlStructures[{{ $loop->iteration }}][2]
+      containerGrid = document.getElementById('grid_{{ $loop->iteration }}');
+      containerGrid.innerHTML += grid;
     @endforeach
 </script>
 

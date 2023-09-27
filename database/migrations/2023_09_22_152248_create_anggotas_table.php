@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('id')->unique();
             $table->string('nama');
             $table->string('dapil');
+            $table->string('fraksi');
             $table->timestamps();
         });
     }
