@@ -384,7 +384,7 @@
       </div><!-- main-footer -->
     </div><!-- main -->
 
-    {{-- Modal --}}
+    {{-- Modal Full Customize Dashboard--}}
        <div class="modal fade" id="modal3" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
@@ -414,7 +414,7 @@
                           <form action="/dashboard/content" method="post">
                               @csrf
                             <input type="hidden" value="{{ $chart->id }}" name="clusterId">
-                            <td><button type="submit" class="btn btn-primary">add</button></td>
+                            <td><button type="submit" class="btn btn-primary">Add</button></td>
                           </form>
                         </tr>
                     @endforeach
@@ -435,9 +435,10 @@
                 @foreach ($contents as $content)
                     <tr>
                       <th scope="row">{{ $loop->iteration }}</th>
-                      <td>{{ $content->cluster }}</td>
+                      <td>{{ $content->chart->id }}</td>
                       <td style="display: flex; justify-content: center;  align-items: center;">
                         <form action="/dashboard/content/{{ $content->id }}" method="post">
+                        <a href="/dashboard/chart/{{ $content->chart->id }}" class="btn btn-primary">Edit </a>
                           @method('delete')
                           @csrf
                             <button class="btn btn-danger">Delete</button>
@@ -458,7 +459,6 @@
         </div><!-- modal-content -->
       </div><!-- modal-content -->
     </div><!-- modal -->
-
 
     <script>
     // JavaScript object to store HTML structures with ID
@@ -748,7 +748,7 @@
 
     @foreach ($contents as $content)
       // Access the HTML structure based on the PHP value
-      contentId = {{ $content->cluster }};
+      contentId = {{ $content->chart->id }};
       htmlContent = htmlStructures[contentId][0];
       
       // Create a containerContent element and set its innerHTML
@@ -770,12 +770,8 @@
 @endsection
 
 @section('custom_script')
-  <script src="/lib/jquery/jquery.min.js"></script>
-  <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
   <script src="/lib/apexcharts/apexcharts.min.js"></script>
 
-  <script src="/js/script.js"></script>
   <script src="/js/db.data.js"></script>
   <script src="/js/db.finance.js"></script>
 

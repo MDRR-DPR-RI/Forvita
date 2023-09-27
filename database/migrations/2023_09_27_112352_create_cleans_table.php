@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contents', function (Blueprint $table) {
+        Schema::create('cleans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('chart_id');
+            $table->string('judul');
+            $table->string('keterangan');
+            $table->string('jumlah');
             $table->timestamps();
         });
     }
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contents');
+        Schema::dropIfExists('cleans');
     }
 };

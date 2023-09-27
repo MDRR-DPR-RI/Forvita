@@ -8,6 +8,7 @@ use App\Models\Ruu;
 use App\Models\Content;
 use App\Models\Chart;
 use App\Models\Agenda;
+use App\Models\Clean;
 use App\Models\Komisi;
 use App\Models\Bulan;
 
@@ -27,17 +28,20 @@ class DatabaseSeeder extends Seeder
 
         Ruu::factory(20)->create();
         Agenda::factory(20)->create();
+        // Content::create([
+        //     'chart_id' => 3,
+        // ]);
+        // Content::create([
+        //     'chart_id' => 1,
+        // ]);
+        // Content::create([
+        //     'chart_id' => 2,
+        // ]);
         Content::create([
-            'cluster' => 3,
+            'chart_id' => 7,
         ]);
         Content::create([
-            'cluster' => 1,
-        ]);
-        Content::create([
-            'cluster' => 2,
-        ]);
-        Content::create([
-            'cluster' => 7,
+            'chart_id' => 8,
         ]);
         Chart::create([
             'name' => "Nama 1",
@@ -63,39 +67,75 @@ class DatabaseSeeder extends Seeder
         Chart::create([
             'name' => "Nama 8",
         ]);
-        Komisi::create([
-            'name' => 'Komisi I',
+
+        Clean::create([
+            'judul' => "Agama",
+            'keterangan' => "Islam",
+            'jumlah' => 1000,
         ]);
-        Komisi::create([
-            'name' => 'Komisi II',
+        Clean::create([
+            'judul' => "Agama",
+            'keterangan' => "Kristen",
+            'jumlah' => 200,
         ]);
-        Komisi::create([
-            'name' => 'Komisi III',
+        Clean::create([
+            'judul' => "Agama",
+            'keterangan' => "Budha",
+            'jumlah' => 150,
         ]);
-        Komisi::create([
-            'name' => 'Komisi IV',
+        Clean::create([
+            'judul' => "Jeni Kelamin",
+            'keterangan' => "L",
+            'jumlah' => 1250,
         ]);
-        Komisi::create([
-            'name' => 'Komisi V',
+        Clean::create([
+            'judul' => "Jeni Kelamin",
+            'keterangan' => "P",
+            'jumlah' => 260,
         ]);
-        Komisi::create([
-            'name' => 'Komisi VI',
-        ]);
-        Komisi::create([
-            'name' => 'Komisi VII',
-        ]);
-        Komisi::create([
-            'name' => 'Komisi VIII',
-        ]);
-        Komisi::create([
-            'name' => 'Komisi IX',
-        ]);
-        Komisi::create([
-            'name' => 'Komisi X',
-        ]);
-        Komisi::create([
-            'name' => 'Komisi XI',
-        ]);
+
+
+
+
+
+
+
+
+
+
+        // Komisi::create([
+        //     'name' => 'Komisi I',
+        // ]);
+        // Komisi::create([
+        //     'name' => 'Komisi II',
+        // ]);
+        // Komisi::create([
+        //     'name' => 'Komisi III',
+        // ]);
+        // Komisi::create([
+        //     'name' => 'Komisi IV',
+        // ]);
+        // Komisi::create([
+        //     'name' => 'Komisi V',
+        // ]);
+        // Komisi::create([
+        //     'name' => 'Komisi VI',
+        // ]);
+        // Komisi::create([
+        //     'name' => 'Komisi VII',
+        // ]);
+        // Komisi::create([
+        //     'name' => 'Komisi VIII',
+        // ]);
+        // Komisi::create([
+        //     'name' => 'Komisi IX',
+        // ]);
+        // Komisi::create([
+        //     'name' => 'Komisi X',
+        // ]);
+        // Komisi::create([
+        //     'name' => 'Komisi XI',
+        // ]);
         //     Bulan::create([
         //         'name' => 'Jan',
         //     ]);

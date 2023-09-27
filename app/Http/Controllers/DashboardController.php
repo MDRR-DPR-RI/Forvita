@@ -55,7 +55,7 @@ class DashboardController extends Controller
      */
     public function edit(Content $content)
     {
-        //
+        // return "test";
     }
 
     /**
@@ -63,7 +63,7 @@ class DashboardController extends Controller
      */
     public function update(Request $request, Content $content)
     {
-        //
+        // dd("ts");
     }
 
     /**
