@@ -98,7 +98,14 @@
                 tableHtml += '</tr>';
                 tableHtml += '</thead>';
                 tableHtml += '<tbody>';
-                let xValue = JSON.parse(data.xValue)
+                // let xValue = data.xValue ? JSON.parse(data.xValue) : null;
+                let xValue;
+
+                if (typeof data.xValue === 'string' && data.xValue.trim() !== '') { // check data.xValue is !null
+                  xValue = JSON.parse(data.xValue);
+                } else {
+                  xValue = null;
+                }
                 // Iterate over the data and build table rows
                 data.value.forEach(function (item) {
                     tableHtml += '<tr class="table-row" data-judul="' + item.judul + '">';
@@ -107,7 +114,7 @@
                     tableHtml += 'value="' + item.keterangan + '" id="item' + item.index + '" name="xValue[]" ';
                     
                     // Check the box if the value is in db
-                    if (xValue.includes(item.keterangan)) {
+                    if ("xValue".includes(item.keterangan)) {
                         tableHtml += 'checked';
                         console.log("checked")
                     }
