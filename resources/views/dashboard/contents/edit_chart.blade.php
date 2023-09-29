@@ -66,15 +66,8 @@
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-
-      // ccheck all
-        $("#selectAllCheckbox").click(function() {
-            $(".checkbox-item").prop('checked', $(this).prop('checked'));
-            console.log("all")
-        });
      // Attach a click event listener to the "Update" button
         $('#updateBtn').click(function () {
-          console.log("clicked")
           var selectedJudul = $('#selectJudul').val();
           var contentId = $('#contentId').val();
             //Make an AJAX request to fetch data
@@ -132,7 +125,11 @@
 
                 // Update the table container with the dynamic table
                 $('#table-container').html(tableHtml);
-                              
+                    // ccheck all
+                  $("#selectAllCheckbox").click(function() {
+                      $(".checkbox-item").prop('checked', $(this).prop('checked'));
+                      console.log("all")
+                  });
                 },
                 error: function (error) {
                     console.error(error);
