@@ -37,17 +37,6 @@ class ChartController extends Controller
      */
     public function show(Chart $chart)
     {
-        // Query distinct "judul" values from the database
-        $juduls = Clean::distinct()->pluck('judul');
-
-        // Query distinct "keterangan" values from the database
-        $keterangans = Clean::distinct()->pluck('keterangan');
-        return view('dashboard.contents.edit_chart', [
-            'active' => 'kelompok23',
-            'chart' => $chart,
-            'juduls' => $juduls,
-            'keterangans' => $keterangans,
-        ]);
     }
 
     /**
@@ -63,7 +52,6 @@ class ChartController extends Controller
      */
     public function update(Request $request, Chart $chart)
     {
-        return "tes";
     }
 
     /**

@@ -8,7 +8,8 @@
 @section('page_content')
   <script>
     var ruuData = @json($ruu);
-    var anggotaData = @json($anggotas);
+    // var anggotaData = @json($anggotas);
+    var contents = @json($contents);
   </script>
     <div class="main main-app p-3 p-lg-4">
       <div class="d-md-flex align-items-center justify-content-between mb-4">
@@ -413,7 +414,7 @@
                           <td id="grid_{{ $loop->iteration }}"></td>
                           <form action="/dashboard/content" method="post">
                               @csrf
-                            <input type="hidden" value="{{ $chart->id }}" name="clusterId">
+                            <input type="hidden" value="{{ $chart->id }}" name="chartId">
                             <td><button type="submit" class="btn btn-primary">Add</button></td>
                           </form>
                         </tr>
@@ -428,6 +429,7 @@
                     <tr>
                       <th scope="col">No</th>
                       <th scope="col">Cluster</th>
+                      <th scope="col">Grid</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
@@ -436,9 +438,10 @@
                     <tr>
                       <th scope="row">{{ $loop->iteration }}</th>
                       <td>{{ $content->chart->id }}</td>
+                      <td>8</td>
                       <td style="display: flex; justify-content: center;  align-items: center;">
                         <form action="/dashboard/content/{{ $content->id }}" method="post">
-                        <a href="/dashboard/chart/{{ $content->chart->id }}" class="btn btn-primary">Edit </a>
+                        <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary">Edit </a>
                           @method('delete')
                           @csrf
                             <button class="btn btn-danger">Delete</button>
@@ -685,7 +688,25 @@
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`, `Nama 6`, `8`],
-        7: [`<div class="col-xl-8">
+        7:[` <div class="col-xl-4">
+          <div class="card card-one">
+            <div class="card-header">
+              <h6 class="card-title">Pengusul RUU</h6>
+              <nav class="nav nav-icon nav-icon-sm ms-auto">
+                <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
+                <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+              </nav>
+            </div><!-- card-header -->
+            <div class="card-body position-relative d-flex justify-content-center">
+              <div id="chartDonut" class="apex-donut-two"></div>
+              <div class="finance-donut-value "style="margin-bottom: 35px;">
+                <h1>{{ count($ruu) }}</h1>
+                <!-- <p>86.24%</p> -->
+              </div>
+            </div><!-- card-body -->
+          </div><!-- card -->
+        </div><!-- col --> `, `Nama 7`, `4`],     
+        8: [`<div class="col-xl-8">
           <div class="card card-one">
             <div class="card-header">
               <h6 class="card-title">Program Legislasi Nasional 2020-2024</h6>
@@ -721,26 +742,7 @@
             </div><!-- card-body -->
             
           </div><!-- card -->
-        </div><!-- col -->`, 'Bar Chart', `8`],
-        8: [` <div class="col-xl-4">
-          <div class="card card-one">
-            <div class="card-header">
-              <h6 class="card-title">Pengusul RUU</h6>
-              <nav class="nav nav-icon nav-icon-sm ms-auto">
-                <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
-                <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
-              </nav>
-            </div><!-- card-header -->
-            <div class="card-body position-relative d-flex justify-content-center">
-              <div id="chartDonut" class="apex-donut-two"></div>
-              <div class="finance-donut-value "style="margin-bottom: 35px;">
-                <h1>{{ count($ruu) }}</h1>
-                <!-- <p>86.24%</p> -->
-              </div>
-            </div><!-- card-body -->
-          </div><!-- card -->
-        </div><!-- col --> `, `Nama 8`, `4`],
-
+        </div><!-- col -->`, 'Bar Chart', `8`]
     };
 
     // Declare variables outside the loop

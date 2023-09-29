@@ -19,6 +19,7 @@
     <!-- Vendor CSS -->
     <link rel="stylesheet" href="/lib/remixicon/fonts/remixicon.css">
     <link rel="stylesheet" href="/lib/apexcharts/apexcharts.css">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
   {{-- Vendor --}}
     @yield('custom_vendor')

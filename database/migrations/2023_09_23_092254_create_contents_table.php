@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('chart_id');
+            $table->string('judul')->nullable();
+            $table->json('x_value')->nullable();
+            $table->json('y_value')->nullable();
             $table->timestamps();
         });
     }

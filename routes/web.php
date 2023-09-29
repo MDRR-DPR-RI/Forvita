@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\ChartController;
-use App\Http\Controllers\DashboardController;
-use App\Models\RUU;
+use App\Http\Controllers\ContentController;
+use App\Models\Clean;
+use App\Models\Content;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RuuController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +26,19 @@ Route::get('/kelompok1', function () {
     ]);
 });
 Route::resource('/kelompok23', RuuController::class);
-Route::resource('/dashboard/content', DashboardController::class);
+Route::resource('/dashboard/content', ContentController::class);
 Route::resource('/dashboard/chart', ChartController::class);
+Route::post('/fetch-data', function (Request $request) {
 
+    // return response()->json($request->selectedJudul);
+
+    $cleanAll = Clean::where('judul', $request->selectedJudul)->get();
+    $xValue = Content::where('id', $request->contentId)->pluck('x_value');
+    return response()->json([
+        'value' => $cleanAll,
+        'xValue' => $xValue
+    ]);
+});
 Route::get('/kelompok46', function () {
     return view('dashboard.contents.kelompok46', [
         'active' => 'kelompok46',

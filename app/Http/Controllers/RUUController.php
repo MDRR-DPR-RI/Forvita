@@ -19,7 +19,6 @@ class RUUController extends Controller
      */
     public function index()
     {
-
         return view('dashboard.contents.kelompok23', [
             'active' => 'kelompok23',
             'ruu' => Ruu::all(),

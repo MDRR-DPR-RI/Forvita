@@ -37,9 +37,9 @@ class DatabaseSeeder extends Seeder
         // Content::create([
         //     'chart_id' => 2,
         // ]);
-        Content::create([
-            'chart_id' => 7,
-        ]);
+        // Content::create([
+        //     'chart_id' => 7,
+        // ]);
         Content::create([
             'chart_id' => 8,
         ]);
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
         Clean::create([
             'judul' => "Agama",
             'keterangan' => "Islam",
-            'jumlah' => 1000,
+            'jumlah' => 800,
         ]);
         Clean::create([
             'judul' => "Agama",
@@ -84,12 +84,12 @@ class DatabaseSeeder extends Seeder
             'jumlah' => 150,
         ]);
         Clean::create([
-            'judul' => "Jeni Kelamin",
+            'judul' => "Jenis Kelamin",
             'keterangan' => "L",
-            'jumlah' => 1250,
+            'jumlah' => 350,
         ]);
         Clean::create([
-            'judul' => "Jeni Kelamin",
+            'judul' => "Jenis Kelamin",
             'keterangan' => "P",
             'jumlah' => 260,
         ]);
