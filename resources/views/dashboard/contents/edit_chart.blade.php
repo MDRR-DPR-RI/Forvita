@@ -15,9 +15,13 @@
           <div class="card-body">
             <label for="judul">Select Data:</label>
               <select id="selectJudul" class="form-select" name="judul">
+
                 @foreach ($juduls as $judulOption)
-                    <option value="{{ $judulOption }}">{{ $judulOption }}</option>
-                    
+                    @if ($judulOption == $content->judul)
+                      <option value="{{ $judulOption }}" selected>{{ $judulOption }}</option>
+                    @else
+                      <option value="{{ $judulOption }}">{{ $judulOption }}</option>
+                    @endif
                 @endforeach
             </select>
 
@@ -36,6 +40,7 @@
           <form action="/dashboard/content/{{ $content->id }}" method="post">
               @method('put')
               @csrf
+              <input type="hidden" name="" id="">
           <div class="modal fade" id="modal5" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -57,6 +62,7 @@
           </div><!-- modal-body -->
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="hidden" name="selectedJudul" id="selectedJudul">
             <button type="submit" class="btn btn-primary">Save changes</button>
           </div><!-- modal-footer -->
         </div><!-- modal-content -->
@@ -69,7 +75,9 @@
      // Attach a click event listener to the "Update" button
         $('#updateBtn').click(function () {
           var selectedJudul = $('#selectJudul').val();
+          $("#selectedJudul").val(selectedJudul); // fill the input hidden type to store in db
           var contentId = $('#contentId').val();
+
             //Make an AJAX request to fetch data
             $.ajax({
                 url: '/fetch-data',
@@ -82,12 +90,31 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (data) {
+
+                let xValue;
+
+                if (typeof data.xValue === 'object' && data.xValue[0] !== null) { // check data.xValue is !null
+                  xValue = JSON.parse(data.xValue);
+                } else {
+                  xValue = "";
+                }
+
                 var tableHtml = '<table class="table">';
                 tableHtml += '<thead>';
                 tableHtml += '<tr>';
                 tableHtml += '<th scope="col">';
                 tableHtml += '<div class="form-check">';
-                tableHtml += '<input class="form-check-input" type="checkbox" id="selectAllCheckbox">';
+                tableHtml += '<input class="form-check-input" type="checkbox" id="selectAllCheckbox" ';
+
+                // Select all if the xValue is all in db
+                  if (xValue.length == data.value.length) {
+                      tableHtml += 'checked';
+                      console.log("checked all")
+                  }
+                  
+
+                tableHtml += '>';
+
                 tableHtml += '<label class="form-check-label" for="flexCheckDefault">';
                 tableHtml += 'Select All';
                 tableHtml += '</label>';
@@ -98,14 +125,7 @@
                 tableHtml += '</tr>';
                 tableHtml += '</thead>';
                 tableHtml += '<tbody>';
-                // let xValue = data.xValue ? JSON.parse(data.xValue) : null;
-                let xValue;
-
-                if (typeof data.xValue === 'string' && data.xValue.trim() !== '') { // check data.xValue is !null
-                  xValue = JSON.parse(data.xValue);
-                } else {
-                  xValue = null;
-                }
+             
                 // Iterate over the data and build table rows
                 data.value.forEach(function (item) {
                     tableHtml += '<tr class="table-row" data-judul="' + item.judul + '">';
@@ -114,9 +134,9 @@
                     tableHtml += 'value="' + item.keterangan + '" id="item' + item.index + '" name="xValue[]" ';
                     
                     // Check the box if the value is in db
-                    if ("xValue".includes(item.keterangan)) {
+                    if (xValue.includes(item.keterangan)) {
                         tableHtml += 'checked';
-                        console.log("checked")
+                        console.log("checked " + item.keterangan)
                     }
                     
                     tableHtml += '>';

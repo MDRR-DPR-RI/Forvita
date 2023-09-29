@@ -75,7 +75,7 @@ class ContentController extends Controller
                 array_push($count, $clean->jumlah);
             }
             $content->update([
-                'data' => $request->judul,
+                'judul' => $request->selectedJudul,
                 'x_value' => json_encode($selectedXValues),
                 'y_value' => $count
             ]);
