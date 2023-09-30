@@ -252,6 +252,10 @@ var optionFour = {
     type: 'column',
     data: []
   },
+  // {
+  //   type: 'column',
+  //   data: [[0,9],[1,7],[2,4],[3,8],[4,4],[5,12],[6,4],[7,6],[8,5],[9,10],[10,4],[11,5],[12,10],[13,2],[14,6],[15,16],[16,5],[17,17],[18,14],[19,6],[20,5],[21,2],[22,12],[23,4],[24,7]]
+  // }
   ],
   chart: {
     height: 120,
@@ -679,6 +683,45 @@ var optionDonut = {
 var chartDonut = new ApexCharts(document.querySelector('#chartDonut'), optionDonut);
 chartDonut.render();
 
+var optionLine = {
+  series: [
+    {
+    name: 'Desktops',
+    data: []
+  },
+  //  {
+  //   name: 'Desktops',
+  //   data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+  // }
+  ],
+  chart: {
+    height: 350,
+    type: 'line',
+    zoom: {
+      enabled: false
+    }
+  },
+  dataLabels: {
+    enabled: false
+  },
+  stroke: {
+    curve: 'straight',
+    width: 2
+  },
+  title: {
+    text: 'Product Trends by Month',
+    align: 'left'
+  },
+  grid: {
+    row: {
+      colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+      opacity: 1
+    },
+  },
+  xaxis: {
+    categories: []
+  }
+};
 // Dark skin integration
 function switchDark(enabled) {
   if(enabled) {
@@ -704,10 +747,9 @@ $('#skinMode .nav-link').bind('click', function(e){
 for (var i = 0; i < contents.length; i++) {
   let maxValue;
   if (contents[i].chart_id === 4) {
-    // Assign the value to optionEigt
+    // Assign the value to optionFour
     let yAxis = JSON.parse(contents[i].y_value)
 
-    // transform yAxis form ['800', '200'] --> [[1, 800], [2, 200]]
     let yContainer = []
     if (yAxis) {
       for(let x = 0; x<yAxis.length; x++){
@@ -721,7 +763,7 @@ for (var i = 0; i < contents.length; i++) {
         maxValue = secondValue; // Update the maximum value if a higher one is found
       }
     }
-    // asign the value to the chart config
+    // asign the value to the chart configuration
     optionFour.series[0].data = yContainer;
     optionFour.yaxis.max = maxValue+100 ;
 
@@ -729,8 +771,8 @@ for (var i = 0; i < contents.length; i++) {
     chartFour.render();
     
     console.log('render content ' + contents[i].id);
-  }
-  if (contents[i].chart_id === 8) { 
+  } 
+  else if (contents[i].chart_id === 8) { 
     
     // Assign the value to optionEigt
     let xAxis = JSON.parse(contents[i].x_value)
@@ -750,7 +792,7 @@ for (var i = 0; i < contents.length; i++) {
         maxValue = secondValue; // Update the maximum value if a higher one is found
       }
     }
-    // asign the value to the chart config
+    // asign the value to the chart configuration
     optionEight.xaxis.categories = xAxis;
     optionEight.yaxis.max = maxValue;
     optionEight.series[0].data = yContainer;
@@ -758,6 +800,20 @@ for (var i = 0; i < contents.length; i++) {
     var chartEight = new ApexCharts(document.querySelector('#content' + contents[i].id), optionEight);
     chartEight.render();
     console.log('render content ' + contents[i].id);
-    // break; // Exit the loop once a match is found
+  } 
+  else if  (contents[i].chart_id === 9) {
+    // Assign the value to optionEigt
+    let xAxis = JSON.parse(contents[i].x_value)
+    let yAxis = JSON.parse(contents[i].y_value)
+    console.log(xAxis);
+    console.log(yAxis);
+    // asign the value to the chart configuration
+    optionLine.xaxis.categories = xAxis;
+    optionLine.series[0].data = yAxis;
+
+    var chartLine = new ApexCharts(document.querySelector('#content' + contents[i].id), optionLine);
+    chartLine.render();
+
+    console.log('render content ' + contents[i].id);
   }
 }

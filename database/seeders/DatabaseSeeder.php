@@ -79,10 +79,13 @@ class DatabaseSeeder extends Seeder
             'grid' => 4
         ]);
         Chart::create([
-            'name' => "Nama 8",
+            'name' => "Bar Chart",
             'grid' => 8
         ]);
-
+        Chart::create([
+            'name' => "Line Chart",
+            'grid' => 8
+        ]);
         Clean::create([
             'judul' => "Agama",
             'keterangan' => "Islam",
@@ -107,6 +110,16 @@ class DatabaseSeeder extends Seeder
             'judul' => "Jenis Kelamin",
             'keterangan' => "P",
             'jumlah' => 260,
+        ]);
+        Clean::create([
+            'judul' => "Tubuh",
+            'keterangan' => "Hidung",
+            'jumlah' => 1,
+        ]);
+        Clean::create([
+            'judul' => "Tubuh",
+            'keterangan' => "Tangan",
+            'jumlah' => 2,
         ]);
     }
 }

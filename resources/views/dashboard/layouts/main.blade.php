@@ -19,6 +19,7 @@
     <!-- Vendor CSS -->
     <link rel="stylesheet" href="/lib/remixicon/fonts/remixicon.css">
     <link rel="stylesheet" href="/lib/apexcharts/apexcharts.css">
+    <link rel="stylesheet" href="/lib/prismjs/themes/prism.min.css">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
   {{-- Vendor --}}
@@ -44,7 +45,7 @@
       
     <div class="main main-app p-3 p-lg-4">
         @yield('page_content')
-      <div class="row g-3" id="content">
+      <div class="row g-3" id="main">
         {{-- CHART CONTENT WILL GOES HERE --}}
       </div><!-- row -->
       <div class="main-footer mt-5">
@@ -52,8 +53,8 @@
       </div><!-- main-footer -->
     </div><!-- main -->
 
-                
 @if (isset($contents))                      
+
       {{-- Modal Customize Dashboard for all--}}
        <div class="modal fade" id="modal3" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-fullscreen">
@@ -85,7 +86,7 @@
                               @csrf
                             <input type="hidden" value="{{ $chart->id }}" name="chartId">
                             <input type="hidden" name="dashboard" value="{{ $dashboard }}" >
-                            @if ($chart->id === 8 || $chart->id === 4)
+                            @if ($chart->id === 8 || $chart->id === 4 || $chart->id === 9)
                               <td><button type="submit" class="btn btn-primary">Add</button></td>
                             @else
                               <td><button type="submit" class="btn btn-warning">Belum bisa dynamic data</button></td>
@@ -132,14 +133,16 @@
           </div><!-- modal-body -->
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
           </div><!-- modal-footer -->
         </div><!-- modal-content -->
       </div><!-- modal-content -->
     </div>
 
+{{-- include all assets --}}
+<script src="/js/assets/htmlStructures.js"></script>
 
-<script src="/js/assets/charts.js"></script>
+{{-- script to print content in the dashboard --}}
   <script>
     // Declare variables outside the loop
     let contentId, htmlContent, containerContent, uniqe;
@@ -152,7 +155,7 @@
       
       htmlContent = htmlContent.replace('id="content"', `id="${unique}"`);
       // Create a containerContent element and set its innerHTML
-      containerContent = document.getElementById('content');
+      containerContent = document.getElementById('main');
       containerContent.innerHTML += htmlContent;
     @endforeach
 </script>
@@ -169,6 +172,9 @@
 
   <script src="/js/db.data.js"></script>
   <script src="/js/db.finance.js"></script>
+
+  <script src="/js/apexchart.js"></script>
+
 @yield('custom_script')
 
 </body>
