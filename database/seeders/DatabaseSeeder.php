@@ -52,27 +52,35 @@ class DatabaseSeeder extends Seeder
         ]);
         Chart::create([
             'name' => "Nama 1",
+            'grid' => 9
         ]);
         Chart::create([
             'name' => "Nama 2",
+            'grid' => 3
         ]);
         Chart::create([
             'name' => "Nama 3",
+            'grid' => 6
         ]);
         Chart::create([
             'name' => "Nama 4",
+            'grid' => 6
         ]);
         Chart::create([
             'name' => "Nama 5",
+            'grid' => 12
         ]);
         Chart::create([
             'name' => "Nama 6",
+            'grid' => 8
         ]);
         Chart::create([
             'name' => "Nama 7",
+            'grid' => 4
         ]);
         Chart::create([
             'name' => "Nama 8",
+            'grid' => 8
         ]);
 
         Clean::create([

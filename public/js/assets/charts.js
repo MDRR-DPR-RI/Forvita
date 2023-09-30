@@ -1,5 +1,5 @@
  // Chart ASSET goes here
-    const htmlStructures = {
+    let htmlStructures = {
         1: [`<div class="col-xl-9">
           <div class="card card-one">
             <div class="card-body overflow-hidden px-0 pb-3">
@@ -109,7 +109,20 @@
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->` , `Nama 3`, `6`],
-        4: [`<div class="col-xl-12">
+        4:[`<div class="col-xl-6">
+          <div class="card card-one">
+            <div class="card-body">
+              <div id="content" class="mb-1"></div>
+              <h3 class="card-value">0.9:8</h3>
+              <div class="progress ht-5 mb-2">
+                <div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <label class="fw-semibold text-dark mb-1">Quick Ratio Goal: 1.0 or higher</label>
+              <p class="fs-sm text-secondary mb-0">Measures your Accounts Receivable / Current Liabilities</p>
+            </div><!-- card-body -->
+          </div><!-- card -->
+        </div><!-- col -->`, `Nama 4`, `6`], 
+        5:    [`<div class="col-xl-12">
           <div class="card card-one">
             <div class="card-body p-3 p-xl-4">
               <div class="row justify-content-center g-3 mb-2 mb-xl-4">
@@ -195,20 +208,7 @@
               </div><!-- row -->
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`, `Nama 4`, `12`],
-        5: [`<div class="col-xl-6">
-          <div class="card card-one">
-            <div class="card-body">
-              <div id="apexChart4" class="mb-1"></div>
-              <h3 class="card-value">0.9:8</h3>
-              <div class="progress ht-5 mb-2">
-                <div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <label class="fw-semibold text-dark mb-1">Quick Ratio Goal: 1.0 or higher</label>
-              <p class="fs-sm text-secondary mb-0">Measures your Accounts Receivable / Current Liabilities</p>
-            </div><!-- card-body -->
-          </div><!-- card -->
-        </div><!-- col -->`, `Nama 5`, `6`],
+        </div><!-- col -->`, `Nama 5`, `12`],
         6: [`<div class="col-xl-6">
           <div class="card card-one">
             <div class="card-body">
@@ -252,7 +252,7 @@
             <div class="card-body p-4">
               <div class="row g-4">
                 <div class="col-md-6">
-                  <div id="apexChart8" class="apex-chart-three"></div>
+                  <div id="content" class="apex-chart-three"></div>
                 </div><!-- col -->
                  <div class="col-md-6">
                  <div class="text-center fw-semibold text-dark">Latest RUU</div>

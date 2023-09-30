@@ -79,13 +79,13 @@
                     @foreach ($charts as $chart)
                         <tr>
                           <th scope="row">{{ $loop->iteration }}</th>
-                          <td id="itemName_{{ $loop->iteration }}"></td>
-                          <td id="grid_{{ $loop->iteration }}"></td>
+                          <td ">{{ $chart->name }}</td>
+                          <td >{{ $chart->grid }}</td>
                           <form action="/dashboard/content" method="post">
                               @csrf
                             <input type="hidden" value="{{ $chart->id }}" name="chartId">
                             <input type="hidden" name="dashboard" value="{{ $dashboard }}" >
-                            @if ($chart->id === 8)
+                            @if ($chart->id === 8 || $chart->id === 4)
                               <td><button type="submit" class="btn btn-primary">Add</button></td>
                             @else
                               <td><button type="submit" class="btn btn-warning">Belum bisa dynamic data</button></td>
@@ -112,7 +112,7 @@
                         <tr>
                           <th scope="row">{{ $loop->iteration }}</th>
                           <td>{{ $content->chart->id }}</td>
-                          <td>8</td>
+                          <td>{{ $content->chart->grid }}</td>
                           <td style="display: flex; justify-content: center;  align-items: center;">
                             <form action="/dashboard/content/{{ $content->id }}" method="post">
                               <a href="/dashboard/content/{{ $content->id }}?dashboard={{ $dashboard }}" class="btn btn-primary">Edit </a>
@@ -142,29 +142,18 @@
 <script src="/js/assets/charts.js"></script>
   <script>
     // Declare variables outside the loop
-    let contentId, htmlContent, containerContent, containerContentName, itemName, containerGrid, grid;
-
-    // Chart Assets to show in modal
-    @foreach ($charts as $chart)
-      itemName = htmlStructures[{{ $loop->iteration }}][1]
-      containerContentName = document.getElementById('itemName_{{ $loop->iteration }}');
-      containerContentName.innerHTML += itemName;
-
-      grid = htmlStructures[{{ $loop->iteration }}][2]
-      containerGrid = document.getElementById('grid_{{ $loop->iteration }}');
-      containerGrid.innerHTML += grid;
-    @endforeach
-
+    let contentId, htmlContent, containerContent, uniqe;
     // Content to show in modal
     @foreach ($contents as $content)
       // Access the HTML structure based on the PHP value
+      unique = 'content' + {{ $content->id }}
       contentId = {{ $content->chart->id }};
       htmlContent = htmlStructures[contentId][0];
       
+      htmlContent = htmlContent.replace('id="content"', `id="${unique}"`);
       // Create a containerContent element and set its innerHTML
       containerContent = document.getElementById('content');
       containerContent.innerHTML += htmlContent;
-
     @endforeach
 </script>
 @endif

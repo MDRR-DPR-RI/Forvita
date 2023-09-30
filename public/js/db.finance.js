@@ -4,10 +4,12 @@ var optionOne = {
   series: [{
     name: 'series1',
     data: dp3
-  },{
+  },
+  {
     name: 'series2',
     data: dp3
-  }],
+  }
+  ],
   chart: {
     height: 430,
     parentHeightOffset: 0,
@@ -245,13 +247,12 @@ chartThree.render();
 //-------------------------------------------------
 
 var optionFour = {
-  series: [{
+  series: [
+  {
     type: 'column',
-    data: [[0,0],[1,0],[2,5],[3,6],[4,8],[5,10],[6,15],[7,18],[8,13],[9,11],[10,13],[11,15],[12,13],[13,7],[14,5],[15,8],[16,11],[17,7],[18,5],[19,5],[20,6],[21,6],[22,5],[23,5],[24,6]]
-  }, {
-    type: 'column',
-    data: [[0,9],[1,7],[2,4],[3,8],[4,4],[5,12],[6,4],[7,6],[8,5],[9,10],[10,4],[11,5],[12,10],[13,2],[14,6],[15,16],[16,5],[17,17],[18,14],[19,6],[20,5],[21,2],[22,12],[23,4],[24,7]]
-  }],
+    data: []
+  },
+  ],
   chart: {
     height: 120,
     stacked: true,
@@ -292,15 +293,15 @@ var optionFour = {
   },
   yaxis: {
     min: 0,
-    max: 30
+    max: 0,
   },
   tooltip: {
-    enabled: false
+    enabled: true
   }
 };
 
-var chartFour = new ApexCharts(document.querySelector('#apexChart4'), optionFour);
-chartFour.render();
+// var chartFour = new ApexCharts(document.querySelector('#apexChart4'), optionFour);
+// chartFour.render();
 
 //------------------------------------------------
 
@@ -621,7 +622,7 @@ var optionEight = {
   },
   yaxis: {
     min: 0,
-    max: 1000, // change this to the highest jumlah dynamicly
+    max: 1000, // change this to the highest jumlah dynamicly (done)
     tickAmount: 5
   },
   xaxis: {
@@ -641,32 +642,6 @@ var optionEight = {
     show: true
   }
 };
-// Loop through the contents array to find the matching chart_id
-for (var i = 0; i < contents.length; i++) {
-  if (contents[i].chart_id === 8) { 
-    
-    // Assign the value to optionEigt
-    let xAxis = JSON.parse(contents[i].x_value)
-    let yAxis = JSON.parse(contents[i].y_value)
-
-    // transform yAxis form ['800', '200'] --> [[1, 800], [2, 200]]
-    let yContainer = []
-    if (yAxis) {
-      for(let x = 0; x<yAxis.length; x++){
-        yContainer.push([x+1, yAxis[x]])
-      }
-    }
-    // asign the value to the chart config
-    optionEight.xaxis.categories = xAxis;
-    optionEight.series[0].data = yContainer;
-
-    break; // Exit the loop once a match is found
-  }
-}
-
-var chartEight = new ApexCharts(document.querySelector('#apexChart8'), optionEight);
-chartEight.render();
-
 //------------------------------------------------
 var optionDonut = {
   series: [2, 5, 7],
@@ -724,3 +699,65 @@ $('#skinMode .nav-link').bind('click', function(e){
     switchDark(false);
   }
 });
+
+// Loop through the contents array to find the matching chart_id
+for (var i = 0; i < contents.length; i++) {
+  let maxValue;
+  if (contents[i].chart_id === 4) {
+    // Assign the value to optionEigt
+    let yAxis = JSON.parse(contents[i].y_value)
+
+    // transform yAxis form ['800', '200'] --> [[1, 800], [2, 200]]
+    let yContainer = []
+    if (yAxis) {
+      for(let x = 0; x<yAxis.length; x++){
+        yContainer.push([x+1, yAxis[x]])
+      }
+    }
+    // Iterate through the array
+    for (let i = 0; i < yContainer.length; i++) {
+      let secondValue = yContainer[i][1]; // Get the second value in each sub-array
+      if (secondValue > maxValue) {
+        maxValue = secondValue; // Update the maximum value if a higher one is found
+      }
+    }
+    // asign the value to the chart config
+    optionFour.series[0].data = yContainer;
+    optionFour.yaxis.max = maxValue+100 ;
+
+    var chartFour = new ApexCharts(document.querySelector('#content' + contents[i].id), optionFour);
+    chartFour.render();
+    
+    console.log('render content ' + contents[i].id);
+  }
+  if (contents[i].chart_id === 8) { 
+    
+    // Assign the value to optionEigt
+    let xAxis = JSON.parse(contents[i].x_value)
+    let yAxis = JSON.parse(contents[i].y_value)
+
+    // transform yAxis form ['800', '200'] --> [[1, 800], [2, 200]]
+    let yContainer = []
+    if (yAxis) {
+      for(let x = 0; x<yAxis.length; x++){
+        yContainer.push([x+1, yAxis[x]])
+      }
+    }
+    // Iterate through the array
+    for (let i = 0; i < yContainer.length; i++) {
+      let secondValue = yContainer[i][1]; // Get the second value in each sub-array
+      if (secondValue > maxValue) {
+        maxValue = secondValue; // Update the maximum value if a higher one is found
+      }
+    }
+    // asign the value to the chart config
+    optionEight.xaxis.categories = xAxis;
+    optionEight.yaxis.max = maxValue;
+    optionEight.series[0].data = yContainer;
+
+    var chartEight = new ApexCharts(document.querySelector('#content' + contents[i].id), optionEight);
+    chartEight.render();
+    console.log('render content ' + contents[i].id);
+    // break; // Exit the loop once a match is found
+  }
+}
