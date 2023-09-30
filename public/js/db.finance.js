@@ -648,13 +648,14 @@ for (var i = 0; i < contents.length; i++) {
     // Assign the value to optionEigt
     let xAxis = JSON.parse(contents[i].x_value)
     let yAxis = JSON.parse(contents[i].y_value)
-    
+
     // transform yAxis form ['800', '200'] --> [[1, 800], [2, 200]]
     let yContainer = []
-    for(let x = 0; x<yAxis.length; x++){
-      yContainer.push([x+1, yAxis[x]])
+    if (yAxis) {
+      for(let x = 0; x<yAxis.length; x++){
+        yContainer.push([x+1, yAxis[x]])
+      }
     }
-
     // asign the value to the chart config
     optionEight.xaxis.categories = xAxis;
     optionEight.series[0].data = yContainer;
@@ -662,143 +663,13 @@ for (var i = 0; i < contents.length; i++) {
     break; // Exit the loop once a match is found
   }
 }
-// console.log(anggotaData)
-// // Extract unique fraksi values
-// const uniqueFraksiValues = [...new Set(anggotaData.map(item => item.fraksi))];
-
-// // Create the categories array using unique fraksi values
-// const categories = uniqueFraksiValues.map(fraksi => [fraksi]);
-
-// // Now, categories will contain unique fraksi values
-// console.log(categories);
-
-//   var updateChartButton = document.getElementById('updateChart');
-//   updateChartButton.addEventListener('click', function () {
-//     var xValue = xSelect.value
-//     // var yValue = ySelect.value
-//      // Fetch data based on the selected value (you need to implement this part)
-//     const newData = fetchDataBasedOnSelection(xValue);
-
-//     // Update the chart with the new data
-//     updateChart(newData);
-//     console.log(xValue)
-//   });
-
-// // Add an event listener to the select element
-
-// // Function to fetch data based on the selected value (you need to implement this part)
-// function fetchDataBasedOnSelection(selectedValue) {
-//     // Implement your data fetching logic here based on the selected value
-//     // For example, fetch data for "dapil" Aceh 1 and return it as an array
-//     if (selectedValue === 'dapil') {
-//         return [[1, 1], [2, 4], [3, 5], /* ... */];
-//     }
-    
-//     // Fetch data for "fraksi" (implement logic for fraksi if needed)
-
-//     // If none of the conditions match, return an empty array or handle appropriately
-//     return [];
-// }
-
-// // Function to update the chart (you need to implement this part)
-// function updateChart(newData) {
-//     // Implement your chart update logic here
-//     // For example, if you're using Highcharts, you can use chart.series[0].setData(newData) to update the data
-// }
-
-// var optionEight3 = {
-//   series: [
-//   //   {
-//   //   type: 'column',
-//   //   data: chartData
-//   // },  
-//   {
-//     type: 'column',
-//     data: [[1,1],[2,4],[3,5],[4,8],[5,10],[6,4],[7,7],[8,11],[9,9],[10,5],[11,5],[12,5]]
-//   }
-//   ],
-//   chart: {
-//     height: '100%',
-//     parentHeightOffset: 0,
-//     stacked: true,
-//     type: 'line',
-//     toolbar: {
-//       show: false
-//     }
-//   },
-//   grid: {
-//     borderColor: 'rgba(72,94,144, 0.07)',
-//     padding: {
-//       top: -20,
-//       left: 5,
-//       bottom: -15
-//     }
-//   },
-//   states: {
-//     hover: {
-//       filter: {
-//         type: 'none'
-//       }
-//     },
-//     active: {
-//       filter: {
-//         type: 'none'
-//       }
-//     }
-//   },
-//   colors: ['#506fd9', '#e5e9f2'],
-//   plotOptions: {
-//     bar: {
-//       columnWidth: '40%',
-//       endingShape: 'rounded'
-//     },
-//   },
-//   stroke: {
-//     curve: 'straight',
-//     lineCap: 'square',
-//     width: 0
-//   },
-//   yaxis: {
-//     min: 0,
-//     max: 5,
-//     tickAmount: 5
-//   },
-//   xaxis: {
-//     categories: categories,
-//     labels: {
-//       style: {
-//         colors: '#6e7985',
-//         fontSize: '10px',
-//         fontWeight: '500'
-//       }
-//     },
-//   },
-//   tooltip: {
-//     enabled: false
-//   },
-//   legend: {
-//     show: false
-//   }
-// };
 
 var chartEight = new ApexCharts(document.querySelector('#apexChart8'), optionEight);
 chartEight.render();
 
 //------------------------------------------------
-console.log(ruuData[1].pengusul)
-var dataRuu = [0, 0, 0];
-for(let i = 0; i<ruuData.length; i++){
-  if(ruuData[i].pengusul == 'Dpr'){
-    dataRuu[0]++
-  }else if(ruuData[i].pengusul == 'Dpd') {
-    dataRuu[1]++
-  }else{
-    dataRuu[2]++
-  }
-}
-console.log(dataRuu)
 var optionDonut = {
-  series: dataRuu,
+  series: [2, 5, 7],
   chart: {
     type: 'donut',
     height: 'auto',

@@ -26,22 +26,29 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Ruu::factory(20)->create();
-        Agenda::factory(20)->create();
         // Content::create([
         //     'chart_id' => 3,
+        //     'dashboard' => "kelompok23
+
         // ]);
         // Content::create([
         //     'chart_id' => 1,
+        //     'dashboard' => "kelompok23
+
         // ]);
         // Content::create([
         //     'chart_id' => 2,
+        //     'dashboard' => "kelompok23
+
         // ]);
         // Content::create([
         //     'chart_id' => 7,
+        //     'dashboard' => "kelompok23
+
         // ]);
         Content::create([
             'chart_id' => 8,
+            'dashboard' => "kelompok23",
         ]);
         Chart::create([
             'name' => "Nama 1",
@@ -93,84 +100,5 @@ class DatabaseSeeder extends Seeder
             'keterangan' => "P",
             'jumlah' => 260,
         ]);
-
-
-
-
-
-
-
-
-
-
-        // Komisi::create([
-        //     'name' => 'Komisi I',
-        // ]);
-        // Komisi::create([
-        //     'name' => 'Komisi II',
-        // ]);
-        // Komisi::create([
-        //     'name' => 'Komisi III',
-        // ]);
-        // Komisi::create([
-        //     'name' => 'Komisi IV',
-        // ]);
-        // Komisi::create([
-        //     'name' => 'Komisi V',
-        // ]);
-        // Komisi::create([
-        //     'name' => 'Komisi VI',
-        // ]);
-        // Komisi::create([
-        //     'name' => 'Komisi VII',
-        // ]);
-        // Komisi::create([
-        //     'name' => 'Komisi VIII',
-        // ]);
-        // Komisi::create([
-        //     'name' => 'Komisi IX',
-        // ]);
-        // Komisi::create([
-        //     'name' => 'Komisi X',
-        // ]);
-        // Komisi::create([
-        //     'name' => 'Komisi XI',
-        // ]);
-        //     Bulan::create([
-        //         'name' => 'Jan',
-        //     ]);
-        //     Bulan::create([
-        //         'name' => 'Feb',
-        //     ]);
-        //     Bulan::create([
-        //         'name' => 'Mar',
-        //     ]);
-        //     Bulan::create([
-        //         'name' => 'Apr',
-        //     ]);
-        //     Bulan::create([
-        //         'name' => 'May',
-        //     ]);
-        //     Bulan::create([
-        //         'name' => 'Jun',
-        //     ]);
-        //     Bulan::create([
-        //         'name' => 'Jul',
-        //     ]);
-        //     Bulan::create([
-        //         'name' => 'Aug',
-        //     ]);
-        //     Bulan::create([
-        //         'name' => 'Sep',
-        //     ]);
-        //     Bulan::create([
-        //         'name' => 'Okt',
-        //     ]);
-        //     Bulan::create([
-        //         'name' => 'Nov',
-        //     ]);
-        //     Bulan::create([
-        //         'name' => 'Des',
-        //     ]);
     }
 }

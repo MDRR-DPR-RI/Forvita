@@ -11,6 +11,7 @@
       <div class="container">
 
 <br><br><br>
+        
         <div class="card card-example">
           <div class="card-body">
             <label for="judul">Select Data:</label>
@@ -31,7 +32,7 @@
           <br>
         <input type="hidden" value="{{ $content->id }}" id="contentId">
               <div class="col d-flex justify-content-end">
-                <button href="#modal5" class="btn btn-primary" data-bs-toggle="modal" id="updateBtn">Update</button>
+                <button href="#modal5" class="btn btn-primary" data-bs-toggle="modal" id="updateBtn">Select</button>
               </div>
             {{-- <button type="submit" class="btn btn-primary">Update Table</button> --}}
             </div>
@@ -63,7 +64,8 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <input type="hidden" name="selectedJudul" id="selectedJudul">
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <input type="hidden" name="dashboard" value="{{ $dashboard }}">
+            <button type="submit" class="btn btn-primary">Apply</button>
           </div><!-- modal-footer -->
         </div><!-- modal-content -->
       </div><!-- modal-content -->

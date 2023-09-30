@@ -28,24 +28,36 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        Content::create([
+        // Create and store the content in the database
+        $content = Content::create([
             'chart_id' => $request->input('chartId'),
+            'dashboard' => $request->input('dashboard'),
         ]);
-        return redirect('/kelompok23');
+
+        // Retrieve the ID of the newly created content
+        $contentId = $content->id;
+
+        return redirect('/dashboard/content/' . $contentId)->with('dashboard', $request->dashboard);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Content $content)
+    public function show(Content $content, Request $request)
     {
         // Query distinct "judul" values from the database
         $juduls = Clean::distinct()->pluck('judul');
+        $dashboard = $request->session()->get('dashboard');
 
+        if (isset($dashboard) || $dashboard != null) { // add new chart, code goes here
+            $dashboard = $request->session()->get('dashboard');
+        } else { // edit chart, code goes here
+            $dashboard = $request->query('dashboard');
+        }
         // Query distinct "keterangan" values from the database
         $keterangans = Clean::distinct()->pluck('keterangan');
         return view('dashboard.contents.edit_chart', [
-            'active' => 'kelompok23',
+            'dashboard' => $dashboard,
             'cleanAll' => Clean::all(),
             'content' => $content,
             'juduls' => $juduls,
@@ -87,15 +99,15 @@ class ContentController extends Controller
             ]);
         }
 
-        return redirect('/kelompok23');
+        return redirect('/' . $request->dashboard);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Content $content)
+    public function destroy(Content $content, Request $request)
     {
         Content::destroy($content->id);
-        return redirect('/kelompok23');
+        return redirect('/' . $request->dashboard);
     }
 }
