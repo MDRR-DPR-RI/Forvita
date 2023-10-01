@@ -235,7 +235,7 @@
               <div id="chartDonut" class="apex-donut-two"></div>
               <div class="finance-donut-value "style="margin-bottom: 35px;">
                   <h1>200</h1>
-                 <p>86.24%</p> -->
+                 <p>86.24%</p>
               </div>
             </div><!-- card-body -->
           </div><!-- card -->
@@ -250,7 +250,24 @@
               </nav>
             </div><!-- card-header -->
             <div class="card-body p-4">
+                  <div class="row g-4">
+                <div class="col-md-6">
                   <div id="content" class="apex-chart-three"></div>
+                </div><!-- col -->
+                <div class="col-md-6">
+                  <div class="d-flex">
+                    <div>
+                      <h6 class="fw-semibold text-dark mb-1">AI Analysis</h6>
+                      <p class="fs-sm text-secondary mb-0" id="aiAnalysis">
+                        <p class="card-text placeholder-glow" id="placeholder">
+                          <span class="placeholder col-12">.............................................................</span>
+                          <span class="placeholder col-18">.............................................................</span>
+                        </p>
+                      </p>
+                    </div>
+                  
+                </div><!-- col -->
+              </div><!-- row -->
             </div><!-- card-body -->
             
           </div><!-- card -->

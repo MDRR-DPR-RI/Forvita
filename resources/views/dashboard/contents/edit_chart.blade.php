@@ -78,7 +78,7 @@
         $('#updateBtn').click(function () {
           var selectedJudul = $('#selectJudul').val();
           $("#selectedJudul").val(selectedJudul); // fill the input hidden type to store in db
-          var contentId = $('#contentId').val();
+          var contentId = $('#contentId').val();  
 
             //Make an AJAX request to fetch data
             $.ajax({
@@ -94,7 +94,6 @@
                 success: function (data) {
 
                 let xValue;
-
                 if (typeof data.xValue === 'object' && data.xValue[0] !== null) { // check data.xValue is !null
                   xValue = JSON.parse(data.xValue);
                 } else {

@@ -139,24 +139,70 @@
       </div><!-- modal-content -->
     </div>
 
-{{-- include all assets --}}
+{{-- include all assets (htmlStructures) --}}
 <script src="/js/assets/htmlStructures.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 {{-- script to print content in the dashboard --}}
   <script>
     // Declare variables outside the loop
-    let contentId, htmlContent, containerContent, uniqe;
-    // Content to show in modal
+    let chartId, htmlContent, containerContent, uniqe;
     @foreach ($contents as $content)
+
       // Access the HTML structure based on the PHP value
       unique = 'content' + {{ $content->id }}
-      contentId = {{ $content->chart->id }};
-      htmlContent = htmlStructures[contentId][0];
-      
+      chartId = {{ $content->chart->id }};
+      y_value = {!! json_encode($content->y_value) !!}.split(',');
+
+      htmlContent = htmlStructures[chartId][0];
       htmlContent = htmlContent.replace('id="content"', `id="${unique}"`);
+
       // Create a containerContent element and set its innerHTML
       containerContent = document.getElementById('main');
       containerContent.innerHTML += htmlContent;
+
+      // add AI analysis wkwk (ala-ala)
+      if(chartId === 8){
+        $(document).ready(function() {
+          let inputString = "What is the total " + y_value.join(" plus ") + ".";
+          inputString = inputString.replace(/"/g, ''); // Remove double quotes
+          console.log(inputString);
+          $.ajax({
+            url: 'https://robomatic-ai.p.rapidapi.com/api',
+            method: 'POST',
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'X-RapidAPI-Key': '346543f61cmshefda0a20bd76340p19f426jsn816f3d62e933',
+                'X-RapidAPI-Host': 'robomatic-ai.p.rapidapi.com'
+            },
+            data: {
+                in: inputString, // request input hanya bisa simple math, belum bisa aneh2. like --> Please perform data analysis on the following dataset: I have three categories - 'Islam,' 'Kristen,' and 'Buddha,' each with respective totals of '800,' '200,' and '150.' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph.
+                op: 'in',
+                cbot: '1',
+                SessionID: 'RapidAPI1',
+                cbid: '1',
+                key: 'RHMN5hnQ4wTYZBGCF3dfxzypt68rVP',
+                ChatSource: 'RapidAPI',
+                duration: '1'
+            },
+            success: function (response) {
+              // Assuming the API response is in response.out
+              const result = response.out;
+              console.log("analysis result : " + result)
+              // Set the result in the HTML element
+              $('#aiAnalysis').text(result);
+              
+              // Empty the placeholder content
+              $('#placeholder').empty();
+            },
+            error: function (error) {
+                console.error(error);
+                // Handle any errors here
+            }
+        });
+      })
+    }
     @endforeach
 </script>
 @endif
@@ -172,9 +218,7 @@
 
   <script src="/js/db.data.js"></script>
   <script src="/js/db.finance.js"></script>
-
-  <script src="/js/apexchart.js"></script>
-
+  
 @yield('custom_script')
 
 </body>

@@ -49,6 +49,9 @@ class DatabaseSeeder extends Seeder
         Content::create([
             'chart_id' => 8,
             'dashboard' => "kelompok23",
+            'judul' => 'Agama',
+            'x_value' => '["Islam","Kristen","Budha"]',
+            'y_value' => '["800","200","150"]'
         ]);
         Chart::create([
             'name' => "Nama 1",
