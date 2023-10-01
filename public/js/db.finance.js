@@ -805,8 +805,7 @@ for (var i = 0; i < contents.length; i++) {
     // Assign the value to optionEigt
     let xAxis = JSON.parse(contents[i].x_value)
     let yAxis = JSON.parse(contents[i].y_value)
-    console.log(xAxis);
-    console.log(yAxis);
+
     // asign the value to the chart configuration
     optionLine.xaxis.categories = xAxis;
     optionLine.series[0].data = yAxis;

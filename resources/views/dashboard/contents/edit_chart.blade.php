@@ -108,7 +108,7 @@
                 tableHtml += '<input class="form-check-input" type="checkbox" id="selectAllCheckbox" ';
 
                 // Select all if the xValue is all in db
-                  if (xValue.length == data.value.length) {
+                  if (xValue.length == data.value.length && $(".checkbox-item:checked").length === $(".checkbox-item").length) {
                       tableHtml += 'checked';
                       console.log("checked all")
                   }

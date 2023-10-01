@@ -176,12 +176,13 @@
       containerContent = document.getElementById('main');
       containerContent.innerHTML += htmlContent;
       // add AI analysis wkwk (ala-ala)
-      if(chartId === 8){ // ai analyst is only in chartId = 8 
-        if (y_value) { // if not null do ajax call api
+      if(chartId === 8 && y_value){ // ai analyst is only in chartId = 8 and y_value is not null do ajax call api 
+        console.log(chartId);
+        let inputString = "What is the total " + y_value.join(" plus ") + ".";
+        inputString = inputString.replace(/"/g, ''); // Remove double quotes
+        console.log(inputString);
+        if (y_value) { 
           $(document).ready(function() {
-            let inputString = "What is the total " + y_value.join(" plus ") + ".";
-            inputString = inputString.replace(/"/g, ''); // Remove double quotes
-            console.log(inputString);
             $.ajax({
               url: 'https://robomatic-ai.p.rapidapi.com/api',
               method: 'POST',
