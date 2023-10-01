@@ -158,6 +158,14 @@
                       $(".checkbox-item").prop('checked', $(this).prop('checked'));
                       console.log("all")
                   });
+                    // Listen for changes on item checkboxes
+                  $(".checkbox-item").on('change', function () {
+                      // Check if all item checkboxes are checked
+                      var allChecked = $(".checkbox-item:checked").length === $(".checkbox-item").length;
+
+                      // Update the "Select All" checkbox accordingly
+                      $("#selectAllCheckbox").prop('checked', allChecked);
+                  });
                 },
                 error: function (error) {
                     console.error(error);

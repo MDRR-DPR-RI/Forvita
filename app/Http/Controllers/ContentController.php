@@ -37,6 +37,7 @@ class ContentController extends Controller
         // Retrieve the ID of the newly created content
         $contentId = $content->id;
 
+        // Go to edit page after cretaed new chart
         return redirect('/dashboard/content/' . $contentId)->with('dashboard', $request->dashboard);
     }
 
@@ -99,7 +100,7 @@ class ContentController extends Controller
             ]);
         }
 
-        return redirect('/' . $request->dashboard);
+        return redirect('/' . $request->dashboard)->with('success', 'Successfully');
     }
 
     /**
@@ -108,6 +109,6 @@ class ContentController extends Controller
     public function destroy(Content $content, Request $request)
     {
         Content::destroy($content->id);
-        return redirect('/' . $request->dashboard);
+        return redirect('/' . $request->dashboard)->with('deleted', "Chart has been deleted!");
     }
 }

@@ -45,6 +45,17 @@
       
     <div class="main main-app p-3 p-lg-4">
         @yield('page_content')
+        @if (session()->has('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> {{ session('success') }}.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @elseif (session()->has('deleted'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Deleted!</strong> {{ session('deleted') }}.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @endif
       <div class="row g-3" id="main">
         {{-- CHART CONTENT WILL GOES HERE --}}
       </div><!-- row -->
@@ -151,57 +162,65 @@
     @foreach ($contents as $content)
 
       // Access the HTML structure based on the PHP value
-      unique = 'content' + {{ $content->id }}
+      unique = 'content' + {{ $content->id }} // set unique value for each content
       chartId = {{ $content->chart->id }};
-      y_value = {!! json_encode($content->y_value) !!}.split(',');
+      y_value = {!! json_encode($content->y_value) !!}
+      if (y_value) {
+        y_value = y_value.split(','); // this for AI analyst 
+      }
 
       htmlContent = htmlStructures[chartId][0];
-      htmlContent = htmlContent.replace('id="content"', `id="${unique}"`);
+      htmlContent = htmlContent.replace('id="content"', `id="${unique}"`); // set the unique id for each content
 
       // Create a containerContent element and set its innerHTML
       containerContent = document.getElementById('main');
       containerContent.innerHTML += htmlContent;
-
       // add AI analysis wkwk (ala-ala)
-      if(chartId === 8){
-        $(document).ready(function() {
-          let inputString = "What is the total " + y_value.join(" plus ") + ".";
-          inputString = inputString.replace(/"/g, ''); // Remove double quotes
-          console.log(inputString);
-          $.ajax({
-            url: 'https://robomatic-ai.p.rapidapi.com/api',
-            method: 'POST',
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded',
-                'X-RapidAPI-Key': '346543f61cmshefda0a20bd76340p19f426jsn816f3d62e933',
-                'X-RapidAPI-Host': 'robomatic-ai.p.rapidapi.com'
-            },
-            data: {
-                in: inputString, // request input hanya bisa simple math, belum bisa aneh2. like --> Please perform data analysis on the following dataset: I have three categories - 'Islam,' 'Kristen,' and 'Buddha,' each with respective totals of '800,' '200,' and '150.' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph.
-                op: 'in',
-                cbot: '1',
-                SessionID: 'RapidAPI1',
-                cbid: '1',
-                key: 'RHMN5hnQ4wTYZBGCF3dfxzypt68rVP',
-                ChatSource: 'RapidAPI',
-                duration: '1'
-            },
-            success: function (response) {
-              // Assuming the API response is in response.out
-              const result = response.out;
-              console.log("analysis result : " + result)
-              // Set the result in the HTML element
-              $('#aiAnalysis').text(result);
-              
-              // Empty the placeholder content
-              $('#placeholder').empty();
-            },
-            error: function (error) {
-                console.error(error);
-                // Handle any errors here
-            }
-        });
-      })
+      if(chartId === 8){ // ai analyst is only in chartId = 8 
+        if (y_value) { // if not null do ajax call api
+          $(document).ready(function() {
+            let inputString = "What is the total " + y_value.join(" plus ") + ".";
+            inputString = inputString.replace(/"/g, ''); // Remove double quotes
+            console.log(inputString);
+            $.ajax({
+              url: 'https://robomatic-ai.p.rapidapi.com/api',
+              method: 'POST',
+              headers: {
+                  'content-type': 'application/x-www-form-urlencoded',
+                  'X-RapidAPI-Key': '346543f61cmshefda0a20bd76340p19f426jsn816f3d62e933',
+                  'X-RapidAPI-Host': 'robomatic-ai.p.rapidapi.com'
+              },
+              data: {
+                  in: inputString, // request input hanya bisa simple math, belum bisa aneh2. like --> Please perform data analysis on the following dataset: I have three categories - 'Islam,' 'Kristen,' and 'Buddha,' each with respective totals of '800,' '200,' and '150.' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph.
+                  op: 'in',
+                  cbot: '1',
+                  SessionID: 'RapidAPI1',
+                  cbid: '1',
+                  key: 'RHMN5hnQ4wTYZBGCF3dfxzypt68rVP',
+                  ChatSource: 'RapidAPI',
+                  duration: '1'
+              },
+              success: function (response) {
+                const result = response.out;
+                console.log("analysis result : " + result)
+
+                // Set the result in the HTML element
+                $('#aiAnalysis').text(result);
+                
+                // Empty the placeholder content
+                $('#placeholder').empty();
+              },
+              error: function (error) {
+                  console.error(error);
+              }
+          });
+        })
+      } else {
+        $('#aiAnalysis').text("No data");
+
+         // Empty the placeholder content
+        $('#placeholder').empty();
+      } 
     }
     @endforeach
 </script>
