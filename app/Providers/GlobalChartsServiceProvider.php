@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\Chart;
-use App\Models\Content;
+use Illuminate\Support\Facades\Schema;
 
 class GlobalChartsServiceProvider extends ServiceProvider
 {
@@ -21,6 +21,9 @@ class GlobalChartsServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        view()->share('charts', Chart::all());
+        if (Schema::hasTable('charts')) {
+            $chartData = Chart::all();
+            view()->share('charts', $chartData);
+        }
     }
 }
