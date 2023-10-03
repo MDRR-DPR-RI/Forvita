@@ -646,42 +646,29 @@ var optionEight = {
     show: true
   }
 };
-//------------------------------------------------
-var optionDonut = {
-  series: [2, 5, 7],
-  chart: {
-    type: 'donut',
-    height: 'auto',
-    parentHeightOffset: 0
-  },
-  labels: ['Dpr', 'Dpd', 'Pemerintah',],
-  colors: ['#506fd9', '#85b6ff', '#51596d', '#eff1f5'],
-  dataLabels: {
-    enabled: true
-  },
-  grid: {
-    padding: {
-      top: 0,
-      bottom: 0
-    }
-  },
-   legend: {
-      show: true,
-      showForSingleSeries: false,
-      showForNullSeries: true,
-      showForZeroSeries: true,
-      position: 'bottom',
-      horizontalAlign: 'center', 
-      floating: false,
-      fontSize: '14px',
-      fontFamily: 'Helvetica, Arial',
-      fontWeight: 400,
-    
-  },
-};
 
-var chartDonut = new ApexCharts(document.querySelector('#chartDonut'), optionDonut);
-chartDonut.render();
+// Dark skin integration
+function switchDark(enabled) {
+  if(enabled) {
+    $('.btn-white').addClass('btn-outline-primary').removeClass('btn-white');
+  } else {
+    $('.btn-outline-primary').addClass('btn-white').removeClass('btn-outline-primary');
+  }
+}
+
+if(skinMode) { switchDark(true); }
+
+// Switch between light and dark
+$('#skinMode .nav-link').bind('click', function(e){
+  var mode = $(this).text().toLowerCase();
+  if(mode == 'dark') {
+    switchDark(true);
+  } else {
+    switchDark(false);
+  }
+});
+
+//------------------------------------------------
 
 var optionLine = {
   series: [
@@ -722,26 +709,42 @@ var optionLine = {
     categories: []
   }
 };
-// Dark skin integration
-function switchDark(enabled) {
-  if(enabled) {
-    $('.btn-white').addClass('btn-outline-primary').removeClass('btn-white');
-  } else {
-    $('.btn-outline-primary').addClass('btn-white').removeClass('btn-outline-primary');
-  }
-}
+//------------------------------------------------
+var optionDonut = {
+  series: [],
+  chart: {
+    type: 'donut',
+    height: 'auto',
+    parentHeightOffset: 0
+  },
+  labels: [],
+  colors: ['#506fd9', '#85b6ff', '#51596d', '#eff1f5'],
+  dataLabels: {
+    enabled: true
+  },
+  grid: {
+    padding: {
+      top: 0,
+      bottom: 0
+    }
+  },
+   legend: {
+      show: true,
+      showForSingleSeries: false,
+      showForNullSeries: true,
+      showForZeroSeries: true,
+      position: 'bottom',
+      horizontalAlign: 'center', 
+      floating: false,
+      fontSize: '14px',
+      fontFamily: 'Helvetica, Arial',
+      fontWeight: 400,
+    
+  },
+};
 
-if(skinMode) { switchDark(true); }
-
-// Switch between light and dark
-$('#skinMode .nav-link').bind('click', function(e){
-  var mode = $(this).text().toLowerCase();
-  if(mode == 'dark') {
-    switchDark(true);
-  } else {
-    switchDark(false);
-  }
-});
+// var chartDonut = new ApexCharts(document.querySelector('#chartDonut'), optionDonut);
+// chartDonut.render();
 
 // Loop through the contents array to find the matching chart_id
 for (var i = 0; i < contents.length; i++) {
@@ -806,6 +809,7 @@ for (var i = 0; i < contents.length; i++) {
     let xAxis = JSON.parse(contents[i].x_value)
     let yAxis = JSON.parse(contents[i].y_value)
 
+    console.log(yAxis);
     // asign the value to the chart configuration
     optionLine.xaxis.categories = xAxis;
     optionLine.series[0].data = yAxis;
@@ -814,5 +818,21 @@ for (var i = 0; i < contents.length; i++) {
     chartLine.render();
 
     console.log('render content ' + contents[i].id);
-  }
+  } 
+  else if  (contents[i].chart_id === 10) {
+    // Assign the value to optionEigt
+    let xAxis = JSON.parse(contents[i].x_value)
+    let yAxis = JSON.parse(contents[i].y_value)
+
+    console.log(yAxis);
+    // asign the value to the chart configuration
+    optionDonut.labels = xAxis;
+    optionDonut.series = yAxis;
+
+var chartDonut = new ApexCharts(document.querySelector('#content' + contents[i].id), optionDonut);
+chartDonut.render();
+
+    console.log('render content ' + contents[i].id);
+  } 
+  
 }

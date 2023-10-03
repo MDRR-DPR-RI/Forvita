@@ -85,7 +85,11 @@ class ContentController extends Controller
             // asign jumlah for all selectedValues
             for ($i = 0; $i < count($selectedXValues); $i++) {
                 $clean = Clean::where('keterangan', $selectedXValues[$i])->first(); // find row that = slectedXValues
-                array_push($count, $clean->jumlah);
+                if ($clean) {
+                    // Convert the string to an integer and add it to the $count array
+                    $numericValue = intval($clean->jumlah);
+                    $count[] = $numericValue;
+                }
             }
             $content->update([
                 'judul' => $request->selectedJudul,

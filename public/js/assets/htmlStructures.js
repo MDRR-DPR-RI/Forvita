@@ -1,6 +1,6 @@
- // HERE IS WHERE U PUT UR HTML CONTENT. THEN ADD NEW CHART IN DATABASE (table->charts)
-    let htmlStructures = {
-        1: [`<div class="col-xl-9">
+// HERE IS WHERE U PUT UR HTML CONTENT. THEN ADD NEW CHART IN DATABASE (table->charts)
+let htmlStructures = {
+  1: [`<div class="col-xl-9">
           <div class="card card-one">
             <div class="card-body overflow-hidden px-0 pb-3">
               <div class="finance-info p-3 p-xl-4">
@@ -50,7 +50,7 @@
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`,],
-        2: [`<div class="col-xl-3">
+  2: [`<div class="col-xl-3">
           <div class="row g-3">
             <div class="col-sm-6 col-xl-12">
               <div class="card card-one">
@@ -74,7 +74,7 @@
             </div><!-- col -->
           </div><!-- row -->
         </div><!-- col -->`,],
-        3: [`<div class="col-xl-6">
+  3: [`<div class="col-xl-6">
           <div class="card card-one">
             <div class="card-header border-0 pb-2">
               <h6 class="card-title">Profit Margin (%)</h6>
@@ -109,7 +109,7 @@
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->` ,],
-        4:[`<div class="col-xl-6">
+  4: [`<div class="col-xl-6">
           <div class="card card-one">
             <div class="card-body">
               <div id="content" class="mb-1"></div>
@@ -121,8 +121,8 @@
               <p class="fs-sm text-secondary mb-0">Measures your Accounts Receivable / Current Liabilities</p>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`,], 
-        5:    [`<div class="col-xl-12">
+        </div><!-- col -->`,],
+  5: [`<div class="col-xl-12">
           <div class="card card-one">
             <div class="card-body p-3 p-xl-4">
               <div class="row justify-content-center g-3 mb-2 mb-xl-4">
@@ -209,7 +209,7 @@
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`,],
-        6: [`<div class="col-xl-6">
+  6: [`<div class="col-xl-6">
           <div class="card card-one">
             <div class="card-body">
               <div id="apexChart5" class="mb-1"></div>
@@ -222,7 +222,7 @@
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`,],
-        7:[` <div class="col-xl-4">
+  7: [` <div class="col-xl-4">
           <div class="card card-one">
             <div class="card-header">
               <h6 class="card-title">Pengusul RUU</h6>
@@ -234,13 +234,13 @@
             <div class="card-body position-relative d-flex justify-content-center">
               <div id="chartDonut" class="apex-donut-two"></div>
               <div class="finance-donut-value "style="margin-bottom: 35px;">
-                  <h1>200</h1>
-                 <p>86.24%</p>
+                 <!--<h1>200</h1>-->
+                 <!--<p>86.24%</p>-->
               </div>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col --> `,],     
-        8: [`<div class="col-xl-8">
+        </div><!-- col --> `,],
+  8: [`<div class="col-xl-8">
           <div class="card card-one">
             <div class="card-header">
               <h6 class="card-title">Program Legislasi Nasional 2020-2024</h6>
@@ -272,11 +272,32 @@
             
           </div><!-- card -->
         </div><!-- col -->`,],
-        9: [`<div class="col-xl-8">
+  9: [`<div class="col-xl-8">
           <div class="card card-one">
             <div class="card-body p-4">
               <div id="content"></div>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`]
-    };
+        </div><!-- col -->`],
+  10: [`
+    <div class="col-xl-4">
+    <div class="card card-one">
+      <div class="card-header">
+        <h6 class="card-title">Pengusul RUU</h6>
+        <nav class="nav nav-icon nav-icon-sm ms-auto">
+          <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
+          <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+        </nav>
+      </div><!-- card-header -->
+      <div class="card-body position-relative d-flex justify-content-center">
+        <div id="content" class="apex-donut-two"></div>
+        <div class="finance-donut-value "style="margin-bottom: 35px;">
+            <!--<h1>200</h1>-->
+            <!--<p>86.24%</p>-->
+        </div>
+      </div><!-- card-body -->
+    </div><!-- card -->
+  </div><!-- col -->`],
+
+
+};

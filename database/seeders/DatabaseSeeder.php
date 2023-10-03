@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
             'dashboard' => "kelompok23",
             'judul' => 'Agama',
             'x_value' => '["Islam","Kristen","Budha"]',
-            'y_value' => '["800","200","150"]'
+            'y_value' => '[800,200,150]'
         ]);
         Chart::create([
             'name' => "Nama 1",

@@ -158,16 +158,14 @@
 {{-- script to print content in the dashboard --}}
   <script>
     // Declare variables outside the loop
-    let chartId, htmlContent, containerContent, uniqe;
+    let chartId, htmlContent, containerContent, uniqe, y_value, x_value;
     @foreach ($contents as $content)
 
       // Access the HTML structure based on the PHP value
       unique = 'content' + {{ $content->id }} // set unique value for each content
       chartId = {{ $content->chart->id }};
       y_value = {!! json_encode($content->y_value) !!}
-      if (y_value) {
-        y_value = y_value.split(','); // this for AI analyst 
-      }
+      x_value = {!! json_encode($content->x_value) !!}
 
       htmlContent = htmlStructures[chartId][0];
       htmlContent = htmlContent.replace('id="content"', `id="${unique}"`); // set the unique id for each content
@@ -175,34 +173,43 @@
       // Create a containerContent element and set its innerHTML
       containerContent = document.getElementById('main');
       containerContent.innerHTML += htmlContent;
-      // add AI analysis wkwk (ala-ala)
+      // add AI analysis for chartId = 8
       if(chartId === 8 && y_value){ // ai analyst is only in chartId = 8 and y_value is not null do ajax call api 
         console.log(chartId);
-        let inputString = "What is the total " + y_value.join(" plus ") + ".";
-        inputString = inputString.replace(/"/g, ''); // Remove double quotes
+        let inputString = `Please perform data analysis on the following data: I have '${x_value}' each with respective totals of '${y_value}' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph. and in bahasa indonesia and start with dengan kalimat Data menunjukkan bahwa.....`
         console.log(inputString);
         if (y_value) { 
           $(document).ready(function() {
             $.ajax({
-              url: 'https://robomatic-ai.p.rapidapi.com/api',
-              method: 'POST',
-              headers: {
-                  'content-type': 'application/x-www-form-urlencoded',
-                  'X-RapidAPI-Key': '346543f61cmshefda0a20bd76340p19f426jsn816f3d62e933',
-                  'X-RapidAPI-Host': 'robomatic-ai.p.rapidapi.com'
-              },
-              data: {
-                  in: inputString, // request input hanya bisa simple math, belum bisa aneh2. like --> Please perform data analysis on the following dataset: I have three categories - 'Islam,' 'Kristen,' and 'Buddha,' each with respective totals of '800,' '200,' and '150.' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph.
-                  op: 'in',
-                  cbot: '1',
-                  SessionID: 'RapidAPI1',
-                  cbid: '1',
-                  key: 'RHMN5hnQ4wTYZBGCF3dfxzypt68rVP',
-                  ChatSource: 'RapidAPI',
-                  duration: '1'
-              },
+              type: 'POST',
+              url: 'http://localhost:3000/ask',
+              contentType: "application/json; charset=utf-8",
+              dataType: 'json',
+              data: 
+              JSON.stringify({
+                  prompt: inputString
+              }),
+              
+              // $.ajax({ // ini api AI analyst using RobotMatic.AI not GPT
+              // url: 'https://robomatic-ai.p.rapidapi.com/api',
+              // method: 'POST',
+              // headers: {
+              //     'content-type': 'application/x-www-form-urlencoded',
+              //     'X-RapidAPI-Key': '346543f61cmshefda0a20bd76340p19f426jsn816f3d62e933',
+              //     'X-RapidAPI-Host': 'robomatic-ai.p.rapidapi.com'
+              // },
+              // data: {
+              //     in: `  Whats 19 plus 23 `, // request input hanya bisa simple math, belum bisa aneh2. like --> Please perform data analysis on the following dataset: I have three categories - 'Islam,' 'Kristen,' and 'Buddha,' each with respective totals of '800,' '200,' and '150.' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph.
+              //     op: 'in',
+              //     cbot: '1',
+              //     SessionID: 'RapidAPI1',
+              //     cbid: '1',
+              //     key: 'RHMN5hnQ4wTYZBGCF3dfxzypt68rVP',
+              //     ChatSource: 'RapidAPI',
+              //     duration: '1'
+              // },
               success: function (response) {
-                const result = response.out;
+                const result = response.message;
                 console.log("analysis result : " + result)
 
                 // Set the result in the HTML element
@@ -213,6 +220,8 @@
               },
               error: function (error) {
                   console.error(error);
+                  $('#aiAnalysis').text(error);
+                  $('#placeholder').empty();
               }
           });
         })
