@@ -49,7 +49,7 @@ let htmlStructures = {
               <div id="apexChart1" class="apex-chart-two"></div>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`,],
+        </div><!-- col -->`],
   2: [`<div class="col-xl-3">
           <div class="row g-3">
             <div class="col-sm-6 col-xl-12">
@@ -73,7 +73,7 @@ let htmlStructures = {
               </div><!-- card -->
             </div><!-- col -->
           </div><!-- row -->
-        </div><!-- col -->`,],
+        </div><!-- col -->`],
   3: [`<div class="col-xl-6">
           <div class="card card-one">
             <div class="card-header border-0 pb-2">
@@ -121,7 +121,7 @@ let htmlStructures = {
               <p class="fs-sm text-secondary mb-0">Measures your Accounts Receivable / Current Liabilities</p>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`,],
+        </div><!-- col -->`],
   5: [`<div class="col-xl-12">
           <div class="card card-one">
             <div class="card-body p-3 p-xl-4">
@@ -208,7 +208,7 @@ let htmlStructures = {
               </div><!-- row -->
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`,],
+        </div><!-- col -->`],
   6: [`<div class="col-xl-6">
           <div class="card card-one">
             <div class="card-body">
@@ -221,7 +221,7 @@ let htmlStructures = {
               <p class="fs-sm text-secondary mb-0">Measures your Current Assets / Current Liabilities</p>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`,],
+        </div><!-- col -->`],
   7: [` <div class="col-xl-4">
           <div class="card card-one">
             <div class="card-header">
@@ -239,7 +239,7 @@ let htmlStructures = {
               </div>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col --> `,],
+        </div><!-- col --> `],
   8: [`<div class="col-xl-8">
           <div class="card card-one">
             <div class="card-header">
@@ -271,7 +271,7 @@ let htmlStructures = {
             </div><!-- card-body -->
             
           </div><!-- card -->
-        </div><!-- col -->`,],
+        </div><!-- col -->`],
   9: [`<div class="col-xl-8">
           <div class="card card-one">
             <div class="card-body p-4">
@@ -298,6 +298,4 @@ let htmlStructures = {
       </div><!-- card-body -->
     </div><!-- card -->
   </div><!-- col -->`],
-
-
 };

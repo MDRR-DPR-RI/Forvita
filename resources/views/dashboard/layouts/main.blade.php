@@ -160,79 +160,63 @@
     // Declare variables outside the loop
     let chartId, htmlContent, containerContent, uniqe, y_value, x_value;
     @foreach ($contents as $content)
-
       // Access the HTML structure based on the PHP value
-      unique = 'content' + {{ $content->id }} // set unique value for each content
+      unique = 'content' + {{ $content->id }}; // set unique value for each content
       chartId = {{ $content->chart->id }};
       y_value = {!! json_encode($content->y_value) !!}
       x_value = {!! json_encode($content->x_value) !!}
 
       htmlContent = htmlStructures[chartId][0];
       htmlContent = htmlContent.replace('id="content"', `id="${unique}"`); // set the unique id for each content
+      htmlContent = htmlContent.replace('id="aiAnalysis"', `id="aiAnalysis${unique}"`); // set the unique id for each content
+      htmlContent = htmlContent.replace('id="placeholder"', `id="placeholder${unique}"`); // set the unique id for each content
 
       // Create a containerContent element and set its innerHTML
       containerContent = document.getElementById('main');
       containerContent.innerHTML += htmlContent;
+
       // add AI analysis for chartId = 8
-      if(chartId === 8 && y_value){ // ai analyst is only in chartId = 8 and y_value is not null do ajax call api 
+      if (chartId === 8 && y_value && x_value) {
         console.log(chartId);
-        let inputString = `Please perform data analysis on the following data: I have '${x_value}' each with respective totals of '${y_value}' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph. and in bahasa indonesia and start with dengan kalimat Data menunjukkan bahwa.....`
+        let inputString = `Please perform data analysis on the following data: I have '${x_value}' each with respective totals of '${y_value}' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start dengan kalimat =  Data menunjukkan bahwa.....`
         console.log(inputString);
-        if (y_value) { 
-          $(document).ready(function() {
-            $.ajax({
-              type: 'POST',
-              url: 'http://localhost:3000/ask',
-              contentType: "application/json; charset=utf-8",
-              dataType: 'json',
-              data: 
-              JSON.stringify({
-                  prompt: inputString
-              }),
-              
-              // $.ajax({ // ini api AI analyst using RobotMatic.AI not GPT
-              // url: 'https://robomatic-ai.p.rapidapi.com/api',
-              // method: 'POST',
-              // headers: {
-              //     'content-type': 'application/x-www-form-urlencoded',
-              //     'X-RapidAPI-Key': '346543f61cmshefda0a20bd76340p19f426jsn816f3d62e933',
-              //     'X-RapidAPI-Host': 'robomatic-ai.p.rapidapi.com'
-              // },
-              // data: {
-              //     in: `  Whats 19 plus 23 `, // request input hanya bisa simple math, belum bisa aneh2. like --> Please perform data analysis on the following dataset: I have three categories - 'Islam,' 'Kristen,' and 'Buddha,' each with respective totals of '800,' '200,' and '150.' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph.
-              //     op: 'in',
-              //     cbot: '1',
-              //     SessionID: 'RapidAPI1',
-              //     cbid: '1',
-              //     key: 'RHMN5hnQ4wTYZBGCF3dfxzypt68rVP',
-              //     ChatSource: 'RapidAPI',
-              //     duration: '1'
-              // },
-              success: function (response) {
-                const result = response.message;
-                console.log("analysis result : " + result)
+        
+        // Use unique identifier to select elements
+        let aiAnalysisElement = `#aiAnalysis${unique}`;
+        let placeholderElement = `#placeholder${unique}`;
 
-                // Set the result in the HTML element
-                $('#aiAnalysis').text(result);
-                
-                // Empty the placeholder content
-                $('#placeholder').empty();
-              },
-              error: function (error) {
-                  console.error(error);
-                  $('#aiAnalysis').text(error);
-                  $('#placeholder').empty();
-              }
+        $(document).ready(function() {
+          $.ajax({
+            type: 'POST',
+            url: 'http://localhost:3000/ask',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: JSON.stringify({
+              prompt: inputString
+            }),
+            success: function (response) {
+              const result = response.message;
+              console.log("analysis result : " + result)
+
+              // Set the result in the HTML element
+              $(aiAnalysisElement).text(result);
+
+              // Empty the placeholder content
+              $(placeholderElement).empty();
+            },
+            error: function (error) {
+              console.error(error);
+              $(aiAnalysisElement).text("API Error");
+              $(placeholderElement).empty();
+            }
           });
-        })
+        });
       } else {
-        $('#aiAnalysis').text("No data");
+        $(`#aiAnalysis${unique}`).text("NO DATA");
+        $(`#placeholder${unique}`).empty();
+      }
+@endforeach
 
-         // Empty the placeholder content
-        $('#placeholder').empty();
-      } 
-    }
-    @endforeach
 </script>
 @endif
 
@@ -253,3 +237,22 @@
 </body>
 
 </html>
+
+{{--   $.ajax({ // ini api AI analyst using RobotMatic.AI not GPT
+            url: 'https://robomatic-ai.p.rapidapi.com/api',
+            method: 'POST',
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'X-RapidAPI-Key': '346543f61cmshefda0a20bd76340p19f426jsn816f3d62e933',
+                'X-RapidAPI-Host': 'robomatic-ai.p.rapidapi.com'
+            },
+            data: {
+                in: `  Whats 19 plus 23 `, // request input hanya bisa simple math, belum bisa aneh2. like --> Please perform data analysis on the following dataset: I have three categories - 'Islam,' 'Kristen,' and 'Buddha,' each with respective totals of '800,' '200,' and '150.' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph.
+                op: 'in',
+                cbot: '1',
+                SessionID: 'RapidAPI1',
+                cbid: '1',
+                key: 'RHMN5hnQ4wTYZBGCF3dfxzypt68rVP',
+                ChatSource: 'RapidAPI',
+                duration: '1'
+            }, --}}

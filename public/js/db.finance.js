@@ -743,9 +743,6 @@ var optionDonut = {
   },
 };
 
-// var chartDonut = new ApexCharts(document.querySelector('#chartDonut'), optionDonut);
-// chartDonut.render();
-
 // Loop through the contents array to find the matching chart_id
 for (var i = 0; i < contents.length; i++) {
   let maxValue;
@@ -759,7 +756,7 @@ for (var i = 0; i < contents.length; i++) {
         yContainer.push([x+1, yAxis[x]])
       }
     }
-    // Iterate through the array
+    // SET MAX VALUE TO CHART ID = 4
     for (let i = 0; i < yContainer.length; i++) {
       let secondValue = yContainer[i][1]; // Get the second value in each sub-array
       if (secondValue > maxValue) {
@@ -772,8 +769,6 @@ for (var i = 0; i < contents.length; i++) {
 
     var chartFour = new ApexCharts(document.querySelector('#content' + contents[i].id), optionFour);
     chartFour.render();
-    
-    console.log('render content ' + contents[i].id);
   } 
   else if (contents[i].chart_id === 8) { 
     
@@ -788,7 +783,7 @@ for (var i = 0; i < contents.length; i++) {
         yContainer.push([x+1, yAxis[x]])
       }
     }
-    // Iterate through the array
+    // SET MAX VALUE TO CHART ID = 8
     for (let i = 0; i < yContainer.length; i++) {
       let secondValue = yContainer[i][1]; // Get the second value in each sub-array
       if (secondValue > maxValue) {
@@ -802,7 +797,6 @@ for (var i = 0; i < contents.length; i++) {
 
     var chartEight = new ApexCharts(document.querySelector('#content' + contents[i].id), optionEight);
     chartEight.render();
-    console.log('render content ' + contents[i].id);
   } 
   else if  (contents[i].chart_id === 9) {
     // Assign the value to optionEigt
@@ -829,10 +823,9 @@ for (var i = 0; i < contents.length; i++) {
     optionDonut.labels = xAxis;
     optionDonut.series = yAxis;
 
-var chartDonut = new ApexCharts(document.querySelector('#content' + contents[i].id), optionDonut);
-chartDonut.render();
+    var chartDonut = new ApexCharts(document.querySelector('#content' + contents[i].id), optionDonut);
+    chartDonut.render();
 
-    console.log('render content ' + contents[i].id);
   } 
   
 }
