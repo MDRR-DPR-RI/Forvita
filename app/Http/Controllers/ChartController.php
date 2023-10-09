@@ -59,6 +59,6 @@ class ChartController extends Controller
      */
     public function destroy(Chart $chart)
     {
-        //
+        //destry
     }
 }
