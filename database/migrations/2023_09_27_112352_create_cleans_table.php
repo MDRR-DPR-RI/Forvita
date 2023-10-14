@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cleans', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
-            $table->string('keterangan');
+            $table->string('keterangan')->unique();
             $table->string('jumlah');
             $table->timestamps();
         });

@@ -4,13 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Ruu;
 use App\Models\Content;
 use App\Models\Chart;
-use App\Models\Agenda;
 use App\Models\Clean;
-use App\Models\Komisi;
-use App\Models\Bulan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,26 +22,6 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // Content::create([
-        //     'chart_id' => 3,
-        //     'dashboard' => "kelompok23
-
-        // ]);
-        // Content::create([
-        //     'chart_id' => 1,
-        //     'dashboard' => "kelompok23
-
-        // ]);
-        // Content::create([
-        //     'chart_id' => 2,
-        //     'dashboard' => "kelompok23
-
-        // ]);
-        // Content::create([
-        //     'chart_id' => 7,
-        //     'dashboard' => "kelompok23
-
-        // ]);
         Content::create([
             'chart_id' => 8,
             'dashboard' => "kelompok23",
@@ -82,11 +58,27 @@ class DatabaseSeeder extends Seeder
             'grid' => 4
         ]);
         Chart::create([
-            'name' => "Bar Chart",
+            'name' => "Bar Chart With AI Analyst",
             'grid' => 8
         ]);
         Chart::create([
             'name' => "Line Chart",
+            'grid' => 8
+        ]);
+        Chart::create([
+            'name' => "Donut Chart",
+            'grid' => 4
+        ]);
+        Chart::create([
+            'name' => "Card",
+            'grid' => 8
+        ]);
+        Chart::create([
+            'name' => "Table",
+            'grid' => 8
+        ]);
+        Chart::create([
+            'name' => "Side Bar Chart",
             'grid' => 8
         ]);
         Clean::create([
@@ -103,6 +95,16 @@ class DatabaseSeeder extends Seeder
             'judul' => "Agama",
             'keterangan' => "Budha",
             'jumlah' => 150,
+        ]);
+        Clean::create([
+            'judul' => "Agama",
+            'keterangan' => "Hindu",
+            'jumlah' => 235,
+        ]);
+        Clean::create([
+            'judul' => "Agama",
+            'keterangan' => "Konghucu",
+            'jumlah' => 100,
         ]);
         Clean::create([
             'judul' => "Jenis Kelamin",

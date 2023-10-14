@@ -97,7 +97,7 @@
                               @csrf
                             <input type="hidden" value="{{ $chart->id }}" name="chartId">
                             <input type="hidden" name="dashboard" value="{{ $dashboard }}" >
-                            @if ($chart->id === 8 || $chart->id === 4 || $chart->id === 9)
+                            @if ($chart->id === 8 || $chart->id === 4 || $chart->id === 9 || $chart->id === 10 || $chart->id === 11 || $chart->id === 12 || $chart->id === 13)
                               <td><button type="submit" class="btn btn-primary">Add</button></td>
                             @else
                               <td><button type="submit" class="btn btn-warning">Belum bisa dynamic data</button></td>
@@ -122,7 +122,7 @@
                   <tbody>
                     @foreach ($contents as $content)
                         <tr>
-                          <th scope="row">{{ $loop->iteration }}</th>
+                          <td scope="row">{{ $loop->iteration }}</td>
                           <td>{{ $content->chart->id }}</td>
                           <td>{{ $content->chart->grid }}</td>
                           <td style="display: flex; justify-content: center;  align-items: center;">
@@ -156,17 +156,17 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 {{-- script to print content in the dashboard --}}
-  <script>
+  <script >
     // Declare variables outside the loop
-    let chartId, htmlContent, containerContent, uniqe, y_value, x_value;
+    let chartId, htmlContent, containerContent, unique, y_value, x_value;
     @foreach ($contents as $content)
       // Access the HTML structure based on the PHP value
       unique = 'content' + {{ $content->id }}; // set unique value for each content
       chartId = {{ $content->chart->id }};
       y_value = {!! json_encode($content->y_value) !!}
       x_value = {!! json_encode($content->x_value) !!}
-
       htmlContent = htmlStructures[chartId][0];
+
       htmlContent = htmlContent.replace('id="content"', `id="${unique}"`); // set the unique id for each content
       htmlContent = htmlContent.replace('id="aiAnalysis"', `id="aiAnalysis${unique}"`); // set the unique id for each content
       htmlContent = htmlContent.replace('id="placeholder"', `id="placeholder${unique}"`); // set the unique id for each content

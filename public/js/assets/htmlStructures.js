@@ -279,8 +279,7 @@ let htmlStructures = {
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`],
-  10: [`
-    <div class="col-xl-4">
+  10: [`<div class="col-xl-4">
     <div class="card card-one">
       <div class="card-header">
         <h6 class="card-title">Pengusul RUU</h6>
@@ -296,6 +295,30 @@ let htmlStructures = {
             <!--<p>86.24%</p>-->
         </div>
       </div><!-- card-body -->
-    </div><!-- card -->
-  </div><!-- col -->`],
+        </div><!-- card --></div><!-- col -->`],
+  11: [`<div class="col-xl-8" >
+          <div class="row g-3" id="content">
+          </div>
+        </div>`],
+  12: [`<div class="col-xl-8 card card-one" >
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Judul</th>
+                <th scope="col">Keterangan</th>
+                <th scope="col">Jumlah</th>
+              </tr>
+              <tbody id="content">
+              </tbody>
+            </thead>
+          </table>
+        </div>`],
+  13: [`<div class="col-xl-8">
+          <div class="card card-one">
+            <div class="card-body p-4">
+              <div id="content"></div>
+            </div><!-- card-body -->
+          </div><!-- card -->
+        </div><!-- col -->`],
 };

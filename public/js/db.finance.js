@@ -71,8 +71,8 @@ var optionOne = {
   }
 };
 
-var chartOne = new ApexCharts(document.querySelector('#apexChart1'), optionOne);
-chartOne.render();
+// var chartOne = new ApexCharts(document.querySelector('#apexChart1'), optionOne);
+// chartOne.render();
 
 //--------------------------------------------
 
@@ -156,8 +156,8 @@ var optionTwo = {
   }
 };
 
-var chartTwo = new ApexCharts(document.querySelector('#apexChart2'), optionTwo);
-chartTwo.render();
+// var chartTwo = new ApexCharts(document.querySelector('#apexChart2'), optionTwo);
+// chartTwo.render();
 
 //---------------------------------------------------
 
@@ -241,11 +241,11 @@ var optionThree = {
   }
 };
 
-var chartThree = new ApexCharts(document.querySelector('#apexChart3'), optionThree);
-chartThree.render();
+// var chartThree = new ApexCharts(document.querySelector('#apexChart3'), optionThree);
+// chartThree.render();
 
 //-------------------------------------------------
-
+// chartId = 4
 var optionFour = {
   series: [
   {
@@ -304,9 +304,6 @@ var optionFour = {
   }
 };
 
-// var chartFour = new ApexCharts(document.querySelector('#apexChart4'), optionFour);
-// chartFour.render();
-
 //------------------------------------------------
 
 var optionFive = {
@@ -364,8 +361,8 @@ var optionFive = {
   }
 };
 
-var chartFive = new ApexCharts(document.querySelector('#apexChart5'), optionFive);
-chartFive.render();
+// var chartFive = new ApexCharts(document.querySelector('#apexChart5'), optionFive);
+// chartFive.render();
 
 //----------------------------------------------
 
@@ -418,8 +415,8 @@ var optionSix = {
   }
 };
 
-var chartSix = new ApexCharts(document.querySelector('#apexChart6'), optionSix);
-chartSix.render();
+// var chartSix = new ApexCharts(document.querySelector('#apexChart6'), optionSix);
+// chartSix.render();
 
 //-------------------------------------------------
 
@@ -498,8 +495,8 @@ var optionSeven = {
   }
 };
 
-var chartSeven = new ApexCharts(document.querySelector('#apexChart7'), optionSeven);
-chartSeven.render();
+// var chartSeven = new ApexCharts(document.querySelector('#apexChart7'), optionSeven);
+// chartSeven.render();
 
 //--------------------------------------------------
 //default
@@ -711,14 +708,14 @@ var optionLine = {
 };
 //------------------------------------------------
 var optionDonut = {
-  series: [],
+  series: [25,15,10,12,9,13,16],
   chart: {
     type: 'donut',
     height: 'auto',
     parentHeightOffset: 0
   },
-  labels: [],
-  colors: ['#506fd9', '#85b6ff', '#51596d', '#eff1f5'],
+  labels: ['USD', 'EUR', 'CNY', 'GBP', 'JPY', 'KRW', 'SGD'],
+  colors: ['#506fd9', '#85b6ff','#33d685','#0dcaf0','#1c96e9','#6e7985','#ccd2da'],
   dataLabels: {
     enabled: true
   },
@@ -742,90 +739,177 @@ var optionDonut = {
     
   },
 };
+//------------------------------------------------
+// chartId = 13
+var optionBarSide = {
+  series: [{
+    data: []
+  }],
+  chart: {
+    type: 'bar',
+    height: 300
+  },
+  colors: ['#506fd9'],
+  plotOptions: {
+    bar: {
+      borderRadius: 2,
+      horizontal: true,
+    }
+  },
+  dataLabels: {
+    enabled: false
+  },
+  xaxis: {
+    categories: [],
+}
+};
 
 // Loop through the contents array to find the matching chart_id
-for (var i = 0; i < contents.length; i++) {
-  let maxValue;
-  if (contents[i].chart_id === 4) {
-    // Assign the value to optionFour
-    let yAxis = JSON.parse(contents[i].y_value)
+  for (var i = 0; i < contents.length; i++) {
+    let maxValue;
+    if (contents[i].chart_id === 4) { // Nama 4
+      // Assign the value to optionFour
+      let yAxis = JSON.parse(contents[i].y_value)
 
-    let yContainer = []
-    if (yAxis) {
-      for(let x = 0; x<yAxis.length; x++){
-        yContainer.push([x+1, yAxis[x]])
+      let yContainer = []
+      if (yAxis) {
+        for(let x = 0; x<yAxis.length; x++){
+          yContainer.push([x+1, yAxis[x]])
+        }
+      }
+      // SET MAX VALUE TO CHART ID = 4
+      for (let i = 0; i < yContainer.length; i++) {
+        let secondValue = yContainer[i][1]; // Get the second value in each sub-array
+        if (secondValue > maxValue) {
+          maxValue = secondValue; // Update the maximum value if a higher one is found
+        }
+      }
+      // asign the value to the chart configuration
+      optionFour.series[0].data = yContainer;
+      optionFour.yaxis.max = maxValue+100 ;
+
+      var chartFour = new ApexCharts(document.querySelector('#content' + contents[i].id), optionFour);
+      chartFour.render();
+    } 
+    else if (contents[i].chart_id === 8) { // Bar Chart With AI Analyst
+      
+      // Assign the value to optionEigt
+      let xAxis = JSON.parse(contents[i].x_value)
+      let yAxis = JSON.parse(contents[i].y_value)
+
+      // transform yAxis form ['800', '200'] --> [[1, 800], [2, 200]]
+      let yContainer = []
+      if (yAxis) {
+        for(let x = 0; x<yAxis.length; x++){
+          yContainer.push([x+1, yAxis[x]])
+        }
+      }
+      // SET MAX VALUE TO CHART ID = 8
+      for (let i = 0; i < yContainer.length; i++) {
+        let secondValue = yContainer[i][1]; // Get the second value in each sub-array
+        if (secondValue > maxValue) {
+          maxValue = secondValue; // Update the maximum value if a higher one is found
+        }
+      }
+      // asign the value to the chart configuration
+      optionEight.xaxis.categories = xAxis;
+      optionEight.yaxis.max = maxValue;
+      optionEight.series[0].data = yContainer;
+
+      var chartEight = new ApexCharts(document.querySelector('#content' + contents[i].id), optionEight);
+      chartEight.render();
+    } 
+    else if (contents[i].chart_id === 9) { // Line Chart
+      // Assign the value to optionEigt
+      let xAxis = JSON.parse(contents[i].x_value)
+      let yAxis = JSON.parse(contents[i].y_value)
+
+      console.log(yAxis);
+      // asign the value to the chart configuration
+      optionLine.xaxis.categories = xAxis;
+      optionLine.series[0].data = yAxis;
+
+      var chartLine = new ApexCharts(document.querySelector('#content' + contents[i].id), optionLine);
+      chartLine.render();
+      console.log('render content ' + contents[i].id);
+    } 
+    else if (contents[i].chart_id === 10) { // Donut chart
+      // Assign the value to optionEigt
+      let xAxis = JSON.parse(contents[i].x_value)
+      let yAxis = JSON.parse(contents[i].y_value)
+
+      console.log(yAxis);
+      // asign the value to the chart configuration
+      optionDonut.labels = xAxis;
+      optionDonut.series = yAxis;
+
+      var chartDonut = new ApexCharts(document.querySelector('#content' + contents[i].id), optionDonut);
+      chartDonut.render();
+    } 
+    else if (contents[i].chart_id === 11) { // card
+      const y_value = JSON.parse(contents[i].y_value);
+      const x_value = JSON.parse(contents[i].x_value);
+
+      // reference to the card container element
+      const cardContainer = document.querySelector(`#content${contents[i].id}`);
+
+      // Clear any previous content
+      cardContainer.innerHTML = '';
+
+      // Iterate over the elements based on y_value.length
+      for (let j = 0; j < y_value.length; j++) {
+        const newElement = document.createElement('div');
+        newElement.className = 'col-6 col-sm';
+        newElement.innerHTML = `
+          <div class="card card-one">
+            <div class="card-body p-3">
+              <div class="d-block fs-40 lh-1 text-primary mb-1"><i class="ri-calendar-todo-line"></i></div>
+              <h1 class="card-value mb-0 ls--1 fs-32" id="card-val">${y_value[j]}</h1>
+              <label class="d-block mb-1 fw-medium text-dark">${x_value[j]}</label>
+              <small><span class="d-inline-flex text-danger">0.7% <i class="ri-arrow-down-line"></i></span> than last week</small>
+            </div>
+          </div>
+        `;
+
+        cardContainer.appendChild(newElement); // asign element to the content
       }
     }
-    // SET MAX VALUE TO CHART ID = 4
-    for (let i = 0; i < yContainer.length; i++) {
-      let secondValue = yContainer[i][1]; // Get the second value in each sub-array
-      if (secondValue > maxValue) {
-        maxValue = secondValue; // Update the maximum value if a higher one is found
+    else if (contents[i].chart_id === 12) { // table
+      const y_value = JSON.parse(contents[i].y_value);
+      const x_value = JSON.parse(contents[i].x_value);
+
+      // reference to the card container element
+      const tableDataContainer = document.querySelector(`#content${contents[i].id}`);
+
+      // Clear any previous content
+      tableDataContainer.innerHTML = '';
+
+      // Iterate over the elements based on y_value.length
+      for (let j = 0; j < y_value.length; j++) {
+        const newElement = document.createElement('tr');
+        newElement.className = 'table-row';
+        newElement.innerHTML = `
+        <td scope="row">${j+1}</td>
+        <td>${contents[i].judul}</td>
+        <td>${x_value[j]}</td>
+        <td>${y_value[j]}</td>
+        `;
+        tableDataContainer.appendChild(newElement); // asign the element to the content
       }
     }
-    // asign the value to the chart configuration
-    optionFour.series[0].data = yContainer;
-    optionFour.yaxis.max = maxValue+100 ;
+    else if (contents[i].chart_id === 13) { // Side Bar Chart
+      // Assign the value to optionEigt
+      let xAxis = JSON.parse(contents[i].x_value)
+      let yAxis = JSON.parse(contents[i].y_value)
 
-    var chartFour = new ApexCharts(document.querySelector('#content' + contents[i].id), optionFour);
-    chartFour.render();
-  } 
-  else if (contents[i].chart_id === 8) { 
-    
-    // Assign the value to optionEigt
-    let xAxis = JSON.parse(contents[i].x_value)
-    let yAxis = JSON.parse(contents[i].y_value)
+      console.log(yAxis);
+      // asign the value to the chart configuration
+      optionBarSide.xaxis.categories = xAxis;
+      optionBarSide.series[0].data = yAxis;
 
-    // transform yAxis form ['800', '200'] --> [[1, 800], [2, 200]]
-    let yContainer = []
-    if (yAxis) {
-      for(let x = 0; x<yAxis.length; x++){
-        yContainer.push([x+1, yAxis[x]])
-      }
-    }
-    // SET MAX VALUE TO CHART ID = 8
-    for (let i = 0; i < yContainer.length; i++) {
-      let secondValue = yContainer[i][1]; // Get the second value in each sub-array
-      if (secondValue > maxValue) {
-        maxValue = secondValue; // Update the maximum value if a higher one is found
-      }
-    }
-    // asign the value to the chart configuration
-    optionEight.xaxis.categories = xAxis;
-    optionEight.yaxis.max = maxValue;
-    optionEight.series[0].data = yContainer;
+      var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
+      chartBar.render();
+      console.log('render content ' + contents[i].id);
+    } 
 
-    var chartEight = new ApexCharts(document.querySelector('#content' + contents[i].id), optionEight);
-    chartEight.render();
-  } 
-  else if  (contents[i].chart_id === 9) {
-    // Assign the value to optionEigt
-    let xAxis = JSON.parse(contents[i].x_value)
-    let yAxis = JSON.parse(contents[i].y_value)
-
-    console.log(yAxis);
-    // asign the value to the chart configuration
-    optionLine.xaxis.categories = xAxis;
-    optionLine.series[0].data = yAxis;
-
-    var chartLine = new ApexCharts(document.querySelector('#content' + contents[i].id), optionLine);
-    chartLine.render();
-
-    console.log('render content ' + contents[i].id);
-  } 
-  else if  (contents[i].chart_id === 10) {
-    // Assign the value to optionEigt
-    let xAxis = JSON.parse(contents[i].x_value)
-    let yAxis = JSON.parse(contents[i].y_value)
-
-    console.log(yAxis);
-    // asign the value to the chart configuration
-    optionDonut.labels = xAxis;
-    optionDonut.series = yAxis;
-
-    var chartDonut = new ApexCharts(document.querySelector('#content' + contents[i].id), optionDonut);
-    chartDonut.render();
-
-  } 
-  
-}
+  }
