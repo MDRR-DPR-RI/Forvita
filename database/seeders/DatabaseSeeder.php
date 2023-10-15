@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Content;
 use App\Models\Chart;
 use App\Models\Clean;
+use App\Models\Prompt;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
             'x_value' => '["Islam","Kristen","Budha"]',
             'y_value' => '[800,200,150]'
         ]);
+
         Chart::create([
             'name' => "Nama 1",
             'grid' => 9
@@ -61,6 +63,18 @@ class DatabaseSeeder extends Seeder
             'name' => "Bar Chart With AI Analyst",
             'grid' => 8
         ]);
+        Prompt::create([
+            'body' => "Nilai Tertinggi dan Terendah ",
+        ]);
+        Prompt::create([
+            'body' => "Nilai Tertinggi",
+        ]);
+        Prompt::create([
+            'body' => "Nilai Terendah",
+        ]);
+        Prompt::create([
+            'body' => "Nilai rata-rata dari semua",
+        ]);
         Chart::create([
             'name' => "Line Chart",
             'grid' => 8
@@ -80,6 +94,14 @@ class DatabaseSeeder extends Seeder
         Chart::create([
             'name' => "Side Bar Chart",
             'grid' => 8
+        ]);
+        Chart::create([
+            'name' => "Pie Chart",
+            'grid' => 4
+        ]);
+        Chart::create([
+            'name' => "Nama 15",
+            'grid' => 12
         ]);
         Clean::create([
             'judul' => "Agama",

@@ -666,7 +666,7 @@ $('#skinMode .nav-link').bind('click', function(e){
 });
 
 //------------------------------------------------
-
+// chartId = 9
 var optionLine = {
   series: [
     {
@@ -707,6 +707,7 @@ var optionLine = {
   }
 };
 //------------------------------------------------
+// chartId = 10
 var optionDonut = {
   series: [25,15,10,12,9,13,16],
   chart: {
@@ -761,8 +762,55 @@ var optionBarSide = {
   },
   xaxis: {
     categories: [],
-}
+  }
 };
+//------------------------------------------------
+// chartId = 14
+var optionPie = {
+  series: [25,15,10,12,9,13,16],
+  chart: {
+    type: 'pie',
+    height: 'auto',
+    parentHeightOffset: 0
+  },
+  labels: ['USD', 'EUR', 'CNY', 'GBP', 'JPY', 'KRW', 'SGD'],
+  colors: ['#506fd9', '#85b6ff','#33d685','#0dcaf0','#1c96e9','#6e7985','#ccd2da'],
+  dataLabels: {
+    enabled: true
+  },
+  grid: {
+    padding: {
+      top: 0,
+      bottom: 0
+    }
+  },
+   legend: {
+      show: true,
+      showForSingleSeries: false,
+      showForNullSeries: true,
+      showForZeroSeries: true,
+      position: 'bottom',
+      horizontalAlign: 'center', 
+      floating: false,
+      fontSize: '14px',
+      fontFamily: 'Helvetica, Arial',
+      fontWeight: 400,
+    
+  },
+};
+// function to append title to the card
+function appendTitleToCard(containerSelector, title) {
+  const judulContainer = document.querySelector(containerSelector);
+
+  // empty the content if any
+  judulContainer.innerHTML = '';
+
+  // apend title to the card
+  const newElement = document.createElement('h6');
+  newElement.className = 'card-title';
+  newElement.innerHTML = `Data ${title}`;
+  judulContainer.appendChild(newElement);// asign the element to the content
+}
 
 // Loop through the contents array to find the matching chart_id
   for (var i = 0; i < contents.length; i++) {
@@ -793,6 +841,8 @@ var optionBarSide = {
     } 
     else if (contents[i].chart_id === 8) { // Bar Chart With AI Analyst
       
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].judul);
+
       // Assign the value to optionEigt
       let xAxis = JSON.parse(contents[i].x_value)
       let yAxis = JSON.parse(contents[i].y_value)
@@ -834,6 +884,9 @@ var optionBarSide = {
       console.log('render content ' + contents[i].id);
     } 
     else if (contents[i].chart_id === 10) { // Donut chart
+
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].judul);
+
       // Assign the value to optionEigt
       let xAxis = JSON.parse(contents[i].x_value)
       let yAxis = JSON.parse(contents[i].y_value)
@@ -875,6 +928,9 @@ var optionBarSide = {
       }
     }
     else if (contents[i].chart_id === 12) { // table
+
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].judul);
+
       const y_value = JSON.parse(contents[i].y_value);
       const x_value = JSON.parse(contents[i].x_value);
 
@@ -898,6 +954,9 @@ var optionBarSide = {
       }
     }
     else if (contents[i].chart_id === 13) { // Side Bar Chart
+
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].judul);
+
       // Assign the value to optionEigt
       let xAxis = JSON.parse(contents[i].x_value)
       let yAxis = JSON.parse(contents[i].y_value)
@@ -910,6 +969,51 @@ var optionBarSide = {
       var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
       chartBar.render();
       console.log('render content ' + contents[i].id);
+    } 
+    else if (contents[i].chart_id === 14) { // Side Bar Chart
+
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].judul);
+
+      // Assign the value to optionEigt
+      let xAxis = JSON.parse(contents[i].x_value)
+      let yAxis = JSON.parse(contents[i].y_value)
+
+      console.log(yAxis);
+      // asign the value to the chart configuration
+      optionPie.labels = xAxis;
+      optionPie.series = yAxis;
+
+      var chartPie = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionPie);
+      chartPie.render();
+      console.log('render content ' + contents[i].id);
+    } 
+    else if (contents[i].chart_id === 15) { // Nama 15
+
+      // Assign the value to optionEigt
+      let xAxis = JSON.parse(contents[i].x_value)
+      let yAxis = JSON.parse(contents[i].y_value)
+
+      let max = Math.max(...yAxis);
+      // reference to the card container element
+      const contentContainer = document.querySelector(`#content${contents[i].id}`);
+
+      // Clear any previous content
+      contentContainer.innerHTML = '';
+
+      // Iterate over the elements based on y_value.length
+      for (let j = 0; j < yAxis.length; j++) {
+        let gray = max == yAxis[j] // find if max or not, if then make the circle = bg-gray 
+        const newElement = document.createElement('div');
+        newElement.className = 'col-6 col-sm-4 col-md';
+        newElement.innerHTML = `
+          <div class="finance-item">
+            <div class="finance-item-circle ${gray ? 'bg-gray-400' : ''}">
+              <h1>${yAxis[j]}</h1>
+              <label class="text-center">${xAxis[j]}</label>
+            </div><!-- finance-item-circle -->
+          </div><!-- finance-item --> `;
+        contentContainer.appendChild(newElement); // asign the element to the content
+      }
     } 
 
   }

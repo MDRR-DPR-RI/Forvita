@@ -79,6 +79,25 @@ class ContentController extends Controller
      */
     public function update(Request $request, Content $content)
     {
+        // asign result prompt to the content
+        $resultPrompt = $request->input('result');
+        if ($resultPrompt) {
+            return $content->update([
+                'result_prompt' => $resultPrompt,
+            ]);
+        }
+        // update prompt(id) in the content
+        $selectedPrompt = $request->input('selectPrompt');
+        if ($selectedPrompt) {
+            $content->update([
+                'prompt_id' => $selectedPrompt,
+            ]);
+            if ($request->input('newPrompt')) {
+                dd("new");
+            }
+            return redirect('/' . $request->dashboard)->with('success', 'Successfully to update prompt');
+        }
+        // update content data x/y value
         $selectedXValues = $request->input('xValue');
         if ($selectedXValues) {
             $count = [];
@@ -93,6 +112,7 @@ class ContentController extends Controller
             }
             $content->update([
                 'judul' => $request->selectedJudul,
+                'result_prompt' => null,
                 'x_value' => json_encode($selectedXValues),
                 'y_value' => $count
             ]);

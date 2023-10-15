@@ -13,4 +13,8 @@ class Content extends Model
     {
         return $this->belongsTo(Chart::class);
     }
+    public function prompt()
+    {
+        return $this->belongsTo(Prompt::class);
+    }
 }

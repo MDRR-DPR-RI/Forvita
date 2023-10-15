@@ -2,10 +2,10 @@
 
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\PromptController;
 use App\Models\Clean;
 use App\Models\Content;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RuuController;
 use Illuminate\Http\Request;
 
 /*
@@ -47,6 +47,7 @@ Route::get('/kelompok5', function () {
 
 Route::resource('/dashboard/chart', ChartController::class);
 Route::resource('/dashboard/content', ContentController::class);
+Route::resource('/prompt', PromptController::class);
 Route::post('/fetch-data', function (Request $request) {
 
     // return response()->json($request->selectedJudul);

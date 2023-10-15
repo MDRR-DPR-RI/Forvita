@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\Chart;
+use App\Models\Prompt;
 use Illuminate\Support\Facades\Schema;
 
 class GlobalChartsServiceProvider extends ServiceProvider
@@ -21,9 +22,14 @@ class GlobalChartsServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // check if has these schema then sent as global variable. this will prevent error while migration
         if (Schema::hasTable('charts')) {
             $chartData = Chart::all();
             view()->share('charts', $chartData);
+        }
+        if (Schema::hasTable('prompts')) {
+            $prmopts = Prompt::all();
+            view()->share('prompts', $prmopts);
         }
     }
 }
