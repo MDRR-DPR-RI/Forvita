@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Content;
 use App\Models\Clean;
+use App\Models\Prompt;
 use Illuminate\Http\Request;
 
 class ContentController extends Controller
@@ -79,24 +80,30 @@ class ContentController extends Controller
      */
     public function update(Request $request, Content $content)
     {
-        // asign result prompt to the content
+        // after AI Analysis, asign result_prompt  to the content
         $resultPrompt = $request->input('result');
         if ($resultPrompt) {
             return $content->update([
                 'result_prompt' => $resultPrompt,
             ]);
         }
-        // update prompt(id) in the content
+
+        // if user edit prompt in chartId = 8, then update prompt(id) in the content
         $selectedPrompt = $request->input('selectPrompt');
         if ($selectedPrompt) {
             $content->update([
                 'prompt_id' => $selectedPrompt,
             ]);
-            if ($request->input('newPrompt')) {
-                dd("new");
+            // if the user add their own prmopt then store the prompt to the prompt(table)
+            $newPrompt = $request->input('newPrompt');
+            if ($newPrompt) {
+                Prompt::create([
+                    'body' => $newPrompt,
+                ]);
             }
             return redirect('/' . $request->dashboard)->with('success', 'Successfully to update prompt');
         }
+
         // update content data x/y value
         $selectedXValues = $request->input('xValue');
         if ($selectedXValues) {
@@ -116,7 +123,7 @@ class ContentController extends Controller
                 'x_value' => json_encode($selectedXValues),
                 'y_value' => $count
             ]);
-        } else {
+        } else { // if the user did not select any data(x_value) then update null
             $content->update([
                 'data' => null,
                 'x_value' => null,

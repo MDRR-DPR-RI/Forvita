@@ -163,15 +163,17 @@
               @csrf
               <div class="modal-body container text-center">
                 <label for="judul">Select Prompt:</label>
+                {{-- set on change function, when user add new prompt, then will show INPUT FIELD to enter new prompt --}}
                 <select id="selectPrompt" class="form-select" name="selectPrompt" onchange="checkForNewPrompt()">
                   @foreach ($prompts as $prompt)
-                    @if ($prompt->id == $content->id)
+                    @if ($prompt->id == 3) <!-- IMPORTANT: UPDATE THIS IF $prompt->id is EQUAL with the prompt_id in table contents -->
                       <option value="{{ $prompt->id }}" selected>{{ $prompt->body }}</option>
                     @else
                       <option value="{{ $prompt->id }}">{{ $prompt->body }}</option>
                     @endif
                   
                   @endforeach
+                  {{-- IF THE USER ADD NEW PROMPT THEN UPDATE THE prompt_id in contents(table) WITH next id of prompt(new id) --}}
                   @php
                     // Calculate the next ID by adding 1 to the last prompt's ID
                     $nextId = $prompts->isEmpty() ? 1 : $prompts->last()->id + 1;
@@ -180,18 +182,19 @@
                 </select>
                 <!-- Add a new prompt input field initially hidden -->
                 <div id="newPromptInput" class="modal-body container text-center" style="display: none;">
-                  <label for="newPrompt">New Prompt:</label>
+                  <label for="newPrompt">Enter New Prompt:</label>
                   <input type="text" id="newPrompt" name="newPrompt" class="form-control">
                 </div>
-                <input type="hidden" id=" ">
                 <input type="hidden" name="dashboard" value="{{ $dashboard }}" >
+
+                {{-- SCRIPT TO SHOW INPUT FIELD IF USER WANT TO ADD THEIR OWN/NEW PROMPT --}}
                   <script>
                   function checkForNewPrompt() {
                     const select = document.getElementById('selectPrompt');
                     const newPromptInput = document.getElementById('newPromptInput');
                     const newPrompt = document.getElementById('newPrompt');
 
-                    if (select.value === 'new_prompt') {
+                    if (select.value == {{ $nextId }}) {
                       newPromptInput.style.display = 'block'; // Show the new prompt input
                       newPrompt.required = true; // Make the new prompt field required
                     } else {
@@ -200,6 +203,7 @@
                     }
                   }
                 </script>
+                
               </div><!-- modal-body -->
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -309,9 +313,7 @@
 
 $(document).ready(function () {
   $('a[data-bs-toggle="modal"]').on('click', function () {
-    // Get the content ID from the data attribute
-    var contentId = $(this).data('content-id');
-    
+
     // Update the form action attribute with the content ID
     var formAction = 'dashboard/content/' + contentId;
     $('#contentForm').attr('action', formAction);
