@@ -64,7 +64,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <input type="hidden" name="selectedJudul" id="selectedJudul">
-            <input type="hidden" name="dashboard" value="{{ $dashboard }}">
+            <input type="hidden" name="dashboard_id" value="{{ $dashboard_id }}">
             <button type="submit" class="btn btn-primary">Apply</button>
           </div><!-- modal-footer -->
         </div><!-- modal-content -->

@@ -13,6 +13,10 @@ class Content extends Model
     {
         return $this->belongsTo(Chart::class);
     }
+    public function dashboard()
+    {
+        return $this->belongsTo(Dashboard::class);
+    }
     public function prompt()
     {
         return $this->belongsTo(Prompt::class);

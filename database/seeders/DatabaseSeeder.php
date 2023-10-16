@@ -7,6 +7,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Content;
 use App\Models\Chart;
 use App\Models\Clean;
+use App\Models\Cluster;
+use App\Models\Dashboard;
 use App\Models\Prompt;
 
 class DatabaseSeeder extends Seeder
@@ -22,10 +24,30 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        Cluster::create([
+            'name' => "DPR RI",
+        ]);
+
+        Dashboard::create([
+            'cluster_id' => 1,
+            'name' => "Kelompok 1",
+        ]);
+        Dashboard::create([
+            'cluster_id' => 1,
+            'name' => "Kelompok 23",
+        ]);
+        Dashboard::create([
+            'cluster_id' => 1,
+            'name' => "Kelompok 46",
+        ]);
+        Dashboard::create([
+            'cluster_id' => 1,
+            'name' => "Kelompok 5",
+        ]);
 
         Content::create([
             'chart_id' => 8,
-            'dashboard' => "kelompok23",
+            'dashboard_id' => 2,
             'judul' => 'Agama',
             'x_value' => '["Islam","Kristen","Budha"]',
             'y_value' => '[800,200,150]'

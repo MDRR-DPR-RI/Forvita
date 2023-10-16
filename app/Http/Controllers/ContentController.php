@@ -32,14 +32,17 @@ class ContentController extends Controller
         // Create and store the content in the database
         $content = Content::create([
             'chart_id' => $request->input('chartId'),
-            'dashboard' => $request->input('dashboard'),
+            'dashboard_id' => $request->input('dashboard_id'),
         ]);
 
         // Retrieve the ID of the newly created content
         $contentId = $content->id;
 
         // Go to edit page after cretaed new chart
-        return redirect('/dashboard/content/' . $contentId)->with('dashboard', $request->dashboard);
+        return redirect('/dashboard/content/' . $contentId)->with([
+            'dashboard_id' => $request->dashboard_id,
+            'dashboard_name' => $request->dashboard_name
+        ]);
     }
 
     /**
@@ -49,17 +52,24 @@ class ContentController extends Controller
     {
         // Query distinct "judul" values from the database
         $juduls = Clean::distinct()->pluck('judul');
-        $dashboard = $request->session()->get('dashboard');
 
-        if (isset($dashboard) || $dashboard != null) { // add new chart, code goes here
-            $dashboard = $request->session()->get('dashboard');
+        // session is sent after user add chart ->with([..])
+        $dashboard_name = $request->session()->get('dashboard_name');
+        $dashboard_id = $request->session()->get('dashboard_id');
+
+        if (isset($dashboard_name) || $dashboard_name != null) { // add new chart, code goes here
+            $dashboard_name = $request->session()->get('dashboard_name');
+            $dashboard_id = $request->session()->get('dashboard_id');
         } else { // edit chart, code goes here
-            $dashboard = $request->query('dashboard');
+            // queary is form the url req, like https://url/?dashboard_name={{ $dashboard_name }}
+            $dashboard_name = $request->query('dashboard_name');
+            $dashboard_id = $request->query('dashboard_id');
         }
         // Query distinct "keterangan" values from the database
         $keterangans = Clean::distinct()->pluck('keterangan');
         return view('dashboard.contents.edit_chart', [
-            'dashboard' => $dashboard,
+            'dashboard_name' => $dashboard_name,
+            'dashboard_id' => $dashboard_id,
             'cleanAll' => Clean::all(),
             'content' => $content,
             'juduls' => $juduls,
@@ -101,7 +111,7 @@ class ContentController extends Controller
                     'body' => $newPrompt,
                 ]);
             }
-            return redirect('/' . $request->dashboard)->with('success', 'Successfully to update prompt');
+            return redirect('/' . $request->dashboard_id)->with('success', 'Successfully to update prompt');
         }
 
         // update content data x/y value
@@ -131,7 +141,7 @@ class ContentController extends Controller
             ]);
         }
 
-        return redirect('/' . $request->dashboard)->with('success', 'Successfully');
+        return redirect('/' . $request->dashboard_id)->with('success', 'Successfully');
     }
 
     /**
@@ -140,6 +150,6 @@ class ContentController extends Controller
     public function destroy(Content $content, Request $request)
     {
         Content::destroy($content->id);
-        return redirect('/' . $request->dashboard)->with('deleted', "Chart has been deleted!");
+        return redirect('/' . $request->dashboard_id)->with('deleted', "Chart has been deleted!");
     }
 }

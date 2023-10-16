@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('chart_id');
+            $table->foreignId('dashboard_id');
             $table->foreignId('prompt_id')->default(1);
             $table->string('result_prompt')->nullable();
-            $table->string('dashboard');
             $table->string('judul')->nullable();
             $table->json('x_value')->nullable();
             $table->json('y_value')->nullable();

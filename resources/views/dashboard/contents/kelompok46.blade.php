@@ -14,7 +14,6 @@
     </ol>
     <h4 class="main-title mb-0">Kelompok 4 & 6</h4>
   </div>
-
   <div class="d-flex gap-2 mt-3 mt-md-0">
     <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-share-line fs-18 lh-1"></i>Share</button>
     <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-printer-line fs-18 lh-1"></i>Print</button>

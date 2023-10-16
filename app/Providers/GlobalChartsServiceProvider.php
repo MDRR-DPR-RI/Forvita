@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Chart;
 use App\Models\Prompt;
+use App\Models\Dashboard;
 use Illuminate\Support\Facades\Schema;
 
 class GlobalChartsServiceProvider extends ServiceProvider
@@ -30,6 +31,10 @@ class GlobalChartsServiceProvider extends ServiceProvider
         if (Schema::hasTable('prompts')) {
             $prmopts = Prompt::all();
             view()->share('prompts', $prmopts);
+        }
+        if (Schema::hasTable('dashboards')) {
+            $dashboards = Dashboard::where('cluster_id', 1)->get();
+            view()->share('dashboards', $dashboards);
         }
     }
 }

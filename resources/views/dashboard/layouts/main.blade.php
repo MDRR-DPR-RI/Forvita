@@ -44,7 +44,25 @@
         
       
     <div class="main main-app p-3 p-lg-4">
-        @yield('page_content')
+        @if (isset($content))
+          @yield('page_content')
+        @else
+          <div class="d-md-flex align-items-center justify-content-between mb-4">
+            <div>
+              <ol class="breadcrumb fs-sm mb-1">
+                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Kelompok 1</li>
+              </ol>
+              <h4 class="main-title mb-0">Kelompok 1</h4>
+            </div>
+                
+            <div class="d-flex gap-2 mt-3 mt-md-0">
+              <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-share-line fs-18 lh-1"></i>Share</button>
+              <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-printer-line fs-18 lh-1"></i>Print</button>
+              <a href="#modal3" class="btn btn-primary d-flex align-items-center gap-2"  data-bs-toggle="modal"><i class="ri-bar-chart-2-line fs-18 lh-1"></i>Customize<span class="d-none d-sm-inline"> Dashboard</span></a>
+            </div>
+          </div>
+        @endif
         @if (session()->has('success'))
           <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Success!</strong> {{ session('success') }}.
@@ -71,7 +89,7 @@
         <div class="modal-dialog modal-fullscreen">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Customize Dashboard {{ $dashboard }}</h5>
+              <h5 class="modal-title">Customize Dashboard {{ $dashboard_name }}</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div><!-- modal-header -->
             <div class="modal-body container text-center">
@@ -96,7 +114,8 @@
                             <form action="/dashboard/content" method="post">
                                 @csrf
                               <input type="hidden" value="{{ $chart->id }}" name="chartId">
-                              <input type="hidden" name="dashboard" value="{{ $dashboard }}" >
+                              <input type="hidden" name="dashboard_id" value="{{ $dashboard_id }}" >
+                              <input type="hidden" name="dashboard_name" value="{{ $dashboard_name }}" >
                               @if ($chart->id === 8 || $chart->id === 4 || $chart->id === 9 || $chart->id === 10 || $chart->id === 11 || $chart->id === 12 || $chart->id === 13)
                                 <td><button type="submit" class="btn btn-primary">Add</button></td>
                               @else
@@ -127,10 +146,11 @@
                             <td>{{ $content->chart->grid }}</td>
                             <td style="display: flex; justify-content: center;  align-items: center;">
                               <form action="/dashboard/content/{{ $content->id }}" method="post">
-                                <a href="/dashboard/content/{{ $content->id }}?dashboard={{ $dashboard }}" class="btn btn-primary">Edit </a>
+                                <a href="/dashboard/content/{{ $content->id }}?dashboard_name={{ $dashboard_name }}&dashboard_id={{ $dashboard_id }}" class="btn btn-primary">Edit </a>
                                   @method('delete')
                                   @csrf
-                                <input type="hidden" name="dashboard" value="{{ $dashboard }}">
+                                <input type="hidden" name="dashboard_id" value="{{ $dashboard_id }}">
+                                <input type="hidden" name="dashboard_name" value="{{ $dashboard_name }}">
                                   <button type="submit" class="btn btn-danger">Delete</button>
                               </form>
                             </td>
@@ -185,7 +205,7 @@
                   <label for="newPrompt">Enter New Prompt:</label>
                   <input type="text" id="newPrompt" name="newPrompt" class="form-control">
                 </div>
-                <input type="hidden" name="dashboard" value="{{ $dashboard }}" >
+                <input type="hidden" name="dashboard_id" value="{{ $dashboard_id }}" >
 
                 {{-- SCRIPT TO SHOW INPUT FIELD IF USER WANT TO ADD THEIR OWN/NEW PROMPT --}}
                   <script>

@@ -7,10 +7,12 @@
       <div class="nav-group show">
         <a href="#" class="nav-label">Dashboard</a>
         <ul class="nav nav-sidebar">
-          <li class="nav-item">
-            <a href="/kelompok1" class="nav-link {{ ($dashboard) == "kelompok1" ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>Kelompok 1</span></a>
-          </li>
-          <li class="nav-item">
+          @foreach ($dashboards as $dashboard)
+            <li class="nav-item">
+              <a href="/{{ $dashboard->id }}" class="nav-link {{ ($dashboard_name) == ($dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $dashboard->name }}</span></a>
+            </li>
+          @endforeach
+          {{-- <li class="nav-item">
             <a href="/kelompok23" class="nav-link {{ ($dashboard) == "kelompok23" ? 'active' : '' }}"><i class="ri-calendar-todo-line"></i> <span>Kelompok 2 & 3</span></a>
           </li>
           <li class="nav-item">
@@ -18,7 +20,7 @@
           </li>
           <li class="nav-item">
             <a href="/kelompok5" class="nav-link {{ ($dashboard) == "kelompok5" ? 'active' : '' }}"><i class="ri-bar-chart-2-line"></i> <span>Kelompok 5</span></a>
-          </li>
+          </li> --}}
         </ul>
       </div><!-- nav-group -->
       
