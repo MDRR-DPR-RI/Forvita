@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="/lib/remixicon/fonts/remixicon.css">
     <link rel="stylesheet" href="/lib/apexcharts/apexcharts.css">
     <link rel="stylesheet" href="/lib/prismjs/themes/prism.min.css">
-<meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
   {{-- Vendor --}}
     @yield('custom_vendor')
@@ -161,38 +161,7 @@
                   </table>
                 </div>
               </div>
-              <div class="col">
-                content
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">No</th>
-                      <th scope="col">Cluster</th>
-                      <th scope="col">Grid</th>
-                      <th scope="col">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($contents as $content)
-                        <tr>
-                          <td scope="row">{{ $loop->iteration }}</td>
-                          <td>{{ $content->chart->id }}</td>
-                          <td>{{ $content->chart->grid }}</td>
-                          <td style="display: flex; justify-content: center;  align-items: center;">
-                            <form action="/dashboard/content/{{ $content->id }}" method="post">
-                              <a href="/dashboard/content/{{ $content->id }}?dashboard={{ $dashboard }}" class="btn btn-primary">Edit </a>
-                                @method('delete')
-                                @csrf
-                              <input type="hidden" name="dashboard" value="{{ $dashboard }}">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                          </td>
-                        </tr>
-                    @endforeach
-
-                  </tbody>
-                </table>
-              </div>
+         
             </div>
           </div><!-- modal-body -->
           <div class="modal-footer">
@@ -285,6 +254,7 @@
       htmlContent = htmlStructures[chartId][0];
 
       htmlContent = htmlContent.replace('id="content"', `id="${unique}"`); // set the unique id for each content
+      htmlContent = htmlContent.replace('id="judul"', `id="judul  ${unique}"`); // set the unique id for each content
       htmlContent = htmlContent.replace('id="aiAnalysis"', `id="aiAnalysis${unique}"`); // set the unique id for each content
       htmlContent = htmlContent.replace('id="placeholder"', `id="placeholder${unique}"`); // set the unique id for each content
 
