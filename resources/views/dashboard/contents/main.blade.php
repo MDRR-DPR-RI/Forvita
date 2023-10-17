@@ -199,21 +199,26 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 {{-- script to print content in the dashboard --}}
-  <script >
+ <script >
     // Declare variables outside the loop
-    let chartId, htmlContent, containerContent, unique, y_value, x_value;
+    let contentId, chartId, htmlContent, containerContent, unique, y_value, x_value, prompt, result_prompt;
     @foreach ($contents as $content)
       // Access the HTML structure based on the PHP value
+      contentId = {{ $content->id }}
       unique = 'content' + {{ $content->id }}; // set unique value for each content
       chartId = {{ $content->chart->id }};
       y_value = {!! json_encode($content->y_value) !!}
       x_value = {!! json_encode($content->x_value) !!}
+      prompt = "{!! $content->prompt->body !!}"
+      result_prompt = "{{ $content->result_prompt }}"
+
       htmlContent = htmlStructures[chartId][0];
 
       htmlContent = htmlContent.replace('id="content"', `id="${unique}"`); // set the unique id for each content
-      htmlContent = htmlContent.replace('id="judul"', `id="judul${unique}"`); // set the unique id for each content
-      htmlContent = htmlContent.replace('id="aiAnalysis"', `id="aiAnalysis${unique}"`); // set the unique id for each content
-      htmlContent = htmlContent.replace('id="placeholder"', `id="placeholder${unique}"`); // set the unique id for each content
+      htmlContent = htmlContent.replace('id="judul"', `id="judul${unique}"`); // set the unique id for each judul content
+      htmlContent = htmlContent.replace('id="aiAnalysis"', `id="aiAnalysis${unique}"`); // set the unique id for aiAnalysis
+      htmlContent = htmlContent.replace('id="placeholder"', `id="placeholder${unique}"`); // set the unique id for placeholder
+      htmlContent = htmlContent.replace('data-content-id="id"', `data-content-id="${contentId}"`); // set the data-content-id with its id to send into a modal
 
       // Create a containerContent element and set its innerHTML
       containerContent = document.getElementById('main');
@@ -221,45 +226,75 @@
 
       // add AI analysis for chartId = 8
       if (chartId === 8 && y_value && x_value) {
-        console.log(chartId);
-        let inputString = `Please perform data analysis on the following data: I have '${x_value}' each with respective totals of '${y_value}' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start dengan kalimat =  Data menunjukkan bahwa.....`
-        console.log(inputString);
-        
         // Use unique identifier to select elements
-        let aiAnalysisElement = `#aiAnalysis${unique}`;
-        let placeholderElement = `#placeholder${unique}`;
+        const aiAnalysisElement = `#aiAnalysis${unique}`;
+        const placeholderElement = `#placeholder${unique}`;
+        if (!result_prompt) { // if there is no result_prompt in the content so do ajax call to do the analysis then asign the result prompt to the content(table in db)
+          let inputString = `Please perform data analysis based on ${prompt} on the following data: I have '${x_value}' each with respective totals of '${y_value}' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start dengan kalimat =  Data menunjukkan bahwa.....`
+          console.log(`prompt to api: ${inputString}` );
 
-        $(document).ready(function() {
-          $.ajax({
-            type: 'POST',
-            url: 'http://localhost:3000/ask',
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            data: JSON.stringify({
-              prompt: inputString
-            }),
-            success: function (response) {
-              const result = response.message;
-              console.log("analysis result : " + result)
+          $(document).ready(function() {
+            $.ajax({
+              type: 'POST',
+              url: 'http://localhost:3000/ask',
+              contentType: "application/json; charset=utf-8",
+              dataType: 'json',
+              data: JSON.stringify({
+                prompt: inputString
+              }),
+              success: function (response) {
+                const result = response.message;
+                console.log("analysis result : " + result)
 
-              // Set the result in the HTML element
-              $(aiAnalysisElement).text(result);
+                // Set the result in the HTML element
+                $(aiAnalysisElement).text(result);
 
-              // Empty the placeholder content
-              $(placeholderElement).empty();
-            },
-            error: function (error) {
-              console.error(error);
-              $(aiAnalysisElement).text("API Error");
-              $(placeholderElement).empty();
-            }
+                // Empty the placeholder content
+                $(placeholderElement).empty();
+
+                // store the result prompt into the db (table "contents")
+                $.ajax({
+                  url: `/dashboard/content/${contentId}`, // Include the content ID
+                  method: 'put', // Use POST
+                  data: {
+                    result: result // Your data to update
+                  },
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  success: function (response) {
+                      console.log("success to update the result_prompt");
+                  },
+                  error: function (error) {
+                    console.error(error);
+                    console.error("woy error when try to access the resource api");
+                  }
+                });
+              },
+              error: function (error) {
+                console.error(error);
+                $(aiAnalysisElement).text("API Error");
+                $(placeholderElement).empty();
+              }
+            });
           });
-        });
+        } else { // if there is a result then no need to do ajax call, just show the result_prompt
+          $(aiAnalysisElement).text(result_prompt);
+          $(placeholderElement).empty();
+        }
       } else {
         $(`#aiAnalysis${unique}`).text("NO DATA");
         $(`#placeholder${unique}`).empty();
       }
 @endforeach
+$(document).ready(function () {
+  $('a[data-bs-toggle="modal"]').on('click', function () {
+
+    // Update the form action attribute with the content ID
+    var formAction = 'dashboard/content/' + contentId;
+    $('#contentForm').attr('action', formAction);
+  });
+});
 
 </script>
 
