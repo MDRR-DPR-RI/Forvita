@@ -170,5 +170,10 @@ class DatabaseSeeder extends Seeder
             'keterangan' => "Tangan",
             'jumlah' => 2,
         ]);
+
+        $this->call([
+            SchedulerSeeder::class,
+            // ... other seeders
+        ]);
     }
 }
