@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dashboard;
 use App\Models\Content;
 use App\Models\Clean;
 use App\Models\Prompt;
@@ -22,6 +23,7 @@ class ContentController extends Controller
      */
     public function create()
     {
+        //
     }
 
     /**
@@ -67,7 +69,9 @@ class ContentController extends Controller
         }
         // Query distinct "keterangan" values from the database
         $keterangans = Clean::distinct()->pluck('keterangan');
+        $dashboards = Dashboard::where('cluster_id', 1)->get();
         return view('dashboard.contents.edit_chart', [
+            'dashboards' => $dashboards,
             'dashboard_name' => $dashboard_name,
             'dashboard_id' => $dashboard_id,
             'cleanAll' => Clean::all(),
@@ -111,7 +115,8 @@ class ContentController extends Controller
                     'body' => $newPrompt,
                 ]);
             }
-            return redirect('/' . $request->dashboard_id)->with('success', 'Successfully to update prompt');
+            // redirect with send dashboard_id variable to the dashboard routes
+            return redirect('/' . $request->dashboard_id . '?dashboard_id=' . $request->dashboard_id)->with('success', 'Successfully to update prompt');
         }
 
         // update content data x/y value
@@ -140,8 +145,8 @@ class ContentController extends Controller
                 'y_value' => null
             ]);
         }
-
-        return redirect('/' . $request->dashboard_id)->with('success', 'Successfully');
+        // redirect with send dashboard_id variable to the dashboard routes
+        return redirect('/' . $request->dashboard_id . '?dashboard_id=' . $request->dashboard_id)->with('success', 'Successfully');
     }
 
     /**
@@ -150,6 +155,8 @@ class ContentController extends Controller
     public function destroy(Content $content, Request $request)
     {
         Content::destroy($content->id);
-        return redirect('/' . $request->dashboard_id)->with('deleted', "Chart has been deleted!");
+
+        // redirect with send dashboard_id variable to the dashboard routes
+        return redirect('/' . $request->dashboard_id . '?dashboard_id=' . $request->dashboard_id)->with('deleted', "Chart has been deleted!");
     }
 }

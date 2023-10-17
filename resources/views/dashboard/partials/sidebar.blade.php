@@ -9,7 +9,7 @@
         <ul class="nav nav-sidebar">
           @foreach ($dashboards as $dashboard)
             <li class="nav-item">
-              <a href="/{{ $dashboard->id }}" class="nav-link {{ ($dashboard_name) == ($dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $dashboard->name }}</span></a>
+              <a href="/dashboard/{{ $dashboard->id }}?dashboard_id={{ $dashboard->id }}" class="nav-link {{ ($dashboard_name) == ($dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $dashboard->name }}</span></a>
             </li>
           @endforeach
           {{-- <li class="nav-item">

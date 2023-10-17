@@ -6,6 +6,7 @@
 @endsection
 
 @section('page_content')
+<div class="main main-app p-3 p-lg-4">
 
  <div class="main main-docs">
       <div class="container">
@@ -36,7 +37,12 @@
               </div>
             {{-- <button type="submit" class="btn btn-primary">Update Table</button> --}}
             </div>
-      </div>
+      </div><!-- main-docs -->
+    <div class="main-footer mt-5">
+      <span>&copy; 2023. DPR RI</span>
+    </div><!-- main-footer -->
+</div><!-- main-app -->
+    
     {{-- modal select xValues --}}
           <form action="/dashboard/content/{{ $content->id }}" method="post">
               @method('put')

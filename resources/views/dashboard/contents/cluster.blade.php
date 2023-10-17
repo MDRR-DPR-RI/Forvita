@@ -30,19 +30,32 @@
 </head>
 
 <body>
-@if(isset($contents))
-    <script>
-        var contents = @json($contents);
-    </script>
-@endif
-{{-- Side Bar --}}
-    @include('dashboard.partials.sidebar') 
-
     {{-- Top Bar --}}
         @include('dashboard.partials.topbar')
 
-      {{-- Page Content --}}
-          @yield('page_content')
+ <div class="main main-app p-3 p-lg-4">
+        <div class="row g-3" id="main">
+            @foreach ($clusters as $cluster)
+                <div class="col-xl-4" >
+                    <div class="row g-3" id="content">
+                        <div class="col-6 col-sm">
+                            <div class="card card-one">
+                                <div class="card-body p-3">
+                                    <div class="d-block fs-40 lh-1 text-primary mb-1"><i class="ri-calendar-todo-line"></i></div>
+                                    <h1 class="card-value mb-0 ls--1 fs-32" id="card-val">{{ $cluster->name }}}</h1>
+                                    {{-- <label class="d-block mb-1 fw-medium text-dark">${x_value[j]}</label> --}}
+                                    {{-- <small><span class="d-inline-flex text-danger">0.7% <i class="ri-arrow-down-line"></i></span> than last week</small> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div><!-- row -->
+        <div class="main-footer mt-5">
+            <span>&copy; 2023. DPR RI</span>
+        </div><!-- main-footer -->
+    </div><!-- main -->
 
 {{-- Custom Script --}}
   <script src="/lib/jquery/jquery.min.js"></script>

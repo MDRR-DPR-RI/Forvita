@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Chart;
-use App\Models\Clean;
+use App\Models\Cluster;
 use Illuminate\Http\Request;
 
-class ChartController extends Controller
+class ClusterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        dd("hey");
+        $clusters = Cluster::get();
+        return view('dashboard.contents.cluster', [
+            'clusters' => $clusters,
+        ]);
     }
 
     /**
@@ -35,14 +38,15 @@ class ChartController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Chart $chart)
+    public function show(Cluster $cluster)
     {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Chart $chart)
+    public function edit(Cluster $cluster)
     {
         //
     }
@@ -50,15 +54,16 @@ class ChartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Chart $chart)
+    public function update(Request $request, Cluster $cluster)
     {
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Chart $chart)
+    public function destroy(Cluster $cluster)
     {
-        //destry
+        //
     }
 }
