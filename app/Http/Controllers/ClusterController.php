@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cluster;
 use App\Models\Dashboard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ClusterController extends Controller
 {
@@ -49,6 +50,9 @@ class ClusterController extends Controller
     public function show(Cluster $cluster, Request $request)
     {
         $cluster_id = $request->query('cluster_id');
+
+        $request->session()->put('cluster', $cluster_id);
+        $request->session()->get('cluster');
 
         $dashboards = Dashboard::where('cluster_id', $cluster_id)->get();
         return view('dashboard.contents.main', [

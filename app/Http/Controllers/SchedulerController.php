@@ -16,8 +16,10 @@ class SchedulerController extends Controller
      */
     public function show(Request $request): View
     {
+        $cluster_id = session()->get('cluster');
+
         return view('scheduler.scheduler', [
-            'dashboards' => Dashboard::all(),
+            'dashboards' => Dashboard::where('cluster_id', $cluster_id)->get(),
             'schedulers' => Scheduler::all(),
             'currentParentPage' => 'Admin',
             'currentPage' => 'Scheduler',
