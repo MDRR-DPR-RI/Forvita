@@ -1,26 +1,20 @@
 
   <div class="sidebar">
     <div class="sidebar-header">
-      <a href="../" class="sidebar-logo">SATU DATA</a>
+      <a href="/cluster" class="sidebar-logo">SATU DATA</a>
     </div><!-- sidebar-header -->
     <div id="sidebarMenu" class="sidebar-body">
       <div class="nav-group show">
         <a href="#" class="nav-label">Dashboard</a>
         <ul class="nav nav-sidebar">
+          <li class="nav-item">
+            <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-primary">New Dashboard</span></a>
+          </li>
           @foreach ($dashboards as $dashboard)
             <li class="nav-item">
-              <a href="/dashboard/{{ $dashboard->id }}?dashboard_id={{ $dashboard->id }}" class="nav-link {{ ($dashboard_name) == ($dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $dashboard->name }}</span></a>
+              <a href="/dashboard/control/{{ $dashboard->id }}?dashboard_id={{ $dashboard->id }}&cluster_id={{ $dashboard->cluster_id }}" class="nav-link {{ ($dashboard_name) == ($dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $dashboard->name }}</span></a>
             </li>
           @endforeach
-          {{-- <li class="nav-item">
-            <a href="/kelompok23" class="nav-link {{ ($dashboard) == "kelompok23" ? 'active' : '' }}"><i class="ri-calendar-todo-line"></i> <span>Kelompok 2 & 3</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="/kelompok46" class="nav-link {{ ($dashboard) == "kelompok46" ? 'active' : '' }}"><i class="ri-shopping-bag-3-line"></i> <span>Kelompok 4 & 6</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="/kelompok5" class="nav-link {{ ($dashboard) == "kelompok5" ? 'active' : '' }}"><i class="ri-bar-chart-2-line"></i> <span>Kelompok 5</span></a>
-          </li> --}}
         </ul>
       </div><!-- nav-group -->
       
@@ -52,3 +46,27 @@
       </div><!-- sidebar-footer-menu -->
     </div><!-- sidebar-footer -->
   </div><!-- sidebar -->
+    
+    {{-- MODAL NEW DASHBOARD --}}
+    <div class="modal fade" id="newDashboard" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New Dashboard</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/dashboard" method="post">
+        @csrf
+        <div class="modal-body text-center">
+            <label>Enter New Dashboard Name:</label>
+            <input type="text" class="form-control" name="dashboard_name">
+            <input type="text" class="form-control" name="cluster_id" value="{{ $dashboard->cluster_id }}">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Add Dashboard</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

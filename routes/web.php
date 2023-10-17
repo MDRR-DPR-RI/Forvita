@@ -3,7 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\ContentController;
-use App\Http\Controllers\PromptController;
+use App\Http\Controllers\DashboardController;
 use App\Models\Dashboard;
 use App\Models\Clean;
 use App\Models\Content;
@@ -32,9 +32,11 @@ Route::get('/register', [AuthController::class, 'register_view']);
 Route::post('/register', [AuthController::class, 'register_submit']);
 
 
-Route::get('/dashboard/{dashboard:id}', function (Request $request) {
-    $dashboards = Dashboard::where('cluster_id', 1)->get();
-    $dashboard = Dashboard::where('id', $request->query('dashboard_id'))->first();
+Route::get('/dashboard/control/{dashboard:id}', function (Request $request) {
+    $cluster_id = $request->query('cluster_id');
+    $dashboard_id = $request->query('dashboard_id');
+    $dashboards = Dashboard::where('cluster_id', $cluster_id)->get();
+    $dashboard = Dashboard::where('id', $dashboard_id)->first();
     return view('dashboard.contents.main', [
         'dashboards' => $dashboards,
         'dashboard_name' => $dashboard->name,
@@ -44,8 +46,8 @@ Route::get('/dashboard/{dashboard:id}', function (Request $request) {
 });
 
 Route::resource('/cluster', ClusterController::class);
+Route::resource('/dashboard', DashboardController::class);
 Route::resource('/dashboard/content', ContentController::class);
-Route::resource('/prompt', PromptController::class);
 Route::post('/fetch-data', function (Request $request) {
 
     // return response()->json($request->selectedJudul);

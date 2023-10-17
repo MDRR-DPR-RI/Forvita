@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cluster;
+use App\Models\Dashboard;
 use Illuminate\Http\Request;
 
 class ClusterController extends Controller
@@ -12,7 +13,6 @@ class ClusterController extends Controller
      */
     public function index()
     {
-        dd("hey");
         $clusters = Cluster::get();
         return view('dashboard.contents.cluster', [
             'clusters' => $clusters,
@@ -32,15 +32,25 @@ class ClusterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Cluster::create([
+            'name' => $request->input('cluster_name'),
+        ]);
+        return redirect('/cluster');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Cluster $cluster)
+    public function show(Cluster $cluster, Request $request)
     {
-        //
+        $cluster_id = $request->query('cluster_id');
+
+        $dashboards = Dashboard::where('cluster_id', $cluster_id)->get();
+        return view('dashboard.contents.main', [
+            'dashboards' => $dashboards,
+            'dashboard_name' => "null",
+            'cluster' => $cluster
+        ]);
     }
 
     /**

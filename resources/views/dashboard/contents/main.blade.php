@@ -6,6 +6,7 @@
 @endsection
 
 @section('page_content')
+@if (!isset($cluster))
     <div class="main main-app p-3 p-lg-4">
         <div class="d-md-flex align-items-center justify-content-between mb-4">
             <div>
@@ -127,7 +128,7 @@
           </div><!-- modal-footer -->
         </div><!-- modal-content -->
       </div>
-
+      
 {{-- Modal Edit PROMPT--}}
       <div class="modal fade" id="modalprompt" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -136,7 +137,7 @@
               <h5 class="modal-title">Edit Prompt</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div><!-- modal-header -->
-            <form id="contentForm" action="dashboard/content/" method="post">
+            <form id="contentForm" action="/dashboard/content/" method="post">
               @method('put')
               @csrf
               <div class="modal-body container text-center">
@@ -291,12 +292,15 @@ $(document).ready(function () {
   $('a[data-bs-toggle="modal"]').on('click', function () {
 
     // Update the form action attribute with the content ID
-    var formAction = 'dashboard/content/' + contentId;
+    var formAction = '/dashboard/content/' + contentId;
     $('#contentForm').attr('action', formAction);
   });
 });
 
 </script>
+@else
+woy
+@endif
 
 @endsection
 
