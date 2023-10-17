@@ -32,8 +32,13 @@ class ClusterController extends Controller
      */
     public function store(Request $request)
     {
-        Cluster::create([
+        $cluster = Cluster::create([
             'name' => $request->input('cluster_name'),
+        ]);
+        $clusterId = $cluster->id;
+        Dashboard::create([
+            'cluster_id' => $clusterId,
+            'name' => 'dashboard 1',
         ]);
         return redirect('/cluster');
     }

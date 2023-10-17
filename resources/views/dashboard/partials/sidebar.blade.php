@@ -66,7 +66,7 @@
         <div class="modal-body text-center">
             <label>Enter New Dashboard Name:</label>
             <input type="text" class="form-control" name="dashboard_name">
-            <input type="text" class="form-control" name="cluster_id" value="{{ $dashboard->cluster_id }}">
+            <input type="hidden" class="form-control" name="cluster_id" value="{{ $dashboard->cluster_id }}">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
