@@ -5,11 +5,21 @@
     </div><!-- sidebar-header -->
     <div id="sidebarMenu" class="sidebar-body">
       <div class="nav-group show">
+        <a href="#" class="nav-label">Admin</a>
+        <ul class="nav nav-sidebar">
+          <li class="nav-item">
+              <a href="/scheduler" class="nav-link @isset($schedulers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>scheduler</span></a>
+          </li>
+        </ul>
         <a href="#" class="nav-label">Dashboard</a>
         <ul class="nav nav-sidebar">
           @foreach ($dashboards as $dashboard)
             <li class="nav-item">
-              <a href="/{{ $dashboard->id }}" class="nav-link {{ ($dashboard_name) == ($dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $dashboard->name }}</span></a>
+              @if(isset($dashboard_name))
+                <a href="/{{ $dashboard->id }}" class="nav-link {{ ($dashboard_name) == ($dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $dashboard->name }}</span></a>
+              @else
+                <a href="/{{ $dashboard->id }}" class="nav-link"><i class="ri-pie-chart-2-fill"></i> <span>{{ $dashboard->name }}</span></a>
+              @endif
             </li>
           @endforeach
           {{-- <li class="nav-item">

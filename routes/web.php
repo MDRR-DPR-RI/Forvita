@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ContentController;
-use App\Http\Controllers\PromptController;
+//use App\Http\Controllers\PromptController;
+use App\Http\Controllers\SchedulerController;
 use App\Models\Dashboard;
 use App\Models\Clean;
 use App\Models\Content;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Schema;
 */
 
 Route::redirect('/', '/1');
-$dashboards;
+//$dashboards;
 if (Schema::hasTable('dashboards')) {
     $dashboards = Dashboard::where('cluster_id', 1)->get();
 }
@@ -63,7 +64,7 @@ foreach ($dashboards as $dashboard) {
 
 Route::resource('/dashboard/chart', ChartController::class);
 Route::resource('/dashboard/content', ContentController::class);
-Route::resource('/prompt', PromptController::class);
+//Route::resource('/prompt', PromptController::class);
 Route::post('/fetch-data', function (Request $request) {
 
     // return response()->json($request->selectedJudul);
@@ -76,6 +77,12 @@ Route::post('/fetch-data', function (Request $request) {
     ]);
 });
 
+// Scheduler routers
+Route::get('scheduler', [SchedulerController::class, 'show']);
+Route::get('scheduler/execute', [SchedulerController::class, 'execute']);
+Route::post('scheduler', [SchedulerController::class, 'store']);
+Route::patch('scheduler', [SchedulerController::class, 'update']);
+Route::delete('scheduler', [SchedulerController::class, 'destroy']);
 
 // <!DOCTYPE html>
 // <html lang="en">

@@ -50,10 +50,10 @@
           <div class="d-md-flex align-items-center justify-content-between mb-4">
             <div>
               <ol class="breadcrumb fs-sm mb-1">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Kelompok 1</li>
+                <li class="breadcrumb-item"><a>@isset($currentParentPage) {{$currentParentPage}} @else Dashboard @endisset</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@isset($currentPage) {{$currentPage}} @else Dashboard Content @endisset</li>
               </ol>
-              <h4 class="main-title mb-0">Kelompok 1</h4>
+              <h4 class="main-title mb-0">@isset($currentPage) {{$currentPage}} @else Content Title @endisset</h4>
             </div>
                 
             <div class="d-flex gap-2 mt-3 mt-md-0">
@@ -109,8 +109,8 @@
                       @foreach ($charts as $chart)
                           <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td ">{{ $chart->name }}</td>
-                            <td >{{ $chart->grid }}</td>
+                            <td>{{ $chart->name }}</td>
+                            <td>{{ $chart->grid }}</td>
                             <form action="/dashboard/content" method="post">
                                 @csrf
                               <input type="hidden" value="{{ $chart->id }}" name="chartId">
@@ -229,6 +229,7 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Update Prompt</button>
+              </div>
             </form>
             </div><!-- modal-footer -->
           </div><!-- modal-content -->
@@ -254,7 +255,7 @@
       htmlContent = htmlStructures[chartId][0];
 
       htmlContent = htmlContent.replace('id="content"', `id="${unique}"`); // set the unique id for each content
-      htmlContent = htmlContent.replace('id="judul"', `id="judul  ${unique}"`); // set the unique id for each content
+      htmlContent = htmlContent.replace('id="judul"', `id="judul${unique}"`); // set the unique id for each content
       htmlContent = htmlContent.replace('id="aiAnalysis"', `id="aiAnalysis${unique}"`); // set the unique id for each content
       htmlContent = htmlContent.replace('id="placeholder"', `id="placeholder${unique}"`); // set the unique id for each content
 

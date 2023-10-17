@@ -14,10 +14,15 @@ class SchedulerSeeder extends Seeder
     public function run(): void
     {
         $sql = "INSERT INTO dataset.dummy_data
-                VALUES
-                    (null, 1, 5, 10, null, null),
-                    (null, 5, 10, 1, null, null),
-                    (null, 10, 1, 5, null, null);";
+                VALUES ";
+        for ($i = 1; $i <= 50; $i++) {
+            $random_a = rand(1, 100);
+            $random_b = rand(1, 100);
+            $random_c = rand(1, 100);
+            $sql = $sql . "(null, $random_a, $random_b, $random_c, null, null),\n";
+        }
+        $sql = substr($sql, 0, -2) . ";";
+        echo $sql;
         DB::insert($sql);
         Scheduler::create([
             'name' => "total_dummy_data",
