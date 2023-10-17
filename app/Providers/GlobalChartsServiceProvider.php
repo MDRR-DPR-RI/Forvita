@@ -32,9 +32,5 @@ class GlobalChartsServiceProvider extends ServiceProvider
             $prmopts = Prompt::all();
             view()->share('prompts', $prmopts);
         }
-        if (Schema::hasTable('dashboards')) {
-            $dashboards = Dashboard::where('cluster_id', 1)->get();
-            view()->share('dashboards', $dashboards);
-        }
     }
 }

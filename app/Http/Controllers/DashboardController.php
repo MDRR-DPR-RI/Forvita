@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Chart;
-use App\Models\Clean;
+use App\Models\Dashboard;
 use Illuminate\Http\Request;
 
-class ChartController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,20 +28,25 @@ class ChartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Dashboard::create([
+            'name' => $request->input('dashboard_name'),
+            'cluster_id' => $request->input('cluster_id'),
+        ]);
+        return redirect()->back();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Chart $chart)
+    public function show(Dashboard $dashboard)
     {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Chart $chart)
+    public function edit(Dashboard $dashboard)
     {
         //
     }
@@ -50,15 +54,16 @@ class ChartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Chart $chart)
+    public function update(Request $request, Dashboard $dashboard)
     {
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Chart $chart)
+    public function destroy(Dashboard $dashboard)
     {
-        //destry
+        //
     }
 }
