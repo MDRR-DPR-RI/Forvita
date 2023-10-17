@@ -26,14 +26,18 @@ class SchedulerSeeder extends Seeder
         DB::insert($sql);
         Scheduler::create([
             'name' => "total_dummy_data",
-            'query' => "select 'total_dummy_data' as judul, 'total_dummy_data_a' as keterangan, sum(a) as data
-                        from dataset.dummy_data
-                            UNION
-                        select 'total_dummy_data' as judul, 'total_dummy_data_b' as keterangan, sum(b) as data
-                        from dataset.dummy_data
-                            UNION
-                        select 'total_dummy_data' as judul, 'total_dummy_data_c' as keterangan, sum(c) as data
-                        from dataset.dummy_data;",
+            'query' => "INSERT INTO dataset.cleans(judul, keterangan, jumlah)
+                        SELECT *
+                        FROM (
+                            select 'total_dummy_data' as judul, 'total_dummy_data_a' as keterangan, sum(a) as data
+                            from dataset.dummy_data
+                                UNION
+                            select 'total_dummy_data' as judul, 'total_dummy_data_b' as keterangan, sum(b) as data
+                            from dataset.dummy_data
+                                UNION
+                            select 'total_dummy_data' as judul, 'total_dummy_data_c' as keterangan, sum(c) as data
+                            from dataset.dummy_data
+                                            ) as query;",
         ]);
     }
 }

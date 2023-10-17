@@ -18,7 +18,7 @@
           </li>
           @foreach ($dashboards as $dashboard)
             <li class="nav-item">
-              <a href="/dashboard/control/{{ $dashboard->id }}?dashboard_id={{ $dashboard->id }}&cluster_id={{ $dashboard->cluster_id }}" class="nav-link {{ ($dashboard_name) == ($dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $dashboard->name }}</span></a>
+              <a href="/dashboard/control/{{ $dashboard->id }}?dashboard_id={{ $dashboard->id }}&cluster_id={{ $dashboard->cluster_id }}" class="nav-link @isset($dashboard_name) {{ ($dashboard_name) == ($dashboard->name) ? 'active' : '' }} @else @endisset"><i class="ri-pie-chart-2-fill"></i> <span>{{ $dashboard->name }}</span></a>
             </li>
           @endforeach
         </ul>

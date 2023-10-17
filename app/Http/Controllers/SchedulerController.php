@@ -64,7 +64,9 @@ class SchedulerController extends Controller
         error_log("Type of schedulerResult is " . gettype($scheduler));
 
         DB::insert($scheduler->query);
-        error_log("Execute: SUCCESS JANCOK");
+        error_log("Execute: SUCCESS!!!");
+        $scheduler->status = "Ran successfully!";
+        $scheduler->save();
         return redirect('scheduler');
     }
 }
