@@ -10,7 +10,7 @@
   <!-- Meta -->
   <meta name="description" content="">
   <meta name="author" content="Themepixels">
-
+ 
   <!-- Favicon -->
   <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
 

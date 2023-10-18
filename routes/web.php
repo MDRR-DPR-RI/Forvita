@@ -5,6 +5,7 @@ use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SchedulerController;
+use App\Http\Controllers\TableauController;
 use App\Models\Dashboard;
 use App\Models\Clean;
 use App\Models\Content;
@@ -67,3 +68,7 @@ Route::get('scheduler/execute', [SchedulerController::class, 'execute']);
 Route::post('scheduler', [SchedulerController::class, 'store']);
 Route::patch('scheduler', [SchedulerController::class, 'update']);
 Route::delete('scheduler', [SchedulerController::class, 'destroy']);
+
+
+// Tableau routers
+Route::get('tableau', [TableauController::class,'index']);

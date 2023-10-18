@@ -10,6 +10,9 @@
           <li class="nav-item">
               <a href="/scheduler" class="nav-link @isset($schedulers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>scheduler</span></a>
           </li>
+          <li class="nav-item">
+            <a href="/tableau" class="nav-link @isset($tableau) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>tableau</span></a>
+        </li>
         </ul>
         <a href="#" class="nav-label">Dashboard</a>
         <ul class="nav nav-sidebar">
