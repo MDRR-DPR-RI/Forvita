@@ -10,8 +10,13 @@ class Database extends Model
     use HasFactory;
     protected $fillable =
         [
+            'name',
             'url',
-            'user',
+            'driver',
+            'host',
+            'port',
+            'database',
+            'username',
             'password',
         ];
 }

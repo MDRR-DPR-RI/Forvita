@@ -8,7 +8,12 @@
         <a href="#" class="nav-label">Admin</a>
         <ul class="nav nav-sidebar">
           <li class="nav-item">
-              <a href="/scheduler" class="nav-link @isset($schedulers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>scheduler</span></a>
+            <a href="/database" class="nav-link @isset($databases) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>databases</span></a>
+          </li>
+        </ul>
+        <ul class="nav nav-sidebar">
+          <li class="nav-item">
+              <a href="/scheduler" class="nav-link @isset($schedulers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>schedulers</span></a>
           </li>
         </ul>
         <a href="#" class="nav-label">Dashboard</a>

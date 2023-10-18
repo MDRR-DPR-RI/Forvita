@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Scheduler;
+use App\Models\Database;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -36,7 +37,36 @@ class SchedulerSeeder extends Seeder
                                 UNION
                             select 'total_dummy_data' as judul, 'total_dummy_data_c' as keterangan, sum(c) as jumlah
                             from dataset.dummy_data
-                                            ) as query;",
+                            ) as query;",
+        ]);
+        Scheduler::create([
+            'name' => "total_alasan_cuti",
+            'query' => "SELECT *
+                        FROM (
+                        SELECT 'total_alasan_cuti' AS judul, coalesce(cuti.keterangan, 'tidak ada alasan') as keterangan, count(*) as jumlah
+                        FROM db_sirajin_ppnasn.cuti as cuti
+                        GROUP BY cuti.keterangan
+                        ) AS query;",
+        ]);
+        Database::create([
+            'name' => "localhost",
+            'url' => "jdbc:mariadb://localhost:3306",
+            'driver' => "mysql",
+            'host' => "127.0.0.1",
+            'port' => "3306",
+            'database' => "dataset",
+            'username' => "root",
+            'password' => "",
+        ]);
+        Database::create([
+            'name' => "postgre_localhost",
+            'url' => "jdbc:postgresql://localhost:5432/postgres",
+            'driver' => "pgsql",
+            'host' => "127.0.0.1",
+            'port' => "5432",
+            'database' => "dummy_database",
+            'username' => "postgres",
+            'password' => "password",
         ]);
     }
 }

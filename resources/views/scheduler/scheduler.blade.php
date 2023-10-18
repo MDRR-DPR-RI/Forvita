@@ -18,7 +18,8 @@
                         <p class="card-text">
                             Rules: <br>
                             1. Three columns in order: <br>Judul, Keterangan, jumlah<br>
-                            2. Groups of data needs to have the same judul with keterangan to describe the differences.
+                            2. Groups of data needs to have the same judul with keterangan to describe the differences.<br>
+                            3. Don't have any null or empty string values in any columns.
                         </p>
                     </div>
                 </div>

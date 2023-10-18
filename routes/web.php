@@ -5,6 +5,7 @@ use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SchedulerController;
+use App\Http\Controllers\DatabaseController;
 use App\Models\Dashboard;
 use App\Models\Clean;
 use App\Models\Content;
@@ -61,9 +62,15 @@ Route::post('/fetch-data', function (Request $request) {
     ]);
 });
 
-// Scheduler routers
+// Scheduler Routers
 Route::get('scheduler', [SchedulerController::class, 'show']);
 Route::get('scheduler/execute', [SchedulerController::class, 'execute']);
 Route::post('scheduler', [SchedulerController::class, 'store']);
 Route::patch('scheduler', [SchedulerController::class, 'update']);
 Route::delete('scheduler', [SchedulerController::class, 'destroy']);
+
+// Database Routers
+Route::get('database', [DatabaseController::class, 'show']);
+Route::post('database', [DatabaseController::class, 'store']);
+Route::patch('database', [DatabaseController::class, 'update']);
+Route::delete('database', [DatabaseController::class, 'destroy']);
