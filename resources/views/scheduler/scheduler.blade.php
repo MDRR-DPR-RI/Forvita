@@ -8,9 +8,44 @@
 
 @section('page_content')
     <div class="main main-app p-3 p-lg-4">
+        <h1> Schedulers </h1>
+        <div class="row">
+            <div class="col">
+                {{--Query Format Card--}}
+                <div class="card" id="queryFormatCard" style="width: 22rem; margin-left: auto; margin-right: 0;">
+                    <div class="card-body">
+                        <h5 class="card-title">Query Format</h5>
+                        <p class="card-text">
+                            Rules: <br>
+                            1. Three columns in order: <br>Judul, Keterangan, jumlah<br>
+                            2. Groups of data needs to have the same judul with keterangan to describe the differences.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                {{--Query Example Card--}}
+                    <div class="card" id="queryExampleCard" style="width: 50rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Query Example</h5>
+                            <p class="card-text">
+                                SELECT * <br>
+                                FROM (<br>
+                                SELECT 'total_dummy_data' AS judul, 'total_dummy_data_a' AS keterangan, sum(a) AS jumlah<br>
+                                FROM dataset.dummy_data<br>
+                                UNION<br>
+                                SELECT 'total_dummy_data' AS judul, 'total_dummy_data_b' AS keterangan, sum(b) AS jumlah<br>
+                                FROM dataset.dummy_data<br>
+                                UNION<br>
+                                SELECT 'total_dummy_data' AS judul, 'total_dummy_data_c' AS keterangan, sum(c) AS jumlah<br>
+                                FROM dataset.dummy_data<br>
+                                ) AS query;
+                            </p>
+                        </div>
+                    </div>
+        </div>
         <table class="table">
             <thead>
-            Schedulers
             <tr>
                 <th scope="col">No</th>
                 <th scope="col">Name</th>

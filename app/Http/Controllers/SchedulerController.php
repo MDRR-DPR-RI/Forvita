@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clean;
 use App\Models\Dashboard;
 use App\Models\Scheduler;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Illuminate\Database\QueryException;
 
 class SchedulerController extends Controller
 {
@@ -23,7 +25,6 @@ class SchedulerController extends Controller
             'schedulers' => Scheduler::all(),
             'currentParentPage' => 'Admin',
             'currentPage' => 'Scheduler',
-            'content' => True,
         ]);
     }
 
@@ -60,13 +61,27 @@ class SchedulerController extends Controller
     }
     public function execute(Request $request) {
         $schedulerID = $request->query('schedulerID');
-        error_log("Execute: Got scheduler with ID " . $schedulerID);
-
         $scheduler = Scheduler::find($schedulerID);
-        error_log("Type of schedulerResult is " . gettype($scheduler));
 
-        DB::insert($scheduler->query);
-        error_log("Execute: SUCCESS!!!");
+        try {
+            $queryResult = DB::select($scheduler->query);
+            foreach($queryResult as $row) {
+                Clean::updateOrCreate(
+                    ['keterangan' => $row->keterangan],
+                    [
+                        'judul' => $row->judul,
+                        'jumlah' => $row->jumlah,
+                    ]
+                );
+            }
+        } catch(QueryException $ex){
+            $errorMessage = substr($ex, 0, 200);
+            error_log("Failed to execute query: " . $errorMessage);
+            $scheduler->status = "Failed to run: " . $errorMessage;
+            $scheduler->save();
+            return redirect('scheduler');
+        }
+
         $scheduler->status = "Ran successfully!";
         $scheduler->save();
         return redirect('scheduler');
