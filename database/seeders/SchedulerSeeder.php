@@ -26,8 +26,7 @@ class SchedulerSeeder extends Seeder
         DB::insert($sql);
         Scheduler::create([
             'name' => "total_dummy_data",
-            'query' => "INSERT INTO dataset.cleans(judul, keterangan, jumlah)
-                        SELECT *
+            'query' => "SELECT *
                         FROM (
                             select 'total_dummy_data' as judul, 'total_dummy_data_a' as keterangan, sum(a) as data
                             from dataset.dummy_data
