@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cluster;
 use App\Models\Dashboard;
 use Illuminate\Http\Request;
+use Illuminate\Queue\Jobs\RedisJob;
 use Illuminate\Support\Facades\Session;
 
 class ClusterController extends Controller
@@ -49,17 +50,16 @@ class ClusterController extends Controller
      */
     public function show(Cluster $cluster, Request $request)
     {
-        $cluster_id = $request->query('cluster_id');
+        // storing session
+        $cluster_id = $cluster->id;
+        $request->session()->put('cluster_id', $cluster_id);
 
-        $request->session()->put('cluster', $cluster_id);
-        $request->session()->get('cluster');
+        $cluster_name = $cluster->name;
+        $request->session()->put('cluster_name', $cluster_name);
 
-        $dashboards = Dashboard::where('cluster_id', $cluster_id)->get();
-        return view('dashboard.contents.main', [
-            'dashboards' => $dashboards,
-            'dashboard_name' => "null",
-            'cluster' => $cluster
-        ]);
+        $dashboard = Dashboard::where('cluster_id', $cluster_id)->first();
+
+        return redirect('/dashboard/view/' . $dashboard->id);
     }
 
     /**

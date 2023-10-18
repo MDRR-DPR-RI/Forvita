@@ -44,18 +44,13 @@
       {{-- Page Content --}}
           @yield('page_content')
 
-{{-- Custom Script --}}
   <script src="/lib/jquery/jquery.min.js"></script>
   <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-  
-  <script src="/js/script.js"></script>
-  
- <script src="/lib/apexcharts/apexcharts.min.js"></script>
 
-  <script src="/js/db.data.js"></script>
-  <script src="/js/db.finance.js"></script>
-  
+  <script src="/js/script.js"></script>
+
+{{-- Custom Script --}}  
 @yield('custom_script')
 
 </body>

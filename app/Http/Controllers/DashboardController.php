@@ -28,9 +28,10 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
+        $cluster_id = $request->session()->get('cluster_id');
         Dashboard::create([
             'name' => $request->input('dashboard_name'),
-            'cluster_id' => $request->input('cluster_id'),
+            'cluster_id' => $cluster_id,
         ]);
         return redirect()->back();
     }

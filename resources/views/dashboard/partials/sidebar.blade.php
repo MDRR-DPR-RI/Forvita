@@ -16,9 +16,13 @@
           <li class="nav-item">
             <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-primary">New Dashboard</span></a>
           </li>
-          @foreach ($dashboards as $dashboard)
+          @foreach ($dashboards as $index_dashboard)
             <li class="nav-item">
-              <a href="/dashboard/control/{{ $dashboard->id }}?dashboard_id={{ $dashboard->id }}&cluster_id={{ $dashboard->cluster_id }}" class="nav-link @isset($dashboard_name) {{ ($dashboard_name) == ($dashboard->name) ? 'active' : '' }} @else @endisset"><i class="ri-pie-chart-2-fill"></i> <span>{{ $dashboard->name }}</span></a>
+            @if (isset($dashboard->name))
+              <a href="/dashboard/view/{{ $index_dashboard->id }}" class="nav-link  {{ ($dashboard->name) == ($index_dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $index_dashboard->name }}</span></a>
+            @else
+              <a href="/dashboard/view/{{ $index_dashboard->id }}" class="nav-link  {{ ($dashboard_name) == ($index_dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $index_dashboard->name }}</span></a>
+            @endif
             </li>
           @endforeach
         </ul>
@@ -66,7 +70,6 @@
         <div class="modal-body text-center">
             <label>Enter New Dashboard Name:</label>
             <input type="text" class="form-control" name="dashboard_name">
-            <input type="hidden" class="form-control" name="cluster_id" value="{{ session('cluster') }}">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

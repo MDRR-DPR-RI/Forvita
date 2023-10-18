@@ -18,13 +18,13 @@ class SchedulerController extends Controller
      */
     public function show(Request $request): View
     {
-        $cluster_id = session()->get('cluster');
+        $cluster_id = session()->get('cluster_id');
 
         return view('scheduler.scheduler', [
             'dashboards' => Dashboard::where('cluster_id', $cluster_id)->get(),
             'schedulers' => Scheduler::all(),
             'currentParentPage' => 'Admin',
-            'currentPage' => 'Scheduler',
+            'dashboard_name' => 'Scheduler',
         ]);
     }
 
@@ -36,7 +36,7 @@ class SchedulerController extends Controller
             'database_id' => $request->input('schedulerDatabaseID'),
         ]);
 
-       return redirect('scheduler');
+        return redirect('scheduler');
     }
 
     public function update(Request $request): RedirectResponse
@@ -59,13 +59,14 @@ class SchedulerController extends Controller
         error_log("deleted scheduler with id $deleteSchedulerID");
         return redirect('scheduler');
     }
-    public function execute(Request $request) {
+    public function execute(Request $request)
+    {
         $schedulerID = $request->query('schedulerID');
         $scheduler = Scheduler::find($schedulerID);
 
         try {
             $queryResult = DB::select($scheduler->query);
-            foreach($queryResult as $row) {
+            foreach ($queryResult as $row) {
                 Clean::updateOrCreate(
                     ['keterangan' => $row->keterangan],
                     [
@@ -74,7 +75,7 @@ class SchedulerController extends Controller
                     ]
                 );
             }
-        } catch(QueryException $ex){
+        } catch (QueryException $ex) {
             $errorMessage = substr($ex, 0, 200);
             error_log("Failed to execute query: " . $errorMessage);
             $scheduler->status = "Failed to run: " . $errorMessage;

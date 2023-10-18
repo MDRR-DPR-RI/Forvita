@@ -46,7 +46,7 @@
                 </div>
             @foreach ($clusters as $cluster)
                 <div class="col-3">
-                    <a href="/cluster/{{ $cluster->id }}?cluster_id={{ $cluster->id }}">
+                    <a href="/cluster/{{ $cluster->id }}">
                         <div class="card card-one">
                             <div class="card-body p-3">
                                 <div class="d-block fs-40 lh-1 text-primary mb-1"><i class="ri-calendar-todo-line"></i></div>

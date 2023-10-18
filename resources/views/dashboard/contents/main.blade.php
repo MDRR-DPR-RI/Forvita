@@ -6,15 +6,14 @@
 @endsection
 
 @section('page_content')
-@if (!isset($cluster))
     <div class="main main-app p-3 p-lg-4">
         <div class="d-md-flex align-items-center justify-content-between mb-4">
             <div>
                 <ol class="breadcrumb fs-sm mb-1">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $dashboard_name }}</li>
+                <li class="breadcrumb-item"><a href="/cluster">{{ session('cluster_name') }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $dashboard->name }}</li>
                 </ol>
-                <h4 class="main-title mb-0">{{ $dashboard_name }}</h4>
+                <h4 class="main-title mb-0">Dashboard {{ $dashboard->name }}</h4>
             </div>
                 
             <div class="d-flex gap-2 mt-3 mt-md-0">
@@ -47,7 +46,7 @@
         <div class="modal-dialog modal-fullscreen">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Customize Dashboard {{ $dashboard_name }}</h5>
+              <h5 class="modal-title">Customize Dashboard {{ $dashboard->name }}</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div><!-- modal-header -->
             <div class="modal-body container text-center">
@@ -71,9 +70,8 @@
                             <td >{{ $chart->grid }}</td>
                             <form action="/dashboard/content" method="post">
                                 @csrf
-                              <input type="hidden" value="{{ $chart->id }}" name="chartId">
-                              <input type="hidden" name="dashboard_id" value="{{ $dashboard_id }}" >
-                              <input type="hidden" name="dashboard_name" value="{{ $dashboard_name }}" >
+                              <input type="hidden" value="{{ $chart->id }}" name="chart_id">
+                              <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
                               @if ($chart->id === 8 || $chart->id === 4 || $chart->id === 9 || $chart->id === 10 || $chart->id === 11 || $chart->id === 12 || $chart->id === 13)
                                 <td><button type="submit" class="btn btn-primary">Add</button></td>
                               @else
@@ -104,11 +102,9 @@
                             <td>{{ $content->chart->grid }}</td>
                             <td style="display: flex; justify-content: center;  align-items: center;">
                               <form action="/dashboard/content/{{ $content->id }}" method="post">
-                                <a href="/dashboard/content/{{ $content->id }}?dashboard_name={{ $dashboard_name }}&dashboard_id={{ $dashboard_id }}" class="btn btn-primary">Edit </a>
+                                <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary">Edit </a>
                                   @method('delete')
                                   @csrf
-                                <input type="hidden" name="dashboard_id" value="{{ $dashboard_id }}">
-                                <input type="hidden" name="dashboard_name" value="{{ $dashboard_name }}">
                                   <button type="submit" class="btn btn-danger">Delete</button>
                               </form>
                             </td>
@@ -164,7 +160,7 @@
                   <label for="newPrompt">Enter New Prompt:</label>
                   <input type="text" id="newPrompt" name="newPrompt" class="form-control">
                 </div>
-                <input type="hidden" name="dashboard_id" value="{{ $dashboard_id }}" >
+                <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
 
                 {{-- SCRIPT TO SHOW INPUT FIELD IF USER WANT TO ADD THEIR OWN/NEW PROMPT --}}
                   <script>
@@ -298,14 +294,14 @@ $(document).ready(function () {
 });
 
 </script>
-@else
-woy
-@endif
 
 @endsection
 
 @section('custom_script')
+  
+  <script src="/lib/apexcharts/apexcharts.min.js"></script>
 
-
+  <script src="/js/db.data.js"></script>
+  <script src="/js/db.finance.js"></script>
 @endsection
 

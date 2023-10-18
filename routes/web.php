@@ -33,15 +33,14 @@ Route::get('/register', [AuthController::class, 'register_view']);
 Route::post('/register', [AuthController::class, 'register_submit']);
 
 
-Route::get('/dashboard/control/{dashboard:id}', function (Request $request) {
-    $cluster_id = $request->query('cluster_id');
-    $dashboard_id = $request->query('dashboard_id');
+Route::get('/dashboard/view/{dashboard:id}', function (Request $request, Dashboard $dashboard) {
+
+    $cluster_id = $request->session()->get('cluster_id'); // get cluster_id from session which stored when select cluster after login 
     $dashboards = Dashboard::where('cluster_id', $cluster_id)->get();
-    $dashboard = Dashboard::where('id', $dashboard_id)->first();
+
     return view('dashboard.contents.main', [
         'dashboards' => $dashboards,
-        'dashboard_name' => $dashboard->name,
-        'dashboard_id' => $dashboard->id,
+        'dashboard' => $dashboard,
         'contents' => Content::where('dashboard_id', $dashboard->id)->get(),
     ]);
 });
@@ -49,10 +48,9 @@ Route::get('/dashboard/control/{dashboard:id}', function (Request $request) {
 Route::resource('/cluster', ClusterController::class);
 Route::resource('/dashboard', DashboardController::class);
 Route::resource('/dashboard/content', ContentController::class);
+
+// ajax call, when select data in edit_chart page
 Route::post('/fetch-data', function (Request $request) {
-
-    // return response()->json($request->selectedJudul);
-
     $cleanAll = Clean::where('judul', $request->selectedJudul)->get();
     $xValue = Content::where('id', $request->contentId)->pluck('x_value');
     return response()->json([
