@@ -10,8 +10,8 @@ class Database extends Model
     use HasFactory;
     protected $fillable =
         [
-            'database_url',
-            'database_user',
-            'database_password',
+            'url',
+            'user',
+            'password',
         ];
 }
