@@ -72,7 +72,7 @@
                                 @csrf
                               <input type="hidden" value="{{ $chart->id }}" name="chart_id">
                               <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
-                              @if ($chart->id === 8 || $chart->id === 4 || $chart->id === 9 || $chart->id === 10 || $chart->id === 11 || $chart->id === 12 || $chart->id === 13)
+                              @if (in_array($chart->id, [4, 8, 9, 10, 11, 12, 13, 14, 15]))
                                 <td><button type="submit" class="btn btn-primary">Add</button></td>
                               @else
                                 <td><button type="submit" class="btn btn-warning">Belum bisa dynamic data</button></td>

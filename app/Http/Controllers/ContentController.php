@@ -82,7 +82,7 @@ class ContentController extends Controller
      */
     public function update(Request $request, Content $content)
     {
-        // after AI Analysis, asign result_prompt  to the content
+        // after AI Analysis, asign result_prompt to the content
         $resultPrompt = $request->input('result');
         if ($resultPrompt) {
             return $content->update([
@@ -104,27 +104,27 @@ class ContentController extends Controller
                 ]);
             }
             // redirect with send dashboard_id variable to the dashboard routes
-            return redirect('/dashboard/view/' . $request->dashboard_id)->with('success', 'Successfully to update prompt');
+            return redirect('/dashboard/' . $request->dashboard_id)->with('success', 'Successfully to update prompt');
         }
 
         // update content data x/y value
         $selectedXValues = $request->input('xValue');
         if ($selectedXValues) {
-            $count = [];
+            $y_value = [];
             // asign jumlah for all selectedValues
             for ($i = 0; $i < count($selectedXValues); $i++) {
                 $clean = Clean::where('keterangan', $selectedXValues[$i])->first(); // find row that = slectedXValues
                 if ($clean) {
-                    // Convert the string to an integer and add it to the $count array
+                    // Convert the string to an integer and add it to the $y_value array
                     $numericValue = intval($clean->jumlah);
-                    $count[] = $numericValue;
+                    $y_value[] = $numericValue;
                 }
             }
             $content->update([
                 'judul' => $request->selectedJudul,
                 'result_prompt' => null,
                 'x_value' => json_encode($selectedXValues),
-                'y_value' => $count
+                'y_value' => $y_value
             ]);
         } else { // if the user did not select any data(x_value) then update null
             $content->update([
@@ -134,7 +134,7 @@ class ContentController extends Controller
             ]);
         }
         // redirect with send dashboard_id variable to the dashboard routes
-        return redirect('/dashboard/view/' . $request->dashboard_id)->with('success', 'Successfully');
+        return redirect('/dashboard/' . $request->dashboard_id)->with('success', 'Successfully');
     }
 
     /**
@@ -145,6 +145,6 @@ class ContentController extends Controller
         Content::destroy($content->id);
 
         // redirect with send dashboard_id variable to the dashboard routes
-        return redirect('/dashboard/view/' . $content->dashboard->id)->with('deleted', "Chart has been deleted!");
+        return redirect('/dashboard/' . $content->dashboard->id)->with('deleted', "Chart has been deleted!");
     }
 }

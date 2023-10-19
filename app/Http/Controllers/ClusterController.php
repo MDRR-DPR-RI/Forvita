@@ -59,7 +59,7 @@ class ClusterController extends Controller
 
         $dashboard = Dashboard::where('cluster_id', $cluster_id)->first();
 
-        return redirect('/dashboard/view/' . $dashboard->id);
+        return redirect('/dashboard/' . $dashboard->id);
     }
 
     /**
