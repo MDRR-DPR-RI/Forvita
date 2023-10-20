@@ -37,6 +37,12 @@ class CleanSeeder extends Seeder
             'judul' => "Agama",
             'keterangan' => "Konghucu",
             'jumlah' => 100,
+            'newest' => false
+        ]);
+        Clean::create([
+            'judul' => "Agama",
+            'keterangan' => "Konghucu",
+            'jumlah' => 129,
         ]);
         Clean::create([
             'judul' => "Jenis Kelamin",

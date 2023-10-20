@@ -51,9 +51,6 @@
 
   <script src="/js/script.js"></script>
 
-{{-- Custom Script --}}  
-@yield('custom_script')
-
 </body>
 
 </html>

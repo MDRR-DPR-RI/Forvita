@@ -1,15 +1,15 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\SchedulerController;
-use App\Models\Dashboard;
-use App\Models\Clean;
-use App\Models\Content;
+
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ use Illuminate\Http\Request;
 Route::redirect('/', '/login');
 
 Route::get('/login',  [AuthController::class, 'login_view']); //loginpage
-Route::post('/login',  [AuthController::class, 'login_submit']); //loginpage
+Route::post('/login',  [AuthController::class, 'login_submit']);
 
 Route::post('/logout',  [AuthController::class, 'logout']);
 
@@ -35,18 +35,13 @@ Route::post('/register', [AuthController::class, 'register_submit']);
 Route::resource('/cluster', ClusterController::class);
 Route::resource('/dashboard', DashboardController::class);
 Route::resource('/dashboard/content', ContentController::class);
+Route::resource('/permission', PermissionController::class)->middleware('admin');
 
 // ajax call, when select data in edit_chart page
-Route::post('/fetch-data', function (Request $request) {
-    $cleanAll = Clean::where('judul', $request->selectedJudul)
-        ->where('newest', true)
-        ->get();
-    $xValue = Content::where('id', $request->contentId)->pluck('x_value');
-    return response()->json([
-        'value' => $cleanAll,
-        'xValue' => $xValue
-    ]);
-});
+Route::post('/fetch-data', [AjaxController::class, 'data_cleans']);
+
+// ajax call, +grant access when add user email in permission page
+Route::post('/fetch-dashboard', [AjaxController::class, 'data_dashboards']);
 
 // Scheduler routers
 Route::get('scheduler', [SchedulerController::class, 'show']);

@@ -69,14 +69,9 @@ class DashboardController extends Controller
                 'y_value' => json_encode($y_value),
             ]);
         }
-
-        $cluster_id = $request->session()->get('cluster_id'); // get cluster_id from session which stored when select cluster after login 
-        $dashboards = Dashboard::where('cluster_id', $cluster_id)->get();
-
         return view('dashboard.contents.main', [
-            'dashboards' => $dashboards,
             'dashboard' => $dashboard,
-            'contents' => Content::where('dashboard_id', $dashboard->id)->get(),
+            'contents' => $contents,
         ]);
     }
 

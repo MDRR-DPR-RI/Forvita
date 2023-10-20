@@ -68,6 +68,8 @@
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td ">{{ $chart->name }}</td>
                             <td >{{ $chart->grid }}</td>
+
+                            {{-- Add new card --}}
                             <form action="/dashboard/content" method="post">
                                 @csrf
                               <input type="hidden" value="{{ $chart->id }}" name="chart_id">
@@ -78,6 +80,7 @@
                                 <td><button type="submit" class="btn btn-warning">Belum bisa dynamic data</button></td>
                               @endif
                             </form>
+
                           </tr>
                       @endforeach
                     </tbody>
@@ -101,11 +104,15 @@
                             <td>{{ $content->chart->id }}</td>
                             <td>{{ $content->chart->grid }}</td>
                             <td style="display: flex; justify-content: center;  align-items: center;">
+
+                              {{-- Edit cards --}}
+                              <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary">Edit </a>
+                              
+                              {{-- Delete cards --}}
                               <form action="/dashboard/content/{{ $content->id }}" method="post">
-                                <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary">Edit </a>
-                                  @method('delete')
-                                  @csrf
-                                  <button type="submit" class="btn btn-danger">Delete</button>
+                                @method('delete')
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Delete</button>
                               </form>
                             </td>
                           </tr>
@@ -295,13 +302,11 @@ $(document).ready(function () {
 
 </script>
 
+<script src="/lib/apexcharts/apexcharts.min.js"></script>
+
+<script src="/js/db.data.js"></script>
+<script src="/js/db.finance.js"></script>
+
 @endsection
 
-@section('custom_script')
-  
-  <script src="/lib/apexcharts/apexcharts.min.js"></script>
-
-  <script src="/js/db.data.js"></script>
-  <script src="/js/db.finance.js"></script>
-@endsection
 

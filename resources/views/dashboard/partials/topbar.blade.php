@@ -96,7 +96,9 @@
             <a href=""><i class="ri-question-line"></i> Help Center</a>
             <a href=""><i class="ri-lock-line"></i> Privacy Settings</a>
             <a href=""><i class="ri-user-settings-line"></i> Account Settings</a>
-            <a href=""><i class="ri-logout-box-r-line"></i> Log Out</a>
+            {{-- <form action="/logout" method="post">
+              <button type="submit"><i class="ri-logout-box-r-line"></i> Log Out</button>
+            </form> --}}
           </nav>
         </div><!-- dropdown-menu-body -->
       </div><!-- dropdown-menu -->

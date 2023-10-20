@@ -5,23 +5,31 @@
     </div><!-- sidebar-header -->
     <div id="sidebarMenu" class="sidebar-body">
       <div class="nav-group show">
-        <a href="#" class="nav-label">Admin</a>
-        <ul class="nav nav-sidebar">
-          <li class="nav-item">
-              <a href="/scheduler" class="nav-link @isset($schedulers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>scheduler</span></a>
-          </li>
-        </ul>
+        @can('admin') <!-- using gate in AppServiceProvider to show this menu only for admin-->
+          <a href="#" class="nav-label">Admin</a>
+          <ul class="nav nav-sidebar">
+            <li class="nav-item">
+                <a href="/scheduler" class="nav-link @isset($schedulers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>scheduler</span></a>
+            </li>
+            <li class="nav-item">
+                <a href="/permission" class="nav-link @isset($permissions) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Grant Access</span></a>
+            </li>
+          </ul>
+        @endcan
+
         <a href="#" class="nav-label">Dashboard</a>
         <ul class="nav nav-sidebar">
-          <li class="nav-item">
-            <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-primary">New Dashboard</span></a>
-          </li>
+          @can('admin')
+            <li class="nav-item">
+              <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-primary">New Dashboard</span></a>
+            </li>
+          @endcan
           @foreach ($dashboards as $index_dashboard)
             <li class="nav-item">
             @if (isset($dashboard->name))
               <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link  {{ ($dashboard->name) == ($index_dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $index_dashboard->name }}</span></a>
             @else
-              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link  {{ ($dashboard_name) == ($index_dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $index_dashboard->name }}</span></a>
+              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link"><i class="ri-pie-chart-2-fill"></i> <span>{{ $index_dashboard->name }}</span></a>
             @endif
             </li>
           @endforeach

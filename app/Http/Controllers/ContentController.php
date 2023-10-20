@@ -55,13 +55,8 @@ class ContentController extends Controller
         // Query distinct(unique) "keterangan" values from the database
         $keterangans = Clean::distinct()->pluck('keterangan');
 
-        $cluster_id = $request->session()->get('cluster_id');
-        $dashboards = Dashboard::where('cluster_id', $cluster_id)->get();
-
         return view('dashboard.contents.edit_chart', [
-            'dashboards' => $dashboards,
-            'dashboard_id' => $content->dashboard->id,
-            'dashboard_name' => $content->dashboard->name,
+            'dashboard' => $content->dashboard,
             'cleanAll' => Clean::all(),
             'content' => $content,
             'juduls' => $juduls,
