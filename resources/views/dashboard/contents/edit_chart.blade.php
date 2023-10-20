@@ -48,7 +48,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div><!-- modal-header -->
             <div class="modal-body" id="modalContent">
-                <div id="table-container" class="text-center">
+                <div id="table-container">
                   <p class="card-text placeholder-glow">
                     <span class="placeholder col-7"></span>
                     <span class="placeholder col-4"></span>
@@ -104,7 +104,11 @@
                   tableHtml += '<input class="form-check-input" type="checkbox" id="selectAllCheckbox" ';
 
                   // Select all if the xValue is all in db
-                    if (xValue.length == data.value.length && $(".checkbox-item:checked").length === $(".checkbox-item").length) {
+                  console.log(xValue.length);
+                  console.log(data.value.length);
+                  console.log($(".checkbox-item:checked").length);
+                  console.log($(".checkbox-item").length);
+                    if (xValue.length == data.value.length) {
                         tableHtml += 'checked';
                         console.log("checked all")
                     }

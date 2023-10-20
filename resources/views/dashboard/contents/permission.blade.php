@@ -55,8 +55,7 @@
     </div>
 
     {{-- modal select dashboard access --}}
-    <form action="/dashboard/content/" method="post">
-        @method('put')
+    <form action="/permission/" method="post">
         @csrf
         <input type="hidden" name="" id="">
         <div class="modal fade" id="modalSelectUserDashboard" tabindex="-1" aria-hidden="true">
@@ -79,8 +78,8 @@
                 </div><!-- modal-body -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <input type="text" name="userEmailModal" id="userEmailModal">
-                    <button type="submit" class="btn btn-primary">Apply</button>
+                    <input type="hidden" name="userEmailModal" id="userEmailModal">
+                    <button type="submit" class="btn btn-primary" id="submitButton">Apply</button>
                 </div><!-- modal-footer -->
                 </div><!-- modal-content -->
             </div><!-- modal-content -->
@@ -111,8 +110,8 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (data) {
-                    console.log(data.dashboards);
-                    $('#titleModal').text(`Select dashboard for ${userEmail}`);  
+                    $('#titleModal').text(`Select dashboard for ${userEmail}`); // change modal title 
+                    $('#submitButton').show(); // show submit btn
 
                     var tableHtml = '<table class="table">';
                     tableHtml += '<thead>';
@@ -120,12 +119,15 @@
                     tableHtml += '<th scope="col">';
                     tableHtml += '<div class="form-check">';
                     tableHtml += '<input class="form-check-input" type="checkbox" id="selectAllCheckbox" ';
+                    
+                    // count the dashboards length. dashboards was send as a global variable. that used for loop the sidebar
+                    var dashboardsCount = {{ count($dashboards) }}; 
 
                     // Select all if all the checkbox was checked
-                        if (data.dashboard_id.length == $(".checkbox-item").length && $(".checkbox-item:checked").length === $(".checkbox-item").length) {
-                            tableHtml += 'checked';
-                            console.log("checked all")
-                        }
+                    if (data.dashboard_id.length == dashboardsCount) {
+                        tableHtml += 'checked';
+                        console.log("checked all")
+                    }
                     
                     tableHtml += '>';
 
@@ -141,24 +143,24 @@
                     tableHtml += '<tbody>';
                 
                     // Iterate over the data and build table rows
-                    data.dashboards.forEach(function (item, index) {
+                    data.dashboards.forEach(function (dashboard, index) {
                         index += 1
-                        tableHtml += '<tr class="table-row" data-judul="' + item.name + '">';
+                        tableHtml += '<tr class="table-row" data-judul="' + dashboard.name + '">';
                         tableHtml += '<td scope="row">';
                         tableHtml += '<input class="form-check-input checkbox-item" type="checkbox" ';
-                        tableHtml += 'value="' + item.name + '" id="item' + item.index + '" name="dashboard_name[]" ';
+                        tableHtml += 'value="' + dashboard.id + '" id="dashboard' + dashboard.index + '" name="dashboard_ids[]" ';
                         
                         // Check the box if the value is in db
-                        if (data.dashboard_id.includes(item.id)) {
+                        if (data.dashboard_id.includes(dashboard.id)) {
                             tableHtml += 'checked';
-                            console.log("checked " + item.name)
+                            console.log("checked " + dashboard.name)
                         }
                         
                         tableHtml += '>';
                         tableHtml += ' ' + index;
                         tableHtml += '</td>';
-                        tableHtml += '<td>' + item.name + '</td>';
-                        tableHtml += '<td>' + item.cluster.name + '</td>';
+                        tableHtml += '<td>' + dashboard.name + '</td>';
+                        tableHtml += '<td>' + dashboard.cluster.name + '</td>';
                         tableHtml += '</tr>';
                     });
 
@@ -183,6 +185,7 @@
                 },
                 error: function (error) {
                     $('#titleModal').text(``);  
+                    $('#submitButton').hide(); // hide submit btn
                     $('#table-container').html("User not found");
                     console.log("not found");
                     console.error(error);

@@ -26,10 +26,26 @@ class AjaxController extends Controller
     public function data_dashboards(Request $request)
     {
         $user = User::where('email', $request->userEmail)->first(); // take user data after admin entering their email
-        $cluster_id = $request->session()->get('cluster_id');
+        $cluster_id = $request->session()->get('cluster_id'); // take cluster_id from variable that storing in session
 
-        $dashboards = Dashboard::where('cluster_id', $cluster_id)->with('cluster')->get();
-        $dashboard_id = Permission::where('user_id', $user->id)->pluck('dashboard_id');
+        $dashboards = Dashboard::where('cluster_id', $cluster_id)->with('cluster')->get(); // get the dashboards table with clusters table  to access cluster name
+
+        /*
+        |--------------------------------------------------------------------------
+        | his code will give the dashboard_id values associated with the 
+        | specified user and filtered by the cluster_id in the dashboards table.
+        |--------------------------------------------------------------------------
+        |
+        | use the whereHas method to filter the results. Inside the whereHas callback,
+        | define the relationship between the permissions and dashboards tables. then
+        | specify the additional where clause to filter by the cluster_id in the dashboards table.
+        | 
+        */
+        $dashboard_id = Permission::where('user_id', $user->id)
+            ->whereHas('dashboard', function ($query) use ($cluster_id) {
+                $query->where('cluster_id', $cluster_id);
+            })
+            ->pluck('dashboard_id'); // take the dashboard_id
 
         return response()->json([
             'dashboards' => $dashboards,
