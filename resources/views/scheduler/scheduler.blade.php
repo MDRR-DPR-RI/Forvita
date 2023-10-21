@@ -169,22 +169,19 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    // Javascript for assigning edit scheduler modal
     let editSchedulerModal = document.getElementById('editSchedulerModal')
     editSchedulerModal.addEventListener('show.bs.modal', function (event) {
         let button = event.relatedTarget
         let schedulerID = button.getAttribute('data-bs-schedulerID')
         let schedulerName = button.getAttribute('data-bs-schedulerName')
         let schedulerQuery = button.getAttribute('data-bs-schedulerQuery')
-        console.log(schedulerID)
-        console.log(schedulerName)
-        console.log(schedulerQuery)
 
         let modalTitle = editSchedulerModal.querySelector(".modal-title")
         modalTitle.textContent = "Edit Scheduler " + schedulerName
 
         let schedulerIdInput = editSchedulerModal.querySelector("#schedulerID")
         schedulerIdInput.value = schedulerID
-        console.log(schedulerIdInput.value)
 
         let schedulerNameInput = editSchedulerModal.querySelector('#schedulerName')
         schedulerNameInput.value = schedulerName

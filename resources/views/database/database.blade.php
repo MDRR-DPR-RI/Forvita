@@ -73,6 +73,13 @@
             </table>
         </div>
 
+        <datalist id="databaseDrivers">
+            <option value="sqlite">
+            <option value="mysql">
+            <option value="pgsql">
+            <option value="sqlsrv">
+        </datalist>
+
         {{--Add Database Modal--}}
         <div class="modal fade" id="addDatabaseModal" tabindex="-1" aria-hidden="true">
             <form action="/database" method="post">
@@ -96,7 +103,20 @@
                             </div>
                             <div class="form-group">
                                 <label for="databaseDriver">Database Driver</label>
-                                <input type="text" id="databaseDriver" name="databaseDriver" class="form-control" required>
+                                <div class="input-group width-150px">
+                                    <input type="text" id="databaseDriver" name="databaseDriver" class="form-control"
+                                           required>
+                                    <div id="databaseDriverDropdown" class="btn-group">
+                                        <button type="button" class="btn btn-outline-secondary dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" data-databaseDriver="sqlite" href="#">SQLite </a></li>
+                                            <li><a class="dropdown-item" data-databaseDriver="mysql" href="#">MySQL/MariaDB</a></li>
+                                            <li><a class="dropdown-item" data-databaseDriver="pgsql" href="#">PostgreSQL</a></li>
+                                            <li><a class="dropdown-item" data-databaseDriver="sqlsrv" href="#">SQL Server</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="databaseHost">Database Host</label>
@@ -116,7 +136,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="databasePassword">Database Password</label>
-                                <input type="text" id="databasePassword" name="databasePassword" class="form-control" required>
+                                <input type="password" id="databasePassword" name="databasePassword" class="form-control" required>
                             </div>
                         </div>
                         <!-- modal-footer -->
@@ -154,7 +174,20 @@
                             </div>
                             <div class="form-group">
                                 <label for="databaseDriver">Database Driver</label>
-                                <input type="text" id="databaseDriver" name="databaseDriver" class="form-control" required>
+                                <div class="input-group width-150px">
+                                    <input type="text" id="databaseDriver" name="databaseDriver" class="form-control"
+                                           required>
+                                    <div id="databaseDriverDropdown" class="btn-group">
+                                        <button type="button" class="btn btn-outline-secondary dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" data-databaseDriver="sqlite" href="#">SQLite </a></li>
+                                            <li><a class="dropdown-item" data-databaseDriver="mysql" href="#">MySQL/MariaDB</a></li>
+                                            <li><a class="dropdown-item" data-databaseDriver="pgsql" href="#">PostgreSQL</a></li>
+                                            <li><a class="dropdown-item" data-databaseDriver="sqlsrv" href="#">SQL Server</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="databaseHost">Database Host</label>
@@ -191,9 +224,11 @@
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
+            // Javascript for assigning edit database modal
             let editDatabaseModal = document.getElementById('editDatabaseModal')
             editDatabaseModal.addEventListener('show.bs.modal', function (event) {
                 let button = event.relatedTarget
+
                 let databaseID = button.getAttribute('data-bs-databaseID')
                 let databaseName = button.getAttribute('data-bs-databaseName')
                 let databaseUrl = button.getAttribute('data-bs-databaseUrl')
@@ -203,7 +238,6 @@
                 let databaseDatabase = button.getAttribute('data-bs-databaseDatabase')
                 let databaseUsername = button.getAttribute('data-bs-databaseUsername')
                 let databasePassword = button.getAttribute('data-bs-databasePassword')
-
 
                 let modalTitle = editDatabaseModal.querySelector(".modal-title")
                 modalTitle.textContent = "Edit Database " + databaseName
@@ -219,6 +253,11 @@
 
                 let databaseDriverInput = editDatabaseModal.querySelector('#databaseDriver')
                 databaseDriverInput.value = databaseDriver
+                editDatabaseModal.addEventListener('hide.bs.dropdown', event => {
+                    let clickedValue = event.clickEvent.target.getAttribute('data-databaseDriver')
+                    let databaseDriverInput = editDatabaseModal.querySelector('#databaseDriver')
+                    databaseDriverInput.value = clickedValue
+                })
 
                 let databaseHostInput = editDatabaseModal.querySelector('#databaseHost')
                 databaseHostInput.value = databaseHost
@@ -234,6 +273,13 @@
 
                 let databasePasswordInput = editDatabaseModal.querySelector('#databasePassword')
                 databasePasswordInput.value = databasePassword
+            })
+
+            let addDatabaseModal = document.getElementById('addDatabaseModal')
+            addDatabaseModal.addEventListener('hide.bs.dropdown', event => {
+                let clickedValue = event.clickEvent.target.getAttribute('data-databaseDriver')
+                let databaseDriverInput = addDatabaseModal.querySelector('#databaseDriver')
+                databaseDriverInput.value = clickedValue
             })
         </script>
 @endsection
