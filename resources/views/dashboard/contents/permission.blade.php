@@ -36,7 +36,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Role</th>
                     <th scope="col">Cluster</th>
-                    <th scope="col">Dashboard Permission</th>
+                    <th scope="col">Dashboard Name</th>
                 </tr>
             </thead>
             <tbody>
