@@ -6,6 +6,7 @@ use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\CsvImportController;
 use App\Http\Controllers\SchedulerController;
 
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,9 @@ Route::post('/fetch-data', [AjaxController::class, 'data_cleans']);
 
 // ajax call, +grant access when add user email in permission page
 Route::post('/fetch-dashboard', [AjaxController::class, 'data_dashboards']);
+
+// Import Data CSV
+Route::post('/import-csv', [CsvImportController::class, 'import'])->name('import.csv');
 
 // Scheduler routers
 Route::get('scheduler', [SchedulerController::class, 'show']);

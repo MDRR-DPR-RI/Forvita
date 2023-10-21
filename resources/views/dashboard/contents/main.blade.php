@@ -17,9 +17,14 @@
             </div>
                 
             <div class="d-flex gap-2 mt-3 mt-md-0">
-                <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-share-line fs-18 lh-1"></i>Share</button>
-                <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-printer-line fs-18 lh-1"></i>Print</button>
-                <a href="#modal3" class="btn btn-primary d-flex align-items-center gap-2"  data-bs-toggle="modal"><i class="ri-bar-chart-2-line fs-18 lh-1"></i>Customize<span class="d-none d-sm-inline"> Dashboard</span></a>
+              @can('admin')
+                  <a href="#importModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
+                        <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import CSV
+                  </a>
+                  <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-share-line fs-18 lh-1"></i>Share</button>
+                  <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-printer-line fs-18 lh-1"></i>Print</button>
+                  <a href="#modal3" class="btn btn-primary d-flex align-items-center gap-2"  data-bs-toggle="modal"><i class="ri-bar-chart-2-line fs-18 lh-1"></i>Customize<span class="d-none d-sm-inline"> Dashboard</span></a>
+              @endcan
             </div>
         </div>
         @if (session()->has('success'))
@@ -130,7 +135,7 @@
             {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
           </div><!-- modal-footer -->
         </div><!-- modal-content -->
-      </div>
+      </div><!-- modal-fade -->
       
 {{-- Modal Edit PROMPT--}}
       <div class="modal fade" id="modalprompt" tabindex="-1" aria-hidden="true">
@@ -194,7 +199,33 @@
             </div><!-- modal-footer -->
           </div><!-- modal-content -->
         </div><!-- modal-content -->
-      </div>
+      </div><!-- modal-fade -->
+
+        {{-- Modal untuk Impor CSV --}}
+<div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importModalLabel">Import CSV File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('import.csv') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="tableName" class="form-label">Table Name</label>
+                        <input class="form-control" type="text" id="tableName" name="tableName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="csvFile" class="form-label">Choose CSV File</label>
+                        <input class="form-control" type="file" id="csvFile" name="csvFile" accept=".csv" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Import CSV</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 {{-- include all assets (htmlStructures) --}}
