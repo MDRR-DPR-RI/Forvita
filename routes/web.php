@@ -7,10 +7,9 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CsvImportController;
+use App\Http\Controllers\ApiImportController;
 use App\Http\Controllers\SchedulerController;
-
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +45,9 @@ Route::post('/fetch-dashboard', [AjaxController::class, 'data_dashboards']);
 
 // Import Data CSV
 Route::post('/import-csv', [CsvImportController::class, 'import'])->name('import.csv');
+
+// Import Data From RESTful API
+Route::post('/import-api', [ApiImportController::class, 'storeDataFromApi'])->name('import.api');
 
 // Scheduler routers
 Route::get('scheduler', [SchedulerController::class, 'show']);
