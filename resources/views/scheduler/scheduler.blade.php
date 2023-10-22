@@ -17,8 +17,9 @@
                         <h5 class="card-title">Query Format</h5>
                         <p class="card-text">
                             Rules: <br>
-                            1. Three columns in order: <br>Judul, Keterangan, jumlah<br>
-                            2. Groups of data needs to have the same judul with keterangan to describe the differences.
+                            1. Three columns in order: <br>judul, keterangan, jumlah (Case sensitive!)<br>
+                            2. Groups of data needs to have the same judul with keterangan to describe the differences.<br>
+                            3. Don't have any null or empty string values in any columns.
                         </p>
                     </div>
                 </div>
@@ -50,6 +51,7 @@
                 <th scope="col">No</th>
                 <th scope="col">Name</th>
                 <th scope="col">Query</th>
+                <th scope="col">Database</th>
                 <th scope="col">Status</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -60,6 +62,11 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $scheduler->name }}</td>
                     <td>{{ $scheduler->query }}</td>
+                    @isset($scheduler->database_id)
+                        <td>{{ $scheduler->database->name }}</td>
+                    @else
+                        <td>localhost</td>
+                    @endisset
                     <td>{{ $scheduler->status }}</td>
                     <td>
                         {{--Execute Scheduler Query--}}
@@ -70,6 +77,10 @@
                            data-bs-schedulerID="{{ $scheduler->id }}"
                            data-bs-schedulerName="{{ $scheduler->name }}"
                            data-bs-schedulerQuery="{{ $scheduler->query }}"
+                           data-bs-schedulerDatabaseID="{{ $scheduler->database_id }}"
+{{--                           @isset($scheduler->database_id)--}}
+{{--                               data-bs-schedulerDatabaseName="{{$scheduler->database->name}}"--}}
+{{--                           @endisset--}}
                            class="btn btn-primary">Edit</a>
 
                         {{--Delete Scheduler--}}
@@ -117,6 +128,15 @@
                         <label for="schedulerQuery">Query</label>
                         <textarea id="schedulerQuery" name="schedulerQuery" class="form-control" required></textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="schedulerDatabaseID">Database</label>
+                        <select id="schedulerDatabaseID" name="schedulerDatabaseID" class="form-select" aria-label="Select Database Scheduler">
+                            <option value="">Localhost</option>
+                            @foreach ($databases as $database)
+                                <option value="{{$database->id}}">{{$database->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <!-- modal-footer -->
                 <div class="modal-footer">
@@ -153,6 +173,15 @@
                         <textarea id="schedulerQuery" name="schedulerQuery" class="form-control"
                                   required></textarea>
                     </div>
+                    <div id="schedulerDatabaseSelectGroup" class="form-group">
+                        <label for="schedulerDatabaseID">Database</label>
+                        <select id="schedulerDatabaseID" name="schedulerDatabaseID" class="form-select" aria-label="Select Database Scheduler">
+                            <option value="">Localhost</option>
+                            @foreach ($databases as $database)
+                                <option value="{{$database->id}}">{{$database->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <!-- modal-footer -->
                 <div class="modal-footer">
@@ -168,28 +197,29 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    // Javascript for assigning edit scheduler modal
     let editSchedulerModal = document.getElementById('editSchedulerModal')
     editSchedulerModal.addEventListener('show.bs.modal', function (event) {
         let button = event.relatedTarget
         let schedulerID = button.getAttribute('data-bs-schedulerID')
         let schedulerName = button.getAttribute('data-bs-schedulerName')
         let schedulerQuery = button.getAttribute('data-bs-schedulerQuery')
-        console.log(schedulerID)
-        console.log(schedulerName)
-        console.log(schedulerQuery)
+        let schedulerDatabaseID = button.getAttribute('data-bs-schedulerDatabaseID')
 
         let modalTitle = editSchedulerModal.querySelector(".modal-title")
         modalTitle.textContent = "Edit Scheduler " + schedulerName
 
         let schedulerIdInput = editSchedulerModal.querySelector("#schedulerID")
         schedulerIdInput.value = schedulerID
-        console.log(schedulerIdInput.value)
 
         let schedulerNameInput = editSchedulerModal.querySelector('#schedulerName')
         schedulerNameInput.value = schedulerName
 
         let schedulerQueryInput = editSchedulerModal.querySelector('#schedulerQuery')
         schedulerQueryInput.value = schedulerQuery
+
+        let schedulerDatabaseIDInput = editSchedulerModal.querySelector('#schedulerDatabaseID')
+        schedulerDatabaseIDInput.value = schedulerDatabaseID
     })
 </script>
 @endsection

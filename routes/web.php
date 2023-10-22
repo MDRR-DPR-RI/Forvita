@@ -9,6 +9,10 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CsvImportController;
 use App\Http\Controllers\ApiImportController;
 use App\Http\Controllers\SchedulerController;
+use App\Http\Controllers\DatabaseController;
+use App\Models\Dashboard;
+use App\Models\Clean;
+use App\Models\Content;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// ->middleware('admin') was created in app/Http/Middleware/IsAdmin. and register the middleware name as = 'admin' in Kernel.php  
+// ->middleware('admin') was created in app/Http/Middleware/IsAdmin. and register the middleware name as = 'admin' in Kernel.php
 
 Route::redirect('/', '/login');
 
@@ -51,9 +55,16 @@ Route::post('/import-csv', [CsvImportController::class, 'import'])->name('import
 // Import Data From RESTful API
 Route::post('/import-api', [ApiImportController::class, 'storeDataFromApi'])->name('import.api')->middleware('admin');
 
-// Scheduler routers
-Route::get('scheduler', [SchedulerController::class, 'show'])->middleware('admin');
+// Scheduler Routers
 Route::get('scheduler/execute', [SchedulerController::class, 'execute'])->middleware('admin');
+Route::get('scheduler', [SchedulerController::class, 'show'])->middleware('admin');
 Route::post('scheduler', [SchedulerController::class, 'store'])->middleware('admin');
 Route::patch('scheduler', [SchedulerController::class, 'update'])->middleware('admin');
 Route::delete('scheduler', [SchedulerController::class, 'destroy'])->middleware('admin');
+
+// Database Routers
+Route::get('database/test-connection', [DatabaseController::class, 'testConnection'])->middleware('admin');
+Route::get('database', [DatabaseController::class, 'show'])->middleware('admin');
+Route::post('database', [DatabaseController::class, 'store'])->middleware('admin');
+Route::patch('database', [DatabaseController::class, 'update'])->middleware('admin');
+Route::delete('database', [DatabaseController::class, 'destroy'])->middleware('admin');

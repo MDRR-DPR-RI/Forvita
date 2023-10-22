@@ -9,7 +9,10 @@
           <a href="#" class="nav-label">Admin</a>
           <ul class="nav nav-sidebar">
             <li class="nav-item">
-                <a href="/scheduler" class="nav-link @isset($schedulers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>scheduler</span></a>
+                <a href="/database" class="nav-link @isset($databases) @empty($schedulers) active @endempty @endisset"><i class="ri-pie-chart-2-fill"></i> <span>databases</span></a>
+            </li>
+            <li class="nav-item">
+                <a href="/scheduler" class="nav-link @isset($schedulers)  active  @endisset"><i class="ri-pie-chart-2-fill"></i> <span>scheduler</span></a>
             </li>
             <li class="nav-item">
                 <a href="/permission" class="nav-link @isset($permissions) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Grant Access</span></a>

@@ -10,8 +10,18 @@ class Database extends Model
     use HasFactory;
     protected $fillable =
         [
+            'name',
             'url',
-            'user',
+            'driver',
+            'host',
+            'port',
+            'database',
+            'username',
             'password',
+            'status',
         ];
+
+    protected $attributes = [
+        'status' => "not tested connection yet",
+    ];
 }

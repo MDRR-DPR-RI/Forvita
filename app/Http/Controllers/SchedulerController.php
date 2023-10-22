@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Clean;
 use App\Models\Dashboard;
+use App\Models\Database;
 use App\Models\Scheduler;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Illuminate\Database\QueryException;
 
 class SchedulerController extends Controller
 {
@@ -20,18 +21,18 @@ class SchedulerController extends Controller
     {
         return view('scheduler.scheduler', [
             'schedulers' => Scheduler::all(),
+            'databases' => Database::all(),
             'currentParentPage' => 'Admin',
         ]);
     }
 
     public function store(Request $request): RedirectResponse
     {
-        $scheduler = Scheduler::create([
+        Scheduler::create([
             'name' => $request->input('schedulerName'),
             'query' => $request->input('schedulerQuery'),
             'database_id' => $request->input('schedulerDatabaseID'),
         ]);
-
         return redirect('scheduler');
     }
 
@@ -55,23 +56,30 @@ class SchedulerController extends Controller
         error_log("deleted scheduler with id $deleteSchedulerID");
         return redirect('scheduler');
     }
-    public function execute(Request $request)
-    {
+    public function execute(Request $request) {
         $schedulerID = $request->query('schedulerID');
         $scheduler = Scheduler::find($schedulerID);
 
-        try {
-            $queryResult = DB::select($scheduler->query);
-            foreach ($queryResult as $row) {
-                Clean::updateOrCreate(
-                    ['keterangan' => $row->keterangan],
-                    [
-                        'judul' => $row->judul,
-                        'jumlah' => $row->jumlah,
-                    ]
-                );
+        try { // should move this to services
+            $schedulerDatabase = $scheduler->database;
+            if ($schedulerDatabase) {
+                (new DatabaseController())->changeDatabaseConnection('scheduler', $schedulerDatabase);
+                $queryResult = DB::connection('scheduler')->select($scheduler->query);
             }
-        } catch (QueryException $ex) {
+            else {
+                $queryResult = DB::select($scheduler->query);
+            }
+            foreach($queryResult as $row) {
+                Clean::where('judul', $row->judul)
+                    ->where('keterangan', $row->keterangan)
+                    ->update(['newest' => False]);
+                Clean::create([
+                    'judul' => $row->judul,
+                    'keterangan' => $row->keterangan,
+                    'jumlah' => $row->jumlah,
+                ]);
+            }
+        } catch(Exception $ex){
             $errorMessage = substr($ex, 0, 200);
             error_log("Failed to execute query: " . $errorMessage);
             $scheduler->status = "Failed to run: " . $errorMessage;
