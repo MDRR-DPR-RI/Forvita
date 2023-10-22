@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Scheduler extends Model
 {
@@ -18,7 +19,7 @@ class Scheduler extends Model
         'status' => "not executed yet",
         'database_id' => null,
     ];
-    public function database()
+    public function database(): BelongsTo
     {
         return $this->belongsTo(Database::class);
     }

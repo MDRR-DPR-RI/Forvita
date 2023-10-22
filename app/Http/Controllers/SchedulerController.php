@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Clean;
 use App\Models\Dashboard;
+use App\Models\Database;
 use App\Models\Scheduler;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -23,6 +24,7 @@ class SchedulerController extends Controller
         return view('scheduler.scheduler', [
             'dashboards' => Dashboard::where('cluster_id', $cluster_id)->get(),
             'schedulers' => Scheduler::all(),
+            'databases' => Database::all(),
             'currentParentPage' => 'Admin',
             'currentPage' => 'Scheduler',
         ]);
@@ -30,7 +32,7 @@ class SchedulerController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $scheduler = Scheduler::create([
+        Scheduler::create([
             'name' => $request->input('schedulerName'),
             'query' => $request->input('schedulerQuery'),
             'database_id' => $request->input('schedulerDatabaseID'),
@@ -63,8 +65,15 @@ class SchedulerController extends Controller
         $schedulerID = $request->query('schedulerID');
         $scheduler = Scheduler::find($schedulerID);
 
-        try {
-            $queryResult = DB::select($scheduler->query);
+        try { // should move this to services
+            $schedulerDatabase = $scheduler->database;
+            if ($schedulerDatabase) {
+                (new DatabaseController())->changeDatabaseConnection('scheduler', $schedulerDatabase);
+                $queryResult = DB::connection('scheduler')->select($scheduler->query);
+            }
+            else {
+                $queryResult = DB::select($scheduler->query);
+            }
             foreach($queryResult as $row) {
                 Clean::updateOrCreate(
                     ['keterangan' => $row->keterangan],

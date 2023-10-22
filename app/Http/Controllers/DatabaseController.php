@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Database;
 use App\Models\Dashboard;
 use Exception;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
