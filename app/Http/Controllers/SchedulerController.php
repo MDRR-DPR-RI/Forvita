@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Clean;
 use App\Models\Dashboard;
 use App\Models\Scheduler;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Illuminate\Database\QueryException;
 
 class SchedulerController extends Controller
 {
@@ -74,7 +74,7 @@ class SchedulerController extends Controller
                     ]
                 );
             }
-        } catch(QueryException $ex){
+        } catch(Exception $ex){
             $errorMessage = substr($ex, 0, 200);
             error_log("Failed to execute query: " . $errorMessage);
             $scheduler->status = "Failed to run: " . $errorMessage;
