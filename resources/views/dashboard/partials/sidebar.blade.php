@@ -5,25 +5,35 @@
     </div><!-- sidebar-header -->
     <div id="sidebarMenu" class="sidebar-body">
       <div class="nav-group show">
-        <a href="#" class="nav-label">Admin</a>
-        <ul class="nav nav-sidebar">
-          <li class="nav-item">
-            <a href="/database" class="nav-link @isset($databases) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>databases</span></a>
-          </li>
-        </ul>
-        <ul class="nav nav-sidebar">
-          <li class="nav-item">
-              <a href="/scheduler" class="nav-link @isset($schedulers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>schedulers</span></a>
-          </li>
-        </ul>
+        @can('admin') <!-- using gate in AppServiceProvider to show this menu only for admin-->
+          <a href="#" class="nav-label">Admin</a>
+          <ul class="nav nav-sidebar">
+            <li class="nav-item">
+                <a href="/database" class="nav-link @isset($databases) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>databases</span></a>
+            </li>
+            <li class="nav-item">
+                <a href="/scheduler" class="nav-link @isset($schedulers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>scheduler</span></a>
+            </li>
+            <li class="nav-item">
+                <a href="/permission" class="nav-link @isset($permissions) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Grant Access</span></a>
+            </li>
+          </ul>
+        @endcan
+
         <a href="#" class="nav-label">Dashboard</a>
         <ul class="nav nav-sidebar">
-          <li class="nav-item">
-            <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-primary">New Dashboard</span></a>
-          </li>
-          @foreach ($dashboards as $dashboard)
+          @can('admin')
             <li class="nav-item">
-              <a href="/dashboard/control/{{ $dashboard->id }}?dashboard_id={{ $dashboard->id }}&cluster_id={{ $dashboard->cluster_id }}" class="nav-link @isset($dashboard_name) {{ ($dashboard_name) == ($dashboard->name) ? 'active' : '' }} @else @endisset"><i class="ri-pie-chart-2-fill"></i> <span>{{ $dashboard->name }}</span></a>
+              <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-primary">New Dashboard</span></a>
+            </li>
+          @endcan
+          @foreach ($dashboards as $index_dashboard)
+            <li class="nav-item">
+            @if (isset($dashboard->name))
+              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link  {{ ($dashboard->name) == ($index_dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $index_dashboard->name }}</span></a>
+            @else
+              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link"><i class="ri-pie-chart-2-fill"></i> <span>{{ $index_dashboard->name }}</span></a>
+            @endif
             </li>
           @endforeach
         </ul>
@@ -52,7 +62,7 @@
           <a href=""><i class="ri-question-line"></i> Help Center</a>
           <a href=""><i class="ri-lock-line"></i> Privacy Settings</a>
           <a href=""><i class="ri-user-settings-line"></i> Account Settings</a>
-          <a href=""><i class="ri-logout-box-r-line"></i> Log Out</a>
+          <a href="#modalLogout" data-bs-toggle="modal"><i class="ri-logout-box-r-line"></i> Log Out</a>
         </nav>
       </div><!-- sidebar-footer-menu -->
     </div><!-- sidebar-footer -->
@@ -71,7 +81,6 @@
         <div class="modal-body text-center">
             <label>Enter New Dashboard Name:</label>
             <input type="text" class="form-control" name="dashboard_name">
-            <input type="hidden" class="form-control" name="cluster_id" value="{{ session('cluster') }}">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

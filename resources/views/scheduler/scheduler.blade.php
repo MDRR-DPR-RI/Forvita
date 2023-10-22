@@ -223,8 +223,3 @@
     })
 </script>
 @endsection
-
-@section('custom_script')
-
-@endsection
-

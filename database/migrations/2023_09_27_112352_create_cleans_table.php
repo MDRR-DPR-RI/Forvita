@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('judul');
             $table->string('keterangan');
             $table->string('jumlah');
+            $table->boolean('newest')->default(true);
             $table->timestamps();
         });
     }

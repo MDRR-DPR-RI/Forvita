@@ -6,21 +6,28 @@
 @endsection
 
 @section('page_content')
-@if (!isset($cluster))
     <div class="main main-app p-3 p-lg-4">
         <div class="d-md-flex align-items-center justify-content-between mb-4">
             <div>
                 <ol class="breadcrumb fs-sm mb-1">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $dashboard_name }}</li>
+                <li class="breadcrumb-item"><a href="/cluster">{{ session('cluster_name') }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $dashboard->name }}</li>
                 </ol>
-                <h4 class="main-title mb-0">{{ $dashboard_name }}</h4>
+                <h4 class="main-title mb-0">Dashboard {{ $dashboard->name }}</h4>
             </div>
                 
             <div class="d-flex gap-2 mt-3 mt-md-0">
-                <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-share-line fs-18 lh-1"></i>Share</button>
-                <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-printer-line fs-18 lh-1"></i>Print</button>
-                <a href="#modal3" class="btn btn-primary d-flex align-items-center gap-2"  data-bs-toggle="modal"><i class="ri-bar-chart-2-line fs-18 lh-1"></i>Customize<span class="d-none d-sm-inline"> Dashboard</span></a>
+              @can('admin')
+                  <a href="#importCSVModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
+                        <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import CSV
+                  </a>
+                  <a href="#importAPIModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
+                        <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import RESTful API
+                  </a>
+                  <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-share-line fs-18 lh-1"></i>Share</button>
+                  <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-printer-line fs-18 lh-1"></i>Print</button>
+                  <a href="#modal3" class="btn btn-primary d-flex align-items-center gap-2"  data-bs-toggle="modal"><i class="ri-bar-chart-2-line fs-18 lh-1"></i>Customize<span class="d-none d-sm-inline"> Dashboard</span></a>
+              @endcan
             </div>
         </div>
         @if (session()->has('success'))
@@ -47,7 +54,7 @@
         <div class="modal-dialog modal-fullscreen">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Customize Dashboard {{ $dashboard_name }}</h5>
+              <h5 class="modal-title">Customize Dashboard {{ $dashboard->name }}</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div><!-- modal-header -->
             <div class="modal-body container text-center">
@@ -69,17 +76,19 @@
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td ">{{ $chart->name }}</td>
                             <td >{{ $chart->grid }}</td>
+
+                            {{-- Add new card --}}
                             <form action="/dashboard/content" method="post">
                                 @csrf
-                              <input type="hidden" value="{{ $chart->id }}" name="chartId">
-                              <input type="hidden" name="dashboard_id" value="{{ $dashboard_id }}" >
-                              <input type="hidden" name="dashboard_name" value="{{ $dashboard_name }}" >
-                              @if ($chart->id === 8 || $chart->id === 4 || $chart->id === 9 || $chart->id === 10 || $chart->id === 11 || $chart->id === 12 || $chart->id === 13)
+                              <input type="hidden" value="{{ $chart->id }}" name="chart_id">
+                              <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
+                              @if (in_array($chart->id, [4, 8, 9, 10, 11, 12, 13, 14, 15]))
                                 <td><button type="submit" class="btn btn-primary">Add</button></td>
                               @else
                                 <td><button type="submit" class="btn btn-warning">Belum bisa dynamic data</button></td>
                               @endif
                             </form>
+
                           </tr>
                       @endforeach
                     </tbody>
@@ -103,13 +112,15 @@
                             <td>{{ $content->chart->id }}</td>
                             <td>{{ $content->chart->grid }}</td>
                             <td style="display: flex; justify-content: center;  align-items: center;">
+
+                              {{-- Edit cards --}}
+                              <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary">Edit </a>
+                              
+                              {{-- Delete cards --}}
                               <form action="/dashboard/content/{{ $content->id }}" method="post">
-                                <a href="/dashboard/content/{{ $content->id }}?dashboard_name={{ $dashboard_name }}&dashboard_id={{ $dashboard_id }}" class="btn btn-primary">Edit </a>
-                                  @method('delete')
-                                  @csrf
-                                <input type="hidden" name="dashboard_id" value="{{ $dashboard_id }}">
-                                <input type="hidden" name="dashboard_name" value="{{ $dashboard_name }}">
-                                  <button type="submit" class="btn btn-danger">Delete</button>
+                                @method('delete')
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Delete</button>
                               </form>
                             </td>
                           </tr>
@@ -127,7 +138,7 @@
             {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
           </div><!-- modal-footer -->
         </div><!-- modal-content -->
-      </div>
+      </div><!-- modal-fade -->
       
 {{-- Modal Edit PROMPT--}}
       <div class="modal fade" id="modalprompt" tabindex="-1" aria-hidden="true">
@@ -164,7 +175,7 @@
                   <label for="newPrompt">Enter New Prompt:</label>
                   <input type="text" id="newPrompt" name="newPrompt" class="form-control">
                 </div>
-                <input type="hidden" name="dashboard_id" value="{{ $dashboard_id }}" >
+                <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
 
                 {{-- SCRIPT TO SHOW INPUT FIELD IF USER WANT TO ADD THEIR OWN/NEW PROMPT --}}
                   <script>
@@ -191,7 +202,64 @@
             </div><!-- modal-footer -->
           </div><!-- modal-content -->
         </div><!-- modal-content -->
-      </div>
+      </div><!-- modal-fade -->
+
+        {{-- Modal untuk Impor CSV --}}
+<div class="modal fade" id="importCSVModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importModalLabel">Import CSV File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('import.csv') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="tableName" class="form-label">Table Name</label>
+                        <input class="form-control" type="text" id="tableName" name="tableName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="csvFile" class="form-label">Choose CSV File</label>
+                        <input class="form-control" type="file" id="csvFile" name="csvFile" accept=".csv" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Import CSV</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Modal untuk Impor From RESTful API --}}
+<div class="modal fade" id="importAPIModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importModalLabel">Import from RESTful API</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('import.api') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                      Example url
+                        <ol class="list-group list-group-numbered">
+                          <li class="list-group-item">https://catfact.ninja/fact</li>
+                          <li class="list-group-item">https://www.dpr.go.id/rest/?method=getAgendaPerBulan&tahun=2015&bulan=02&tipe=json</li>
+                        </ol>
+                        <label for="tableName" class="form-label">Table Name</label>
+                        <input class="form-control" type="text" id="tableName" name="tableName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="api_url" class="form-label">Enter URL</label>
+                        <input class="form-control" type="text" id="api_url" name="api_url" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Import</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 {{-- include all assets (htmlStructures) --}}
@@ -298,14 +366,12 @@ $(document).ready(function () {
 });
 
 </script>
-@else
-woy
-@endif
+
+<script src="/lib/apexcharts/apexcharts.min.js"></script>
+
+<script src="/js/db.data.js"></script>
+<script src="/js/db.finance.js"></script>
 
 @endsection
 
-@section('custom_script')
-
-
-@endsection
 

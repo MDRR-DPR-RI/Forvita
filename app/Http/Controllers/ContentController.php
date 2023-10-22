@@ -33,18 +33,15 @@ class ContentController extends Controller
     {
         // Create and store the content in the database
         $content = Content::create([
-            'chart_id' => $request->input('chartId'),
-            'dashboard_id' => $request->input('dashboard_id'),
+            'chart_id' => $request->chart_id, // input hidden
+            'dashboard_id' => $request->dashboard_id, // input hidden
         ]);
 
         // Retrieve the ID of the newly created content
         $contentId = $content->id;
 
-        // Go to edit page after cretaed new chart
-        return redirect('/dashboard/content/' . $contentId)->with([
-            'dashboard_id' => $request->dashboard_id,
-            'dashboard_name' => $request->dashboard_name
-        ]);
+        // Go to edit page after cretaed new chart, the nset session to use in edit page in show function
+        return redirect('/dashboard/content/' . $contentId);
     }
 
     /**
@@ -52,28 +49,14 @@ class ContentController extends Controller
      */
     public function show(Content $content, Request $request)
     {
-        // Query distinct "judul" values from the database
+        // Query distinct(unique) "judul" values from the database
         $juduls = Clean::distinct()->pluck('judul');
 
-        // session is sent after user add chart ->with([..])
-        $dashboard_name = $request->session()->get('dashboard_name');
-        $dashboard_id = $request->session()->get('dashboard_id');
-
-        if (isset($dashboard_name) || $dashboard_name != null) { // add new chart, code goes here
-            $dashboard_name = $request->session()->get('dashboard_name');
-            $dashboard_id = $request->session()->get('dashboard_id');
-        } else { // edit chart, code goes here
-            // queary is form the url req, like https://url/?dashboard_name={{ $dashboard_name }}
-            $dashboard_name = $request->query('dashboard_name');
-            $dashboard_id = $request->query('dashboard_id');
-        }
-        // Query distinct "keterangan" values from the database
+        // Query distinct(unique) "keterangan" values from the database
         $keterangans = Clean::distinct()->pluck('keterangan');
-        $dashboards = Dashboard::where('cluster_id', $content->dashboard->cluster_id)->get();
+
         return view('dashboard.contents.edit_chart', [
-            'dashboards' => $dashboards,
-            'dashboard_name' => $dashboard_name,
-            'dashboard_id' => $dashboard_id,
+            'dashboard' => $content->dashboard,
             'cleanAll' => Clean::all(),
             'content' => $content,
             'juduls' => $juduls,
@@ -94,7 +77,7 @@ class ContentController extends Controller
      */
     public function update(Request $request, Content $content)
     {
-        // after AI Analysis, asign result_prompt  to the content
+        // after AI Analysis, asign result_prompt to the content
         $resultPrompt = $request->input('result');
         if ($resultPrompt) {
             return $content->update([
@@ -116,27 +99,29 @@ class ContentController extends Controller
                 ]);
             }
             // redirect with send dashboard_id variable to the dashboard routes
-            return redirect('/dashboard/control/' . $request->dashboard_id . '?dashboard_id=' . $request->dashboard_id . '&dashboard=' . $request->dashboard_id . $request->dashboard_id . '&cluster_id=' . $content->dashboard->cluster_id)->with('success', 'Successfully to update prompt');
+            return redirect('/dashboard/' . $request->dashboard_id)->with('success', 'Successfully to update prompt');
         }
 
         // update content data x/y value
         $selectedXValues = $request->input('xValue');
         if ($selectedXValues) {
-            $count = [];
+            $y_value = [];
             // asign jumlah for all selectedValues
             for ($i = 0; $i < count($selectedXValues); $i++) {
-                $clean = Clean::where('keterangan', $selectedXValues[$i])->first(); // find row that = slectedXValues
+                $clean = Clean::where('keterangan', $selectedXValues[$i])
+                    ->where('judul', $request->selectedJudul)
+                    ->first(); // find row that = slectedXValues
                 if ($clean) {
-                    // Convert the string to an integer and add it to the $count array
+                    // Convert the string to an integer and add it to the $y_value array
                     $numericValue = intval($clean->jumlah);
-                    $count[] = $numericValue;
+                    $y_value[] = $numericValue;
                 }
             }
             $content->update([
                 'judul' => $request->selectedJudul,
                 'result_prompt' => null,
                 'x_value' => json_encode($selectedXValues),
-                'y_value' => $count
+                'y_value' => $y_value
             ]);
         } else { // if the user did not select any data(x_value) then update null
             $content->update([
@@ -146,17 +131,17 @@ class ContentController extends Controller
             ]);
         }
         // redirect with send dashboard_id variable to the dashboard routes
-        return redirect('/dashboard/control/' . $request->dashboard_id . '?dashboard_id=' . $request->dashboard_id . '&cluster_id=' . $content->dashboard->cluster_id)->with('success', 'Successfully');
+        return redirect('/dashboard/' . $request->dashboard_id)->with('success', 'Successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Content $content, Request $request)
+    public function destroy(Content $content)
     {
         Content::destroy($content->id);
 
         // redirect with send dashboard_id variable to the dashboard routes
-        return redirect('/dashboard/control/' . $request->dashboard_id . '?dashboard_id=' . $request->dashboard_id . '&cluster_id=' . $content->dashboard->cluster_id)->with('deleted', "Chart has been deleted!");
+        return redirect('/dashboard/' . $content->dashboard->id)->with('deleted', "Chart has been deleted!");
     }
 }
