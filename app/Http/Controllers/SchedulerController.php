@@ -76,9 +76,8 @@ class SchedulerController extends Controller
             }
             foreach($queryResult as $row) {
                 Clean::updateOrCreate(
-                    ['keterangan' => $row->keterangan],
+                    ['judul' => $row->judul, 'keterangan' => $row->keterangan,],
                     [
-                        'judul' => $row->judul,
                         'jumlah' => $row->jumlah,
                     ]
                 );

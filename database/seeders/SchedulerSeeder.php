@@ -47,16 +47,7 @@ class SchedulerSeeder extends Seeder
                         GROUP BY cuti.keterangan
                         ) AS query;",
         ]);
-        Database::create([
-            'name' => "localhost",
-            'driver' => "mysql",
-            'host' => "127.0.0.1",
-            'port' => "3306",
-            'database' => "dataset",
-            'username' => "root",
-            'password' => "",
-        ]);
-        Database::create([
+        $postgreDatabase = Database::create([
             'name' => "postgre_localhost",
             'driver' => "pgsql",
             'host' => "127.0.0.1",
@@ -64,6 +55,21 @@ class SchedulerSeeder extends Seeder
             'database' => "test_postgre",
             'username' => "postgres",
             'password' => "password",
+        ]);
+        Scheduler::create([
+            'name' => "postgre dummy data test",
+            'query' => "SELECT *
+                        FROM (
+                        SELECT 'postgre_total_dummy_data' AS judul, 'total_dummy_data_a' AS keterangan, sum(a) AS jumlah
+                        FROM dummy_database.dummy_data_1
+                        UNION
+                        SELECT 'postgre_total_dummy_data' AS judul, 'total_dummy_data_b' AS keterangan, sum(b) AS jumlah
+                        FROM dummy_database.dummy_data_1
+                        UNION
+                        SELECT 'postgre_total_dummy_data' AS judul, 'total_dummy_data_c' AS keterangan, sum(c) AS jumlah
+                        FROM dummy_database.dummy_data_1
+                        ) AS query;",
+            'database_id' => $postgreDatabase->id
         ]);
     }
 }
