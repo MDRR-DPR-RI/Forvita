@@ -108,7 +108,9 @@ class ContentController extends Controller
             $y_value = [];
             // asign jumlah for all selectedValues
             for ($i = 0; $i < count($selectedXValues); $i++) {
-                $clean = Clean::where('keterangan', $selectedXValues[$i])->first(); // find row that = slectedXValues
+                $clean = Clean::where('keterangan', $selectedXValues[$i])
+                    ->where('judul', $request->selectedJudul)
+                    ->first(); // find row that = slectedXValues
                 if ($clean) {
                     // Convert the string to an integer and add it to the $y_value array
                     $numericValue = intval($clean->jumlah);
