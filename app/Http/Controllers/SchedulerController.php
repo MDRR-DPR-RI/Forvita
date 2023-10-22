@@ -70,12 +70,14 @@ class SchedulerController extends Controller
                 $queryResult = DB::select($scheduler->query);
             }
             foreach($queryResult as $row) {
-                Clean::updateOrCreate(
-                    ['judul' => $row->judul, 'keterangan' => $row->keterangan,],
-                    [
-                        'jumlah' => $row->jumlah,
-                    ]
-                );
+                Clean::where('judul', $row->judul)
+                    ->where('keterangan', $row->keterangan)
+                    ->update(['newest' => False]);
+                Clean::create([
+                    'judul' => $row->judul,
+                    'keterangan' => $row->keterangan,
+                    'jumlah' => $row->jumlah,
+                ]);
             }
         } catch(Exception $ex){
             $errorMessage = substr($ex, 0, 200);

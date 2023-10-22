@@ -17,13 +17,9 @@ class DatabaseController extends Controller
 
     public function show(Request $request): View
     {
-        $cluster_id = session()->get('cluster');
-
         return view('database.database', [
-            'dashboards' => Dashboard::where('cluster_id', $cluster_id)->get(),
             'databases' => Database::all(),
             'currentParentPage' => 'Admin',
-            'currentPage' => 'Database',
         ]);
     }
     public function store(Request $request): RedirectResponse
