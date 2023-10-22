@@ -39,7 +39,8 @@
                         <td>{{ $database->password }}</td>
                         <td>
                             {{--Edit Database--}}
-                            <a data-bs-toggle="modal" data-bs-target="#editDatabaseModal"
+                            <a data-bs-toggle="modal" data-bs-target="#databaseModal"
+                               data-action="edit"
                                data-bs-databaseID="{{ $database->id }}"
                                data-bs-databaseName="{{ $database->name }}"
                                data-bs-databaseUrl="{{ $database->url }}"
@@ -64,7 +65,7 @@
                 <tr>
                     <td colspan="8"></td>
                     <td colspan="2">
-                        <a href="#addDatabaseModal" class="btn btn-primary d-flex align-items-center gap-2"
+                        <a href="#databaseModal" class="btn btn-primary d-flex align-items-center gap-2"
                            data-bs-toggle="modal"><i class="ri-add-line"></i>
                             <span class="d-none d-sm-inline">Add Database</span></a>
                     </td>
@@ -73,92 +74,15 @@
             </table>
         </div>
 
-        <datalist id="databaseDrivers">
-            <option value="sqlite">
-            <option value="mysql">
-            <option value="pgsql">
-            <option value="sqlsrv">
-        </datalist>
-
-        {{--Add Database Modal--}}
-        <div class="modal fade" id="addDatabaseModal" tabindex="-1" aria-hidden="true">
+        {{--Add/Edit Database Modal (Default ADD)--}}
+        <div class="modal fade" id="databaseModal" tabindex="-1" aria-hidden="true">
             <form action="/database" method="post">
                 <div class="modal-dialog">
                     <!-- modal-content -->
                     <div class="modal-content">
                         <!-- modal-header -->
                         <div class="modal-header">
-                            <h5 class="modal-title">Add Database</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <!-- modal-body -->
-                        <div class="modal-body container text-center">
-                            <div class="form-group">
-                                <label for="databaseName">Database Name</label>
-                                <input type="text" id="databaseName" name="databaseName" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="databaseUrl">Database Url</label>
-                                <input type="text" id="databaseUrl" name="databaseUrl" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="databaseDriver">Database Driver</label>
-                                <div class="input-group width-150px">
-                                    <input type="text" id="databaseDriver" name="databaseDriver" class="form-control"
-                                           required>
-                                    <div id="databaseDriverDropdown" class="btn-group">
-                                        <button type="button" class="btn btn-outline-secondary dropdown-toggle"
-                                                data-bs-toggle="dropdown" aria-expanded="false"></button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" data-databaseDriver="sqlite" href="#">SQLite </a></li>
-                                            <li><a class="dropdown-item" data-databaseDriver="mysql" href="#">MySQL/MariaDB</a></li>
-                                            <li><a class="dropdown-item" data-databaseDriver="pgsql" href="#">PostgreSQL</a></li>
-                                            <li><a class="dropdown-item" data-databaseDriver="sqlsrv" href="#">SQL Server</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="databaseHost">Database Host</label>
-                                <input type="text" id="databaseHost" name="databaseHost" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="databasePort">Database Port</label>
-                                <input type="text" id="databasePort" name="databasePort" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="databaseDatabase">Database Database</label>
-                                <input type="text" id="databaseDatabase" name="databaseDatabase" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="databaseUsername">Database Username</label>
-                                <input type="text" id="databaseUsername" name="databaseUsername" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="databasePassword">Database Password</label>
-                                <input type="password" id="databasePassword" name="databasePassword" class="form-control" required>
-                            </div>
-                        </div>
-                        <!-- modal-footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            @csrf
-                            <button type="submit" class="btn btn-primary">Add Database</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        {{--Edit Database Modal--}}
-        <div class="modal fade" id="editDatabaseModal" tabindex="-1" aria-hidden="true">
-            <form action="/database" method="post">
-                <div class="modal-dialog">
-                    <!-- modal-content -->
-                    <div class="modal-content">
-                        <!-- modal-header -->
-                        <div class="modal-header">
-                            <h5 class="modal-title">Edit Database (Name)</h5>
+                            <h5 id="databaseModalTitle" class="modal-title">Add Database</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <!-- modal-body -->
@@ -207,15 +131,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="databasePassword">Database Password</label>
-                                <input type="text" id="databasePassword" name="databasePassword" class="form-control" required>
+                                <input type="password" id="databasePassword" name="databasePassword" class="form-control" required>
                             </div>
                         </div>
                         <!-- modal-footer -->
-                        <div class="modal-footer">
+                        <div id="databaseModalFooter" class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            @method('patch')
                             @csrf
-                            <button type="submit" class="btn btn-primary">Edit Database</button>
+                            <button data-action="add" id="databaseModalSubmitButton" type="submit" class="btn btn-primary">Add Database</button>
                         </div>
                     </div>
                 </div>
@@ -224,11 +147,42 @@
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            // Javascript for assigning edit database modal
-            let editDatabaseModal = document.getElementById('editDatabaseModal')
-            editDatabaseModal.addEventListener('show.bs.modal', function (event) {
-                let button = event.relatedTarget
+            // Scripts for database modal
+            let databaseModal = document.getElementById('databaseModal')
 
+            // Javascript for database driver input field with dropdown combo
+            databaseModal.addEventListener('hide.bs.dropdown', event => {
+                if (event.clickEvent) {
+                    let clickedValue = event.clickEvent.target.getAttribute('data-databaseDriver')
+                    let databaseDriverInput = databaseModal.querySelector('#databaseDriver')
+                    databaseDriverInput.value = clickedValue
+                }
+            })
+
+            // Javascript for clearing modal inputs when closing modal
+            databaseModal.addEventListener('hidden.bs.modal', function() {
+                let inputs = databaseModal.querySelectorAll('input')
+                inputs.forEach(input => {
+                    input.value = ''
+                })
+            })
+
+            // Javascript for assigning add or edit database modal
+            databaseModal.addEventListener('show.bs.modal', function (event) {
+                let button = event.relatedTarget
+                if(button.getAttribute('data-action') === 'add'){
+
+                    let modalTitle = databaseModal.querySelector(".modal-title")
+                    modalTitle.textContent = "Add Database"
+
+                    let databaseModalFooter = databaseModal.querySelector('#databaseModalFooter')
+                    databaseModalFooter.innerHTML = `
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        @csrf
+                        <button id="databaseModalSubmitButton" type="submit" class="btn btn-primary">Add Database</button>
+                        `
+                    return
+                }
                 let databaseID = button.getAttribute('data-bs-databaseID')
                 let databaseName = button.getAttribute('data-bs-databaseName')
                 let databaseUrl = button.getAttribute('data-bs-databaseUrl')
@@ -239,47 +193,42 @@
                 let databaseUsername = button.getAttribute('data-bs-databaseUsername')
                 let databasePassword = button.getAttribute('data-bs-databasePassword')
 
-                let modalTitle = editDatabaseModal.querySelector(".modal-title")
+                let modalTitle = databaseModal.querySelector(".modal-title")
                 modalTitle.textContent = "Edit Database " + databaseName
 
-                let databaseIdInput = editDatabaseModal.querySelector("#databaseID")
+                let databaseIdInput = databaseModal.querySelector("#databaseID")
                 databaseIdInput.value = databaseID
 
-                let databaseNameInput = editDatabaseModal.querySelector('#databaseName')
+                let databaseNameInput = databaseModal.querySelector('#databaseName')
                 databaseNameInput.value = databaseName
 
-                let databaseUrlInput = editDatabaseModal.querySelector('#databaseUrl')
+                let databaseUrlInput = databaseModal.querySelector('#databaseUrl')
                 databaseUrlInput.value = databaseUrl
 
-                let databaseDriverInput = editDatabaseModal.querySelector('#databaseDriver')
+                let databaseDriverInput = databaseModal.querySelector('#databaseDriver')
                 databaseDriverInput.value = databaseDriver
-                editDatabaseModal.addEventListener('hide.bs.dropdown', event => {
-                    let clickedValue = event.clickEvent.target.getAttribute('data-databaseDriver')
-                    let databaseDriverInput = editDatabaseModal.querySelector('#databaseDriver')
-                    databaseDriverInput.value = clickedValue
-                })
 
-                let databaseHostInput = editDatabaseModal.querySelector('#databaseHost')
+                let databaseHostInput = databaseModal.querySelector('#databaseHost')
                 databaseHostInput.value = databaseHost
 
-                let databasePortInput = editDatabaseModal.querySelector('#databasePort')
+                let databasePortInput = databaseModal.querySelector('#databasePort')
                 databasePortInput.value = databasePort
 
-                let databaseDatabaseInput = editDatabaseModal.querySelector('#databaseDatabase')
+                let databaseDatabaseInput = databaseModal.querySelector('#databaseDatabase')
                 databaseDatabaseInput.value = databaseDatabase
 
-                let databaseUsernameInput = editDatabaseModal.querySelector('#databaseUsername')
+                let databaseUsernameInput = databaseModal.querySelector('#databaseUsername')
                 databaseUsernameInput.value = databaseUsername
 
-                let databasePasswordInput = editDatabaseModal.querySelector('#databasePassword')
+                let databasePasswordInput = databaseModal.querySelector('#databasePassword')
                 databasePasswordInput.value = databasePassword
-            })
 
-            let addDatabaseModal = document.getElementById('addDatabaseModal')
-            addDatabaseModal.addEventListener('hide.bs.dropdown', event => {
-                let clickedValue = event.clickEvent.target.getAttribute('data-databaseDriver')
-                let databaseDriverInput = addDatabaseModal.querySelector('#databaseDriver')
-                databaseDriverInput.value = clickedValue
+                let databaseModalFooter = databaseModal.querySelector('#databaseModalFooter')
+                databaseModalFooter.innerHTML = `
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                @method('patch')
+                @csrf
+                <button id="databaseModalSubmitButton" type="submit" class="btn btn-primary">Edit Database</button>`
             })
         </script>
 @endsection
