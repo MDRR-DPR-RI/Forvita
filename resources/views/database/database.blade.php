@@ -69,7 +69,7 @@
                     <td colspan="8"></td>
                     <td colspan="2">
                         <a href="#databaseModal" class="btn btn-primary d-flex align-items-center gap-2"
-                           data-bs-toggle="modal"><i class="ri-add-line"></i>
+                           data-action="add" data-bs-toggle="modal"><i class="ri-add-line"></i>
                             <span class="d-none d-sm-inline">Add Database</span></a>
                     </td>
                 </tr>
