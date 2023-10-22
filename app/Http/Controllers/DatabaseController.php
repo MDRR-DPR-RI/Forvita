@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Database;
 use App\Models\Dashboard;
+use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use PDO;
+
 class DatabaseController extends Controller
 {
 
@@ -47,6 +53,7 @@ class DatabaseController extends Controller
         $database->driver = $request->input('databaseDriver');
         $database->host = $request->input('databaseHost');
         $database->port = $request->input('databasePort');
+        $database->database = $request->input('databaseDatabase');
         $database->username = $request->input('databaseUsername');
         $database->password = $request->input('databasePassword');
 
@@ -61,6 +68,41 @@ class DatabaseController extends Controller
         $deleteDatabaseID = $request->input('databaseID');
         Database::destroy($deleteDatabaseID);
         error_log("deleted database with id $deleteDatabaseID");
+        return redirect('database');
+    }
+
+    // Function to change a database connection and config (should probably move this to services)
+    public function changeDatabaseConnection(String $connectionName, Database $database): void {
+        DB::purge($connectionName); // Kill DB connection and purge cache first
+
+        Config::set('database.connections.' . $connectionName, [
+            'driver' => $database->driver,
+            'url' => $database->url,
+            'host' => $database->host,
+            'port' => $database->port,
+            'database' => $database->database,
+            'username' => $database->username,
+            'password' => $database->password,
+        ]);
+    }
+
+    public function testConnection(Request $request): RedirectResponse {
+        $databaseID = $request->query('databaseID');
+        $database = Database::find($databaseID);
+
+        try {
+            $this->changeDatabaseConnection('scheduler', $database);
+            $connectionStatus = DB::connection('scheduler')->getPdo()->getAttribute(PDO::ATTR_CONNECTION_STATUS);
+            $database->status = $connectionStatus;
+            $database->save();
+
+        } catch(Exception $ex){
+            $errorMessage = substr($ex, 0, 200);
+            error_log("Failed to connect: " . $errorMessage);
+            $database->status = "Failed to connect: " . $errorMessage;
+            $database->save();
+            return redirect('database');
+        }
         return redirect('database');
     }
 }

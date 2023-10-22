@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('database')->nullable();
             $table->string('username')->nullable();
             $table->string('password')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }

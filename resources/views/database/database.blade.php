@@ -21,7 +21,7 @@
                     <th scope="col">Port</th>
                     <th scope="col">Database</th>
                     <th scope="col">Username</th>
-                    <th scope="col">Password</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -36,8 +36,11 @@
                         <td>{{ $database->port }}</td>
                         <td>{{ $database->database }}</td>
                         <td>{{ $database->username }}</td>
-                        <td>{{ $database->password }}</td>
+                        <td>{{ $database->status }}</td>
                         <td>
+                            {{--Test Database Connection--}}
+                            <a href="/database/test-connection?databaseID={{ $database->id }}" class="btn btn-success">Test Connection</a>
+
                             {{--Edit Database--}}
                             <a data-bs-toggle="modal" data-bs-target="#databaseModal"
                                data-action="edit"
@@ -93,14 +96,13 @@
                                 <input type="text" id="databaseName" name="databaseName" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="databaseUrl">Database Url</label>
-                                <input type="text" id="databaseUrl" name="databaseUrl" class="form-control" required>
+                                <label for="databaseUrl">Database Url (Will overwrite other settings)</label>
+                                <input type="text" id="databaseUrl" name="databaseUrl" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databaseDriver">Database Driver</label>
                                 <div class="input-group width-150px">
-                                    <input type="text" id="databaseDriver" name="databaseDriver" class="form-control"
-                                           required>
+                                    <input type="text" id="databaseDriver" name="databaseDriver" class="form-control">
                                     <div id="databaseDriverDropdown" class="btn-group">
                                         <button type="button" class="btn btn-outline-secondary dropdown-toggle"
                                                 data-bs-toggle="dropdown" aria-expanded="false"></button>
@@ -115,23 +117,23 @@
                             </div>
                             <div class="form-group">
                                 <label for="databaseHost">Database Host</label>
-                                <input type="text" id="databaseHost" name="databaseHost" class="form-control" required>
+                                <input type="text" id="databaseHost" name="databaseHost" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databasePort">Database Port</label>
-                                <input type="text" id="databasePort" name="databasePort" class="form-control" required>
+                                <input type="text" id="databasePort" name="databasePort" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databaseDatabase">Database Database</label>
-                                <input type="text" id="databaseDatabase" name="databaseDatabase" class="form-control" required>
+                                <input type="text" id="databaseDatabase" name="databaseDatabase" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databaseUsername">Database Username</label>
-                                <input type="text" id="databaseUsername" name="databaseUsername" class="form-control" required>
+                                <input type="text" id="databaseUsername" name="databaseUsername" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databasePassword">Database Password</label>
-                                <input type="password" id="databasePassword" name="databasePassword" class="form-control" required>
+                                <input type="password" id="databasePassword" name="databasePassword" class="form-control">
                             </div>
                         </div>
                         <!-- modal-footer -->

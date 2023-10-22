@@ -23,7 +23,6 @@ class SchedulerSeeder extends Seeder
             $sql = $sql . "(null, $random_a, $random_b, $random_c, null, null),\n";
         }
         $sql = substr($sql, 0, -2) . ";";
-        echo $sql;
         DB::insert($sql);
         Scheduler::create([
             'name' => "total_dummy_data",
@@ -50,7 +49,6 @@ class SchedulerSeeder extends Seeder
         ]);
         Database::create([
             'name' => "localhost",
-            'url' => "jdbc:mariadb://localhost:3306",
             'driver' => "mysql",
             'host' => "127.0.0.1",
             'port' => "3306",
@@ -60,11 +58,10 @@ class SchedulerSeeder extends Seeder
         ]);
         Database::create([
             'name' => "postgre_localhost",
-            'url' => "jdbc:postgresql://localhost:5432/postgres",
             'driver' => "pgsql",
             'host' => "127.0.0.1",
             'port' => "5432",
-            'database' => "dummy_database",
+            'database' => "test_postgre",
             'username' => "postgres",
             'password' => "password",
         ]);

@@ -63,13 +63,14 @@ Route::post('/fetch-data', function (Request $request) {
 });
 
 // Scheduler Routers
-Route::get('scheduler', [SchedulerController::class, 'show']);
 Route::get('scheduler/execute', [SchedulerController::class, 'execute']);
+Route::get('scheduler', [SchedulerController::class, 'show']);
 Route::post('scheduler', [SchedulerController::class, 'store']);
 Route::patch('scheduler', [SchedulerController::class, 'update']);
 Route::delete('scheduler', [SchedulerController::class, 'destroy']);
 
 // Database Routers
+Route::get('database/test-connection', [DatabaseController::class, 'testConnection']);
 Route::get('database', [DatabaseController::class, 'show']);
 Route::post('database', [DatabaseController::class, 'store']);
 Route::patch('database', [DatabaseController::class, 'update']);

@@ -18,5 +18,10 @@ class Database extends Model
             'database',
             'username',
             'password',
+            'status',
         ];
+
+    protected $attributes = [
+        'status' => "not tested connection yet",
+    ];
 }
