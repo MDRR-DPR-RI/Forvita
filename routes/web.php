@@ -22,36 +22,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// ->middleware('admin') was created in app/Http/Middleware/IsAdmin. and register the middleware name as = 'admin' in Kernel.php  
+
 Route::redirect('/', '/login');
 
-Route::get('/login',  [AuthController::class, 'login_view']); //loginpage
-Route::post('/login',  [AuthController::class, 'login_submit']);
+Route::get('/login',  [AuthController::class, 'login_view'])->name('login')->middleware('guest'); //loginpage
+Route::post('/login',  [AuthController::class, 'login_submit'])->middleware('guest');
 
-Route::post('/logout',  [AuthController::class, 'logout']);
+Route::post('/logout',  [AuthController::class, 'logout'])->middleware('auth');
 
-Route::get('/register', [AuthController::class, 'register_view']);
-Route::post('/register', [AuthController::class, 'register_submit']);
+Route::get('/register', [AuthController::class, 'register_view'])->middleware('guest');
+Route::post('/register', [AuthController::class, 'register_submit'])->middleware('guest');
 
-Route::resource('/cluster', ClusterController::class);
-Route::resource('/dashboard', DashboardController::class);
-Route::resource('/dashboard/content', ContentController::class);
+Route::resource('/cluster', ClusterController::class)->middleware('auth');
+Route::resource('/dashboard', DashboardController::class)->middleware('auth');
+Route::resource('/dashboard/content', ContentController::class)->middleware('auth');
 Route::resource('/permission', PermissionController::class)->middleware('admin');
 
 // ajax call, when select data in edit_chart page
-Route::post('/fetch-data', [AjaxController::class, 'data_cleans']);
+Route::post('/fetch-data', [AjaxController::class, 'data_cleans'])->middleware('admin');
 
 // ajax call, +grant access when add user email in permission page
-Route::post('/fetch-dashboard', [AjaxController::class, 'data_dashboards']);
+Route::post('/fetch-dashboard', [AjaxController::class, 'data_dashboards'])->middleware('admin');
 
 // Import Data CSV
-Route::post('/import-csv', [CsvImportController::class, 'import'])->name('import.csv');
+Route::post('/import-csv', [CsvImportController::class, 'import'])->name('import.csv')->middleware('admin');
 
 // Import Data From RESTful API
-Route::post('/import-api', [ApiImportController::class, 'storeDataFromApi'])->name('import.api');
+Route::post('/import-api', [ApiImportController::class, 'storeDataFromApi'])->name('import.api')->middleware('admin');
 
 // Scheduler routers
-Route::get('scheduler', [SchedulerController::class, 'show']);
-Route::get('scheduler/execute', [SchedulerController::class, 'execute']);
-Route::post('scheduler', [SchedulerController::class, 'store']);
-Route::patch('scheduler', [SchedulerController::class, 'update']);
-Route::delete('scheduler', [SchedulerController::class, 'destroy']);
+Route::get('scheduler', [SchedulerController::class, 'show'])->middleware('admin');
+Route::get('scheduler/execute', [SchedulerController::class, 'execute'])->middleware('admin');
+Route::post('scheduler', [SchedulerController::class, 'store'])->middleware('admin');
+Route::patch('scheduler', [SchedulerController::class, 'update'])->middleware('admin');
+Route::delete('scheduler', [SchedulerController::class, 'destroy'])->middleware('admin');

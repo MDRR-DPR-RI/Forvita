@@ -35,7 +35,6 @@ class AuthController extends Controller
     // LOGOUT
     public function logout(Request $request)
     {
-        dd("lgg");
         Auth::logout();
 
         $request->session()->invalidate();
