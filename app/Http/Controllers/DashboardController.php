@@ -64,10 +64,13 @@ class DashboardController extends Controller
                     array_push($y_value, $clean->jumlah); // push the vaue into the $y_value array
                 }
             }
-
-            $content->where('x_value', $content->x_value)->update([
-                'y_value' => json_encode($y_value),
-            ]);
+            foreach ($contents as $content) {
+                $content->where('x_value', $content->x_value)
+                    ->where('id', $content->id)
+                    ->update([
+                        'y_value' => json_encode($y_value),
+                    ]);
+            }
         }
         return view('dashboard.contents.main', [
             'dashboard' => $dashboard,
