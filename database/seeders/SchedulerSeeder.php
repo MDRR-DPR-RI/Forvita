@@ -14,7 +14,7 @@ class SchedulerSeeder extends Seeder
      */
     public function run(): void
     {
-        $sql = "INSERT INTO dataset.dummy_data
+        $sql = "INSERT INTO dummy_data
                 VALUES ";
         for ($i = 1; $i <= 50; $i++) {
             $random_a = rand(1, 100);
