@@ -47,6 +47,7 @@ class DashboardController extends Controller
          * Update y_value data everytime the dashboard was rendered 
          */
         $contents = Content::where('dashboard_id', $dashboard->id)->get();
+        $count = 0;
         // logic for updating the y_value data
         foreach ($contents as $content) { // loop every content in the dashboard
             $y_value = [];
@@ -64,16 +65,21 @@ class DashboardController extends Controller
                     array_push($y_value, $clean->jumlah); // push the vaue into the $y_value array
                 }
             }
-            $content->where('x_value', $content->x_value)
+            $updated = Content::where('x_value', $content->x_value)
                 ->where('id', $content->id)
                 ->update([
                     'y_value' => json_encode($y_value),
                 ]);
+            if ($updated) {
+                $count++;
+            }
         }
-        return view('dashboard.contents.main', [
-            'dashboard' => $dashboard,
-            'contents' => $contents,
-        ]);
+        if ($count === count($contents)) {
+            return view('dashboard.contents.main', [
+                'dashboard' => $dashboard,
+                'contents' => $contents,
+            ]);
+        }
     }
 
     /**
