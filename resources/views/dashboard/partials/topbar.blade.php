@@ -96,9 +96,32 @@
             <a href=""><i class="ri-question-line"></i> Help Center</a>
             <a href=""><i class="ri-lock-line"></i> Privacy Settings</a>
             <a href=""><i class="ri-user-settings-line"></i> Account Settings</a>
-            <a href=""><i class="ri-logout-box-r-line"></i> Log Out</a>
+            <a href="#modalLogout" data-bs-toggle="modal"><i class="ri-logout-box-r-line"></i> Log Out</a>
           </nav>
         </div><!-- dropdown-menu-body -->
       </div><!-- dropdown-menu -->
     </div><!-- dropdown -->
   </div><!-- header-main -->
+
+<!-- Modal LOG-OUT -->
+<div class="modal" id="modalLogout" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Log Out</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to log out?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form action="/logout" method="post">
+          @csrf
+          <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

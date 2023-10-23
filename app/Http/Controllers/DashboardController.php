@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Dashboard;
 use Illuminate\Http\Request;
+use App\Models\Content;
+use App\Models\Clean;
 
 class DashboardController extends Controller
 {
@@ -39,9 +41,45 @@ class DashboardController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Dashboard $dashboard)
+    public function show(Request $request, Dashboard $dashboard)
     {
-        //
+        /**
+         * Update y_value data everytime the dashboard was rendered 
+         */
+        $contents = Content::where('dashboard_id', $dashboard->id)->get();
+        $count = 0;
+        // logic for updating the y_value data
+        foreach ($contents as $content) { // loop every content in the dashboard
+            $y_value = [];
+            $x_value_array = json_decode($content->x_value); // convert json to an array
+            if ($x_value_array) { // if data is not null then continue
+                for ($i = 0; $i < count($x_value_array); $i++) { // looping for push the $y_value data based on $content->x_value leangth
+                    /**
+                     * take the new cleans data where judul = $content->judul and keterangan = $content->x_value[$i] & newest = true to take the newest data
+                     * use first() instead of get() so can use the variable like $clean->id to access id.
+                     */
+                    $clean = Clean::where('judul', $content->judul)
+                        ->where('keterangan', $x_value_array[$i])
+                        ->where('newest', true)
+                        ->first();
+                    array_push($y_value, $clean->jumlah); // push the vaue into the $y_value array
+                }
+            }
+            $updated = Content::where('x_value', $content->x_value)
+                ->where('id', $content->id)
+                ->update([
+                    'y_value' => json_encode($y_value),
+                ]);
+            if ($updated) {
+                $count++;
+            }
+        }
+        if ($count === count($contents)) {
+            return view('dashboard.contents.main', [
+                'dashboard' => $dashboard,
+                'contents' => $contents,
+            ]);
+        }
     }
 
     /**

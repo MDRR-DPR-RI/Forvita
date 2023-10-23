@@ -44,14 +44,12 @@
       {{-- Page Content --}}
           @yield('page_content')
 
+  {{-- script for all contents --}}
   <script src="/lib/jquery/jquery.min.js"></script>
   <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 
   <script src="/js/script.js"></script>
-
-{{-- Custom Script --}}  
-@yield('custom_script')
 
 </body>
 

@@ -17,4 +17,8 @@ class Dashboard extends Model
     {
         return $this->belongsTo(Cluster::class);
     }
+    public function permission()
+    {
+        return $this->hasMany(Permission::class);
+    }
 }
