@@ -46,13 +46,21 @@ class DashboardController extends Controller
         /**
          * Update y_value data everytime the dashboard was rendered 
          */
+
+        // Fetch all contents that in the dashboard
         $contents = Content::where('dashboard_id', $dashboard->id)->get();
         $count = 0;
         // logic for updating the y_value data
         foreach ($contents as $content) { // loop every content in the dashboard
+
+            // Initialize an empty array to store y_value data
             $y_value = [];
-            $x_value_array = json_decode($content->x_value); // convert json to an array
-            if ($x_value_array) { // if data is not null then continue
+
+            // Convert the JSON x_value field of the content to an array
+            $x_value_array = json_decode($content->x_value);
+
+            // Check if x_value_array is not null
+            if ($x_value_array) {
                 for ($i = 0; $i < count($x_value_array); $i++) { // looping for push the $y_value data based on $content->x_value leangth
                     /**
                      * take the new cleans data where judul = $content->judul and keterangan = $content->x_value[$i] & newest = true to take the newest data
@@ -62,18 +70,26 @@ class DashboardController extends Controller
                         ->where('keterangan', $x_value_array[$i])
                         ->where('newest', true)
                         ->first();
-                    array_push($y_value, $clean->jumlah); // push the vaue into the $y_value array
+
+                    // Push the 'jumlah' value from the Clean model into the y_value array
+                    array_push($y_value, $clean->jumlah);
                 }
             }
+
+            // Update the content's 'y_value' field with the new y_value array
             $updated = Content::where('x_value', $content->x_value)
                 ->where('id', $content->id)
                 ->update([
                     'y_value' => json_encode($y_value),
                 ]);
+
+            // If the content was successfully updated, increment the count
             if ($updated) {
                 $count++;
             }
         }
+
+        // If all contents were successfully updated, return the view
         if ($count === count($contents)) {
             return view('dashboard.contents.main', [
                 'dashboard' => $dashboard,
