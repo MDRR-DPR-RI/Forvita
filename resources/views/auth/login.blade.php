@@ -56,7 +56,7 @@
               placeholder="Enter a valid email address" name="email" autofocus required/>
          </div>
          <div class="mb-4">
-           <label class="form-label d-flex justify-content-between">Password <a href="">Forgot password?</a></label>
+           <label class="form-label d-flex justify-content-between">Password</label>
           <input name="password" type="password" id="password" class="form-control"
               placeholder="Enter password" required/>
          </div>
@@ -65,12 +65,10 @@
          <div class="divider"><span>or sign in with</span></div>
 
          <div class="row gx-2">
-           <div class="col"><button class="btn btn-facebook"><i class="ri-facebook-fill"></i> Facebook</button></div>
            <div class="col"><button class="btn btn-google"><i class="ri-google-fill"></i> Google</button></div>
          </div><!-- row -->
        </div><!-- card-body -->
        <div class="card-footer">
-         Don't have an account? <a href="/register">Create an Account</a>
        </div><!-- card-footer -->
      </div><!-- card -->
 
