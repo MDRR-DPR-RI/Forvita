@@ -38,15 +38,12 @@
       <div class="dropdown-menu dropdown-menu-end mt-10-f">
         <div class="dropdown-menu-body">
           <div class="avatar avatar-xl online mb-3"><img src="/img/img1.jpg" alt=""></div>
-          <h5 class="mb-1 text-dark fw-semibold">Abdul Mannan Saipi</h5>
-
+          <h5 class="mb-1 text-dark fw-semibold">{{ auth()->user()->name }}</h5>
           <nav class="nav">
-            <a href=""><i class="ri-edit-2-line"></i> Edit Profile</a>
-            {{-- <a href=""><i class="ri-profile-line"></i> View Profile</a> --}}
+            <a href=""><i class="ri-profile-line"></i> View Profile</a>
           </nav>
           <hr>
           <nav class="nav">
-
             <a href="#modalLogout" data-bs-toggle="modal"><i class="ri-logout-box-r-line"></i> Log Out</a>
           </nav>
         </div><!-- dropdown-menu-body -->
