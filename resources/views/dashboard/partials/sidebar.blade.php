@@ -3,8 +3,10 @@
     <div class="sidebar-header">
       <a href="/cluster" class="sidebar-logo">SATU DATA</a>
     </div><!-- sidebar-header -->
+        
     <div id="sidebarMenu" class="sidebar-body">
       <div class="nav-group show">
+    @if (session()->has('cluster_id'))
         @can('admin') <!-- using gate in AppServiceProvider to show this menu only for admin-->
           <a href="#" class="nav-label">Admin</a>
           <ul class="nav nav-sidebar">
@@ -37,10 +39,11 @@
             </li>
           @endforeach
         </ul>
+    @endif
       </div><!-- nav-group -->
-      
-      
     </div><!-- sidebar-body -->
+
+
     <div class="sidebar-footer">
       <div class="sidebar-footer-top">
         <div class="sidebar-footer-thumb">
@@ -55,12 +58,16 @@
       <div class="sidebar-footer-menu">
         <nav class="nav">
           <a href=""><i class="ri-profile-line"></i> View Profile</a>
-        </nav>
         <hr>
-        <nav class="nav">
           <a href="#modalLogout" data-bs-toggle="modal"><i class="ri-logout-box-r-line"></i> Log Out</a>
         </nav>
-      </div><!-- sidebar-footer-menu -->
+        <nav class="nav">
+          <a style="pointer-events: none;"></a>
+          <a style="pointer-events: none;"></a>
+          <a style="pointer-events: none;"></a>
+          <a style="pointer-events: none;"></a>
+        </nav>
+      </div><!-- sidebar-footer-menu -->  
     </div><!-- sidebar-footer -->
   </div><!-- sidebar -->
 

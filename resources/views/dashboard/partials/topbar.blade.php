@@ -22,12 +22,12 @@
           <a href="" class="nav-link">Prime</a>
           <a href="" class="nav-link">Dark</a>
         </nav>
-        <hr>
+        {{-- <hr>
         <label>Direction</label>
         <nav id="layoutDirection" class="nav nav-skin">
           <a href="" class="nav-link active">LTR</a>
           <a href="" class="nav-link">RTL</a>
-        </nav>
+        </nav> --}}
       </div><!-- dropdown-menu -->
     </div><!-- dropdown -->
 
@@ -39,6 +39,7 @@
         <div class="dropdown-menu-body">
           <div class="avatar avatar-xl online mb-3"><img src="/img/img1.jpg" alt=""></div>
           <h5 class="mb-1 text-dark fw-semibold">{{ auth()->user()->name }}</h5>
+          <p>{{ auth()->user()->role->name }}</p>
           <nav class="nav">
             <a href=""><i class="ri-profile-line"></i> View Profile</a>
           </nav>

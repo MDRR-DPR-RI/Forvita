@@ -333,6 +333,7 @@ let htmlStructures = {
               </nav>
             </div><!-- card-header -->
             <div class="card-body p-4">
+              <div id="description"></div><!-- card-description -->
               <div id="content"></div>
             </div><!-- card-body -->
           </div><!-- card -->

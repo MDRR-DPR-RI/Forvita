@@ -52,10 +52,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Cluster::create([
+            'user_id' => 2,
             'name' => "Komisi",
         ]);
 
         Cluster::create([
+            'user_id' => 1,
             'name' => "Pustekinfo",
         ]);
 

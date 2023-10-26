@@ -812,6 +812,20 @@ function appendTitleToCard(containerSelector, title) {
   judulContainer.appendChild(newElement);// asign the element to the content
 }
 
+// function to append description to the card
+function appendDescriptionToCard(containerSelector, description) {
+  const judulContainer = document.querySelector(containerSelector);
+
+  // empty the content if any
+  judulContainer.innerHTML = '';
+
+  // apend description to the card
+  const newElement = document.createElement('p');
+  newElement.className = 'fs-xs text-secondary mb-0 lh-4';
+  newElement.innerHTML = `${description}`;
+  judulContainer.appendChild(newElement);// asign the element to the content
+}
+
 // Loop through the contents array to find the matching chart_id
   for (var i = 0; i < contents.length; i++) {
     let maxValue;
@@ -956,6 +970,8 @@ function appendTitleToCard(containerSelector, title) {
     else if (contents[i].chart_id === 13) { // Side Bar Chart
 
       appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].judul);
+
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].description);
 
       // Assign the value to optionEigt
       let xAxis = JSON.parse(contents[i].x_value)

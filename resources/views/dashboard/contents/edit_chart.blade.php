@@ -7,32 +7,48 @@
 
 @section('page_content')
 <div class="main main-app p-3 p-lg-4">
- <div class="main main-docs">
   <div class="container"><br><br><br>
-    <div class="card card-example">
+    <div class="card">
       <div class="card-body">
-        <label for="judul">Select Data:</label>
-          <select id="selectJudul" class="form-select" name="judul">
-            @foreach ($juduls as $judulOption)
-                @if ($judulOption == $content->judul)
-                  <option value="{{ $judulOption }}" selected>{{ $judulOption }}</option>
-                @else
-                  <option value="{{ $judulOption }}">{{ $judulOption }}</option>
-                @endif
-            @endforeach
-        </select><br>
-      </div><!-- card-body -->
+        <div class="table-responsive">
+          <table class="table table-hover" id="customTable">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Kluster</th>
+                <th scope="col">Judul</th>
+                <th scope="col">Select</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($juduls as $judul)
+                <tr>
+                  <td scope="row">{{ $loop->iteration }}</td>
+                  <td>Anggota</td>
+                  <td>{{ $judul }}</td>
+                  <td>
+                  @if ($judul == $content->judul)
+                    <input class="select-judul" type="checkbox" name="judul" id="selectJudul" value="{{ $judul }}" checked>
+                  @else 
+                    <input class="select-judul" type="checkbox" name="judul" id="selectJudul" value="{{ $judul }}">
+                  @endif 
+                  </td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div><!-- card-body -->
+      </div><!-- table-responsive -->
     </div><!-- card -->
     <br>
     <input type="hidden" value="{{ $content->id }}" id="contentId">
     <div class="col d-flex justify-content-end">
-      <button href="#modal5" class="btn btn-primary" data-bs-toggle="modal" id="updateBtn">Select</button>
+      <button href="#modal5" class="btn btn-primary" data-bs-toggle="modal" id="updateBtn" style="display: none;">Select</button>
     </div>
   </div>
-  </div><!-- main-docs -->
-  <div class="main-footer mt-5">
+  {{-- <div class="main-footer mt-5">
     <span>&copy; 2023. DPR RI</span>
-  </div><!-- main-footer -->
+  </div><!-- main-footer --> --}}
 </div><!-- main-app -->
     
     {{-- modal select xValues --}}
@@ -68,112 +84,150 @@
         </div><!-- modal-content -->
       </div><!-- modal -->
     </form>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script src="/lib/gridjs-jquery/gridjs.production.min.js"></script> --}}
+
 <script>
-    $(document).ready(function() {
-     // Attach a click event listener to the "Update" button
-        $('#updateBtn').click(function () {
-          var selectedJudul = $('#selectJudul').val();
-          $("#selectedJudul").val(selectedJudul); // fill the input hidden type to store in db
-          var contentId = $('#contentId').val();  
 
-            //Make an AJAX request to fetch data
-            $.ajax({
-                url: '/fetch-data',
-                method: 'post',
-                data: {
-                    selectedJudul: selectedJudul,
-                    contentId: contentId
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (data) {
-                  let xValue;
-                  if (typeof data.xValue === 'object' && data.xValue[0] !== null) { // check data.xValue is !null
-                    xValue = JSON.parse(data.xValue);
-                  } else {
-                    xValue = "";
+  // $("#customTable").Grid({
+  //   className: {
+  //     table: 'table table-hover'
+  //   },
+  //   pagination: true,
+  //   search: true,
+  //   sort: true
+  // });
+  $(document).ready(function() {
+    let selectedJudul;
+    const updateBtn = document.getElementById('updateBtn');
+
+    $('.select-judul').change(function() {
+      // Uncheck all checkboxes with the same name except the current one
+      $('.select-judul').not(this).prop('checked', false);
+      if (this.checked) {
+        selectedJudul = this.value;
+        updateBtn.style.display = 'block';
+        console.log(selectedJudul);
+      } else {
+          updateBtn.style.display = 'none'; // Hide the new prompt input
+          console.log('Checkbox is not checked');
+      }
+    });
+  // Attach a click event listener to the "Update" button
+      $('#updateBtn').click(function () {
+        // var selectedJudul = $('#selectJudul').val();
+        console.log(selectedJudul);
+        $("#selectedJudul").val(selectedJudul); // fill the input hidden type to store in db
+        var contentId = $('#contentId').val();  
+
+          //Make an AJAX request to fetch data
+          $.ajax({
+              url: '/fetch-data',
+              method: 'post',
+              data: {
+                  selectedJudul: selectedJudul,
+                  contentId: contentId
+              },
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function (data) {
+                let xValue;
+                if (typeof data.xValue === 'object' && data.xValue[0] !== null) { // check data.xValue is !null
+                  xValue = JSON.parse(data.xValue);
+                } else {
+                  xValue = "";
+                }
+
+                var tableHtml = '<table class="table">';
+                tableHtml += '<thead>';
+                tableHtml += '<tr>';
+                tableHtml += '<th scope="col">';
+                tableHtml += '<div class="form-check">';
+                tableHtml += '<input class="form-check-input" type="checkbox" id="selectAllCheckbox" ';
+
+                // Select all if the xValue is all in db
+                console.log(xValue.length);
+                console.log(data.value.length);
+                console.log($(".checkbox-item:checked").length);
+                console.log($(".checkbox-item").length);
+                  if (xValue.length == data.value.length) {
+                      tableHtml += 'checked';
+                      console.log("checked all")
                   }
+                  
 
-                  var tableHtml = '<table class="table">';
-                  tableHtml += '<thead>';
-                  tableHtml += '<tr>';
-                  tableHtml += '<th scope="col">';
-                  tableHtml += '<div class="form-check">';
-                  tableHtml += '<input class="form-check-input" type="checkbox" id="selectAllCheckbox" ';
+                tableHtml += '>';
 
-                  // Select all if the xValue is all in db
-                  console.log(xValue.length);
-                  console.log(data.value.length);
-                  console.log($(".checkbox-item:checked").length);
-                  console.log($(".checkbox-item").length);
-                    if (xValue.length == data.value.length) {
+                tableHtml += '<label class="form-check-label" for="flexCheckDefault">';
+                tableHtml += 'Select All';
+                tableHtml += '</label>';
+                tableHtml += '</div>';
+                tableHtml += '</th>';
+                tableHtml += '<th scope="col">Judul</th>';
+                tableHtml += '<th scope="col">Jumlah</th>';
+                tableHtml += '</tr>';
+                tableHtml += '</thead>';
+                tableHtml += '<tbody>';
+            
+                // Iterate over the data and build table rows
+                data.value.forEach(function (item) {
+                    tableHtml += '<tr class="table-row" data-judul="' + item.judul + '">';
+                    tableHtml += '<td scope="row">';
+                    tableHtml += '<input class="form-check-input checkbox-item" type="checkbox" ';
+                    tableHtml += 'value="' + item.keterangan + '" id="item' + item.index + '" name="xValue[]" ';
+                    
+                    // Check the box if the value is in db
+                    if (xValue.includes(item.keterangan)) {
                         tableHtml += 'checked';
-                        console.log("checked all")
+                        console.log("checked " + item.keterangan)
                     }
                     
+                    tableHtml += '>';
+                    tableHtml += ' ' + item.keterangan;
+                    tableHtml += '</td>';
+                    tableHtml += '<td>' + item.judul + '</td>';
+                    tableHtml += '<td>' + item.jumlah + '</td>';
+                    tableHtml += '</tr>';
+                });
 
-                  tableHtml += '>';
+                tableHtml += '</tbody>';
+                tableHtml += '</table>';
 
-                  tableHtml += '<label class="form-check-label" for="flexCheckDefault">';
-                  tableHtml += 'Select All';
-                  tableHtml += '</label>';
-                  tableHtml += '</div>';
-                  tableHtml += '</th>';
-                  tableHtml += '<th scope="col">Judul</th>';
-                  tableHtml += '<th scope="col">Jumlah</th>';
-                  tableHtml += '</tr>';
-                  tableHtml += '</thead>';
-                  tableHtml += '<tbody>';
-              
-                  // Iterate over the data and build table rows
-                  data.value.forEach(function (item) {
-                      tableHtml += '<tr class="table-row" data-judul="' + item.judul + '">';
-                      tableHtml += '<td scope="row">';
-                      tableHtml += '<input class="form-check-input checkbox-item" type="checkbox" ';
-                      tableHtml += 'value="' + item.keterangan + '" id="item' + item.index + '" name="xValue[]" ';
-                      
-                      // Check the box if the value is in db
-                      if (xValue.includes(item.keterangan)) {
-                          tableHtml += 'checked';
-                          console.log("checked " + item.keterangan)
-                      }
-                      
-                      tableHtml += '>';
-                      tableHtml += ' ' + item.keterangan;
-                      tableHtml += '</td>';
-                      tableHtml += '<td>' + item.judul + '</td>';
-                      tableHtml += '<td>' + item.jumlah + '</td>';
-                      tableHtml += '</tr>';
-                  });
+                // Update the table container with the dynamic table
+                $('#table-container').html(tableHtml);
+                  // ccheck all
+                $("#selectAllCheckbox").click(function() {
+                    $(".checkbox-item").prop('checked', $(this).prop('checked'));
+                    console.log("all")
+                });
+                  // Listen for changes on item checkboxes
+                $(".checkbox-item").on('change', function () {
+                    // Check if all item checkboxes are checked
+                    var allChecked = $(".checkbox-item:checked").length === $(".checkbox-item").length;
 
-                  tableHtml += '</tbody>';
-                  tableHtml += '</table>';
-
-                  // Update the table container with the dynamic table
-                  $('#table-container').html(tableHtml);
-                    // ccheck all
-                  $("#selectAllCheckbox").click(function() {
-                      $(".checkbox-item").prop('checked', $(this).prop('checked'));
-                      console.log("all")
-                  });
-                    // Listen for changes on item checkboxes
-                  $(".checkbox-item").on('change', function () {
-                      // Check if all item checkboxes are checked
-                      var allChecked = $(".checkbox-item:checked").length === $(".checkbox-item").length;
-
-                      // Update the "Select All" checkbox accordingly
-                      $("#selectAllCheckbox").prop('checked', allChecked);
-                  });
-                },
-                error: function (error) {
-                    console.error(error);
-                }
-            });
-        });
-    });
+                    // Update the "Select All" checkbox accordingly
+                    $("#selectAllCheckbox").prop('checked', allChecked);
+                });
+              },
+              error: function (error) {
+                  console.error(error);
+              }
+          });
+      });
+  });
  
-</script>
 
+</script>
+ {{-- <label for="judul">Select Data:</label>
+            <select id="selectJudul" class="form-select" name="judul">
+              @foreach ($juduls as $judulOption)
+                  @if ($judulOption == $content->judul)
+                    <option value="{{ $judulOption }}" selected>{{ $judulOption }}</option>
+                  @else
+                    <option value="{{ $judulOption }}">{{ $judulOption }}</option>
+                  @endif
+              @endforeach
+          </select><br> --}}
 @endsection

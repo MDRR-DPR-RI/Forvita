@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('prompt_id')->default(1);
             $table->string('result_prompt')->nullable();
             $table->string('judul')->nullable();
+            $table->string('description')->default("Description card..");
             $table->json('x_value')->nullable();
             $table->json('y_value')->nullable();
             $table->timestamps();

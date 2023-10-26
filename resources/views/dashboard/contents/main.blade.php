@@ -285,6 +285,7 @@
 
       htmlContent = htmlContent.replace('id="content"', `id="${unique}"`); // set the unique id for each content
       htmlContent = htmlContent.replace('id="judul"', `id="judul${unique}"`); // set the unique id for each judul content
+      htmlContent = htmlContent.replace('id="description"', `id="description${unique}"`); // set the unique id for each description content
       htmlContent = htmlContent.replace('id="aiAnalysis"', `id="aiAnalysis${unique}"`); // set the unique id for aiAnalysis
       htmlContent = htmlContent.replace('id="placeholder"', `id="placeholder${unique}"`); // set the unique id for placeholder
       htmlContent = htmlContent.replace('data-content-id="id"', `data-content-id="${contentId}"`); // set the data-content-id with its id to send into a modal
