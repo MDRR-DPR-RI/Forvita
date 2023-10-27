@@ -28,9 +28,9 @@
                   <td>{{ $judul }}</td>
                   <td>
                   @if ($judul == $content->judul)
-                    <input class="select-judul" type="checkbox" name="judul" id="selectJudul" value="{{ $judul }}" checked>
+                    <input class="select-judul" type="checkbox" name="judul" id="selectJudul{{ $loop->iteration }}" value="{{ $judul }}" checked>
                   @else 
-                    <input class="select-judul" type="checkbox" name="judul" id="selectJudul" value="{{ $judul }}">
+                    <input class="select-judul" type="checkbox" name="judul" id="selectJudul{{ $loop->iteration }}" value="{{ $judul }}">
                   @endif 
                   </td>
                 </tr>
@@ -43,7 +43,11 @@
     <br>
     <input type="hidden" value="{{ $content->id }}" id="contentId">
     <div class="col d-flex justify-content-end">
-      <button href="#modal5" class="btn btn-primary" data-bs-toggle="modal" id="updateBtn" style="display: none;">Select</button>
+      @if ($content->judul)
+        <button href="#modal5" class="btn btn-primary" data-bs-toggle="modal" id="updateBtn">Select</button>
+      @else
+        <button href="#modal5" class="btn btn-primary" data-bs-toggle="modal" id="updateBtn" style="display: none;">Select</button>
+      @endif
     </div>
   </div>
   {{-- <div class="main-footer mt-5">
@@ -60,10 +64,34 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Select X values</h5>
+              <h5 class="modal-title">Edit Card</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div><!-- modal-header -->
+            </div>
             <div class="modal-body" id="modalContent">
+              <div class="row">
+                <div class="col-8">
+                  <label for="card_title" class="form-label">Judul Kartu</label>
+                  <input type="text" class="form-control" placeholder="Judul" aria-label="card_title" name="card_title" value="{{ $content->card_title }}" required>
+                </div>
+                <div class="col">
+                  <label for="card_grid" class="form-label">Panjang Kartu</label>
+                  <select id="card_grid" name="card_grid" class="form-select">
+                    @for ($a = 1; $a <= 12; $a++)
+                      @if ($a == $content->card_grid)
+                        <option selected>{{ $a }}</option>
+                      @else
+                        <option>{{ $a }}</option>
+                      @endif
+                    @endfor
+                  </select>
+                </div>
+              </div><br>
+              <div>
+                <label for="card_description" class="form-label">Deskripsi Kartu</label>
+                <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Masukan deskripsi kartu disini..." required>{{ $content->card_description }}</textarea>
+              </div>
+              <div> <br>
+                <label class="form-label">Pilih Nilai X</label>
                 <div id="table-container">
                   <p class="card-text placeholder-glow">
                     <span class="placeholder col-7"></span>
@@ -73,6 +101,7 @@
                     <span class="placeholder col-8"></span>
                   </p>
                 </div>
+              </div>
             </div><!-- modal-body -->
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -100,6 +129,15 @@
   // });
   $(document).ready(function() {
     let selectedJudul;
+    // this is for add asign the selectedJudul variable if user want to s=edit the data in the cards. 
+    for (var i = 1; i <= {{ count($juduls) }}; i++) {
+      var checkbox = document.getElementById("selectJudul" + i);
+
+      if (checkbox && checkbox.checked) {
+        selectedJudul = checkbox.value;
+        console.log("Checkbox value for index " + i + ": " + selectedJudul);
+      }
+    }
     const updateBtn = document.getElementById('updateBtn');
 
     $('.select-judul').change(function() {
@@ -119,7 +157,8 @@
         // var selectedJudul = $('#selectJudul').val();
         console.log(selectedJudul);
         $("#selectedJudul").val(selectedJudul); // fill the input hidden type to store in db
-        var contentId = $('#contentId').val();  
+        var contentId = $('#contentId').val();
+                // $(aiAnalysisElement).text("API Error");
 
           //Make an AJAX request to fetch data
           $.ajax({

@@ -692,10 +692,7 @@ var optionLine = {
     curve: 'straight',
     width: 2
   },
-  title: {
-    text: 'Product Trends by Month',
-    align: 'left'
-  },
+
   grid: {
     row: {
       colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
@@ -798,31 +795,31 @@ var optionPie = {
     
   },
 };
-// function to append title to the card
-function appendTitleToCard(containerSelector, title) {
+// function to append card title to the card
+function appendTitleToCard(containerSelector, card_title) {
   const judulContainer = document.querySelector(containerSelector);
 
   // empty the content if any
   judulContainer.innerHTML = '';
 
-  // apend title to the card
+  // apend card_title to the card
   const newElement = document.createElement('h6');
   newElement.className = 'card-title';
-  newElement.innerHTML = `Data ${title}`;
+  newElement.innerHTML = `${card_title}`;
   judulContainer.appendChild(newElement);// asign the element to the content
 }
 
-// function to append description to the card
-function appendDescriptionToCard(containerSelector, description) {
+// function to append card description to the card
+function appendDescriptionToCard(containerSelector, card_description) {
   const judulContainer = document.querySelector(containerSelector);
 
   // empty the content if any
   judulContainer.innerHTML = '';
 
-  // apend description to the card
+  // apend card_description to the card
   const newElement = document.createElement('p');
   newElement.className = 'fs-xs text-secondary mb-0 lh-4';
-  newElement.innerHTML = `${description}`;
+  newElement.innerHTML = `${card_description}`;
   judulContainer.appendChild(newElement);// asign the element to the content
 }
 
@@ -855,7 +852,10 @@ function appendDescriptionToCard(containerSelector, description) {
     } 
     else if (contents[i].chart_id === 8) { // Bar Chart With AI Analyst
       
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].judul);
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
+
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
+
 
       // Assign the value to optionEigt
       let xAxis = JSON.parse(contents[i].x_value)
@@ -884,6 +884,11 @@ function appendDescriptionToCard(containerSelector, description) {
       chartEight.render();
     } 
     else if (contents[i].chart_id === 9) { // Line Chart
+
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
+
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
+
       // Assign the value to optionEigt
       let xAxis = JSON.parse(contents[i].x_value)
       let yAxis = JSON.parse(contents[i].y_value)
@@ -899,7 +904,10 @@ function appendDescriptionToCard(containerSelector, description) {
     } 
     else if (contents[i].chart_id === 10) { // Donut chart
 
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].judul);
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
+
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
+
 
       // Assign the value to optionEigt
       let xAxis = JSON.parse(contents[i].x_value)
@@ -914,6 +922,12 @@ function appendDescriptionToCard(containerSelector, description) {
       chartDonut.render();
     } 
     else if (contents[i].chart_id === 11) { // card
+
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
+
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
+
+
       const y_value = JSON.parse(contents[i].y_value);
       const x_value = JSON.parse(contents[i].x_value);
 
@@ -943,7 +957,10 @@ function appendDescriptionToCard(containerSelector, description) {
     }
     else if (contents[i].chart_id === 12) { // table
 
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].judul);
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
+
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
+
 
       const y_value = JSON.parse(contents[i].y_value);
       const x_value = JSON.parse(contents[i].x_value);
@@ -960,7 +977,6 @@ function appendDescriptionToCard(containerSelector, description) {
         newElement.className = 'table-row';
         newElement.innerHTML = `
         <td scope="row">${j+1}</td>
-        <td>${contents[i].judul}</td>
         <td>${x_value[j]}</td>
         <td>${y_value[j]}</td>
         `;
@@ -969,9 +985,9 @@ function appendDescriptionToCard(containerSelector, description) {
     }
     else if (contents[i].chart_id === 13) { // Side Bar Chart
 
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].judul);
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
 
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].description);
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
       // Assign the value to optionEigt
       let xAxis = JSON.parse(contents[i].x_value)
@@ -988,7 +1004,10 @@ function appendDescriptionToCard(containerSelector, description) {
     } 
     else if (contents[i].chart_id === 14) { // Side Bar Chart
 
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].judul);
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
+
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
+
 
       // Assign the value to optionEigt
       let xAxis = JSON.parse(contents[i].x_value)

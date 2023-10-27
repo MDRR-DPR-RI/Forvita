@@ -78,9 +78,12 @@ class DatabaseSeeder extends Seeder
 
         // last create content
         Content::create([
-            'chart_id' => 8,
+            'chart_id' => 13,
             'dashboard_id' => 1,
             'judul' => 'Agama',
+            'card_title' => 'Jumlah Agama',
+            'card_description' => 'Ini Description card',
+            'card_grid' => 8,
             'x_value' => '["Islam","Kristen","Budha"]',
             'y_value' => '[800,200,150]'
         ]);

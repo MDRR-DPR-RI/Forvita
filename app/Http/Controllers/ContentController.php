@@ -35,6 +35,7 @@ class ContentController extends Controller
         $content = Content::create([
             'chart_id' => $request->chart_id, // input hidden
             'dashboard_id' => $request->dashboard_id, // input hidden
+            'card_grid' => $request->card_grid, // input hidden
         ]);
 
         // Retrieve the ID of the newly created content
@@ -119,6 +120,9 @@ class ContentController extends Controller
             }
             $content->update([
                 'judul' => $request->selectedJudul,
+                'card_title' => $request->card_title,
+                'card_description' => $request->card_description,
+                'card_grid' => $request->card_grid,
                 'result_prompt' => null,
                 'x_value' => json_encode($selectedXValues),
                 'y_value' => $y_value

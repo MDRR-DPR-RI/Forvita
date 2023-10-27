@@ -1,6 +1,6 @@
 // HERE IS WHERE U PUT UR HTML CONTENT. THEN ADD NEW CHART IN DATABASE (table->charts)
 let htmlStructures = {
-  1: [`<div class="col-xl-9">
+  1: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-body overflow-hidden px-0 pb-3">
               <div class="finance-info p-3 p-xl-4">
@@ -50,7 +50,7 @@ let htmlStructures = {
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`],
-  2: [`<div class="col-xl-3">
+  2: [`<div class="col-xl-">
           <div class="row g-3">
             <div class="col-sm-6 col-xl-12">
               <div class="card card-one">
@@ -74,7 +74,7 @@ let htmlStructures = {
             </div><!-- col -->
           </div><!-- row -->
         </div><!-- col -->`],
-  3: [`<div class="col-xl-6">
+  3: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-header border-0 pb-2">
               <h6 class="card-title">Profit Margin (%)</h6>
@@ -109,7 +109,7 @@ let htmlStructures = {
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->` ,],
-  4: [`<div class="col-xl-6">
+  4: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-body">
               <div id="content" class="mb-1"></div>
@@ -122,7 +122,7 @@ let htmlStructures = {
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`],
-  5: [`<div class="col-xl-12">
+  5: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-body p-3 p-xl-4">
               <div class="row justify-content-center g-3 mb-2 mb-xl-4">
@@ -209,7 +209,7 @@ let htmlStructures = {
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`],
-  6: [`<div class="col-xl-6">
+  6: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-body">
               <div id="apexChart5" class="mb-1"></div>
@@ -222,10 +222,10 @@ let htmlStructures = {
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`],
-  7: [` <div class="col-xl-4">
+  7: [` <div class="col-xl-">
           <div class="card card-one">
             <div class="card-header">
-              <h6 class="card-title">Pengusul RUU</h6>
+              <div id="judul"></div><!-- card-title -->
               <nav class="nav nav-icon nav-icon-sm ms-auto">
                 <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
                 <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
@@ -240,7 +240,7 @@ let htmlStructures = {
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col --> `],
-  8: [`<div class="col-xl-8">
+  8: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-header" >
               <div id="judul"></div><!-- card-title -->
@@ -252,6 +252,7 @@ let htmlStructures = {
             <div class="card-body p-4">
                   <div class="row g-4">
                 <div class="col-md-6">
+                  <div id="description"></div><!-- card-description -->
                   <div id="content" class="apex-chart-three"></div>
                 </div><!-- col -->
                 <div class="col-md-6">
@@ -275,55 +276,7 @@ let htmlStructures = {
             
           </div><!-- card -->
         </div><!-- col -->`],
-  9: [`<div class="col-xl-8">
-          <div class="card card-one">
-            <div class="card-body p-4">
-              <div id="content"></div>
-            </div><!-- card-body -->
-          </div><!-- card -->
-        </div><!-- col -->`],
-  10: [`<div class="col-xl-4">
-    <div class="card card-one">
-      <div class="card-header">
-        <div id="judul"></div><!-- card-title -->
-        <nav class="nav nav-icon nav-icon-sm ms-auto">
-          <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
-          <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
-        </nav>
-      </div><!-- card-header -->
-      <div class="card-body p-4">
-        <div id="content"></div>
-      </div><!-- card-body -->
-        </div><!-- card -->
-        </div><!-- col -->`],
-  11: [`<div class="col-xl-8" >
-          <div class="row g-3" id="content">
-          </div>
-        </div>`],
-  12: [`<div class="col-xl-8 " >
-          <div class="card card-one">
-            <div class="card-header">
-              <div id="judul"></div><!-- card-title -->
-              <nav class="nav nav-icon nav-icon-sm ms-auto">
-                <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
-                <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
-              </nav>
-            </div><!-- card-header -->
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">Judul</th>
-                  <th scope="col">Keterangan</th>
-                  <th scope="col">Jumlah</th>
-                </tr>
-                <tbody id="content">
-                </tbody>
-              </thead>
-            </table>
-          </div>
-        </div>`],
-  13: [`<div class="col-xl-8">
+  9: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-header">
               <div id="judul"></div><!-- card-title -->
@@ -338,7 +291,64 @@ let htmlStructures = {
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`],
-  14: [`<div class="col-xl-4">
+  10: [`<div class="col-xl-">
+    <div class="card card-one">
+      <div class="card-header">
+        <div id="judul"></div><!-- card-title -->
+        <nav class="nav nav-icon nav-icon-sm ms-auto">
+          <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
+          <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+        </nav>
+      </div><!-- card-header -->
+      <div class="card-body p-4">
+        <div id="description"></div><!-- card-description -->
+        <div id="content"></div>
+      </div><!-- card-body -->
+        </div><!-- card -->
+        </div><!-- col -->`],
+  11: [`<div class="col-xl-" >
+          <div class="row g-3" id="content">
+          </div>
+        </div>`],
+  12: [`<div class="col-xl-">
+          <div class="card card-one">
+            <div class="card-header">
+              <div id="judul"></div><!-- card-title -->
+              <nav class="nav nav-icon nav-icon-sm ms-auto">
+                <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
+                <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+              </nav>
+            </div><!-- card-header -->
+            <div id="description"></div><!-- card-description -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Keterangan</th>
+                  <th scope="col">Jumlah</th>
+                </tr>
+                <tbody id="content">
+                </tbody>
+              </thead>
+            </table>
+          </div>
+        </div>`],
+  13: [`<div class="col-xl-">
+          <div class="card card-one">
+            <div class="card-header">
+              <div id="judul"></div><!-- card-title -->
+              <nav class="nav nav-icon nav-icon-sm ms-auto">
+                <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
+                <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+              </nav>
+            </div><!-- card-header -->
+            <div class="card-body p-4">
+              <div id="description"></div><!-- card-description -->
+              <div id="content"></div>
+            </div><!-- card-body -->
+          </div><!-- card -->
+        </div><!-- col -->`],
+  14: [`<div class="col-xl-">
         <div class="card card-one">
           <div class="card-header">
             <div id="judul"></div><!-- card-title -->
@@ -348,11 +358,12 @@ let htmlStructures = {
             </nav>
           </div><!-- card-header -->
           <div class="card-body p-4">
+            <div id="description"></div><!-- card-description -->
             <div id="content"></div>
           </div><!-- card-body -->
         </div><!-- card -->
       </div><!-- col -->`],
-  15: [`<div class="col-xl-12">
+  15: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-body p-3 p-xl-4">
               <div class="row justify-content-center g-3 mb-2 mb-xl-4" id="content">

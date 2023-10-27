@@ -82,6 +82,7 @@
                                 @csrf
                               <input type="hidden" value="{{ $chart->id }}" name="chart_id">
                               <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
+                              <input type="hidden" name="card_grid" value="{{ $chart->grid }}" >
                               @if (in_array($chart->id, [4, 8, 9, 10, 11, 12, 13, 14, 15]))
                                 <td><button type="submit" class="btn btn-primary">Add</button></td>
                               @else
@@ -110,7 +111,7 @@
                           <tr>
                             <td scope="row">{{ $loop->iteration }}</td>
                             <td>{{ $content->chart->id }}</td>
-                            <td>{{ $content->chart->grid }}</td>
+                            <td>{{ $content->card_grid }}</td>
                             <td style="display: flex; justify-content: center;  align-items: center;">
 
                               {{-- Edit cards --}}
@@ -270,7 +271,7 @@
 {{-- script to print content in the dashboard --}}
  <script >
     // Declare variables outside the loop
-    let contentId, chartId, htmlContent, containerContent, unique, y_value, x_value, prompt, result_prompt;
+    let contentId, chartId, htmlContent, containerContent, unique, y_value, x_value, prompt, result_prompt, content_grid;
     @foreach ($contents as $content)
       // Access the HTML structure based on the PHP value
       contentId = {{ $content->id }}
@@ -280,6 +281,8 @@
       x_value = {!! json_encode($content->x_value) !!}
       prompt = "{!! $content->prompt->body !!}"
       result_prompt = "{{ $content->result_prompt }}"
+      content_grid = {{ $content->card_grid }}
+      console.log(content_grid);
 
       htmlContent = htmlStructures[chartId][0];
 
@@ -289,6 +292,8 @@
       htmlContent = htmlContent.replace('id="aiAnalysis"', `id="aiAnalysis${unique}"`); // set the unique id for aiAnalysis
       htmlContent = htmlContent.replace('id="placeholder"', `id="placeholder${unique}"`); // set the unique id for placeholder
       htmlContent = htmlContent.replace('data-content-id="id"', `data-content-id="${contentId}"`); // set the data-content-id with its id to send into a modal
+      htmlContent = htmlContent.replace('class="col-xl-"', `class="col-xl-${content_grid}"`); 
+      
 
       // Create a containerContent element and set its innerHTML
       containerContent = document.getElementById('main');
