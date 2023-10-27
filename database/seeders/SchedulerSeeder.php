@@ -29,13 +29,13 @@ class SchedulerSeeder extends Seeder
             'query' => "SELECT *
                         FROM (
                             select 'total_dummy_data' as judul, 'total_dummy_data_a' as keterangan, sum(a) as jumlah
-                            from dataset.dummy_data
+                            from dummy_data
                                 UNION
                             select 'total_dummy_data' as judul, 'total_dummy_data_b' as keterangan, sum(b) as jumlah
-                            from dataset.dummy_data
+                            from dummy_data
                                 UNION
                             select 'total_dummy_data' as judul, 'total_dummy_data_c' as keterangan, sum(c) as jumlah
-                            from dataset.dummy_data
+                            from dummy_data
                             ) as query;",
         ]);
         Scheduler::create([

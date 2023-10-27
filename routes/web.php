@@ -10,6 +10,8 @@ use App\Http\Controllers\CsvImportController;
 use App\Http\Controllers\ApiImportController;
 use App\Http\Controllers\SchedulerController;
 use App\Http\Controllers\DatabaseController;
+use App\Http\Controllers\UserManagementController;
+use App\Livewire\Counter;
 use App\Models\Dashboard;
 use App\Models\Clean;
 use App\Models\Content;
@@ -68,3 +70,6 @@ Route::get('database', [DatabaseController::class, 'show'])->middleware('admin')
 Route::post('database', [DatabaseController::class, 'store'])->middleware('admin');
 Route::patch('database', [DatabaseController::class, 'update'])->middleware('admin');
 Route::delete('database', [DatabaseController::class, 'destroy'])->middleware('admin');
+
+// User Management Routers
+Route::get('user-management', [UserManagementController::class, 'index'])->middleware('admin');
