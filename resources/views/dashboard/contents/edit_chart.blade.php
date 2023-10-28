@@ -71,7 +71,11 @@
               <div class="row">
                 <div class="col-8">
                   <label for="card_title" class="form-label">Judul Kartu</label>
-                  <input type="text" class="form-control" placeholder="Judul" aria-label="card_title" name="card_title" value="{{ $content->card_title }}" required>
+                  @if ($content->chart->id == 11 || $content->chart->id == 15)
+                    <input type="text" class="form-control" placeholder="Kartu ini tidak memiliki judul" aria-label="card_title" name="card_title" disabled>
+                  @else
+                    <input type="text" class="form-control" placeholder="Judul" aria-label="card_title" name="card_title" value="{{ $content->card_title }}" required>
+                  @endif
                 </div>
                 <div class="col">
                   <label for="card_grid" class="form-label">Panjang Kartu</label>
@@ -87,8 +91,13 @@
                 </div>
               </div><br>
               <div>
+
                 <label for="card_description" class="form-label">Deskripsi Kartu</label>
-                <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Masukan deskripsi kartu disini..." required>{{ $content->card_description }}</textarea>
+                @if ($content->chart->id == 11 || $content->chart->id == 15)
+                  <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Kartu ini tidak memiliki deskripsi" disabled></textarea>
+                @else
+                  <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Masukan deskripsi kartu disini..." required>{{ $content->card_description }}</textarea>
+                @endif
               </div>
               <div> <br>
                 <label class="form-label">Pilih Nilai X</label>

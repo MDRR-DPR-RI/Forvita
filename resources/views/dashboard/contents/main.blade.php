@@ -13,7 +13,13 @@
                 <li class="breadcrumb-item"><a href="/cluster">{{ session('cluster_name') }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $dashboard->name }}</li>
                 </ol>
-                <h4 class="main-title mb-0">Dashboard {{ $dashboard->name }}</h4>
+                <h4 class="main-title mb-0">Dashboard {{ $dashboard->name }}
+                <a href="#edit_dashboard_name" data-bs-toggle="modal">
+                  {{-- <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah Nama Dashboard"> --}}
+                    <i class="ri-pencil-line text-dark"></i>
+                  {{-- </a> --}}
+                </a>
+                </h4>
             </div>
                 
             <div class="d-flex gap-2 mt-3 mt-md-0">
@@ -46,221 +52,276 @@
         </div><!-- row -->
         <div class="main-footer mt-5">
             <span>&copy; 2023. DPR RI</span>
+            @can('admin')
+              <a href="#delete_dashboard" class="btn btn-danger" data-bs-toggle="modal">Hapus Dashboard</a>
+            @endcan
         </div><!-- main-footer -->
     </div><!-- main -->
 
     {{-- Modal Customize Dashboard for all--}}
-      <div class="modal fade" id="modal3" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Customize Dashboard {{ $dashboard->name }}</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div><!-- modal-header -->
-            <div class="modal-body container text-center">
-              <div class="row align-items-start">
-                <div class="col">
-                  Chart
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Cluster</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Grid</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($charts as $chart)
-                          <tr>
-                            <th scope="row">{{ $loop->iteration }}</th>
-                            <td ">{{ $chart->name }}</td>
-                            <td >{{ $chart->grid }}</td>
+    <div class="modal fade" id="modal3" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Customize Dashboard {{ $dashboard->name }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div><!-- modal-header -->
+          <div class="modal-body container text-center">
+            <div class="row align-items-start">
+              <div class="col">
+                Chart
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Cluster</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Grid</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($charts as $chart)
+                        <tr>
+                          <th scope="row">{{ $loop->iteration }}</th>
+                          <td ">{{ $chart->name }}</td>
+                          <td >{{ $chart->grid }}</td>
 
-                            {{-- Add new card --}}
-                            <form action="/dashboard/content" method="post">
-                                @csrf
-                              <input type="hidden" value="{{ $chart->id }}" name="chart_id">
-                              <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
-                              <input type="hidden" name="card_grid" value="{{ $chart->grid }}" >
-                              @if (in_array($chart->id, [4, 8, 9, 10, 11, 12, 13, 14, 15]))
-                                <td><button type="submit" class="btn btn-primary">Add</button></td>
-                              @else
-                                <td><button type="submit" class="btn btn-warning">Belum bisa dynamic data</button></td>
-                              @endif
-                            </form>
+                          {{-- Add new card --}}
+                          <form action="/dashboard/content" method="post">
+                              @csrf
+                            <input type="hidden" value="{{ $chart->id }}" name="chart_id">
+                            <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
+                            <input type="hidden" name="card_grid" value="{{ $chart->grid }}" >
+                            @if (in_array($chart->id, [4, 8, 9, 10, 11, 12, 13, 14, 15]))
+                              <td><button type="submit" class="btn btn-primary">Add</button></td>
+                            @else
+                              <td><button type="submit" class="btn btn-warning">Belum bisa dynamic data</button></td>
+                            @endif
+                          </form>
 
-                          </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col">
-                  content
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Cluster</th>
-                        <th scope="col">Grid</th>
-                        <th scope="col">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($contents as $content)
-                          <tr>
-                            <td scope="row">{{ $loop->iteration }}</td>
-                            <td>{{ $content->chart->id }}</td>
-                            <td>{{ $content->card_grid }}</td>
-                            <td style="display: flex; justify-content: center;  align-items: center;">
-
-                              {{-- Edit cards --}}
-                              <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary">Edit </a>
-                              
-                              {{-- Delete cards --}}
-                              <form action="/dashboard/content/{{ $content->id }}" method="post">
-                                @method('delete')
-                                @csrf
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                              </form>
-                            </td>
-                          </tr>
-                      @endforeach
-
-                    </tbody>
-                  </table>
-                </div>
+                        </tr>
+                    @endforeach
+                  </tbody>
+                </table>
               </div>
-         
+              <div class="col">
+                content
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Cluster</th>
+                      <th scope="col">Grid</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($contents as $content)
+                        <tr>
+                          <td scope="row">{{ $loop->iteration }}</td>
+                          <td>{{ $content->chart->id }}</td>
+                          <td>{{ $content->card_grid }}</td>
+                          <td style="display: flex; justify-content: center;  align-items: center;">
+
+                            {{-- Edit cards --}}
+                            <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary">Edit </a>
+                            
+                            {{-- Delete cards --}}
+                            <form action="/dashboard/content/{{ $content->id }}" method="post">
+                              @method('delete')
+                              @csrf
+                              <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                          </td>
+                        </tr>
+                    @endforeach
+
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div><!-- modal-body -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+        
+          </div>
+        </div><!-- modal-body -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+        </div><!-- modal-footer -->
+      </div><!-- modal-content -->
+    </div><!-- modal-fade -->
+
+    {{-- MODAL EDIT DASHBOARD NAME --}}
+    <div class="modal fade" id="edit_dashboard_name" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Ubah Nama Dashboard</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="/dashboard/{{ $dashboard->id }}" method="post">
+            @method('put')
+            @csrf
+            <div class="modal-body text-center">
+                <label>Masukan Nama Dashboard:</label>
+                <input type="text" class="form-control" name="dashboard_name" value="{{ $dashboard->name }}" autofocus>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Ubah</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+      
+    {{-- Modal Edit PROMPT--}}
+    <div class="modal fade" id="modalprompt" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Prompt</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div><!-- modal-header -->
+          <form id="contentForm" action="/dashboard/content/" method="post">
+            @method('put')
+            @csrf
+            <div class="modal-body container text-center">
+              <label for="judul">Select Prompt:</label>
+              {{-- set on change function, when user add new prompt, then will show INPUT FIELD to enter new prompt --}}
+              <select id="selectPrompt" class="form-select" name="selectPrompt" onchange="checkForNewPrompt()">
+                @foreach ($prompts as $prompt)
+                  @if ($prompt->id == 3) <!-- IMPORTANT: UPDATE THIS IF $prompt->id is EQUAL with the prompt_id in table contents -->
+                    <option value="{{ $prompt->id }}" selected>{{ $prompt->body }}</option>
+                  @else
+                    <option value="{{ $prompt->id }}">{{ $prompt->body }}</option>
+                  @endif
+                
+                @endforeach
+                {{-- IF THE USER ADD NEW PROMPT THEN UPDATE THE prompt_id in contents(table) WITH next id of prompt(new id) --}}
+                @php
+                  // Calculate the next ID by adding 1 to the last prompt's ID
+                  $nextId = $prompts->isEmpty() ? 1 : $prompts->last()->id + 1;
+                @endphp
+                  <option value="{{ $nextId }}">Add New Prompt</option>
+              </select>
+              <!-- Add a new prompt input field initially hidden -->
+              <div id="newPromptInput" class="modal-body container text-center" style="display: none;">
+                <label for="newPrompt">Enter New Prompt:</label>
+                <input type="text" id="newPrompt" name="newPrompt" class="form-control">
+              </div>
+              <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
+
+              {{-- SCRIPT TO SHOW INPUT FIELD IF USER WANT TO ADD THEIR OWN/NEW PROMPT --}}
+                <script>
+                function checkForNewPrompt() {
+                  const select = document.getElementById('selectPrompt');
+                  const newPromptInput = document.getElementById('newPromptInput');
+                  const newPrompt = document.getElementById('newPrompt');
+
+                  if (select.value == {{ $nextId }}) {
+                    newPromptInput.style.display = 'block'; // Show the new prompt input
+                    newPrompt.required = true; // Make the new prompt field required
+                  } else {
+                    newPromptInput.style.display = 'none'; // Hide the new prompt input
+                    newPrompt.required = false; // Make the new prompt field not required
+                  }
+                }
+              </script>
+              
+            </div><!-- modal-body -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update Prompt</button>
+          </form>
           </div><!-- modal-footer -->
         </div><!-- modal-content -->
-      </div><!-- modal-fade -->
-      
-{{-- Modal Edit PROMPT--}}
-      <div class="modal fade" id="modalprompt" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Edit Prompt</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div><!-- modal-header -->
-            <form id="contentForm" action="/dashboard/content/" method="post">
-              @method('put')
-              @csrf
-              <div class="modal-body container text-center">
-                <label for="judul">Select Prompt:</label>
-                {{-- set on change function, when user add new prompt, then will show INPUT FIELD to enter new prompt --}}
-                <select id="selectPrompt" class="form-select" name="selectPrompt" onchange="checkForNewPrompt()">
-                  @foreach ($prompts as $prompt)
-                    @if ($prompt->id == 3) <!-- IMPORTANT: UPDATE THIS IF $prompt->id is EQUAL with the prompt_id in table contents -->
-                      <option value="{{ $prompt->id }}" selected>{{ $prompt->body }}</option>
-                    @else
-                      <option value="{{ $prompt->id }}">{{ $prompt->body }}</option>
-                    @endif
-                  
-                  @endforeach
-                  {{-- IF THE USER ADD NEW PROMPT THEN UPDATE THE prompt_id in contents(table) WITH next id of prompt(new id) --}}
-                  @php
-                    // Calculate the next ID by adding 1 to the last prompt's ID
-                    $nextId = $prompts->isEmpty() ? 1 : $prompts->last()->id + 1;
-                  @endphp
-                    <option value="{{ $nextId }}">Add New Prompt</option>
-                </select>
-                <!-- Add a new prompt input field initially hidden -->
-                <div id="newPromptInput" class="modal-body container text-center" style="display: none;">
-                  <label for="newPrompt">Enter New Prompt:</label>
-                  <input type="text" id="newPrompt" name="newPrompt" class="form-control">
+      </div><!-- modal-content -->
+    </div><!-- modal-fade -->
+
+    {{-- Modal untuk Impor CSV --}}
+    <div class="modal fade" id="importCSVModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel">Import CSV File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
-
-                {{-- SCRIPT TO SHOW INPUT FIELD IF USER WANT TO ADD THEIR OWN/NEW PROMPT --}}
-                  <script>
-                  function checkForNewPrompt() {
-                    const select = document.getElementById('selectPrompt');
-                    const newPromptInput = document.getElementById('newPromptInput');
-                    const newPrompt = document.getElementById('newPrompt');
-
-                    if (select.value == {{ $nextId }}) {
-                      newPromptInput.style.display = 'block'; // Show the new prompt input
-                      newPrompt.required = true; // Make the new prompt field required
-                    } else {
-                      newPromptInput.style.display = 'none'; // Hide the new prompt input
-                      newPrompt.required = false; // Make the new prompt field not required
-                    }
-                  }
-                </script>
-                
-              </div><!-- modal-body -->
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Update Prompt</button>
-            </form>
-            </div><!-- modal-footer -->
-          </div><!-- modal-content -->
-        </div><!-- modal-content -->
-      </div><!-- modal-fade -->
-
-        {{-- Modal untuk Impor CSV --}}
-<div class="modal fade" id="importCSVModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="importModalLabel">Import CSV File</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route('import.csv') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="tableName" class="form-label">Table Name</label>
-                        <input class="form-control" type="text" id="tableName" name="tableName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="csvFile" class="form-label">Choose CSV File</label>
-                        <input class="form-control" type="file" id="csvFile" name="csvFile" accept=".csv" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Import CSV</button>
-                </form>
+                <div class="modal-body">
+                    <form action="{{ route('import.csv') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="tableName" class="form-label">Table Name</label>
+                            <input class="form-control" type="text" id="tableName" name="tableName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="csvFile" class="form-label">Choose CSV File</label>
+                            <input class="form-control" type="file" id="csvFile" name="csvFile" accept=".csv" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Import CSV</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-{{-- Modal untuk Impor From RESTful API --}}
-<div class="modal fade" id="importAPIModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="importModalLabel">Import from RESTful API</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route('import.api') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="mb-3">
-                      Example url
-                        <ol class="list-group list-group-numbered">
-                          <li class="list-group-item">https://catfact.ninja/fact</li>
-                          <li class="list-group-item">https://www.dpr.go.id/rest/?method=getAgendaPerBulan&tahun=2015&bulan=02&tipe=json</li>
-                        </ol>
-                        <label for="tableName" class="form-label">Table Name</label>
-                        <input class="form-control" type="text" id="tableName" name="tableName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="api_url" class="form-label">Enter URL</label>
-                        <input class="form-control" type="text" id="api_url" name="api_url" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Import</button>
-                </form>
+    {{-- Modal untuk Impor From RESTful API --}}
+    <div class="modal fade" id="importAPIModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel">Import from RESTful API</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('import.api') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                          Example url
+                            <ol class="list-group list-group-numbered">
+                              <li class="list-group-item">https://catfact.ninja/fact</li>
+                              <li class="list-group-item">https://www.dpr.go.id/rest/?method=getAgendaPerBulan&tahun=2015&bulan=02&tipe=json</li>
+                            </ol>
+                            <label for="tableName" class="form-label">Table Name</label>
+                            <input class="form-control" type="text" id="tableName" name="tableName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="api_url" class="form-label">Enter URL</label>
+                            <input class="form-control" type="text" id="api_url" name="api_url" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Import</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+@can('admin')
+    
+    {{-- Modal delete dashboard --}}
+    <div class="modal" id="delete_dashboard" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Hapus Dashboard {{ $dashboard->name }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Apakah kamu ingin menghapus dashboard {{ $dashboard->name }}?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <form action="/dashboard/{{ $dashboard->id }}" method="post">
+            @method('delete')
+            @csrf
+            <button type="submit" class="btn btn-danger">Hapus</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+@endcan
+
 
 
 {{-- include all assets (htmlStructures) --}}
@@ -370,6 +431,11 @@ $(document).ready(function () {
     $('#contentForm').attr('action', formAction);
   });
 });
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 
 </script>
 

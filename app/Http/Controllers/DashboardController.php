@@ -31,11 +31,11 @@ class DashboardController extends Controller
     public function store(Request $request)
     {
         $cluster_id = $request->session()->get('cluster_id');
-        Dashboard::create([
+        $dashboard = Dashboard::create([
             'name' => $request->input('dashboard_name'),
             'cluster_id' => $cluster_id,
         ]);
-        return redirect()->back();
+        return redirect('/dashboard/' . $dashboard->id)->with('success', "Berhasil Membuat Dashboard Baru: $dashboard->name");
     }
 
     /**
@@ -111,14 +111,45 @@ class DashboardController extends Controller
      */
     public function update(Request $request, Dashboard $dashboard)
     {
-        //
+        $dashboard->update([
+            'name' => $request->dashboard_name,
+        ]);
+
+        return redirect()->back()->with('success', "Berhasil Mengubah Nama Dashboard: $request->dashboard_name");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dashboard $dashboard)
+    public function destroy(Dashboard $dashboard, Request $request)
     {
-        //
+        // Delete the dashboard with the given ID
+        $is_deleted = Dashboard::destroy($dashboard->id);
+
+        // Initialize the variable to store the ID of the next dashboard
+        $next_dashboard_id = '';
+
+        // Get the cluster ID from the session
+        $cluster_id = $request->session()->get('cluster_id');
+
+        // Check if the dashboard was successfully deleted
+        if ($is_deleted) {
+            // If the dashboard was deleted, find the ID of the next dashboard in the same cluster
+            $next_dashboard_id = Dashboard::where('cluster_id', $cluster_id)->pluck('id')->first();
+        }
+
+        // If there is no next dashboard (or the last dashboard was deleted), create a new dashboard
+        if (!$next_dashboard_id) {
+            // Create a new dashboard with the cluster ID and a default name
+            $new_dashboard = Dashboard::create([
+                'cluster_id' => $cluster_id,
+                'name' => 'Dashboard 1',
+            ]);
+            // Set the ID of the newly created dashboard as the next_dashboard_id
+            $next_dashboard_id = $new_dashboard->id;
+        }
+
+        // Redirect to the dashboard route with the next_dashboard_id
+        return redirect('/dashboard/' . $next_dashboard_id)->with('deleted', "Dashboard $dashboard->name berhasil dihapus!");
     }
 }

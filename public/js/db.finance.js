@@ -923,11 +923,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
     } 
     else if (contents[i].chart_id === 11) { // card
 
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
-
       const y_value = JSON.parse(contents[i].y_value);
       const x_value = JSON.parse(contents[i].x_value);
 

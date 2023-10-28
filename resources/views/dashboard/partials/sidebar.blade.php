@@ -76,18 +76,18 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">New Dashboard</h5>
+        <h5 class="modal-title">Dashboard Baru</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="/dashboard" method="post">
         @csrf
         <div class="modal-body text-center">
-            <label>Enter New Dashboard Name:</label>
-            <input type="text" class="form-control" name="dashboard_name">
+            <label>Masukan Nama Dashboard:</label>
+            <input type="text" class="form-control" name="dashboard_name" autofocus>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Add Dashboard</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary">Tambah Dashboard</button>
         </div>
       </form>
     </div>

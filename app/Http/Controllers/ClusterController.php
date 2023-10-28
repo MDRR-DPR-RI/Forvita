@@ -68,7 +68,7 @@ class ClusterController extends Controller
         $clusterId = $cluster->id;
         Dashboard::create([
             'cluster_id' => $clusterId,
-            'name' => 'dashboard 1',
+            'name' => 'Dshboard 1',
         ]);
         return redirect('/cluster');
     }
