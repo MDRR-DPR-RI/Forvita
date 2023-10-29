@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dashboard;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -12,6 +13,7 @@ class UserManagementController extends Controller
     {
         return view('user-management.user-management', [
             'initialUsers' => User::all(),
+            'initialDashboards' => Dashboard::all(),
         ]);
     }
 }
