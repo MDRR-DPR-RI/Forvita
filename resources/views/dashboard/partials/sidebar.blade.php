@@ -86,7 +86,9 @@
         @csrf
         <div class="modal-body text-center">
             <label>Masukan Nama Dashboard:</label>
-            <input type="text" class="form-control" name="dashboard_name" autofocus>
+            <input type="text" class="form-control" name="dashboard_name" placeholder="Nama dashboard" autofocus>
+            <label>Masukan Deskripsi Dashboard:</label>
+            <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..."></textarea>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

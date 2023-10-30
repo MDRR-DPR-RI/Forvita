@@ -15,9 +15,7 @@
                 </ol>
                 <h4 class="main-title mb-0">Dashboard {{ $dashboard->name }}
                 <a href="#edit_dashboard_name" data-bs-toggle="modal">
-                  {{-- <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah Nama Dashboard"> --}}
                     <i class="ri-pencil-line text-dark"></i>
-                  {{-- </a> --}}
                 </a>
                 </h4>
             </div>
@@ -47,7 +45,15 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         @endif
+        <div class="col-xl-12">
+          <p class="mb-0">{{ $dashboard->description }}
+            <a href="#edit_dashboard_name" data-bs-toggle="modal">
+              <i class="ri-pencil-line text-dark"></i>
+            </a>
+          </p>
+        </div>
         <div class="row g-3" id="main">
+        
             {{-- CHART CONTENT WILL GOES HERE --}}
         </div><!-- row -->
         <div class="main-footer mt-5">
@@ -150,7 +156,7 @@
       </div><!-- modal-content -->
     </div><!-- modal-fade -->
 
-    {{-- MODAL EDIT DASHBOARD NAME --}}
+    {{-- MODAL EDIT DASHBOARD NAME & DESCRIPTION --}}
     <div class="modal fade" id="edit_dashboard_name" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -163,7 +169,9 @@
             @csrf
             <div class="modal-body text-center">
                 <label>Masukan Nama Dashboard:</label>
-                <input type="text" class="form-control" name="dashboard_name" value="{{ $dashboard->name }}" autofocus>
+                <input type="text" class="form-control" name="dashboard_name" placeholder="Nama Dashboard" value="{{ $dashboard->name }}" autofocus required>
+                <label>Masukan Deskripsi Dashboard:</label>
+                <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..." required>{{ $dashboard->description }}</textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

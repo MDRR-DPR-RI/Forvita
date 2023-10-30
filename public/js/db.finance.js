@@ -670,7 +670,7 @@ $('#skinMode .nav-link').bind('click', function(e){
 var optionLine = {
   series: [
     {
-    name: 'Desktops',
+    name: '',
     data: []
   },
   //  {
@@ -695,7 +695,8 @@ var optionLine = {
 
   grid: {
     row: {
-      colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+      // colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+      colors: [ 'transparent'], // takes an array which will be repeated on columns
       opacity: 1
     },
   },
@@ -709,7 +710,8 @@ var optionDonut = {
   series: [25,15,10,12,9,13,16],
   chart: {
     type: 'donut',
-    height: 'auto',
+    height: 350,
+    // height: 'auto',
     parentHeightOffset: 0
   },
   labels: ['USD', 'EUR', 'CNY', 'GBP', 'JPY', 'KRW', 'SGD'],
@@ -890,13 +892,15 @@ function appendDescriptionToCard(containerSelector, card_description) {
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
       // Assign the value to optionEigt
+      let judul = contents[i].judul
       let xAxis = JSON.parse(contents[i].x_value)
       let yAxis = JSON.parse(contents[i].y_value)
 
       console.log(yAxis);
       // asign the value to the chart configuration
-      optionLine.xaxis.categories = xAxis;
+      optionLine.series[0].name = judul;
       optionLine.series[0].data = yAxis;
+      optionLine.xaxis.categories = xAxis;
 
       var chartLine = new ApexCharts(document.querySelector('#content' + contents[i].id), optionLine);
       chartLine.render();

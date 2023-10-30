@@ -33,6 +33,7 @@ class DashboardController extends Controller
         $cluster_id = $request->session()->get('cluster_id');
         $dashboard = Dashboard::create([
             'name' => $request->input('dashboard_name'),
+            'description' => $request->input('dashboard_description'),
             'cluster_id' => $cluster_id,
         ]);
         return redirect('/dashboard/' . $dashboard->id)->with('success', "Berhasil Membuat Dashboard Baru: $dashboard->name");
@@ -113,6 +114,7 @@ class DashboardController extends Controller
     {
         $dashboard->update([
             'name' => $request->dashboard_name,
+            'description' => $request->dashboard_description,
         ]);
 
         return redirect()->back()->with('success', "Berhasil Mengubah Nama Dashboard: $request->dashboard_name");
