@@ -51,6 +51,12 @@ class UserListing extends Component
         $this->selectedUsersID = array_diff($this->selectedUsersID, array($userID));
     }
 
+    public function deleteUser($userID): void
+    {
+        $this->users = $this->users->diff(User::where('id', $userID)->get());
+        User::where('id', $userID)
+            ->delete();
+    }
     public function render(): view
     {
         return view('livewire.user-listing');
