@@ -1,4 +1,5 @@
 <div>
+    @livewire('wire-elements-modal')
 {{--    Show selected users--}}
     @if(!is_null($selectedUsers) and !$selectedUsers->isEmpty())
         <div class="row row-cols-md-auto">
@@ -6,7 +7,9 @@
                 <h3>Selected Users</h3>
             </div>
            <div class="col">
-               <button class="btn btn-outline-primary">
+               <button wire:click="$dispatch('openModal', { component: 'edit-permissions',
+                                 arguments: { selectedUsersID: {{json_encode($selectedUsersID)}}}})"
+                       class="btn btn-outline-primary">
                    Edit Selected Users Permissions
                </button>
            </div>
@@ -89,15 +92,19 @@
                         </tr>
                         <tr x-data="{ showPermissions{{$user->id}}: false }">
                             <td colspan="3">
-                                <button class="btn btn-outline-primary">
+                                <button wire:click="$dispatch('openModal', { component: 'edit-permissions',
+                                 arguments: { selectedUsersID: {{json_encode(array($user->id))}}}})"
+                                        class="btn btn-outline-primary">
                                     Edit Permissions
                                 </button>
+
                                 <button x-show="! showPermissions{{$user->id}}"
                                         x-on:click="showPermissions{{$user->id}} = ! showPermissions{{$user->id}}"
                                         class="btn btn-outline-primary">Show Permissions</button>
                                 <button x-show="showPermissions{{$user->id}}"
                                         x-on:click="showPermissions{{$user->id}} = ! showPermissions{{$user->id}}"
                                         class="btn btn-outline-danger">Hide Permissions</button>
+
                                 <div x-show="showPermissions{{$user->id}}">
                                     <table class="table">
                                         <thead>
@@ -124,75 +131,7 @@
                 @endforeach
         </table>
     </div>
-    {{--Edit User Permissions Modal--}}
-{{--    <div class="modal fade"--}}
-{{--         id="editPermissionsModal"--}}
-{{--         style="display: block;"--}}
-{{--         tabindex="-1" aria-hidden="true">--}}
-{{--        <form wire:submit="editPermissions">--}}
-{{--            <div class="modal-dialog">--}}
-{{--                <!-- modal-content -->--}}
-{{--                <div class="modal-content">--}}
-{{--                    <!-- modal-header -->--}}
-{{--                    <div class="modal-header">--}}
-{{--                        <h5 class="modal-title">Edit (Name)'s Permissions</h5>--}}
-{{--                        <button type="button" class="btn-close" aria-label="Close"></button>--}}
-{{--                    </div>--}}
-{{--                    <!-- modal-body -->--}}
-{{--                    <div class="modal-body container text-center">--}}
-{{--                        <input type="hidden" id="userID" name="userID">--}}
-{{--                        <div class="form-search">--}}
-{{--                            <i class="ri-search-line"></i>--}}
-{{--                            <input type="text" class="form-control" id="searchDashboardQuery"--}}
-{{--                                   wire:model.live="searchDashboardQuery" wire:keydown="searchDashboard"--}}
-{{--                                   placeholder="Enter dashboard or cluster name">--}}
-{{--                        </div>--}}
-{{--                        <table class="table">--}}
-{{--                            <thead>--}}
-{{--                            <tr>--}}
-{{--                                <th scope="col">No</th>--}}
-{{--                                <th scope="col">Select</th>--}}
-{{--                                <th scope="col">Dashboard</th>--}}
-{{--                                <th scope="col">Cluster</th>--}}
-{{--                            </tr>--}}
-{{--                            </thead>--}}
-{{--                            <tbody>--}}
-{{--                            @foreach($dashboards as $dashboard)--}}
-{{--                                <tr wire:key="{{ $dashboard->id }}">--}}
-{{--                                    <td>{{ $loop->iteration }}</td>--}}
-{{--                                    <td>--}}
-{{--                                        @if(!is_null($selectedDashboards) and $selectedDashboards->contains($dashboard))--}}
-{{--                                            <button class="btn btn-outline-success"--}}
-{{--                                                    wire:click="deselectDashboard({{ $dashboard->id }})">--}}
-{{--                                                <i class="ri-check-fill"></i>--}}
-{{--                                                Deselect Dashboard--}}
-{{--                                            </button>--}}
-{{--                                        @else--}}
-{{--                                            <button class="btn btn-outline-secondary"--}}
-{{--                                                    wire:click="selectDashboard({{ $dashboard->id }})">--}}
-{{--                                                <i class="ri-add-fill"></i>--}}
-{{--                                                Select Dashboard--}}
-{{--                                            </button>--}}
-{{--                                        @endif--}}
-{{--                                    </td>--}}
-{{--                                    <td>{{ $dashboard->name }}</td>--}}
-{{--                                    <td>{{ $dashboard->cluster->name }}</td>--}}
-{{--                                </tr>--}}
-{{--                            @endforeach--}}
-{{--                            </tbody>--}}
-{{--                        </table>--}}
-{{--                    </div>--}}
-{{--                    <!-- modal-footer -->--}}
-{{--                    <div class="modal-footer">--}}
-{{--                        <button type="button" class="btn btn-secondary">Close</button>--}}
-{{--                        @method('patch')--}}
-{{--                        @csrf--}}
-{{--                        <button type="submit" class="btn btn-primary">Edit Scheduler</button>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </form>--}}
-{{--    </div>--}}
+
     <script>
         // document.addEventListener("DOMContentLoaded", (event) => {
         //     const editPermissionsModal = document.getElementById('editPermissionsModal')

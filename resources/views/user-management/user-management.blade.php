@@ -10,7 +10,6 @@
         <h1> User Management </h1>
         <livewire:user-listing
                 :users="$initialUsers"
-                :dashboards="$initialDashboards"
         />
     </div>
 @endsection

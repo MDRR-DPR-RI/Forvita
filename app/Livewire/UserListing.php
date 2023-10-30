@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Dashboard;
+use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -15,13 +15,9 @@ class UserListing extends Component
     public string $searchUserQuery = "";
     public Collection $users;
     public Collection $selectedUsers;
+    public array $selectedUsersID;
 
-    public string $searchDashboardQuery = "";
-    public Collection $dashboards;
-    public Collection $selectedDashboards;
-
-    public string $class = "show";
-    public string $style = "display: block;";
+    protected $listeners = ['permissionsModified' => '$refresh'];
 
     public function searchUser()
     {
@@ -36,9 +32,14 @@ class UserListing extends Component
             ->get();
         if (!isset($this->selectedUsers)) {
             $this->selectedUsers = $selectedUser;
+
+            $this->selectedUsersID = array();
+            $this->selectedUsersID[] = $userID;
+
         }
         else {
             $this->selectedUsers = $this->selectedUsers->merge($selectedUser);
+            $this->selectedUsersID[] = $userID;
         }
     }
 
@@ -47,33 +48,7 @@ class UserListing extends Component
         $selectedUser = User::where('id', $userID)
             ->get();
         $this->selectedUsers = $this->selectedUsers->diff($selectedUser);
-    }
-
-    public function searchDashboard()
-    {
-        $this->dashboards = Dashboard::where('name', 'LIKE', "%".$this->searchDashboardQuery."%")
-            ->orWhereHas('cluster', function (Builder $query) {
-                $query->where('name', 'LIKE', "%".$this->searchDashboardQuery."%");
-            })->get();
-    }
-
-    public function selectDashboard($dashboardID): void
-    {
-        $selectedDashboard = Dashboard::where('id', $dashboardID)
-            ->get();
-        if (!isset($this->selectedDashboard)) {
-            $this->selectedDashboards = $selectedDashboard;
-        }
-        else {
-            $this->selectedDashboards = $this->selectedDashboards->merge($selectedDashboard);
-        }
-    }
-
-    public function deselectDashboard($dashboardID): void
-    {
-        $selectedDashboard = Dashboard::where('id', $dashboardID)
-            ->get();
-        $this->selectedDashboards = $this->selectedDashboards->diff($selectedDashboard);
+        $this->selectedUsersID = array_diff($this->selectedUsersID, array($userID));
     }
 
     public function render(): view

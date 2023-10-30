@@ -13,7 +13,6 @@ class UserManagementController extends Controller
     {
         return view('user-management.user-management', [
             'initialUsers' => User::all(),
-            'initialDashboards' => Dashboard::all(),
         ]);
     }
 }
