@@ -51,6 +51,8 @@
 
   <script src="/js/script.js"></script>
 
+  @yield('custom_script')
+
 </body>
 
 </html>

@@ -46,14 +46,13 @@
           </div>
         @endif
         <div class="col-xl-12">
-          <p class="mb-0">{{ $dashboard->description }}
+          <p class="mb-5">{{ $dashboard->description }}
             <a href="#edit_dashboard_name" data-bs-toggle="modal">
               <i class="ri-pencil-line text-dark"></i>
             </a>
           </p>
         </div>
         <div class="row g-3" id="main">
-        
             {{-- CHART CONTENT WILL GOES HERE --}}
         </div><!-- row -->
         <div class="main-footer mt-5">
