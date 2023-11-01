@@ -6,7 +6,7 @@
 @endsection
 
 @section('page_content')
-    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 <div class="main main-app p-3 p-lg-4">
   <div class="container"><br><br><br>
@@ -24,16 +24,12 @@
             </thead>
             <tbody>
               @foreach ($juduls as $judul)
-                <tr>
+                <tr @if ($judul == $content->judul) class="table-active" @endif>
                   <td scope="row">{{ $loop->iteration }}</td>
                   <td>Anggota</td>
                   <td>{{ $judul }}</td>
                   <td>
-                  @if ($judul == $content->judul)
-                    <input class="select-judul" type="checkbox" name="judul" id="selectJudul{{ $loop->iteration }}" value="{{ $judul }}" checked>
-                  @else 
-                    <input class="select-judul" type="checkbox" name="judul" id="selectJudul{{ $loop->iteration }}" value="{{ $judul }}">
-                  @endif 
+                    <button id="{{ $judul }}" href="#modal5" class="btn btn-primary btn-icon" data-bs-toggle="modal" onClick="AjaxRequest(this.id)"><i class="ri-logout-circle-r-line"></i></button>
                   </td>
                 </tr>
               @endforeach
@@ -43,14 +39,6 @@
       </div><!-- table-responsive -->
     </div><!-- card -->
     <br>
-    <input type="hidden" value="{{ $content->id }}" id="contentId">
-    <div class="col d-flex justify-content-end">
-      @if ($content->judul)
-        <button href="#modal5" class="btn btn-primary" data-bs-toggle="modal" id="updateBtn">Select</button>
-      @else
-        <button href="#modal5" class="btn btn-primary" data-bs-toggle="modal" id="updateBtn" style="display: none;">Select</button>
-      @endif
-    </div>
   </div>
   {{-- <div class="main-footer mt-5">
     <span>&copy; 2023. DPR RI</span>
@@ -118,6 +106,7 @@
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <input type="hidden" name="selectedJudul" id="selectedJudul">
               <input type="hidden" name="dashboard_id" value="{{ $content->dashboard->id }}">
+              <input type="hidden" value="{{ $content->id }}" id="contentId">
               <button type="submit" class="btn btn-primary">Apply</button>
             </div><!-- modal-footer -->
           </div><!-- modal-content -->
@@ -125,47 +114,19 @@
       </div><!-- modal -->
     </form>
 
-
-{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
-
-
-
-
 @endsection
 
 @section('custom_script')
   <script>
-    $(document).ready(function() {
-      let selectedJudul;
-      // this is for add asign the selectedJudul variable if user want to s=edit the data in the cards. 
-      for (var i = 1; i <= {{ count($juduls) }}; i++) {
-        var checkbox = document.getElementById("selectJudul" + i);
-
-        if (checkbox && checkbox.checked) {
-          selectedJudul = checkbox.value;
-          console.log("Checkbox value for index " + i + ": " + selectedJudul);
-        }
-      }
-      const updateBtn = document.getElementById('updateBtn');
-
-      $('.select-judul').change(function() {
-        // Uncheck all checkboxes with the same name except the current one
-        $('.select-judul').not(this).prop('checked', false);
-        if (this.checked) {
-          selectedJudul = this.value;
-          updateBtn.style.display = 'block';
-          console.log(selectedJudul);
-        } else {
-            updateBtn.style.display = 'none'; // Hide the new prompt input
-            console.log('Checkbox is not checked');
-        }
-      });
-    // Attach a click event listener to the "Update" button
-        $('#updateBtn').click(function () {
-          // var selectedJudul = $('#selectJudul').val();
+  function AjaxRequest(judul)
+  {
+      console.log("kontol");
+          let selectedJudul = judul;
+          // console.log('judul: ' + judul);
           console.log(selectedJudul);
           $("#selectedJudul").val(selectedJudul); // fill the input hidden type to store in db
-          var contentId = $('#contentId').val();
+          let contentId = $('#contentId').val();
+          console.log(contentId);
                   // $(aiAnalysisElement).text("API Error");
 
             //Make an AJAX request to fetch data
@@ -262,14 +223,12 @@
                     console.error(error);
                 }
             });
-        });
-    });
-  
+  }
 
   </script>
   <!-- Page level plugins -->
-  <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="/lib/datatables/jquery.dataTables.min.js"></script>
+  <script src="/lib/datatables/dataTables.bootstrap4.min.js"></script>
 
   <!-- Page level custom scripts -->
   <script src="/js/demo/datatables-demo.js"></script>

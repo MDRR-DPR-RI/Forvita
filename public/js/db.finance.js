@@ -669,14 +669,6 @@ $('#skinMode .nav-link').bind('click', function(e){
 // chartId = 9
 var optionLine = {
   series: [
-    {
-    name: '',
-    data: []
-  },
-  //  {
-  //   name: 'Desktops',
-  //   data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-  // }
   ],
   chart: {
     height: 350,
@@ -890,17 +882,22 @@ function appendDescriptionToCard(containerSelector, card_description) {
       appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
       // Assign the value to optionEigt
-      let judul = contents[i].judul
+      let judul = JSON.parse(contents[i].judul)
       let xAxis = JSON.parse(contents[i].x_value)
       let yAxis = JSON.parse(contents[i].y_value)
 
       console.log(yAxis);
       // asign the value to the chart configuration
-      optionLine.series[0].name = judul;
-      optionLine.series[0].data = yAxis;
-      optionLine.xaxis.categories = xAxis;
+      for (let index = 0; index < judul.length; index++) {
+        var newSeries = {
+          name: judul[index], // Set the new name
+          data: yAxis[index]    // Set the new data
+        };
+        console.log(newSeries);
+        optionLine.series.push(newSeries);
+      }
+      optionLine.xaxis.categories = [1, 2, 4, 5, 6];
 
       var chartLine = new ApexCharts(document.querySelector('#content' + contents[i].id), optionLine);
       chartLine.render();
