@@ -2,7 +2,7 @@
     <div class="modal d-block"
          id="editPermissionsModal"
          tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-scrollable">
                 <!-- modal-content -->
                 <div class="modal-content">
                     <!-- modal-header -->
@@ -15,12 +15,12 @@
                     <div class="modal-body container text-center">
                         <input type="hidden" id="userID" name="userID">
                         <h2>{{$searchDashboardQuery}}</h2>
-{{--                        <div class="form-search">--}}
-{{--                            <i class="ri-search-line"></i>--}}
-{{--                            <input type="text" class="form-control" id="searchDashboardQuery"--}}
-{{--                                   wire:model.live="searchDashboardQuery" wire:keydown="searchDashboard"--}}
-{{--                                   placeholder="Enter dashboard or cluster name">--}}
-{{--                        </div>--}}
+                        <div class="form-search">
+                            <i class="ri-search-line"></i>
+                            <input type="text" class="form-control" id="searchDashboardQuery"
+                                   wire:model.live="searchDashboardQuery" wire:keydown="searchDashboard"
+                                   placeholder="Enter dashboard or cluster name">
+                        </div>
                         <table class="table">
                             <thead>
                             <tr>
