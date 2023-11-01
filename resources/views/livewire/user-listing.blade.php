@@ -83,7 +83,7 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->role->name }}</td>
                             <td>
-                                <button type="submit" class="btn btn-danger"
+                                <button type="submit" class="btn btn-outline-danger"
                                         wire:click="deleteUser({{ $user->id }})"
                                         wire:confirm="Are you sure you want to delete this user?">
                                     Delete
@@ -122,7 +122,7 @@
                                                 <td>{{ $permission->dashboard->name }}</td>
                                                 <td>{{ $permission->dashboard->cluster->name }}</td>
                                                 <td>
-                                                    <button type="submit" class="btn btn-danger"
+                                                    <button type="submit" class="btn btn-outline-danger"
                                                             wire:click="deletePermission({{ $permission->id }})"
                                                             wire:confirm="Are you sure you want to delete this permission?">
                                                         Delete

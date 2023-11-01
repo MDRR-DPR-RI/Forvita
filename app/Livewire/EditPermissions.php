@@ -68,6 +68,13 @@ class EditPermissions extends ModalComponent
         $this->allDashboards = Dashboard::orderBy('cluster_id')
             ->orderBy('name')
             ->get();
+        if(count($this->selectedUsersID) == 1)
+        {
+            $userDashboardIDs = Permission::where('user_id', $this->selectedUsersID[0])
+                ->pluck('dashboard_id');
+            $this->selectedDashboards = Dashboard::whereIn('id', $userDashboardIDs->toArray())
+                ->get();
+        }
     }
 
     public function render()
