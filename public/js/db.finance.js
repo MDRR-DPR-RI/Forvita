@@ -669,7 +669,7 @@ $('#skinMode .nav-link').bind('click', function(e){
 // chartId = 9
 var optionLine = {
   series: [
-  //   {
+  //  {
   //   name: '',
   //   data: []
   // },
@@ -705,17 +705,17 @@ var optionLine = {
   }
 };
 //------------------------------------------------
-// chartId = 10
+// chartId = 10 & 14 donut and pie
 var optionDonut = {
-  series: [25,15,10,12,9,13,16],
+  series: [],
   chart: {
-    type: 'donut',
+    type: '',
     height: 350,
     // height: 'auto',
     parentHeightOffset: 0
   },
-  labels: ['USD', 'EUR', 'CNY', 'GBP', 'JPY', 'KRW', 'SGD'],
-  colors: ['#506fd9', '#85b6ff','#33d685','#0dcaf0','#1c96e9','#6e7985','#ccd2da'],
+  labels: [],
+  // colors: ['#506fd9', '#85b6ff','#33d685','#0dcaf0','#1c96e9','#6e7985','#ccd2da'],
   dataLabels: {
     enabled: true
   },
@@ -742,14 +742,21 @@ var optionDonut = {
 //------------------------------------------------
 // chartId = 13
 var optionBarSide = {
-  series: [{
-    data: []
-  }],
+  series: [
+    // {
+    //   data: []
+    // },
+  //     {
+  //   name: 'ds',
+  //   data: [124, 41, 35, 51, 492, 62, 69, 91, 148]
+  // },
+
+  ],
   chart: {
     type: 'bar',
     height: 300
   },
-  colors: ['#506fd9'],
+  // colors: ['#506fd9'],
   plotOptions: {
     bar: {
       borderRadius: 2,
@@ -762,40 +769,6 @@ var optionBarSide = {
   xaxis: {
     categories: [],
   }
-};
-//------------------------------------------------
-// chartId = 14
-var optionPie = {
-  series: [25,15,10,12,9,13,16],
-  chart: {
-    type: 'pie',
-    height: 'auto',
-    parentHeightOffset: 0
-  },
-  labels: ['USD', 'EUR', 'CNY', 'GBP', 'JPY', 'KRW', 'SGD'],
-  colors: ['#506fd9', '#85b6ff','#33d685','#0dcaf0','#1c96e9','#6e7985','#ccd2da'],
-  dataLabels: {
-    enabled: true
-  },
-  grid: {
-    padding: {
-      top: 0,
-      bottom: 0
-    }
-  },
-   legend: {
-      show: true,
-      showForSingleSeries: false,
-      showForNullSeries: true,
-      showForZeroSeries: true,
-      position: 'bottom',
-      horizontalAlign: 'center', 
-      floating: false,
-      fontSize: '14px',
-      fontFamily: 'Helvetica, Arial',
-      fontWeight: 400,
-    
-  },
 };
 // function to append card title to the card
 function appendTitleToCard(containerSelector, card_title) {
@@ -830,7 +803,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
     let maxValue;
     if (contents[i].chart_id === 4) { // Nama 4
       // Assign the value to optionFour
-      let yAxis = JSON.parse(contents[i].y_value)
+      let yAxis = JSON.parse(contents[i].y_value)[0]
 
       let yContainer = []
       if (yAxis) {
@@ -858,10 +831,9 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-
       // Assign the value to optionEigt
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
+      let xAxis = JSON.parse(contents[i].x_value)[0]
+      let yAxis = JSON.parse(contents[i].y_value)[0]
 
       // transform yAxis form ['800', '200'] --> [[1, 800], [2, 200]]
       let yContainer = []
@@ -926,16 +898,17 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       console.log(yAxis);
       // asign the value to the chart configuration
-      optionDonut.labels = xAxis;
-      optionDonut.series = yAxis;
+      optionDonut.labels = xAxis[0];
+      optionDonut.series = yAxis[0];
+      optionDonut.chart.type = 'donut';
 
       var chartDonut = new ApexCharts(document.querySelector('#content' + contents[i].id), optionDonut);
       chartDonut.render();
     } 
     else if (contents[i].chart_id === 11) { // card
 
-      const y_value = JSON.parse(contents[i].y_value);
-      const x_value = JSON.parse(contents[i].x_value);
+      const y_value = JSON.parse(contents[i].y_value)[0];
+      const x_value = JSON.parse(contents[i].x_value)[0];
 
       // reference to the card container element
       const cardContainer = document.querySelector(`#content${contents[i].id}`);
@@ -968,8 +941,8 @@ function appendDescriptionToCard(containerSelector, card_description) {
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
 
-      const y_value = JSON.parse(contents[i].y_value);
-      const x_value = JSON.parse(contents[i].x_value);
+      const y_value = JSON.parse(contents[i].y_value)[0];
+      const x_value = JSON.parse(contents[i].x_value)[0];
 
       // reference to the card container element
       const tableDataContainer = document.querySelector(`#content${contents[i].id}`);
@@ -996,24 +969,31 @@ function appendDescriptionToCard(containerSelector, card_description) {
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
       // Assign the value to optionEigt
+      let judul = JSON.parse(contents[i].judul)
       let xAxis = JSON.parse(contents[i].x_value)
       let yAxis = JSON.parse(contents[i].y_value)
 
       console.log(yAxis);
       // asign the value to the chart configuration
-      optionBarSide.xaxis.categories = xAxis;
-      optionBarSide.series[0].data = yAxis;
+      for (let index = 0; index < judul.length; index++) {
+        // Create a new series object
+        var newSeries = {
+          name: judul[index], // Set the new name
+          data: yAxis[index]    // Set the new data
+        };
+        optionBarSide.series.push(newSeries);
+      }
+      optionBarSide.xaxis.categories = xAxis[0];
 
       var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
       chartBar.render();
       console.log('render content ' + contents[i].id);
     } 
-    else if (contents[i].chart_id === 14) { // Side Bar Chart
+    else if (contents[i].chart_id === 14) { // Pie Chart
 
       appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
 
       // Assign the value to optionEigt
       let xAxis = JSON.parse(contents[i].x_value)
@@ -1021,18 +1001,23 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       console.log(yAxis);
       // asign the value to the chart configuration
-      optionPie.labels = xAxis;
-      optionPie.series = yAxis;
+      optionDonut.labels = xAxis[0];
+      optionDonut.series = yAxis[0];
+      optionDonut.chart.type = 'pie';
 
-      var chartPie = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionPie);
+      var chartPie = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionDonut);
       chartPie.render();
       console.log('render content ' + contents[i].id);
     } 
     else if (contents[i].chart_id === 15) { // Nama 15
 
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
+
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
+
       // Assign the value to optionEigt
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
+      let xAxis = JSON.parse(contents[i].x_value)[0]
+      let yAxis = JSON.parse(contents[i].y_value)[0]
 
       let max = Math.max(...yAxis);
       // reference to the card container element

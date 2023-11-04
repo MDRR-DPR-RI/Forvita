@@ -46,7 +46,7 @@ class ChartSeeder extends Seeder
             'grid' => 8
         ]);
         Chart::create([
-            'name' => "Line Chart",
+            'name' => "Multiple Line Chart",
             'grid' => 8
         ]);
         Chart::create([
@@ -70,7 +70,7 @@ class ChartSeeder extends Seeder
             'grid' => 4
         ]);
         Chart::create([
-            'name' => "Nama 15",
+            'name' => "Group of Circle",
             'grid' => 12
         ]);
     }

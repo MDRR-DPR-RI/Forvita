@@ -12,16 +12,20 @@
   <div class="container"><br><br><br>
     <div class="card">
       <div class="card-body">
-      Berapa stack?
-      <select name="selectOption" id="selectOption">
-        @for ($index = 1; $index <= 5; $index++)
-          @if (count(json_decode($content->judul)) == $index)
-            <option value="{{ $index }}" selected>{{ $index }}</option>
-          @else
-            <option value="{{ $index }}">{{ $index }}</option>
-          @endif
-        @endfor
-      </select>
+      @if (!in_array($content->chart->id, [10, 11, 12, 14, 15]))
+      <p>Berapa stack?</p>
+        <select name="selectOption" id="selectOption">
+          @for ($index = 1; $index <= 5; $index++)
+            @if (count(json_decode($content->judul)) == $index)
+              <option value="{{ $index }}" selected>{{ $index }}</option>
+            @else
+              <option value="{{ $index }}">{{ $index }}</option>
+            @endif
+          @endfor
+        </select>
+      @else
+        <input type="hidden" id="selectOption" value="1">
+      @endif
         <div class="table-responsive">
           {{-- <table class="table table-hover" id="dataTable" width="100%" cellspacing="0"> --}} <!-- search feature for tabl not use this first cause still have a bug in checkbox -->
           <table class="table table-hover" width="100%" cellspacing="0">

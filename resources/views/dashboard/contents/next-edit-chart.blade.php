@@ -13,7 +13,7 @@
       <div class="row">
           <div class="col-8">
               <label for="card_title" class="form-label">Judul Kartu</label>
-              @if ($content->chart->id == 11 || $content->chart->id == 15)
+              @if ($content->chart->id == 11)
                 <input type="text" class="form-control" placeholder="Kartu ini tidak memiliki judul" aria-label="card_title" name="card_title" disabled>
               @else
                 <input type="text" class="form-control" placeholder="Judul" aria-label="card_title" name="card_title" value="{{ $content->card_title }}" required>
@@ -35,7 +35,7 @@
           <div>
 
           <label for="card_description" class="form-label">Deskripsi Kartu</label>
-          @if ($content->chart->id == 11 || $content->chart->id == 15)
+          @if ($content->chart->id == 11)
               <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Kartu ini tidak memiliki deskripsi" disabled></textarea>
           @else
               <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Masukan deskripsi kartu disini..." required>{{ $content->card_description }}</textarea>
@@ -96,8 +96,11 @@
           <input type="hidden" value="{{ $stackCount }}" name="stackCount">
           <input type="hidden" value="{{ $content->dashboard->id }}" name="dashboard_id">
           <div class="col d-flex justify-content-end">
-            <button type="submit" class="btn btn-secondary" >Selesai</button>
-            {{-- todo: disabled btn til the selected checkbox.length is equal  --}}
+            @if ($content->judul)
+              <button type="submit" class="btn btn-primary" id="selesaiBtn">Selesai</button>
+            @else
+              <button type="submit" class="btn btn-secondary" id="selesaiBtn" disabled>Selesai</button>
+            @endif
           </div>
         </div>
     {{-- <div class="main-footer mt-5">
@@ -111,28 +114,51 @@
 @section('custom_script')
   <script>
     $(document).ready(function() {
-      // ccheck all
-      let stackCount = {{ $stackCount }}
-      for (let index = 0; index < stackCount; index++) {
-        $(`#selectAllCheckbox${index}`).click(function() {
-            $(`.checkbox-item${index}`).prop('checked', $(this).prop('checked'));
-            console.log("all")
-        });
+        
+        let stackCount = {{ $stackCount }};
 
-          // Listen for changes on item checkboxes
-        $(`.checkbox-item${index}`).on('change', function () {
-            // Check if all item checkboxes are checked
-            var allChecked = $(`.checkbox-item${index}:checked`).length === $(`.checkbox-item${index}`).length;
+        // Create an array to keep track of checkbox counts for each group, initialize to 0
+        const counters = new Array(stackCount).fill(0);
 
-            // Update the `Select All` checkbox accordingly
-            let checkboxLength = $(`.checkbox-item${index}`).length;
-            $(`#selectAllCheckbox${index}`).prop('checked', allChecked);
-            console.log(checkboxLength);
-        });
-      }
-    })
-    
+        for (let index = 0; index < stackCount; index++) {
+            // Listen for clicks on the "Select All" checkbox
+            $(`#selectAllCheckbox${index}`).click(function() {
+                const isChecked = $(this).prop('checked');
+                // Check/uncheck all item checkboxes in the current group
+                $(`.checkbox-item${index}`).prop('checked', isChecked);
+                counters[index] = isChecked ? $(`.checkbox-item${index}`).length : 0;
+                updateSelesaiButton(counters, index);
+            });
 
+            // Listen for changes on item checkboxes in the current group
+            $(`.checkbox-item${index}`).on('change', function() {
+                // Check if all item checkboxes are checked in the current group
+                counters[index] = $(`.checkbox-item${index}:checked`).length;
+                updateSelesaiButton(counters, index);
+                
+                // Uncheck the "Select All" checkbox if any individual checkbox is unchecked
+                if (counters[index] < $(`.checkbox-item${index}`).length) {
+                    $(`#selectAllCheckbox${index}`).prop('checked', false);
+                } else {
+                    $(`#selectAllCheckbox${index}`).prop('checked', true);
+                }
+            });
+        }
+
+        function updateSelesaiButton(counters, index) {
+            // Get the "selesai" button element
+            const selesaiBtn = document.getElementById('selesaiBtn');
+            // Check if all counters have the same value
+            if (counters.every(count => count === counters[0]) && counters[0] > 0) {
+                // Enable the "selesai" button and change its class to primary
+                selesaiBtn.disabled = false;
+                selesaiBtn.className = 'btn btn-primary';
+            } else {
+                // Disable the "selesai" button and change its class to secondary
+                selesaiBtn.disabled = true;
+                selesaiBtn.className = 'btn btn-secondary';
+            }
+        }
+    });
   </script>
-
 @endsection

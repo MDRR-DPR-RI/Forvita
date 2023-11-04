@@ -365,47 +365,16 @@ let htmlStructures = {
       </div><!-- col -->`],
   15: [`<div class="col-xl-">
           <div class="card card-one">
+            <div class="card-header">
+              <div id="judul"></div><!-- card-title -->
+              <nav class="nav nav-icon nav-icon-sm ms-auto">
+                <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
+                <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+              </nav>
+            </div><!-- card-header -->
             <div class="card-body p-3 p-xl-4">
+              <div id="description"></div><!-- card-description -->
               <div class="row justify-content-center g-3 mb-2 mb-xl-4" id="content">
-              </div><!-- row -->
-              <div class="row g-4 g-lg-5 pt-3">
-                <div class="col-sm-6 col-xl-3">
-                  <div class="d-flex">
-                    <i class="ri-wallet-2-line fs-32 lh-1 me-3"></i>
-                    <div>
-                      <h6 class="fw-semibold text-dark mb-2">Accounts Receivable</h6>
-                      <p class="fs-sm text-secondary mb-0">The proceeds or payment which the company will receive from its customers.</p>
-                    </div>
-                  </div>
-                </div><!-- col -->
-                <div class="col-sm-6 col-xl-3">
-                  <div class="d-flex">
-                    <i class="ri-refund-2-line fs-32 lh-1 me-3"></i>
-                    <div>
-                      <h6 class="fw-semibold text-dark mb-2">Accounts Payable</h6>
-                      <p class="fs-sm text-secondary mb-0">Money owed by a business to its suppliers shown as a liability.</p>
-                    </div>
-                  </div>
-                </div><!-- col -->
-                <div class="col-sm-6 col-xl-3">
-                  <div class="d-flex">
-                    <i class="ri-exchange-line fs-32 lh-1 me-3"></i>
-                    <div>
-                      <h6 class="fw-semibold text-dark mb-2">Quick Ratio</h6>
-                      <p class="fs-sm text-secondary mb-0">Measures the ability of a company to use its near cash or quick assets.</p>
-                    </div>
-                  </div>
-                </div><!-- col -->
-                <div class="col-sm-6 col-xl-3">
-                  <div class="d-flex">
-                    <i class="ri-exchange-dollar-line fs-32 lh-1 me-3"></i>
-                    <div>
-                      <h6 class="fw-semibold text-dark mb-2">Current Ratio</h6>
-                      <p class="fs-sm text-secondary mb-0">Measures whether a firm has enough resources to meet its short-term obligations.</p>
-                    </div>
-                  </div>
-                </div><!-- col -->
-              </div><!-- row -->
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`]
