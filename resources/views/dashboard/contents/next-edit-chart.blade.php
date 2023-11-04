@@ -6,7 +6,6 @@
 @endsection
 
 @section('page_content')
-<link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <form action="/dashboard/content/{{ $content->id }}" method="post">
 @method('put')
 @csrf
@@ -135,10 +134,5 @@
     
 
   </script>
-  <!-- Page level plugins -->
-  <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="/js/demo/datatables-demo.js"></script>
 @endsection
