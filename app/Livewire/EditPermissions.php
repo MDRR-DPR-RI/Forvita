@@ -23,8 +23,6 @@ class EditPermissions extends ModalComponent
             ->orWhereHas('cluster',   function (Builder $query) {
                 $query->where('name', 'LIKE', "%".$this->searchDashboardQuery."%");
             })->get();
-        error_log($this->searchDashboardQuery);
-        error_log($this->allDashboards);
     }
 
     public function selectDashboard($dashboardID): void
@@ -65,11 +63,15 @@ class EditPermissions extends ModalComponent
         ]);
     }
 
-    public function render()
+    public function mount()
     {
         $this->allDashboards = Dashboard::orderBy('cluster_id')
             ->orderBy('name')
             ->get();
+    }
+
+    public function render()
+    {
         return view('livewire.edit-permissions', [
 
         ]);
