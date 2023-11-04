@@ -4,9 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Permission;
 use App\Models\User;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -15,7 +13,6 @@ class UserListing extends Component
     public string $searchUserQuery = "";
     public Collection $users;
     public Collection $selectedUsers;
-    public array $selectedUsersID;
 
     protected $listeners = ['permissionsModified' => '$refresh'];
 
@@ -32,14 +29,9 @@ class UserListing extends Component
             ->get();
         if (!isset($this->selectedUsers)) {
             $this->selectedUsers = $selectedUser;
-
-            $this->selectedUsersID = array();
-            $this->selectedUsersID[] = $userID;
-
         }
         else {
             $this->selectedUsers = $this->selectedUsers->merge($selectedUser);
-            $this->selectedUsersID[] = $userID;
         }
     }
 
@@ -48,13 +40,19 @@ class UserListing extends Component
         $selectedUser = User::where('id', $userID)
             ->get();
         $this->selectedUsers = $this->selectedUsers->diff($selectedUser);
-        $this->selectedUsersID = array_diff($this->selectedUsersID, array($userID));
+//        $this->selectedUsersID = array_diff($this->selectedUsersID, array($userID));
     }
 
     public function deleteUser($userID): void
     {
         $this->users = $this->users->diff(User::where('id', $userID)->get());
         User::where('id', $userID)
+            ->delete();
+    }
+
+    public function deletePermission($permissionID): void
+    {
+        Permission::where('id', $permissionID)
             ->delete();
     }
     public function render(): view

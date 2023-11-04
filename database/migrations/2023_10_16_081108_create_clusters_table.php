@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id'); // cluster creator
             $table->string('name');
-            $table->string('icon_name');
+            $table->string('icon_name')->nullable();
             $table->timestamps();
         });
     }

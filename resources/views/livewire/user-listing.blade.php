@@ -8,7 +8,7 @@
             </div>
            <div class="col">
                <button wire:click="$dispatch('openModal', { component: 'edit-permissions',
-                                 arguments: { selectedUsersID: {{json_encode($selectedUsersID)}}}})"
+                                 arguments: { selectedUsersID: {{json_encode($selectedUsers->pluck('id')->toArray())}}}})"
                        class="btn btn-outline-primary">
                    Edit Selected Users Permissions
                </button>
@@ -37,7 +37,7 @@
             </div>
         </div>
     @endif
-
+{{--    Search Users--}}
     <label for="searchUserQuery">Search users</label>
     <div class="form-search">
         <i class="ri-search-line"></i>
@@ -112,6 +112,7 @@
                                             <th scope="col">No</th>
                                             <th scope="col">Dashboard</th>
                                             <th scope="col">Cluster</th>
+                                            <th scope="col">Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -120,6 +121,13 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $permission->dashboard->name }}</td>
                                                 <td>{{ $permission->dashboard->cluster->name }}</td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-danger"
+                                                            wire:click="deletePermission({{ $permission->id }})"
+                                                            wire:confirm="Are you sure you want to delete this permission?">
+                                                        Delete
+                                                    </button>
+                                                </td>
                                             </tr>
                                         @endforeach
                                         </tbody>

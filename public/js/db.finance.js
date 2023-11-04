@@ -669,6 +669,14 @@ $('#skinMode .nav-link').bind('click', function(e){
 // chartId = 9
 var optionLine = {
   series: [
+  //   {
+  //   name: '',
+  //   data: []
+  // },
+  //  {
+  //   name: 'Desktops',
+  //   data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+  // }
   ],
   chart: {
     height: 350,
@@ -889,18 +897,20 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       console.log(yAxis);
       // asign the value to the chart configuration
+
       for (let index = 0; index < judul.length; index++) {
+        // Create a new series object
         var newSeries = {
           name: judul[index], // Set the new name
           data: yAxis[index]    // Set the new data
         };
-        console.log(newSeries);
         optionLine.series.push(newSeries);
       }
-      optionLine.xaxis.categories = [1, 2, 4, 5, 6];
+      optionLine.xaxis.categories = xAxis[0];
 
       var chartLine = new ApexCharts(document.querySelector('#content' + contents[i].id), optionLine);
       chartLine.render();
+      optionLine.series = [];
       console.log('render content ' + contents[i].id);
     } 
     else if (contents[i].chart_id === 10) { // Donut chart

@@ -354,7 +354,6 @@
     prompt = "{!! $content->prompt->body !!}"
     result_prompt = "{{ $content->result_prompt }}"
     content_grid = {{ $content->card_grid }}
-    console.log(content_grid);
 
     htmlContent = htmlStructures[chartId][0];
 

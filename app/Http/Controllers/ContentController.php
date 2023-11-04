@@ -50,19 +50,37 @@ class ContentController extends Controller
      */
     public function show(Content $content, Request $request)
     {
+        // dd(($request->selected_judul));
         // Query distinct(unique) "judul" values from the database
-        $juduls = Clean::distinct()->pluck('judul');
+        $cleans = Clean::select('cluster', 'data', 'judul')
+            ->distinct('judul')
+            ->get();
 
-        // Query distinct(unique) "keterangan" values from the database
-        $keterangans = Clean::distinct()->pluck('keterangan');
-
-        return view('dashboard.contents.edit_chart', [
+        if (!$request->selected_judul) { // first edit chart page 
+            return view('dashboard.contents.edit_chart', [
+                'dashboard' => $content->dashboard,
+                'content' => $content,
+                'cleans' => $cleans,
+            ]);
+        }
+        // NEXT>>
+        $arr_selected_judul = explode(",", $request->selected_judul);
+        // dd($arr_selected_judul);
+        $data = [
             'dashboard' => $content->dashboard,
-            'cleanAll' => Clean::all(),
             'content' => $content,
-            'juduls' => $juduls,
-            'keterangans' => $keterangans,
-        ]);
+        ];
+        $stackCount = 0;
+        for ($i = 0; $i < count($arr_selected_judul); $i++) {
+            $clean_based_selected_val = Clean::where('judul', $arr_selected_judul[$i]) // take the cleans data based on selectedJudul
+                ->where('newest', true) // take the newest data
+                ->get();
+            $data['clean' . $i] = $clean_based_selected_val;
+            $stackCount++;
+        }
+        $data['stackCount'] = $stackCount;
+        // dd($data);
+        return view('dashboard.contents.next-edit-chart', $data);
     }
 
     /**
@@ -104,36 +122,78 @@ class ContentController extends Controller
         }
 
         // update content data x/y value
-        $selectedXValues = $request->input('xValue');
-        if ($selectedXValues) {
-            $y_value = [];
-            // asign jumlah for all selectedValues
-            for ($i = 0; $i < count($selectedXValues); $i++) {
-                $clean = Clean::where('keterangan', $selectedXValues[$i])
-                    ->where('judul', $request->selectedJudul)
-                    ->first(); // find row that = slectedXValues
-                if ($clean) {
-                    // Convert the string to an integer and add it to the $y_value array
-                    $numericValue = intval($clean->jumlah);
-                    $y_value[] = $numericValue;
+        $stackCount = $request->stackCount;
+        $x_value = [];
+        $y_value = [];
+        if ($stackCount > 1) { // stack chart / multiple stack
+            # code...
+            $judul_array = [];
+            for ($i = 0; $i < $request->stackCount; $i++) {
+                $selectedXValues = $request->input('xValue' . $i);
+                $x = [];
+                $y = [];
+                // dd($selectedXValues);
+                for ($j = 0; $j < count($selectedXValues); $j++) {
+                    $clean = Clean::where('keterangan', $selectedXValues[$j])
+                        ->where('judul', $request->input('selectedJudul' . $i))
+                        ->first(); // find row that = slectedXValues
+                    if ($clean) {
+                        // Convert the string to an integer and add it to the $y_value array
+                        $numericValue = intval($clean->jumlah);
+                        $x[] = $clean->keterangan;
+                        $y[] = $numericValue;
+                    }
                 }
+                $judul_array[] = $request->input('selectedJudul' . $i);
+                $x_value[] = $x;
+                $y_value[] = $y;
             }
             $content->update([
-                'judul' => $request->selectedJudul,
+                'judul' => $judul_array,
                 'card_title' => $request->card_title,
                 'card_description' => $request->card_description,
                 'card_grid' => $request->card_grid,
                 'result_prompt' => null,
-                'x_value' => json_encode($selectedXValues),
-                'y_value' => $y_value
+                'x_value' => json_encode($x_value),
+                'y_value' => json_encode($y_value),
             ]);
-        } else { // if the user did not select any data(x_value) then update null
+        } else { // single chart
+            $x = [];
+            $y = [];
+            // asign jumlah for all selectedValues
+            for ($i = 0; $i < count($request->input('xValue0')); $i++) {
+                $clean = Clean::where('keterangan', $request->input('xValue0')[$i])
+                    ->where('judul', $request->input('selectedJudul0'))
+                    ->first(); // find row that = slectedXValues
+                if ($clean) {
+                    // Convert the string to an integer and add it to the $y_value array
+                    $numericValue = intval($clean->jumlah);
+                    $x[] = $clean->keterangan;
+                    $y[] = $numericValue;
+                }
+            }
+            $x_value[] = $x;
+            $y_value[] = $y;
+            $judul_array[] = $request->input('selectedJudul0');
+
             $content->update([
-                'data' => null,
-                'x_value' => null,
-                'y_value' => null
+                'judul' => $judul_array,
+                'card_title' => $request->card_title,
+                'card_description' => $request->card_description,
+                'card_grid' => $request->card_grid,
+                'result_prompt' => null,
+                'x_value' => json_encode($x_value),
+                'y_value' => json_encode($y_value)
             ]);
         }
+        // if ($selectedXValues) {
+        // } else { // if the user did not select any data(x_value) then update null
+        //     $content->update([
+        //         'data' => null,
+        //         'x_value' => null,
+        //         'y_value' => null
+        //     ]);
+        // }
         // redirect with send dashboard_id variable to the dashboard routes
         return redirect('/dashboard/' . $request->dashboard_id)->with('success', 'Successfully');
     }

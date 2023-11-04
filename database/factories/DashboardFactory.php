@@ -19,7 +19,7 @@ class DashboardFactory extends Factory
         return [
             'cluster_id' => mt_rand(1, 2),
             'name' => 'dasboard-' . fake()->word(),
-            'description' =>  fake()->paragraph(),
+            'description' =>  fake()->sentence(),
         ];
     }
 }
