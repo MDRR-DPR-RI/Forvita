@@ -78,14 +78,24 @@ class DatabaseSeeder extends Seeder
 
         // last create content
         Content::create([
-            'chart_id' => 13,
+            'chart_id' => 9,
             'dashboard_id' => 1,
-            'judul' => 'Agama',
+            'judul' => '["Jumlah penganut Agama Anggota"]',
             'card_title' => 'Jumlah Agama',
             'card_description' => 'Ini Description card',
             'card_grid' => 8,
-            'x_value' => '["Islam","Kristen","Budha"]',
-            'y_value' => '[800,200,150]'
+            'x_value' => '[["Islam","Kristen","Budha","Hindu"]]',
+            'y_value' => '[["800","200","150","235"]]'
+        ]);
+        Content::create([
+            'chart_id' => 9,
+            'dashboard_id' => 1,
+            'judul' => '["Penjualan Ticket Ayam", "Penjualan Ticket Bebek"]',
+            'card_title' => 'Penjualan Ticket',
+            'card_description' => 'Total penjualan ticket dalam 4 bulan',
+            'card_grid' => 4,
+            'x_value' => '[["Jan","Feb","Mar","Apr"], ["Jan","Feb","Mar","Apr"]]',
+            'y_value' => '[["95","22","92","96"], ["43","29","53","93"]]'
         ]);
     }
 }
