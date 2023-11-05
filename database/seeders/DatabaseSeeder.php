@@ -5,12 +5,11 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\Content;
-use App\Models\Chart;
-use App\Models\Clean;
 use App\Models\Cluster;
 use App\Models\Dashboard;
-use App\Models\Prompt;
+use App\Models\Permission;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,160 +21,95 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         User::Create([
-            'name' => 'Test User',
+            'name' => 'Airlangga Eka Wardhana',
+            'role_id' => 1,
+            'email' => 'angga@dpr.go.id',
+            'password' => bcrypt('Pu$t3k1nf0'),
+        ]);
+        User::Create([
+            'name' => 'USER 1',
+            'role_id' => 1, // admin
             'email' => 'test@example.com',
             'password' => bcrypt('password'),
         ]);
+        User::Create([
+            'name' => 'C. Ucok',
+            'email' => 'test2@example.com',
+            'password' => bcrypt('password'),
+        ]);
+        User::Create([
+            'name' => 'P. Asep',
+            'email' => 'test3@example.com',
+            'password' => bcrypt('password'),
+        ]);
+
+
+        Role::create([
+            'name' => "Admin",
+        ]);
+        Role::create([
+            'name' => "User",
+        ]);
+
         Cluster::create([
-            'name' => "DPR RI",
+            'user_id' => 2,
+            'name' => "Komisi",
         ]);
 
-        Dashboard::create([
-            'cluster_id' => 1,
-            'name' => "Kelompok 1",
-        ]);
-        Dashboard::create([
-            'cluster_id' => 1,
-            'name' => "Kelompok 23",
-        ]);
-        Dashboard::create([
-            'cluster_id' => 1,
-            'name' => "Kelompok 46",
-        ]);
-        Dashboard::create([
-            'cluster_id' => 1,
-            'name' => "Kelompok 5",
+        Cluster::create([
+            'user_id' => 1,
+            'name' => "Pustekinfo",
         ]);
 
-        Content::create([
-            'chart_id' => 8,
-            'dashboard_id' => 2,
-            'judul' => 'Agama',
-            'x_value' => '["Islam","Kristen","Budha"]',
-            'y_value' => '[800,200,150]'
+        Permission::create([
+            'user_id' => 2,
+            'dashboard_id' => 1,
         ]);
 
-        Chart::create([
-            'name' => "Nama 1",
-            'grid' => 9
-        ]);
-        Chart::create([
-            'name' => "Nama 2",
-            'grid' => 3
-        ]);
-        Chart::create([
-            'name' => "Nama 3",
-            'grid' => 6
-        ]);
-        Chart::create([
-            'name' => "Nama 4",
-            'grid' => 6
-        ]);
-        Chart::create([
-            'name' => "Nama 5",
-            'grid' => 12
-        ]);
-        Chart::create([
-            'name' => "Nama 6",
-            'grid' => 8
-        ]);
-        Chart::create([
-            'name' => "Nama 7",
-            'grid' => 4
-        ]);
-        Chart::create([
-            'name' => "Bar Chart With AI Analyst",
-            'grid' => 8
-        ]);
-        Prompt::create([
-            'body' => "Nilai Tertinggi dan Terendah ",
-        ]);
-        Prompt::create([
-            'body' => "Nilai Tertinggi",
-        ]);
-        Prompt::create([
-            'body' => "Nilai Terendah",
-        ]);
-        Prompt::create([
-            'body' => "Nilai rata-rata dari semua",
-        ]);
-        Chart::create([
-            'name' => "Line Chart",
-            'grid' => 8
-        ]);
-        Chart::create([
-            'name' => "Donut Chart",
-            'grid' => 4
-        ]);
-        Chart::create([
-            'name' => "Card",
-            'grid' => 8
-        ]);
-        Chart::create([
-            'name' => "Table",
-            'grid' => 8
-        ]);
-        Chart::create([
-            'name' => "Side Bar Chart",
-            'grid' => 8
-        ]);
-        Chart::create([
-            'name' => "Pie Chart",
-            'grid' => 4
-        ]);
-        Chart::create([
-            'name' => "Nama 15",
-            'grid' => 12
-        ]);
-        Clean::create([
-            'judul' => "Agama",
-            'keterangan' => "Islam",
-            'jumlah' => 800,
-        ]);
-        Clean::create([
-            'judul' => "Agama",
-            'keterangan' => "Kristen",
-            'jumlah' => 200,
-        ]);
-        Clean::create([
-            'judul' => "Agama",
-            'keterangan' => "Budha",
-            'jumlah' => 150,
-        ]);
-        Clean::create([
-            'judul' => "Agama",
-            'keterangan' => "Hindu",
-            'jumlah' => 235,
-        ]);
-        Clean::create([
-            'judul' => "Agama",
-            'keterangan' => "Konghucu",
-            'jumlah' => 100,
-        ]);
-        Clean::create([
-            'judul' => "Jenis Kelamin",
-            'keterangan' => "L",
-            'jumlah' => 350,
-        ]);
-        Clean::create([
-            'judul' => "Jenis Kelamin",
-            'keterangan' => "P",
-            'jumlah' => 260,
-        ]);
-        Clean::create([
-            'judul' => "Tubuh",
-            'keterangan' => "Hidung",
-            'jumlah' => 1,
-        ]);
-        Clean::create([
-            'judul' => "Tubuh",
-            'keterangan' => "Tangan",
-            'jumlah' => 2,
-        ]);
+        Dashboard::factory(10)->create();
 
         $this->call([
             SchedulerSeeder::class,
+            ChartSeeder::class,
+            CleanSeeder::class,
+            PromptSeeder::class,
             // ... other seeders
+        ]);
+
+        // last create content
+        Content::create([
+            'chart_id' => 9,
+            'dashboard_id' => 1,
+            'judul' => '["Jumlah penganut Agama Anggota"]',
+            'card_title' => 'Jumlah Agama',
+            'card_description' => 'Ini Description card',
+            'card_grid' => 8,
+            'x_value' => '[["Islam","Kristen","Budha","Hindu"]]',
+            'y_value' => '[["800","200","150","235"]]',
+            'color' => '["#9f0230"]'
+
+        ]);
+        Content::create([
+            'chart_id' => 9,
+            'dashboard_id' => 1,
+            'judul' => '["Penjualan Ticket Ayam", "Penjualan Ticket Bebek"]',
+            'card_title' => 'Penjualan Ticket',
+            'card_description' => 'Total penjualan ticket dalam 4 bulan',
+            'card_grid' => 4,
+            'x_value' => '[["Jan","Feb","Mar","Apr"], ["Jan","Feb","Mar","Apr"]]',
+            'y_value' => '[["95","22","92","96"], ["43","29","53","93"]]',
+            'color' => '["#620230", "#fff70a"]'
+        ]);
+        Content::create([
+            'chart_id' => 2,
+            'dashboard_id' => 1,
+            'judul' => '["Jumlah penganut Agama Anggota","Jumlah penganut Agama SDMA"]',
+            'card_title' => 'Jumlah Agama',
+            'card_description' => 'Ini Jumlah Penaganut Agama Anggota dan SDMA',
+            'card_grid' => 6,
+            'x_value' => '[["Islam","Kristen","Budha","Hindu","Konghucu"],["Islam","Kristen","Budha","Hindu","Konghucu"]]',
+            'y_value' => '[[800,200,150,235,100],[723,292,129,125,23]]',
+            'color' => '["#ff0000", "#000000"]'
         ]);
     }
 }

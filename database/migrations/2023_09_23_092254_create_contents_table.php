@@ -17,9 +17,13 @@ return new class extends Migration
             $table->foreignId('dashboard_id');
             $table->foreignId('prompt_id')->default(1);
             $table->string('result_prompt')->nullable();
-            $table->string('judul')->nullable();
-            $table->json('x_value')->nullable();
-            $table->json('y_value')->nullable();
+            $table->string('judul')->default('[]');
+            $table->string('card_title')->nullable();
+            $table->string('card_description', 10000)->nullable();
+            $table->string('card_grid')->nullable();
+            $table->json('x_value')->default('[[]]');
+            $table->json('y_value')->default('[[]]');
+            $table->json('color')->default('[]');
             $table->timestamps();
         });
     }

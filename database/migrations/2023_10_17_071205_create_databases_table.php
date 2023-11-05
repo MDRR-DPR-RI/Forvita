@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('databases', function (Blueprint $table) {
             $table->id();
-            $table->string('url');
-            $table->string('driver');
-            $table->string('host');
-            $table->string('port');
-            $table->string('database');
-            $table->string('username');
-            $table->string('password');
+            $table->string('name');
+            $table->string('url')->nullable();
+            $table->string('driver')->nullable();
+            $table->string('host')->nullable();
+            $table->string('port')->nullable();
+            $table->string('database')->nullable();
+            $table->string('username')->nullable();
+            $table->string('password')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }

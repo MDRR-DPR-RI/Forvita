@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('cleans', function (Blueprint $table) {
             $table->id();
+            $table->string('cluster');
+            $table->string('data');
             $table->string('judul');
-            $table->string('keterangan')->unique();
+            $table->string('keterangan');
             $table->string('jumlah');
+            $table->boolean('newest')->default(true);
             $table->timestamps();
         });
     }
