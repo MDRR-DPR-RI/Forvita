@@ -6,7 +6,12 @@
 @endsection
 
 @section('page_content')
+<script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+
     <div class="main main-app p-3 p-lg-4">
+      {{-- <div class="container-fluid">
+            <tableau-viz class="mt-3 mb-3" id="tableauViz"></tableau-viz>
+        </div> --}}
         <div class="d-md-flex align-items-center justify-content-between mb-4">
             <div>
                 <ol class="breadcrumb fs-sm mb-1">
@@ -97,7 +102,15 @@
                             <input type="hidden" value="{{ $chart->id }}" name="chart_id">
                             <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
                             <input type="hidden" name="card_grid" value="{{ $chart->grid }}" >
-                            <td><button type="submit" class="btn btn-primary">Add</button></td>
+                            @if ($chart->id != 1)
+                              <td><button type="submit" class="btn btn-primary">Add</button></td>
+                            @else
+                              <td>
+                                 <a href="#modalEmbedTab" class="btn btn-primary" data-bs-toggle="modal">
+                                    Add
+                                </a>
+                              </td>
+                            @endif
                           </form>
 
                         </tr>
@@ -177,6 +190,36 @@
       </div>
     </div>
 
+    {{-- MODAL EMBED TABLEAU --}}
+    <div class="modal fade" id="modalEmbedTab" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel">Embed Tableau</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/dashboard/content" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                          Contoh url
+                            <ol class="list-group">
+                              <li class="list-group-item">https://public.tableau.com/views/ThePeriodicTableofWine/periodictableauofwineEN?:language=en-US&:display_count=n&:origin=viz_share_link</li>
+                              <li class="list-group-item">https://public.tableau.com/views/SolarEnergyDashboardRWFD_16900452395200/SolarEnergyDashboard?:language=en-US&:display_count=n&:origin=viz_share_link</li>
+                            </ol>
+                        </div>
+                        <div class="modal-body text-center">
+                            <label>Masukan Tableau url:</label>
+                            <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
+                            <input type="hidden" name="card_grid" value="{{ $chart->grid }}" >
+                            <input type="text" class="form-control" name="tableau_link" placeholder="http://example.com" value="{{ $dashboard->card_description }}" autofocus required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Embed</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
       
     {{-- Modal Edit PROMPT--}}
     <div class="modal fade" id="modalprompt" tabindex="-1" aria-hidden="true">
@@ -325,12 +368,13 @@
     </div>
 @endcan
 
+@endsection
 
+
+@section('custom_script')
 
 {{-- include all assets (htmlStructures) --}}
 <script src="/js/assets/htmlStructures.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 {{-- script to save into page into an image --}}
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
@@ -338,6 +382,8 @@
 
 {{-- script to print content in the dashboard --}}
  <script>
+
+
   // Declare variables outside the loop
   let contentId, chartId, htmlContent, containerContent, unique, y_value, x_value, prompt, result_prompt, content_grid;
   @foreach ($contents as $content)
@@ -428,15 +474,15 @@
       $(`#aiAnalysis${unique}`).text("NO DATA");
       $(`#placeholder${unique}`).empty();
     }
-@endforeach
-$(document).ready(function () {
-  $('a[data-bs-toggle="modal"]').on('click', function () {
+  @endforeach
+  $(document).ready(function () {
+    $('a[data-bs-toggle="modal"]').on('click', function () {
 
-    // Update the form action attribute with the content ID
-    var formAction = '/dashboard/content/' + contentId;
-    $('#contentForm').attr('action', formAction);
+      // Update the form action attribute with the content ID
+      var formAction = '/dashboard/content/' + contentId;
+      $('#contentForm').attr('action', formAction);
+    });
   });
-});
 
 </script>
 
@@ -465,6 +511,22 @@ $(document).ready(function () {
 
 <script src="/js/db.data.js"></script>
 <script src="/js/db.finance.js"></script>
+
+{{-- TABLEAU EMBED --}}
+<script>
+  let tableauViz, tableau_link, chart_id;
+  @foreach ($contents as $content)
+  chart_id = {{ $content->chart_id }}
+  if (chart_id == 1) {
+    tableauViz = document.getElementById(`tableauViz{{ $content->id }}`);
+    tableau_link = '{{ $content->card_description }}';
+
+    console.log(tableau_link);
+
+    tableauViz.src = tableau_link;
+  }
+  @endforeach
+</script>
 
 @endsection
 

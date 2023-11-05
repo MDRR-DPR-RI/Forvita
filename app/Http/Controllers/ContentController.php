@@ -32,6 +32,15 @@ class ContentController extends Controller
     public function store(Request $request)
     {
         // Create and store the content in the database
+        if ($request->tableau_link) {
+            $content = Content::create([
+                'chart_id' => 1,
+                'dashboard_id' => $request->dashboard_id, // input hidden
+                'card_grid' => $request->card_grid, // input hidden
+                'card_description' => $request->tableau_link,
+            ]);
+            return redirect()->back()->with('success', 'Successfully to embed Tableau');
+        }
         $content = Content::create([
             'chart_id' => $request->chart_id, // input hidden
             'dashboard_id' => $request->dashboard_id, // input hidden

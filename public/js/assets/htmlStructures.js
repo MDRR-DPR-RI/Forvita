@@ -1,20 +1,7 @@
 // HERE IS WHERE U PUT UR HTML CONTENT. THEN ADD NEW CHART IN DATABASE (table->charts)
 let htmlStructures = {
-  1: [`<div class="col-xl-">
-          <div class="card card-one">
-            <div class="card-header">
-              <div id="judul"></div><!-- card-title -->
-              <nav class="nav nav-icon nav-icon-sm ms-auto">
-                <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
-                <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
-              </nav>
-            </div><!-- card-header -->
-            <div class="card-body p-4">
-              <div id="description"></div><!-- card-description -->
-              <div id="content"></div>
-            </div><!-- card-body -->
-          </div><!-- card -->
-        </div><!-- col -->`],
+  1: [`<div class="container-fluid" id="content">
+        </div>`],
   2: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-header">
@@ -44,7 +31,7 @@ let htmlStructures = {
               <div id="content"></div>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`,],
+        </div><!-- col -->`],
   4: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-header">
@@ -59,7 +46,7 @@ let htmlStructures = {
               <div id="content"></div>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`],
+        </div><!-- col -->`,],
   5: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-header">
@@ -77,14 +64,16 @@ let htmlStructures = {
         </div><!-- col -->`],
   6: [`<div class="col-xl-">
           <div class="card card-one">
-            <div class="card-body">
-              <div id="apexChart5" class="mb-1"></div>
-              <h3 class="card-value">2.8:0</h3>
-              <div class="progress ht-5 mb-2">
-                <div class="progress-bar bg-ui-02 w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <label class="fw-semibold text-dark mb-1">Quick Ratio Goal: 2.0 or higher</label>
-              <p class="fs-sm text-secondary mb-0">Measures your Current Assets / Current Liabilities</p>
+            <div class="card-header">
+              <div id="judul"></div><!-- card-title -->
+              <nav class="nav nav-icon nav-icon-sm ms-auto">
+                <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
+                <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+              </nav>
+            </div><!-- card-header -->
+            <div class="card-body p-4">
+              <div id="description"></div><!-- card-description -->
+              <div id="content"></div>
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`],

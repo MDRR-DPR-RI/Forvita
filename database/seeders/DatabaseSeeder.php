@@ -101,7 +101,7 @@ class DatabaseSeeder extends Seeder
             'color' => '["#620230", "#fff70a"]'
         ]);
         Content::create([
-            'chart_id' => 2,
+            'chart_id' => 3,
             'dashboard_id' => 1,
             'judul' => '["Jumlah penganut Agama Anggota","Jumlah penganut Agama SDMA"]',
             'card_title' => 'Jumlah Agama',
@@ -110,6 +110,17 @@ class DatabaseSeeder extends Seeder
             'x_value' => '[["Islam","Kristen","Budha","Hindu","Konghucu"],["Islam","Kristen","Budha","Hindu","Konghucu"]]',
             'y_value' => '[[800,200,150,235,100],[723,292,129,125,23]]',
             'color' => '["#ff0000", "#000000"]'
+        ]);
+        Content::create([
+            'chart_id' => 1,
+            'dashboard_id' => 1,
+            'judul' => '[]',
+            'card_title' => 'tab',
+            'card_description' => 'https://public.tableau.com/views/ThePeriodicTableofWine/periodictableauofwineEN?:language=en-US&:display_count=n&:origin=viz_share_link',
+            'card_grid' => 12,
+            'x_value' => '[[]]',
+            'y_value' => '[[]]',
+            'color' => '[]'
         ]);
     }
 }

@@ -14,6 +14,10 @@ class ChartSeeder extends Seeder
     public function run(): void
     {
         Chart::create([
+            'name' => "Embad Tablue",
+            'grid' => 12
+        ]);
+        Chart::create([
             'name' => "Column Bar Chart",
             'grid' => 6
         ]);
@@ -32,10 +36,6 @@ class ChartSeeder extends Seeder
         Chart::create([
             'name' => "Radial Bar (%)",
             'grid' => 4
-        ]);
-        Chart::create([
-            'name' => "Nama 6",
-            'grid' => 8
         ]);
         Chart::create([
             'name' => "Nama 7",

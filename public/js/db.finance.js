@@ -666,7 +666,7 @@ $('#skinMode .nav-link').bind('click', function(e){
 });
 
 //-------------------------------------------------
-// chartId = 1
+// chartId = 2
 var optionColumn = {
   series: [],
   chart: {
@@ -705,7 +705,7 @@ var optionColumn = {
   // }
 };
 //-------------------------------------------------
-// chartId = 2 & 4 bar stacked and barRadius
+// chartId = 3 & 5 bar stacked and barRadius
 var optionStacked = {
   series: [
     // {
@@ -779,7 +779,7 @@ fill: {
 
 };
 //-------------------------------------------------
-// chartId = 3
+// chartId = 4
 var optionArea = {
 series: [
   // {
@@ -845,7 +845,7 @@ legend: {
 }
 };
 //-------------------------------------------------
-// chartId = 5
+// chartId = 6
 var optionRadial = {
   chart: {
     height: 300,
@@ -865,7 +865,6 @@ var optionRadial = {
   labels: [],
   colors: []
 };
-
 //------------------------------------------------
 // chartId = 9
 var optionLine = {
@@ -1009,8 +1008,21 @@ function appendDescriptionToCard(containerSelector, card_description) {
 // Loop through the contents array to find the matching chart_id
   for (var i = 0; i < contents.length; i++) {
     let maxValue;
+    if (contents[i].chart_id === 1) { // Tableau
 
-    if (contents[i].chart_id === 1) { // Column bar chart
+      const tabContainer = document.querySelector(`#content${contents[i].id}`);
+
+      // Clear any previous content
+      tabContainer.innerHTML = '';
+
+      // Create an iframe element
+      const newElement = document.createElement('tableau-viz');
+      newElement.id = `tableauViz${contents[i].id}`;
+
+      tabContainer.appendChild(newElement); // Assign the element to the content
+
+    } 
+    else if (contents[i].chart_id === 2) { // Column bar chart
 
       appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
 
@@ -1040,7 +1052,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
       optionColumn.series = [];
       console.log('render content ' + contents[i].id);
     } 
-    else if (contents[i].chart_id === 2) { // Stacked bar chart
+    else if (contents[i].chart_id === 3) { // Stacked bar chart
 
       appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
 
@@ -1071,7 +1083,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
       optionStacked.series = [];
       console.log('render content ' + contents[i].id);
     } 
-    else if (contents[i].chart_id === 3) { // Line Area Chart
+    else if (contents[i].chart_id === 4) { // Line Area Chart
 
       appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
 
@@ -1101,7 +1113,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
       optionArea.series = [];
       console.log('render content ' + contents[i].id);
     } 
-    else if (contents[i].chart_id === 4) { // bar chart with border radius
+    else if (contents[i].chart_id === 5) { // bar chart with border radius
 
       appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
 
@@ -1129,7 +1141,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       optionArea.series = [];
     }
-    else if (contents[i].chart_id === 5) { // Option radial (%)
+    else if (contents[i].chart_id === 6) { // Option radial (%)
 
       appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
 
