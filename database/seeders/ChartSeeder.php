@@ -14,24 +14,24 @@ class ChartSeeder extends Seeder
     public function run(): void
     {
         Chart::create([
-            'name' => "Nama 1",
-            'grid' => 9
-        ]);
-        Chart::create([
-            'name' => "Nama 2",
-            'grid' => 3
-        ]);
-        Chart::create([
-            'name' => "Nama 3",
+            'name' => "Column Bar Chart",
             'grid' => 6
         ]);
         Chart::create([
-            'name' => "Nama 4",
+            'name' => "Stacked Bar Chart",
             'grid' => 6
         ]);
         Chart::create([
-            'name' => "Nama 5",
-            'grid' => 12
+            'name' => "Line Area Chart",
+            'grid' => 6
+        ]);
+        Chart::create([
+            'name' => "Bar Chart With Border Radius",
+            'grid' => 6
+        ]);
+        Chart::create([
+            'name' => "Radial Bar (%)",
+            'grid' => 4
         ]);
         Chart::create([
             'name' => "Nama 6",
@@ -43,7 +43,7 @@ class ChartSeeder extends Seeder
         ]);
         Chart::create([
             'name' => "Bar Chart With AI Analyst",
-            'grid' => 8
+            'grid' => 12
         ]);
         Chart::create([
             'name' => "Multiple Line Chart",

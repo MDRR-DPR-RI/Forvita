@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('card_grid')->nullable();
             $table->json('x_value')->default('[[]]');
             $table->json('y_value')->default('[[]]');
+            $table->json('color')->default('[]');
             $table->timestamps();
         });
     }

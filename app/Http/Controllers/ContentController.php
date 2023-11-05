@@ -96,6 +96,7 @@ class ContentController extends Controller
      */
     public function update(Request $request, Content $content)
     {
+
         // after AI Analysis, asign result_prompt to the content
         $resultPrompt = $request->input('result');
         if ($resultPrompt) {
@@ -125,8 +126,8 @@ class ContentController extends Controller
         $stackCount = $request->stackCount;
         $x_value = [];
         $y_value = [];
+        $color_array = [];
         if ($stackCount > 1) { // stack chart / multiple stack
-            # code...
             $judul_array = [];
             for ($i = 0; $i < $request->stackCount; $i++) {
                 $selectedXValues = $request->input('xValue' . $i);
@@ -147,6 +148,7 @@ class ContentController extends Controller
                 $judul_array[] = $request->input('selectedJudul' . $i);
                 $x_value[] = $x;
                 $y_value[] = $y;
+                $color_array[] = $request->input('color_picker' . $i);
             }
             $content->update([
                 'judul' => $judul_array,
@@ -156,10 +158,15 @@ class ContentController extends Controller
                 'result_prompt' => null,
                 'x_value' => json_encode($x_value),
                 'y_value' => json_encode($y_value),
+                'color' => json_encode($color_array),
             ]);
         } else { // single chart
             $x = [];
             $y = [];
+            $color_array = $request->input('color_picker');
+            if (gettype($color_array) != 'array') {
+                $color_array[] = $request->input('color_picker0');
+            }
             // asign jumlah for all selectedValues
             for ($i = 0; $i < count($request->input('xValue0')); $i++) {
                 $clean = Clean::where('keterangan', $request->input('xValue0')[$i])
@@ -183,7 +190,8 @@ class ContentController extends Controller
                 'card_grid' => $request->card_grid,
                 'result_prompt' => null,
                 'x_value' => json_encode($x_value),
-                'y_value' => json_encode($y_value)
+                'y_value' => json_encode($y_value),
+                'color' => json_encode($color_array),
             ]);
         }
         // if ($selectedXValues) {

@@ -97,11 +97,7 @@
                             <input type="hidden" value="{{ $chart->id }}" name="chart_id">
                             <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
                             <input type="hidden" name="card_grid" value="{{ $chart->grid }}" >
-                            @if (in_array($chart->id, [4, 8, 9, 10, 11, 12, 13, 14, 15]))
-                              <td><button type="submit" class="btn btn-primary">Add</button></td>
-                            @else
-                              <td><button type="submit" class="btn btn-warning">Belum bisa dynamic data</button></td>
-                            @endif
+                            <td><button type="submit" class="btn btn-primary">Add</button></td>
                           </form>
 
                         </tr>

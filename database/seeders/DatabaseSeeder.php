@@ -85,7 +85,9 @@ class DatabaseSeeder extends Seeder
             'card_description' => 'Ini Description card',
             'card_grid' => 8,
             'x_value' => '[["Islam","Kristen","Budha","Hindu"]]',
-            'y_value' => '[["800","200","150","235"]]'
+            'y_value' => '[["800","200","150","235"]]',
+            'color' => '["#9f0230"]'
+
         ]);
         Content::create([
             'chart_id' => 9,
@@ -95,7 +97,19 @@ class DatabaseSeeder extends Seeder
             'card_description' => 'Total penjualan ticket dalam 4 bulan',
             'card_grid' => 4,
             'x_value' => '[["Jan","Feb","Mar","Apr"], ["Jan","Feb","Mar","Apr"]]',
-            'y_value' => '[["95","22","92","96"], ["43","29","53","93"]]'
+            'y_value' => '[["95","22","92","96"], ["43","29","53","93"]]',
+            'color' => '["#620230", "#fff70a"]'
+        ]);
+        Content::create([
+            'chart_id' => 2,
+            'dashboard_id' => 1,
+            'judul' => '["Jumlah penganut Agama Anggota","Jumlah penganut Agama SDMA"]',
+            'card_title' => 'Jumlah Agama',
+            'card_description' => 'Ini Jumlah Penaganut Agama Anggota dan SDMA',
+            'card_grid' => 6,
+            'x_value' => '[["Islam","Kristen","Budha","Hindu","Konghucu"],["Islam","Kristen","Budha","Hindu","Konghucu"]]',
+            'y_value' => '[[800,200,150,235,100],[723,292,129,125,23]]',
+            'color' => '["#ff0000", "#000000"]'
         ]);
     }
 }
