@@ -32,15 +32,17 @@ class ContentController extends Controller
     public function store(Request $request)
     {
         // Create and store the content in the database
-        if ($request->tableau_link) {
+        if ($request->tableau_link) { // 
             $content = Content::create([
                 'chart_id' => 1,
                 'dashboard_id' => $request->dashboard_id, // input hidden
-                'card_grid' => $request->card_grid, // input hidden
-                'card_description' => $request->tableau_link,
+                'card_grid' => $request->card_grid,
+                'card_description' => $request->tableau_link, // store tableau url in the content_description coloumn
             ]);
             return redirect()->back()->with('success', 'Successfully to embed Tableau');
         }
+
+        // store content in db
         $content = Content::create([
             'chart_id' => $request->chart_id, // input hidden
             'dashboard_id' => $request->dashboard_id, // input hidden
@@ -50,7 +52,7 @@ class ContentController extends Controller
         // Retrieve the ID of the newly created content
         $contentId = $content->id;
 
-        // Go to edit page after cretaed new chart, the nset session to use in edit page in show function
+        // Go to edit page after cretaed new chart
         return redirect('/dashboard/content/' . $contentId);
     }
 

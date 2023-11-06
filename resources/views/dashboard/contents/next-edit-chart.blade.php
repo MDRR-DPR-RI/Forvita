@@ -57,7 +57,7 @@
                 @if (in_array($content->chart->id, [1, 2, 3, 4, 9, 13]))
                   <label for="color_picker">Warna :</label>
                   @if (isset($colors_decodedArray[$i]) && ($colors_decodedArray[$i] !== null))
-                    <input class="btn-icon" type="color" id="color_picker" name="color_picker{{ $i }}" value="{{ $colors_decodedArray[$i] }}">{{ gettype($colors_decodedArray) }}
+                    <input class="btn-icon" type="color" id="color_picker" name="color_picker{{ $i }}" value="{{ $colors_decodedArray[$i] }}">
                   @else
                     <input class="btn-icon" type="color" id="color_picker" name="color_picker{{ $i }}" value="#506fd9">
                   @endif

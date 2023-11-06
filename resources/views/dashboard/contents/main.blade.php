@@ -7,6 +7,8 @@
 
 @section('page_content')
 <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+<link rel="stylesheet" href="/lib/jqvmap/jqvmap.min.css">
+<link href="/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     <div class="main main-app p-3 p-lg-4">
       {{-- <div class="container-fluid">
@@ -62,6 +64,7 @@
           </p>
         </div>
         <div class="row g-3" id="main">
+          {{-- <div id="indonesia-map" class="ht-300"></div> --}}
             {{-- CHART CONTENT WILL GOES HERE --}}
         </div><!-- row -->
         <div class="main-footer mt-5">
@@ -74,61 +77,60 @@
 
     {{-- Modal Customize Dashboard for all--}}
     <div class="modal fade" id="modal3" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-fullscreen">
+      <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Customize Dashboard {{ $dashboard->name }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div><!-- modal-header -->
-          <div class="modal-body container text-center">
-            <div class="row align-items-start">
-              <div class="col">
-                Chart
-                <table class="table">
+          <div class="modal-body container ">
+            <div class="row">
+              <div class="col-xl-5">
+                <div class="text-center">
+                  Pilihan Konten
+                </div>
+                <table class="table" id="tablePilihKontent">
                   <thead>
                     <tr>
-                      <th scope="col">Cluster</th>
-                      <th scope="col">Type</th>
-                      <th scope="col">Grid</th>
+                      <th scope="col">Cluster ID</th>
+                      <th scope="col">Nama</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach ($charts as $chart)
                         <tr>
-                          <th scope="row">{{ $loop->iteration }}</th>
+                          <td scope="row">{{ $loop->iteration }}</td>
                           <td ">{{ $chart->name }}</td>
-                          <td >{{ $chart->grid }}</td>
-
                           {{-- Add new card --}}
-                          <form action="/dashboard/content" method="post">
-                              @csrf
-                            <input type="hidden" value="{{ $chart->id }}" name="chart_id">
-                            <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
-                            <input type="hidden" name="card_grid" value="{{ $chart->grid }}" >
+                          <td>
                             @if ($chart->id != 1)
-                              <td><button type="submit" class="btn btn-primary">Add</button></td>
-                            @else
-                              <td>
-                                 <a href="#modalEmbedTab" class="btn btn-primary" data-bs-toggle="modal">
-                                    Add
-                                </a>
-                              </td>
-                            @endif
-                          </form>
-
+                              <form action="/dashboard/content" method="post">
+                                @csrf
+                                <input type="hidden" value="{{ $chart->id }}" name="chart_id">
+                                <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
+                                <input type="hidden" name="card_grid" value="{{ $chart->grid }}" >
+                                <button type="submit" class="btn btn-primary">Tambah</button>
+                              </form>
+                              @else
+                                <a href="#modalEmbedTab" class="btn btn-primary" data-bs-toggle="modal">Tambah</a>
+                              @endif
+                            </td>
                         </tr>
                     @endforeach
                   </tbody>
                 </table>
               </div>
               <div class="col">
-                content
-                <table class="table">
+                <div class="text-center">
+                  Dashboard Kontent
+                </div>
+                <table class="table" id="tableContent">
                   <thead>
                     <tr>
                       <th scope="col">No</th>
-                      <th scope="col">Cluster</th>
+                      <th scope="col">Cluster ID</th>
+                      <th scope="col">Nama</th>
                       <th scope="col">Grid</th>
                       <th scope="col">Actions</th>
                     </tr>
@@ -138,18 +140,22 @@
                         <tr>
                           <td scope="row">{{ $loop->iteration }}</td>
                           <td>{{ $content->chart->id }}</td>
+                          <td>{{ $content->chart->name }}</td>
                           <td>{{ $content->card_grid }}</td>
-                          <td style="display: flex; justify-content: center;  align-items: center;">
-
-                            {{-- Edit cards --}}
-                            <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary">Edit </a>
-                            
-                            {{-- Delete cards --}}
-                            <form action="/dashboard/content/{{ $content->id }}" method="post">
-                              @method('delete')
-                              @csrf
-                              <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
+                          <td>
+                            <div class="d-flex justify-content-center align-items-center">
+                              {{-- Edit cards --}}
+                              @if ($content->chart->id != 1)
+                                <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary">Edit</a>
+                              @endif
+                              
+                              {{-- Delete cards --}}
+                              <form action="/dashboard/content/{{ $content->id }}" method="post">
+                                @method('delete')
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Hapus</button>
+                              </form>
+                            </div>
                           </td>
                         </tr>
                     @endforeach
@@ -159,13 +165,13 @@
               </div>
             </div>
         
-          </div>
-        </div><!-- modal-body -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
-        </div><!-- modal-footer -->
-      </div><!-- modal-content -->
+          </div> <!-- modal-body -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+          </div><!-- modal-footer -->
+        </div><!-- modal-content -->
+      </div><!-- modal-dialog -->
     </div><!-- modal-fade -->
 
     @can('admin')
@@ -198,7 +204,7 @@
 
     {{-- MODAL EMBED TABLEAU --}}
     <div class="modal fade" id="modalEmbedTab" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="importModalLabel">Embed Tableau</h5>
@@ -215,12 +221,28 @@
                             </ol>
                         </div>
                         <div class="modal-body text-center">
-                            <label>Masukan Tableau url:</label>
-                            <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
-                            <input type="hidden" name="card_grid" value="{{ $chart->grid }}" >
-                            <input type="text" class="form-control" name="tableau_link" placeholder="http://example.com" value="{{ $dashboard->card_description }}" autofocus required>
+                          <div class="d-flex justify-content-center">
+                            <div class="col-2">
+                              <label for="card_grid" class="form-label">Panjang Konten</label>
+                              <select id="card_grid" name="card_grid" class="form-select">
+                                @for ($a = 1; $a <= 12; $a++)
+                                  <option selected>{{ $a }}</option>
+                                @endfor
+                              </select>
+                            </div>
+                          </div>
+                          <br>       
+                          <label>Masukan Tableau url:</label>
+                          <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
+                          <input type="text" class="form-control" name="tableau_link" placeholder="http:///public.tableau.com/...=viz_share_link" value="{{ $dashboard->card_description }}" autofocus required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Embed</button>
+                        <div class="container">
+                          <div class="row justify-content-end">
+                            <div class="col-auto">
+                              <button type="submit" class="btn btn-primary">Embed</button>
+                            </div>
+                          </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -378,8 +400,8 @@
 
 @section('custom_script')
 
-{{-- include all assets (htmlStructures) --}}
-<script src="/js/assets/htmlStructures.js"></script>
+{{-- include all assets (html-structures) --}}
+<script src="/js/main/html-structures.js"></script>
 
 {{-- script to save into page into an image --}}
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
@@ -387,8 +409,6 @@
 
 {{-- script to print content in the dashboard --}}
  <script>
-
-
   // Declare variables outside the loop
   let contentId, chartId, htmlContent, containerContent, unique, y_value, x_value, prompt, result_prompt, content_grid;
   @foreach ($contents as $content)
@@ -513,9 +533,8 @@
 </script>
 
 <script src="/lib/apexcharts/apexcharts.min.js"></script>
-
 <script src="/js/db.data.js"></script>
-<script src="/js/db.finance.js"></script>
+<script src="/js/main/contents-config.js"></script>
 
 {{-- TABLEAU EMBED --}}
 <script>
@@ -531,6 +550,79 @@
     tableauViz.src = tableau_link;
   }
   @endforeach
+</script>
+
+{{-- TABLE CUSTOMIZE DASHBOARD CONFIG --}}
+<script src="/lib/gridjs-jquery/gridjs.production.min.js"></script>
+<script>
+
+$("#tablePilihKontent").Grid({
+  className: {
+    table: 'table table-hover'
+  },
+  pagination: true,
+  search: true,
+  sort: true,
+  resizable: true
+});
+
+$("#tableContent").Grid({
+  className: {
+    table: 'table table-hover'
+  },
+  pagination: true,
+  search: true,
+  sort: true,
+  resizable: true
+});
+
+</script>
+
+
+
+<script src="/lib/jqvmap/jquery.vmap.min.js"></script>
+<script src="/lib/jqvmap/maps/jquery.vmap.indonesia.js"></script>
+<script src="/lib/jqvmap/maps/jquery.vmap.world.js"></script>
+
+<script src="/js/vmap.sampledata.js"></script>
+
+<script>
+$('#indonesia-map').vectorMap({
+    map: 'indonesia_id',
+    backgroundColor: 'transparent',
+    borderColor: '#000',
+    borderOpacity: 0.75,
+    borderWidth: 1,
+    color: '#4a4949',
+    enableZoom: true,
+    hoverColor: '#00F',
+    hoverOpacity: 0.7,
+    selectedColor: '#00F',
+    selectedRegion: 'ID', // You can specify the region you want to highlight initially
+    // showTooltip: true,
+    scaleColors: ['#C8EEFF', '#006491'],
+    onRegionClick: function (event, code, region) {
+        // Add your custom click event handling here if needed
+        alert('You clicked on ' + region);
+    },
+    onRegionOver: function (event, code, region) {
+        console.log(code);
+        if (code === 'path11') {
+            // This is DKI Jakarta, so you can add your custom code to display population
+            var population = 10000000; // Replace with the actual population of DKI Jakarta
+            // $('#indonesia-map').vectorMap('set', 'colors', { 'path11': '#FF0000' });
+            console.log(population);
+            // $('#indonesia-map').vectorMap('tip', '<strong>DKI Jakarta</strong><br>Population: ' + population);
+        }
+    },
+    onRegionOut: function (event, code, region) {
+        // if (code === 'path11') {
+        //     // Restore the default color and tooltip
+        //     $('#indonesia-map').vectorMap('set', 'colors', { 'path11': '#4a4949' });
+        //     $('#indonesia-map').vectorMap('tip', '');
+        // }
+    }
+});
 </script>
 
 @endsection

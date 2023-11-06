@@ -49,7 +49,7 @@ class ContentSeeder extends Seeder
         ]);
         Content::create([
             'chart_id' => 1,
-            'dashboard_id' => 1,
+            'dashboard_id' => 2,
             'judul' => '[]',
             'card_title' => 'tab',
             'card_description' => 'https://public.tableau.com/views/ThePeriodicTableofWine/periodictableauofwineEN?:language=en-US&:display_count=n&:origin=viz_share_link',

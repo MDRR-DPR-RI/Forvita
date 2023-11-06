@@ -20,7 +20,7 @@ class DashboardSeeder extends Seeder
         ]);
         Dashboard::create([
             'cluster_id' => 1,
-            'name' => "Dashboard-Embed-Tableau",
+            'name' => "Dashboard-embed-tableau",
             'description' => "Deskripsi das-embed-tableau"
         ]);
         Dashboard::factory(10)->create();
