@@ -1,6 +1,6 @@
 // HERE IS WHERE U PUT UR HTML CONTENT. THEN ADD NEW CHART IN DATABASE (table->charts)
 let htmlStructures = {
-  1: [`<div class="container-fluid" id="content">
+  1: [`<div class="col-xl-" id="content">
         </div>`],
   2: [`<div class="col-xl-">
           <div class="card card-one">

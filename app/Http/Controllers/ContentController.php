@@ -61,7 +61,7 @@ class ContentController extends Controller
     {
         // dd(($request->selected_judul));
         // Query distinct(unique) "judul" values from the database
-        $cleans = Clean::select('cluster', 'data', 'judul')
+        $cleans = Clean::select('group', 'data', 'judul')
             ->distinct('judul')
             ->get();
 
