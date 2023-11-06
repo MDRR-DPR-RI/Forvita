@@ -71,3 +71,5 @@ Route::get('database', [DatabaseController::class, 'show'])->middleware('admin')
 Route::post('database', [DatabaseController::class, 'store'])->middleware('admin');
 Route::patch('database', [DatabaseController::class, 'update'])->middleware('admin');
 Route::delete('database', [DatabaseController::class, 'destroy'])->middleware('admin');
+
+Route::get('user-management', [UserManagementController::class, 'index'])->middleware('admin');
