@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\UserManagement;
 
 use App\Models\Permission;
 use App\Models\User;
@@ -15,6 +15,11 @@ class UserListing extends Component
     public Collection $selectedUsers;
 
     protected $listeners = ['permissionsModified' => '$refresh'];
+
+    public function mount()
+    {
+        $this->users = User::all();
+    }
 
     public function searchUser()
     {
@@ -57,6 +62,6 @@ class UserListing extends Component
     }
     public function render(): view
     {
-        return view('livewire.user-listing');
+        return view('livewire.user-management.user-listing');
     }
 }

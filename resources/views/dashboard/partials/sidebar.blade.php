@@ -19,9 +19,6 @@
             <li class="nav-item">
               <a href="/user-management" class="nav-link @isset($initialUsers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>User Management</span></a>
             </li>
-            <li class="nav-item">
-                <a href="/permission" class="nav-link @isset($permissions) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Grant Access</span></a>
-            </li>
           </ul>
         @endcan
 

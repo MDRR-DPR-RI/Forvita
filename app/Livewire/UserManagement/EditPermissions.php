@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\UserManagement;
 
 use App\Models\Dashboard;
 use App\Models\Permission;
@@ -17,6 +17,19 @@ class EditPermissions extends ModalComponent
     public Collection $selectedDashboards;
     public array $selectedUsersID;
 
+    public function mount()
+    {
+        $this->allDashboards = Dashboard::all();
+
+        // if only editing one user, get their permissions pre-selected
+        if(count($this->selectedUsersID) == 1)
+        {
+            $userDashboardIDs = Permission::where('user_id', $this->selectedUsersID[0])
+                ->pluck('dashboard_id');
+            $this->selectedDashboards = Dashboard::whereIn('id', $userDashboardIDs)
+                ->get();
+        }
+    }
     public function searchDashboard()
     {
         $this->allDashboards = Dashboard::where('name', 'LIKE', "%".$this->searchDashboardQuery."%")
@@ -63,23 +76,14 @@ class EditPermissions extends ModalComponent
         ]);
     }
 
-    public function mount()
-    {
-        $this->allDashboards = Dashboard::orderBy('cluster_id')
-            ->orderBy('name')
-            ->get();
-        if(count($this->selectedUsersID) == 1)
-        {
-            $userDashboardIDs = Permission::where('user_id', $this->selectedUsersID[0])
-                ->pluck('dashboard_id');
-            $this->selectedDashboards = Dashboard::whereIn('id', $userDashboardIDs->toArray())
-                ->get();
-        }
-    }
-
     public function render()
     {
-        return view('livewire.edit-permissions', [
+        $this->allDashboards = $this->allDashboards
+            ->sortBy([
+                ['cluster_id'],
+                ['name'],
+            ]);
+        return view('livewire.user-management.edit-permissions', [
 
         ]);
     }

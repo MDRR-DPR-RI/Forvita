@@ -1,20 +1,25 @@
 <div>
     <div class="modal d-block"
-         id="editPermissionsModal"
          tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable">
                 <!-- modal-content -->
                 <div class="modal-content">
                     <!-- modal-header -->
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit (Name)'s Permissions</h5>
+                        <h5 class="modal-title">Edit Permissions</h5>
                         <button type="button" class="btn-close"
                                 wire:click="$dispatch('closeModal')" aria-label="Close"></button>
                     </div>
                     <!-- modal-body -->
                     <div class="modal-body container text-center">
-                        <input type="hidden" id="userID" name="userID">
-                        <h2>{{$searchDashboardQuery}}</h2>
+                        <div style="text-align: left;">
+                            <label for="searchDashboardQuery">Search dashboards</label>
+                        </div>
+                        <div wire:loading>
+                            <h5>
+                                Loading...
+                            </h5>
+                        </div>
                         <div class="form-search">
                             <i class="ri-search-line"></i>
                             <input type="text" class="form-control" id="searchDashboardQuery"
@@ -30,7 +35,7 @@
                                 <th scope="col">Cluster</th>
                             </tr>
                             </thead>
-                            <tbody style="max-height: fit-content; overflow-y: auto;">
+                            <tbody>
                             @foreach($allDashboards as $dashboard)
                                 <tr wire:key="{{ $dashboard->id }}">
                                     <td>{{ $loop->iteration }}</td>
