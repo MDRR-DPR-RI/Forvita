@@ -44,7 +44,6 @@ Route::post('/register', [AuthController::class, 'register_submit'])->middleware
 Route::resource('/cluster', ClusterController::class)->middleware('auth');
 Route::resource('/dashboard', DashboardController::class)->middleware('auth');
 Route::resource('/dashboard/content', ContentController::class)->middleware('auth');
-Route::resource('/permission', PermissionController::class)->middleware('admin');
 
 // ajax call, when select data in edit_chart page
 Route::post('/fetch-data', [AjaxController::class, 'data_cleans'])->middleware('admin');

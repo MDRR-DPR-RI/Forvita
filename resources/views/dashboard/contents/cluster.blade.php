@@ -24,7 +24,7 @@
               <a href="/cluster/{{ $cluster->id }}">
                 <div class="card card-one">
                   <div class="card-body p-3">
-                    <div class="d-block fs-40 lh-1 text-primary mb-1"><i class="ri-calendar-todo-line"></i></div>
+                    <div class="d-block fs-40 lh-1 text-primary mb-1"><i class="{{ $cluster->icon_name }}"></i></div>
                     <h1 class="card-value mb-0 ls--1 fs-32" id="card-val">{{ $cluster->name }}</h1>
                     <label class="d-block mb-1 fw-medium text-dark">Di buat oleh : {{ $cluster->user->name }}</label>
                     <small><span class="d-inline-flex text-danger">0.7% <i class="ri-arrow-down-line"></i></span> than last week</small>
