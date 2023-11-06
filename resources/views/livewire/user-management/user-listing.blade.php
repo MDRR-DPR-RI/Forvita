@@ -7,7 +7,7 @@
                 <h3>Selected Users</h3>
             </div>
            <div class="col">
-               <button wire:click="$dispatch('openModal', { component: 'edit-permissions',
+               <button wire:click="$dispatch('openModal', { component: 'user-management.edit-permissions',
                                  arguments: { selectedUsersID: {{json_encode($selectedUsers->pluck('id')->toArray())}}}})"
                        class="btn btn-outline-primary">
                    Edit Selected Users Permissions
@@ -52,6 +52,14 @@
         <table class="table">
             <thead>
             <tr>
+                <th scope="col" colspan="5"></th>
+                <th scope="col">
+                    <button class="btn btn-outline-primary">
+                        Add User
+                    </button>
+                </th>
+            </tr>
+            <tr>
                 <th scope="col">No</th>
                 <th scope="col">Select</th>
                 <th scope="col">Name</th>
@@ -83,7 +91,7 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->role->name }}</td>
                             <td>
-                                <button type="submit" class="btn btn-danger"
+                                <button type="submit" class="btn btn-outline-danger"
                                         wire:click="deleteUser({{ $user->id }})"
                                         wire:confirm="Are you sure you want to delete this user?">
                                     Delete
@@ -92,7 +100,7 @@
                         </tr>
                         <tr x-data="{ showPermissions{{$user->id}}: false }">
                             <td colspan="3">
-                                <button wire:click="$dispatch('openModal', { component: 'edit-permissions',
+                                <button wire:click="$dispatch('openModal', { component: 'user-management.edit-permissions',
                                  arguments: { selectedUsersID: {{json_encode(array($user->id))}}}})"
                                         class="btn btn-outline-primary">
                                     Edit Permissions
@@ -122,7 +130,7 @@
                                                 <td>{{ $permission->dashboard->name }}</td>
                                                 <td>{{ $permission->dashboard->cluster->name }}</td>
                                                 <td>
-                                                    <button type="submit" class="btn btn-danger"
+                                                    <button type="submit" class="btn btn-outline-danger"
                                                             wire:click="deletePermission({{ $permission->id }})"
                                                             wire:confirm="Are you sure you want to delete this permission?">
                                                         Delete
