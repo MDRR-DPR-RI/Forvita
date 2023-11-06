@@ -19,9 +19,11 @@
                 <li class="breadcrumb-item active" aria-current="page">{{ $dashboard->name }}</li>
                 </ol>
                 <h4 class="main-title mb-0">Dashboard {{ $dashboard->name }}
-                <a href="#edit_dashboard_name" data-bs-toggle="modal">
-                    <i class="ri-pencil-line text-dark"></i>
-                </a>
+                @can('admin')
+                  <a href="#edit_dashboard_name" data-bs-toggle="modal">
+                      <i class="ri-pencil-line text-dark"></i>
+                  </a>
+                @endcan
                 </h4>
             </div>
                 
@@ -52,9 +54,11 @@
         @endif
         <div class="col-xl-12">
           <p class="mb-5">{{ $dashboard->description }}
+          @can('admin')
             <a href="#edit_dashboard_name" data-bs-toggle="modal">
               <i class="ri-pencil-line text-dark"></i>
             </a>
+          @endcan
           </p>
         </div>
         <div class="row g-3" id="main">
@@ -164,31 +168,33 @@
       </div><!-- modal-content -->
     </div><!-- modal-fade -->
 
-    {{-- MODAL EDIT DASHBOARD NAME & DESCRIPTION --}}
-    <div class="modal fade" id="edit_dashboard_name" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Ubah Nama Dashboard</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    @can('admin')
+      {{-- MODAL EDIT DASHBOARD NAME & DESCRIPTION --}}
+      <div class="modal fade" id="edit_dashboard_name" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Ubah Nama Dashboard</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/dashboard/{{ $dashboard->id }}" method="post">
+              @method('put')
+              @csrf
+              <div class="modal-body text-center">
+                  <label>Masukan Nama Dashboard:</label>
+                  <input type="text" class="form-control" name="dashboard_name" placeholder="Nama Dashboard" value="{{ $dashboard->name }}" autofocus required>
+                  <label>Masukan Deskripsi Dashboard:</label>
+                  <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..." required>{{ $dashboard->description }}</textarea>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                  <button type="submit" class="btn btn-primary">Ubah</button>
+              </div>
+            </form>
           </div>
-          <form action="/dashboard/{{ $dashboard->id }}" method="post">
-            @method('put')
-            @csrf
-            <div class="modal-body text-center">
-                <label>Masukan Nama Dashboard:</label>
-                <input type="text" class="form-control" name="dashboard_name" placeholder="Nama Dashboard" value="{{ $dashboard->name }}" autofocus required>
-                <label>Masukan Deskripsi Dashboard:</label>
-                <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..." required>{{ $dashboard->description }}</textarea>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-primary">Ubah</button>
-            </div>
-          </form>
         </div>
       </div>
-    </div>
+    @endcan
 
     {{-- MODAL EMBED TABLEAU --}}
     <div class="modal fade" id="modalEmbedTab" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
@@ -342,31 +348,30 @@
         </div>
     </div>
 
-@can('admin')
-    
-    {{-- Modal delete dashboard --}}
-    <div class="modal" id="delete_dashboard" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Hapus Dashboard {{ $dashboard->name }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    @can('admin')
+        {{-- Modal delete dashboard --}}
+        <div class="modal" id="delete_dashboard" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Hapus Dashboard {{ $dashboard->name }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Apakah kamu ingin menghapus dashboard {{ $dashboard->name }}?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+              <form action="/dashboard/{{ $dashboard->id }}" method="post">
+                @method('delete')
+                @csrf
+                <button type="submit" class="btn btn-danger">Hapus</button>
+              </form>
+            </div>
+          </div>
         </div>
-        <div class="modal-body">
-          <p>Apakah kamu ingin menghapus dashboard {{ $dashboard->name }}?</p>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-          <form action="/dashboard/{{ $dashboard->id }}" method="post">
-            @method('delete')
-            @csrf
-            <button type="submit" class="btn btn-danger">Hapus</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    </div>
-@endcan
+    @endcan
 
 @endsection
 
