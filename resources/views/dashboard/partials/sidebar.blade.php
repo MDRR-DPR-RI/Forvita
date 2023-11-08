@@ -21,6 +21,9 @@
             </li>
           </ul>
         @endcan
+
+
+        
         <a href="#" class="nav-label">Dashboard</a>
         <ul class="nav nav-sidebar">
           @can('admin')
@@ -31,9 +34,9 @@
           @foreach ($dashboards as $index_dashboard)
             <li class="nav-item">
             @if (isset($dashboard->name))
-              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link  {{ ($dashboard->name) == ($index_dashboard->name) ? 'active' : '' }}"><i class="ri-pie-chart-2-fill"></i> <span>{{ $index_dashboard->name }}</span></a>
+              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link  {{ ($dashboard->name) == ($index_dashboard->name) ? 'active' : '' }}"><i class="{{ $dashboard->icon_name }}"></i> <span>{{ $index_dashboard->name }}</span></a>
             @else
-              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link"><i class="ri-pie-chart-2-fill"></i> <span>{{ $index_dashboard->name }}</span></a>
+              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link"><i class="{{ $dashboard->icon_name }}"></i> <span>{{ $index_dashboard->name }}</span></a>
             @endif
             </li>
           @endforeach
@@ -83,8 +86,14 @@
         <div class="modal-body text-center">
             <label>Masukan Nama Dashboard:</label>
             <input type="text" class="form-control" name="dashboard_name" placeholder="Nama dashboard" autofocus>
-            <label>Masukan Deskripsi Dashboard:</label>
-            <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..."></textarea>
+        </div> 
+       <div class="modal-body text-center">
+          <label>Masukan Deskripsi Dashboard:</label>
+          <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..."></textarea>
+        </div>
+        <div class="modal-body text-center">
+            <label>Pilih Icon:</label>
+            <input type="text" class="form-control iconpicker" name="icon" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -94,3 +103,28 @@
     </div>
   </div>
 </div>
+
+@push('addon-script')
+<script>
+ (async () => {
+    const response = await fetch('https://unpkg.com/codethereal-iconpicker@1.2.1/dist/iconsets/bootstrap5.json')
+    const result = await response.json()
+
+    const iconpicker = new Iconpicker(document.querySelector(".iconpicker"), {
+        icons: result,
+        showSelectedIn: document.querySelector(".selected-icon"),
+        searchable: true,
+        selectedClass: "selected",
+        containerClass: "my-picker",
+        hideOnSelect: true,
+        fade: true,
+        defaultValue: 'bi-alarm',
+        valueFormat: val => `bi ${val}`
+    });
+
+    iconpicker.set() // Set as empty
+    iconpicker.set('bi-alarm') // Reset with a value
+})()
+
+</script>    
+@endpush

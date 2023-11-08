@@ -24,7 +24,7 @@
               <a href="/cluster/{{ $cluster->id }}">
                 <div class="card card-one">
                   <div class="card-body p-3">
-                    <div class="d-block fs-40 lh-1 text-primary mb-1"><i class="ri-calendar-todo-line"></i></div>
+                    <div class="d-block fs-40 lh-1 text-primary mb-1"><i class="{{ $cluster->icon_name }}"></i></div>
                     <h1 class="card-value mb-0 ls--1 fs-32" id="card-val">{{ $cluster->name }}</h1>
                     <label class="d-block mb-1 fw-medium text-dark">Di buat oleh : {{ $cluster->user->name }}</label>
                     <small><span class="d-inline-flex text-danger">0.7% <i class="ri-arrow-down-line"></i></span> than last week</small>
@@ -49,8 +49,12 @@
       <form action="/cluster" method="post">
         @csrf
         <div class="modal-body text-center">
-            <label>Enter New Cluster Name:</label>
+            <label>Masukkan Nama Cluster Baru:</label>
             <input type="text" class="form-control" name="cluster_name">
+        </div>
+        <div class="modal-body text-center">
+          <label>Pilih Icon</label>
+          <input type="text" class="form-control iconpicker" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -61,3 +65,28 @@
   </div>
 </div>
 @endsection
+
+@push('addon-script')
+<script>
+(async () => {
+    const response = await fetch('https://unpkg.com/codethereal-iconpicker@1.2.1/dist/iconsets/bootstrap5.json')
+    const result = await response.json()
+
+    const iconpicker = new Iconpicker(document.querySelector(".iconpicker"), {
+        icons: result,
+        showSelectedIn: document.querySelector(".selected-icon"),
+        searchable: true,
+        selectedClass: "selected",
+        containerClass: "my-picker",
+        hideOnSelect: true,
+        fade: true,
+        defaultValue: 'bi-alarm',
+        valueFormat: val => `bi ${val}`
+    });
+
+    iconpicker.set() // Set as empty
+    iconpicker.set('bi-alarm') // Reset with a value
+})()  
+
+</script>
+@endpush

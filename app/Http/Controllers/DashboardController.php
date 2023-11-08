@@ -34,6 +34,7 @@ class DashboardController extends Controller
         $dashboard = Dashboard::create([
             'name' => $request->input('dashboard_name'),
             'description' => $request->input('dashboard_description'),
+            'icon_name' => $request->input('icon'),
             'cluster_id' => $cluster_id,
         ]);
         return redirect('/dashboard/' . $dashboard->id)->with('success', "Berhasil Membuat Dashboard Baru: $dashboard->name");
@@ -47,9 +48,11 @@ class DashboardController extends Controller
         /**
          * Update y_value data everytime the dashboard was rendered 
          */
-
+        
         // Fetch all contents that in the dashboard
         $contents = Content::where('dashboard_id', $dashboard->id)->get();
+
+        
         // $count = 0;
         // // logic for updating the y_value data
         // foreach ($contents as $content) { // loop every content in the dashboard
