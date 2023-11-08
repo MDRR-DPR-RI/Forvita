@@ -1,4 +1,5 @@
 <div>
+{{--    Initialize livewire modals--}}
     @livewire('wire-elements-modal')
 {{--    Show selected users--}}
     @if(!is_null($selectedUsers) and !$selectedUsers->isEmpty())
@@ -53,11 +54,12 @@
             <thead>
             <tr>
                 <th scope="col" colspan="5"></th>
-                <th scope="col">
-                    <button class="btn btn-outline-primary">
-                        Add User
-                    </button>
-                </th>
+{{--                <th scope="col">--}}
+{{--                    <button wire:click="$dispatch('openModal', { component: 'user-management.add-user'})"--}}
+{{--                            class="btn btn-outline-primary">--}}
+{{--                        Add User--}}
+{{--                    </button>--}}
+{{--                </th>--}}
             </tr>
             <tr>
                 <th scope="col">No</th>
@@ -147,13 +149,4 @@
                 @endforeach
         </table>
     </div>
-
-    <script>
-        // document.addEventListener("DOMContentLoaded", (event) => {
-        //     const editPermissionsModal = document.getElementById('editPermissionsModal')
-        //     console.log(editPermissionsModal)
-        //     editPermissionsModal.show()
-        // });
-    </script>
-
 </div>

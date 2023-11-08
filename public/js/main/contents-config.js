@@ -958,9 +958,9 @@ var optionBarSide = {
   ],
   chart: {
     type: 'bar',
-    height: 300
+    height: 300,
   },
-  // colors: ['#506fd9'],
+  colors: [],
   plotOptions: {
     bar: {
       borderRadius: 2,
@@ -1163,6 +1163,37 @@ function appendDescriptionToCard(containerSelector, card_description) {
       radialBar.render();
 
     }
+    else if (contents[i].chart_id === 7) { // Stacked Side Bar Chart
+
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
+
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
+
+      // Assign the value to optionEigt
+      let judul = JSON.parse(contents[i].judul)
+      let xAxis = JSON.parse(contents[i].x_value)
+      let yAxis = JSON.parse(contents[i].y_value)
+      let colors = JSON.parse(contents[i].color)
+
+      console.log(yAxis);
+      // asign the value to the chart configuration
+      for (let index = 0; index < judul.length; index++) {
+        // Create a new series object
+        var newSeries = {
+          name: judul[index], // Set the new name
+          data: yAxis[index]    // Set the new data
+        };
+        optionBarSide.series.push(newSeries);
+      }
+      optionBarSide.xaxis.categories = xAxis[0];
+      optionBarSide.colors = colors;
+      optionBarSide.chart.stacked = true;
+
+      var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
+      chartBar.render();
+      optionBarSide.series = [];
+      console.log('render content ' + contents[i].id);
+    } 
     else if (contents[i].chart_id === 8) { // Bar Chart With AI Analyst
       
       appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
@@ -1314,6 +1345,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
       let judul = JSON.parse(contents[i].judul)
       let xAxis = JSON.parse(contents[i].x_value)
       let yAxis = JSON.parse(contents[i].y_value)
+      let colors = JSON.parse(contents[i].color)
 
       console.log(yAxis);
       // asign the value to the chart configuration
@@ -1326,9 +1358,12 @@ function appendDescriptionToCard(containerSelector, card_description) {
         optionBarSide.series.push(newSeries);
       }
       optionBarSide.xaxis.categories = xAxis[0];
+      optionBarSide.colors = colors;
 
       var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
       chartBar.render();
+
+      optionBarSide.series = [];
       console.log('render content ' + contents[i].id);
     } 
     else if (contents[i].chart_id === 14) { // Pie Chart

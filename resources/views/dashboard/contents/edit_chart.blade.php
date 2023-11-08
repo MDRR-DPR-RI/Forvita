@@ -10,7 +10,7 @@
 
 <div class="main main-app p-3 p-lg-4">
   <div class="container mt-5 mb-5">
-      @if (!in_array($content->chart->id, [4, 5, 10, 11, 12, 14, 15]))
+      @if (!in_array($content->chart->id, [ 5, 10, 11, 12, 14, 15]))
         <div class="text-center d-flex justify-content-center align-items-center flex-column">
           <p>Berapa stack?</p>
             <select name="selectOption" id="selectOption">
@@ -35,7 +35,7 @@
             <thead>
               <tr>
                 <th scope="col">No</th>
-                <th scope="col">Kluster</th>
+                <th scope="col">Grup</th>
                 <th scope="col">Data</th>
                 <th scope="col">Judul</th>
                 <th scope="col">Select</th>
@@ -48,7 +48,7 @@
                 @endphp --}}
                 <tr>
                   <td scope="row">{{ $loop->iteration }}</td>
-                  <td>{{ $clean->cluster }}</td>
+                  <td>{{ $clean->group }}</td>
                   <td>{{ $clean->data }}</td>
                   <td>{{ $clean->judul }}</td>
                   <td>

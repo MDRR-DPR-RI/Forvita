@@ -1,6 +1,6 @@
 // HERE IS WHERE U PUT UR HTML CONTENT. THEN ADD NEW CHART IN DATABASE (table->charts)
 let htmlStructures = {
-  1: [`<div class="container-fluid" id="content">
+  1: [`<div class="col-xl-" id="content">
         </div>`],
   2: [`<div class="col-xl-">
           <div class="card card-one">
@@ -77,7 +77,7 @@ let htmlStructures = {
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`],
-  7: [` <div class="col-xl-">
+  7: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-header">
               <div id="judul"></div><!-- card-title -->
@@ -86,15 +86,12 @@ let htmlStructures = {
                 <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
               </nav>
             </div><!-- card-header -->
-            <div class="card-body position-relative d-flex justify-content-center">
-              <div id="chartDonut" class="apex-donut-two"></div>
-              <div class="finance-donut-value "style="margin-bottom: 35px;">
-                 <!--<h1>200</h1>-->
-                 <!--<p>86.24%</p>-->
-              </div>
+            <div class="card-body p-4">
+              <div id="description"></div><!-- card-description -->
+              <div id="content"></div>
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col --> `],
+        </div><!-- col -->`],
   8: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-header" >
