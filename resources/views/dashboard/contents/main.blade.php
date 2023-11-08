@@ -191,7 +191,9 @@
                   <input type="text" class="form-control" name="dashboard_name" placeholder="Nama Dashboard" value="{{ $dashboard->name }}" autofocus required>
                   <label>Masukan Deskripsi Dashboard:</label>
                   <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..." required>{{ $dashboard->description }}</textarea>
-              </div>
+                  <label>Pilih Icon:</label>
+                  <input type="text" class="form-control iconpicker" value="{{ $dashboard->icon_name }}" name="icon" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+                </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                   <button type="submit" class="btn btn-primary">Ubah</button>

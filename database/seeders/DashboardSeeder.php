@@ -16,12 +16,14 @@ class DashboardSeeder extends Seeder
         Dashboard::create([
             'cluster_id' => 1,
             'name' => "Dashboard-contoh",
-            'description' => "Deskripsi das-contoh"
+            'description' => "Deskripsi das-contoh",
+            'icon_name' => 'bi bi-pie-chart'
         ]);
         Dashboard::create([
             'cluster_id' => 1,
             'name' => "Dashboard-embed-tableau",
-            'description' => "Deskripsi das-embed-tableau"
+            'description' => "Deskripsi das-embed-tableau",
+            'icon_name' => 'bi bi-pie-chart'
         ]);
         Dashboard::factory(10)->create();
     }

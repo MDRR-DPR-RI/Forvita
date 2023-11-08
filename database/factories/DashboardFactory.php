@@ -20,6 +20,7 @@ class DashboardFactory extends Factory
             'cluster_id' => mt_rand(1, 2),
             'name' => 'dasboard-' . fake()->word(),
             'description' =>  fake()->sentence(),
+            'icon_name' => 'bi bi-pie-chart'
         ];
     }
 }

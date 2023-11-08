@@ -6,6 +6,12 @@
 @endsection
 
 @section('page_content')
+<style>
+  .iconpicker-dropdown ul{
+    width: 500px;
+    top: 80px !important;
+  }
+</style>
  <div class="main main-app p-3 p-lg-4">
         <div class="row g-3">
           @can ('admin')
@@ -54,7 +60,7 @@
         </div>
         <div class="modal-body text-center">
           <label>Pilih Icon</label>
-          <input type="text" class="form-control iconpicker" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+          <input type="text" name="icon" class="form-control iconpickers" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -72,7 +78,7 @@
     const response = await fetch('https://unpkg.com/codethereal-iconpicker@1.2.1/dist/iconsets/bootstrap5.json')
     const result = await response.json()
 
-    const iconpicker = new Iconpicker(document.querySelector(".iconpicker"), {
+    const iconpicker = new Iconpicker(document.querySelector(".iconpickers"), {
         icons: result,
         showSelectedIn: document.querySelector(".selected-icon"),
         searchable: true,
