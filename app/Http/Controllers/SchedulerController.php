@@ -56,7 +56,8 @@ class SchedulerController extends Controller
         error_log("deleted scheduler with id $deleteSchedulerID");
         return redirect('scheduler');
     }
-    public function execute(Request $request) {
+    public function execute(Request $request)
+    {
         $schedulerID = $request->query('schedulerID');
         $scheduler = Scheduler::find($schedulerID);
 
@@ -65,11 +66,10 @@ class SchedulerController extends Controller
             if ($schedulerDatabase) {
                 (new DatabaseController())->changeDatabaseConnection('scheduler', $schedulerDatabase);
                 $queryResult = DB::connection('scheduler')->select($scheduler->query);
-            }
-            else {
+            } else {
                 $queryResult = DB::select($scheduler->query);
             }
-            foreach($queryResult as $row) {
+            foreach ($queryResult as $row) {
                 Clean::where('judul', $row->judul)
                     ->where('keterangan', $row->keterangan)
                     ->update(['newest' => False]);
@@ -79,7 +79,7 @@ class SchedulerController extends Controller
                     'jumlah' => $row->jumlah,
                 ]);
             }
-        } catch(Exception $ex){
+        } catch (Exception $ex) {
             $errorMessage = substr($ex, 0, 200);
             error_log("Failed to execute query: " . $errorMessage);
             $scheduler->status = "Failed to run: " . $errorMessage;

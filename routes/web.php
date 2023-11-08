@@ -9,7 +9,10 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CsvImportController;
 use App\Http\Controllers\ApiImportController;
 use App\Http\Controllers\SchedulerController;
+use App\Http\Controllers\TableauController;
 use App\Http\Controllers\DatabaseController;
+use App\Http\Controllers\UserManagementController;
+use App\Livewire\Counter;
 use App\Models\Dashboard;
 use App\Models\Clean;
 use App\Models\Content;
@@ -41,7 +44,6 @@ Route::post('/register', [AuthController::class, 'register_submit'])->middleware
 Route::resource('/cluster', ClusterController::class)->middleware('auth');
 Route::resource('/dashboard', DashboardController::class)->middleware('auth');
 Route::resource('/dashboard/content', ContentController::class)->middleware('auth');
-Route::resource('/permission', PermissionController::class)->middleware('admin');
 
 // ajax call, when select data in edit_chart page
 Route::post('/fetch-data', [AjaxController::class, 'data_cleans'])->middleware('admin');
@@ -68,3 +70,9 @@ Route::get('database', [DatabaseController::class, 'show'])->middleware('admin')
 Route::post('database', [DatabaseController::class, 'store'])->middleware('admin');
 Route::patch('database', [DatabaseController::class, 'update'])->middleware('admin');
 Route::delete('database', [DatabaseController::class, 'destroy'])->middleware('admin');
+
+Route::get('user-management', [UserManagementController::class, 'index'])->middleware('admin');
+
+Route::post('https://visualisasi.dpr.go.id/trusted', function () {
+    return "kont";
+})->middleware('admin');

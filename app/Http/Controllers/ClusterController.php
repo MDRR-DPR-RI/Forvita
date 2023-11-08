@@ -7,6 +7,7 @@ use App\Models\Dashboard;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Jobs\RedisJob;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class ClusterController extends Controller
@@ -16,6 +17,8 @@ class ClusterController extends Controller
      */
     public function index(Request $request)
     {
+        Session::forget('cluster_id');
+
         /*
         |--------------------------------------------------------------------------
         | This is user's permission to see which clusters they can see based on dashboard permission
@@ -59,12 +62,15 @@ class ClusterController extends Controller
     public function store(Request $request)
     {
         $cluster = Cluster::create([
+            'user_id' => Auth()->user()->id, // cluster creator
             'name' => $request->input('cluster_name'),
+            'icon_name' => $request->input('icon'),
         ]);
         $clusterId = $cluster->id;
         Dashboard::create([
             'cluster_id' => $clusterId,
-            'name' => 'dashboard 1',
+            'name' => 'Dshboard 1',
+            'description'=> 'description 1'
         ]);
         return redirect('/cluster');
     }
@@ -80,6 +86,9 @@ class ClusterController extends Controller
 
         $cluster_name = $cluster->name;
         $request->session()->put('cluster_name', $cluster_name);
+
+        $iconpicker = $cluster->icon_name;
+        $request->session()->put('icon', $iconpicker);
 
         $dashboard = Dashboard::where('cluster_id', $cluster_id)->first();
 

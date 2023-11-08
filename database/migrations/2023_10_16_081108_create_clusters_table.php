@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('clusters', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id'); // cluster creator
             $table->string('name');
+            $table->string('icon_name')->nullable();
             $table->timestamps();
         });
     }
