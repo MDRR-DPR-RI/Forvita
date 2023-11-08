@@ -60,7 +60,10 @@
         </div>
         <div class="modal-body text-center">
           <label>Pilih Icon</label>
-          <input type="text" name="icon" class="form-control iconpickers" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+          <div class="input-group mb-3">
+            <label class="input-group-text iconOutput" for="iconInput" >Icon</label>
+            <input type="text" name="icon"  class="iconInput form-control iconpickers" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+          </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -92,7 +95,11 @@
 
     iconpicker.set() // Set as empty
     iconpicker.set('bi-alarm') // Reset with a value
-})()  
 
+    $(".iconInput").on("blur", function() {
+      $(".iconOutput").html(`<i class="${$(".iconInput").val()}" ></i>`)
+    });
+})()  
+  
 </script>
 @endpush

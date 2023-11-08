@@ -97,8 +97,11 @@
           <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..."></textarea>
         </div>
         <div class="modal-body text-center">
-            <label>Pilih Icon:</label>
-            <input type="button" class="form-control iconpicker" name="icon" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+        <label>Pilih Icon</label>
+          <div class="input-group mb-3">
+            <label class="iconOutputs input-group-text" for="iconInputs">Icon</label>
+            <input type="text" name="icon"  class="iconInputs form-control iconpicker" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+          </div>   
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -129,6 +132,10 @@
 
     iconpicker.set() // Set as empty
     iconpicker.set('bi-alarm') // Reset with a value
+
+    $(".iconInputs").on("blur", function() {
+      $(".iconOutputs").html(`<i class="${$(".iconInputs").val()}" ></i>`)
+    });
 })()
 
 </script>    
