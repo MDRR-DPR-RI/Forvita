@@ -34,18 +34,6 @@ class ContentController extends Controller
     {
         // Create and store the content in the database
         if ($request->tableau_link) { // 
-            // dd("https://visualisasi.dpr.go.id/trusted");
-            $response = Http::post('https://visualisasi.dpr.go.id/trusted', [
-                // 'username' => 'mentee',
-                // 'targe_site' => 'https://visualisasi.dpr.go.id/views/NewVersion_PustekinfoXKomisi6/'
-            ]);
-            // dd($response);
-            if ($response->successful()) {
-                $data = $response->json();
-                // Process the $data as needed
-                dd($data);
-                dd(response()->json($data));
-            }
 
             $content = Content::create([
                 'chart_id' => 1,

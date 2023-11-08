@@ -64,7 +64,7 @@
           </p>
         </div>
         <div class="row g-3" id="main">
-          <div id="indonesia-map" class="ht-300"></div>
+          {{-- <div id="indonesia-map" class="ht-300"></div> --}}
             {{-- CHART CONTENT WILL GOES HERE --}}
         </div><!-- row -->
         <div class="main-footer mt-5">
@@ -234,7 +234,6 @@
                           <br>       
                           <label>Masukan Tableau url:</label>
                           <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
-                          <input type="text" name="username" id="">
                           <input type="text" class="form-control" name="tableau_link" placeholder="http:///public.tableau.com/...=viz_share_link" value="{{ $dashboard->card_description }}" autofocus required>
                         </div>
                         <div class="container">
