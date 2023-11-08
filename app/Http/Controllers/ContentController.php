@@ -36,7 +36,8 @@ class ContentController extends Controller
         if ($request->tableau_link) { // 
             // dd("https://visualisasi.dpr.go.id/trusted");
             $response = Http::post('https://visualisasi.dpr.go.id/trusted', [
-                'username' => 'mentee'
+                'username' => 'mentee',
+                'targe_site' => 'https://visualisasi.dpr.go.id/views/NewVersion_PustekinfoXKomisi6/'
             ]);
             if ($response->successful()) {
                 $data = $response->json();
