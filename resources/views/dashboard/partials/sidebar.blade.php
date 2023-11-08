@@ -1,4 +1,9 @@
-
+<style>
+  .iconpicker-dropdown ul{
+    width: 500px;
+    top: 80px !important;
+  }
+</style>
   <div class="sidebar">
     <div class="sidebar-header">
       <a href="/cluster" class="sidebar-logo">SATU DATA</a>
@@ -34,9 +39,9 @@
           @foreach ($dashboards as $index_dashboard)
             <li class="nav-item">
             @if (isset($dashboard->name))
-              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link  {{ ($dashboard->name) == ($index_dashboard->name) ? 'active' : '' }}"><i class="{{ $dashboard->icon_name }}"></i> <span>{{ $index_dashboard->name }}</span></a>
+              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link  {{ ($dashboard->name) == ($index_dashboard->name) ? 'active' : '' }}"><i class="{{ $index_dashboard->icon_name }}"></i> <span>{{ $index_dashboard->name }}</span></a>
             @else
-              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link"><i class="{{ $dashboard->icon_name }}"></i> <span>{{ $index_dashboard->name }}</span></a>
+              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link"><i class="{{ $index_dashboard->icon_name }}"></i> <span>{{ $index_dashboard->name }}</span></a>
             @endif
             </li>
           @endforeach
@@ -92,8 +97,11 @@
           <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..."></textarea>
         </div>
         <div class="modal-body text-center">
-            <label>Pilih Icon:</label>
-            <input type="text" class="form-control iconpicker" name="icon" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+        <label>Pilih Icon</label>
+          <div class="input-group mb-3">
+            <label class="iconOutputs input-group-text" for="iconInputs">Icon</label>
+            <input type="text" name="icon"  class="iconInputs form-control iconpicker" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+          </div>   
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -124,6 +132,10 @@
 
     iconpicker.set() // Set as empty
     iconpicker.set('bi-alarm') // Reset with a value
+
+    $(".iconInputs").on("blur", function() {
+      $(".iconOutputs").html(`<i class="${$(".iconInputs").val()}" ></i>`)
+    });
 })()
 
 </script>    
