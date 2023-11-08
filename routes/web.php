@@ -72,3 +72,7 @@ Route::patch('database', [DatabaseController::class, 'update'])->middleware('adm
 Route::delete('database', [DatabaseController::class, 'destroy'])->middleware('admin');
 
 Route::get('user-management', [UserManagementController::class, 'index'])->middleware('admin');
+
+Route::post('https://visualisasi.dpr.go.id/trusted', function () {
+    return "kont";
+})->middleware('admin');

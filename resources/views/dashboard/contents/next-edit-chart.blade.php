@@ -54,7 +54,7 @@
                 @endphp
                 <div class="card-body text-center d-flex justify-content-center align-items-center flex-column">
                 <label class="form-label mt-2">Pilih Nilai X data: {{ $value[0]['judul'] }}</label>
-                @if (in_array($content->chart->id, [1, 2, 3, 4, 9, 13]))
+                @if (in_array($content->chart->id, [1, 2, 3, 4, 7, 9, 13]))
                   <label for="color_picker">Warna :</label>
                   @if (isset($colors_decodedArray[$i]) && ($colors_decodedArray[$i] !== null))
                     <input class="btn-icon" type="color" id="color_picker" name="color_picker{{ $i }}" value="{{ $colors_decodedArray[$i] }}">

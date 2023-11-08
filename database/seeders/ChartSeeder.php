@@ -38,8 +38,8 @@ class ChartSeeder extends Seeder
             'grid' => 4
         ]);
         Chart::create([
-            'name' => "Nama 7",
-            'grid' => 4
+            'name' => "Stacked Side Bar Chart",
+            'grid' => 6
         ]);
         Chart::create([
             'name' => "Bar Chart With AI Analyst",

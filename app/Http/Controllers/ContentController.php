@@ -7,6 +7,7 @@ use App\Models\Content;
 use App\Models\Clean;
 use App\Models\Prompt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ContentController extends Controller
 {
@@ -33,6 +34,16 @@ class ContentController extends Controller
     {
         // Create and store the content in the database
         if ($request->tableau_link) { // 
+            // dd("https://visualisasi.dpr.go.id/trusted");
+            $response = Http::post('https://visualisasi.dpr.go.id/trusted', [
+                'username' => 'mentee'
+            ]);
+            if ($response->successful()) {
+                $data = $response->json();
+                // Process the $data as needed
+                dd(response()->json($data));
+            }
+
             $content = Content::create([
                 'chart_id' => 1,
                 'dashboard_id' => $request->dashboard_id, // input hidden
