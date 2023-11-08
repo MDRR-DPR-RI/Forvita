@@ -220,15 +220,19 @@
                               <li class="list-group-item">https://public.tableau.com/views/SolarEnergyDashboardRWFD_16900452395200/SolarEnergyDashboard?:language=en-US&:display_count=n&:origin=viz_share_link</li>
                             </ol>
                         </div>
-                        <div class="modal-body text-center">
-                          <div class="d-flex justify-content-center">
-                            <div class="col-2">
-                              <label for="card_grid" class="form-label">Panjang Konten</label>
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-lg-6 mb-3">
+                              <label for="card_grid">Panjang Konten</label>
                               <select id="card_grid" name="card_grid" class="form-select">
                                 @for ($a = 1; $a <= 12; $a++)
                                   <option selected>{{ $a }}</option>
                                 @endfor
                               </select>
+                            </div>
+                            <div class="col-lg-6 mb-3">
+                              <label for="username_tableau">Username Tableau</label>
+                              <input type="text" class="form-control" name="tableau_username" placeholder="Username akun di profil">
                             </div>
                           </div>
                           <br>       
