@@ -64,7 +64,7 @@
           </p>
         </div>
         <div class="row g-3" id="main">
-          {{-- <div id="indonesia-map" class="ht-300"></div> --}}
+          <div id="indonesia-map" class="ht-300"></div>
             {{-- CHART CONTENT WILL GOES HERE --}}
         </div><!-- row -->
         <div class="main-footer mt-5">
