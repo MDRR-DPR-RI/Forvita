@@ -30,7 +30,10 @@
             </div>
                 
             <div class="d-flex gap-2 mt-3 mt-md-0">
-              <button id="ticket-tableau" class="btn btn-primary" onclick="ticket_tableau()"><i class="ri-bar-chart-2-line fs-18 lh-1"></i> Refresh Tableau</button>
+              <form action="{{ route('refreshTicket') }}" method="post">
+                @csrf
+                <button id="ticket-tableau" class="btn btn-primary"><i class="ri-bar-chart-2-line fs-18 lh-1"></i> Refresh Tableau</button>
+              </form>
               @can('admin')
                   <a href="#importCSVModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
                         <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import CSV
@@ -546,28 +549,28 @@
 {{-- TABLEAU EMBED --}}
 <script>
     // window.onbeforeunload = function() {
-    function ticket_tableau() {
-      $.ajax({
-        url: "https://visualisasi.dpr.go.id/trusted",
-        contentType: "application/json; charset=utf-8",
-        type: "POST",    
-        data: {
-            username: 'mentee',
-            target_site: ''
-        },
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+    // function ticket_tableau() {
+    //   $.ajax({
+    //     url: "https://visualisasi.dpr.go.id/trusted",
+    //     contentType: "application/json; charset=utf-8",
+    //     type: "POST",    
+    //     data: {
+    //         username: 'mentee',
+    //         target_site: ''
+    //     },
+    //     headers: {
+    //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
 
-        },
-        dataType: 'json',
-        success: function(response) {
-            alert(response);
-        },
-        error: function() {
-            console.log("Error");
-        }    
-      });    
-    };
+    //     },
+    //     dataType: 'json',
+    //     success: function(response) {
+    //         alert(response);
+    //     },
+    //     error: function() {
+    //         console.log("Error");
+    //     }    
+    //   });    
+    // };
     
   let tableauViz, tableau_link, chart_id;
   @foreach ($contents as $content)

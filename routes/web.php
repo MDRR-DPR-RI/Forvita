@@ -7,6 +7,7 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CsvImportController;
+use App\Http\Controllers\EmbedTableauController;
 use App\Http\Controllers\ApiImportController;
 use App\Http\Controllers\SchedulerController;
 use App\Http\Controllers\TableauController;
@@ -45,6 +46,8 @@ Route::resource('/cluster', ClusterController::class)->middleware('auth');
 Route::resource('/dashboard', DashboardController::class)->middleware('auth');
 Route::resource('/dashboard/content', ContentController::class)->middleware('auth');
 
+Route::post('/refresh-ticket', [EmbedTableauController::class, 'refresh'])->name('refreshTicket')->middleware('auth');
+
 // ajax call, when select data in edit_chart page
 Route::post('/fetch-data', [AjaxController::class, 'data_cleans'])->middleware('admin');
 
@@ -74,5 +77,5 @@ Route::delete('database', [DatabaseController::class, 'destroy'])->middleware('a
 Route::get('user-management', [UserManagementController::class, 'index'])->middleware('admin');
 
 Route::post('https://visualisasi.dpr.go.id/trusted', function () {
-    return "kont";
+  return "kont";
 })->middleware('admin');
