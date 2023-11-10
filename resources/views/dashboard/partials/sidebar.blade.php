@@ -39,7 +39,7 @@
           @foreach ($dashboards as $index_dashboard)
             <li class="nav-item">
             @if (isset($dashboard->name))
-              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link  {{ ($dashboard->name) == ($index_dashboard->name) ? 'active' : '' }}"><i class="{{ $index_dashboard->icon_name }}"></i> <span>{{ $index_dashboard->name }}</span></a>
+              <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link  {{ ($dashboard->id) == ($index_dashboard->id) ? 'active' : '' }}"><i class="{{ $index_dashboard->icon_name }}"></i> <span>{{ $index_dashboard->name }}</span></a>
             @else
               <a href="/dashboard/{{ $index_dashboard->id }}" class="nav-link"><i class="{{ $index_dashboard->icon_name }}"></i> <span>{{ $index_dashboard->name }}</span></a>
             @endif
@@ -90,17 +90,17 @@
         @csrf
         <div class="modal-body text-center">
             <label>Masukan Nama Dashboard:</label>
-            <input type="text" class="form-control" name="dashboard_name" placeholder="Nama dashboard" autofocus>
+            <input type="text" class="form-control" name="dashboard_name" placeholder="Nama dashboard" autofocus required>
         </div> 
        <div class="modal-body text-center">
           <label>Masukan Deskripsi Dashboard:</label>
-          <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..."></textarea>
+          <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..." required></textarea>
         </div>
         <div class="modal-body text-center">
         <label>Pilih Icon</label>
           <div class="input-group mb-3">
             <label class="iconOutputs input-group-text" for="iconInputs">Icon</label>
-            <input type="text" name="icon"  class="iconInputs form-control iconpicker" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+            <input type="text" name="icon"  class="iconInputs form-control iconpicker" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" required/>
           </div>   
         </div>
         <div class="modal-footer">

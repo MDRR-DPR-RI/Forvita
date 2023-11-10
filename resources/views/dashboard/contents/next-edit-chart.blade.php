@@ -103,7 +103,7 @@
                           </td>
                           <td>{{ $clean->judul }}</td>
                           <td>{{ $clean->jumlah }}</td>
-                          @if (in_array($content->chart->id, [5, 10, 14]))
+                          @if (in_array($content->chart->id, [5, 10, 14, 16]))
                             <td>
                             @if (isset($x_value_decodedArray[$i]) && 
                                   ($x_value_decodedArray[$i] !== null && in_array($clean->keterangan, $x_value_decodedArray[$i])))

@@ -14,19 +14,31 @@ class ContentSeeder extends Seeder
     public function run(): void
     {
         Content::create([
-            'chart_id' => 9,
+            'chart_id' => 16,
             'dashboard_id' => 1,
-            'judul' => '["Jumlah penganut Agama Anggota"]',
-            'card_title' => 'Jumlah Agama',
-            'card_description' => 'Ini Description card',
-            'card_grid' => 8,
-            'x_value' => '[["Islam","Kristen","Budha","Hindu"]]',
-            'y_value' => '[["800","200","150","235"]]',
-            'color' => '["#9f0230"]'
+            'judul' => '["Jumlah populasi yang ganteng yang ada di Indonesia"]',
+            'card_title' => 'Jumlah populasi',
+            'card_description' => 'Ini adalah Jumlah populasi',
+            'card_grid' => 12,
+            'x_value' => '[["DKI Jakarta","Jawa Barat","Kalimantan Tengah","Kalimantan Timur","Gorontalo"]]',
+            'y_value' => '[[938,879,619,749,99999999]]',
+            'color' => '["#506fd9","#506fd9","#506fd9","#506fd9","#ff0000"]'
 
         ]);
         Content::create([
             'chart_id' => 9,
+            'dashboard_id' => 1,
+            'judul' => '["Jumlah penganut Agama Anggota", "Jumlah penganut Agama SDMA"]',
+            'card_title' => 'Jumlah Agama',
+            'card_description' => 'Ini Description card',
+            'card_grid' => 8,
+            'x_value' => '[["Islam","Kristen","Budha","Hindu"], ["Islam","Kristen","Budha","Hindu"]]',
+            'y_value' => '[["800","200","150","235"], [723,292,129,125]]',
+            'color' => '["#9f0230"]'
+
+        ]);
+        Content::create([
+            'chart_id' => 4,
             'dashboard_id' => 1,
             'judul' => '["Penjualan Ticket Ayam", "Penjualan Ticket Bebek"]',
             'card_title' => 'Penjualan Ticket',

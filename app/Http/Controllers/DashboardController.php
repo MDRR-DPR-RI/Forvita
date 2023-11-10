@@ -48,11 +48,11 @@ class DashboardController extends Controller
         /**
          * Update y_value data everytime the dashboard was rendered 
          */
-        
+
         // Fetch all contents that in the dashboard
         $contents = Content::where('dashboard_id', $dashboard->id)->get();
 
-        
+
         // $count = 0;
         // // logic for updating the y_value data
         // foreach ($contents as $content) { // loop every content in the dashboard

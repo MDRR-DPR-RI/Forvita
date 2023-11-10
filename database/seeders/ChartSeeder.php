@@ -73,5 +73,9 @@ class ChartSeeder extends Seeder
             'name' => "Group of Circle",
             'grid' => 12
         ]);
+        Chart::create([
+            'name' => "Map Indonesia",
+            'grid' => 12
+        ]);
     }
 }

@@ -64,7 +64,6 @@
           </p>
         </div>
         <div class="row g-3" id="main">
-          <div id="indonesia-map" class="ht-300"></div>
             {{-- CHART CONTENT WILL GOES HERE --}}
         </div><!-- row -->
         <div class="main-footer mt-5">
@@ -534,8 +533,14 @@
   });
 </script>
 
+
+<script src="/lib/jqvmap/jquery.vmap.min.js"></script>
+<script src="/lib/jqvmap/maps/jquery.vmap.indonesia.js"></script>
+<script src="/lib/jqvmap/maps/jquery.vmap.world.js"></script>
+
 <script src="/lib/apexcharts/apexcharts.min.js"></script>
 <script src="/js/db.data.js"></script>
+<script src="/js/main/possible-map-input.js"></script>
 <script src="/js/main/contents-config.js"></script>
 
 {{-- TABLEAU EMBED --}}
@@ -582,50 +587,6 @@ $("#tableContent").Grid({
 
 
 
-<script src="/lib/jqvmap/jquery.vmap.min.js"></script>
-<script src="/lib/jqvmap/maps/jquery.vmap.indonesia.js"></script>
-<script src="/lib/jqvmap/maps/jquery.vmap.world.js"></script>
-
-<script src="/js/vmap.sampledata.js"></script>
-
-<script>
-$('#indonesia-map').vectorMap({
-    map: 'indonesia_id',
-    backgroundColor: 'transparent',
-    borderColor: '#000',
-    borderOpacity: 0.75,
-    borderWidth: 1,
-    color: '#4a4949',
-    enableZoom: true,
-    hoverColor: '#00F',
-    hoverOpacity: 0.7,
-    selectedColor: '#00F',
-    selectedRegion: 'ID', // You can specify the region you want to highlight initially
-    // showTooltip: true,
-    scaleColors: ['#C8EEFF', '#006491'],
-    onRegionClick: function (event, code, region) {
-        // Add your custom click event handling here if needed
-        alert('You clicked on ' + region);
-    },
-    onRegionOver: function (event, code, region) {
-        console.log(code);
-        if (code === 'path11') {
-            // This is DKI Jakarta, so you can add your custom code to display population
-            var population = 10000000; // Replace with the actual population of DKI Jakarta
-            // $('#indonesia-map').vectorMap('set', 'colors', { 'path11': '#FF0000' });
-            console.log(population);
-            // $('#indonesia-map').vectorMap('tip', '<strong>DKI Jakarta</strong><br>Population: ' + population);
-        }
-    },
-    onRegionOut: function (event, code, region) {
-        // if (code === 'path11') {
-        //     // Restore the default color and tooltip
-        //     $('#indonesia-map').vectorMap('set', 'colors', { 'path11': '#4a4949' });
-        //     $('#indonesia-map').vectorMap('tip', '');
-        // }
-    }
-});
-</script>
 
 @endsection
 

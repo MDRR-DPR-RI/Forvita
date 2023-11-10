@@ -226,8 +226,23 @@ let htmlStructures = {
             </div><!-- card-header -->
             <div class="card-body p-3 p-xl-4">
               <div id="description"></div><!-- card-description -->
-              <div class="row justify-content-center g-3 mb-2 mb-xl-4" id="content">
+              <div class="row justify-content-center g-3 mb-2 mb-xl-4" id="content"></div><!-- content -->
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`]
+        </div><!-- col -->`],
+  16: [`<div class="col-xl-">
+    <div class="card card-one">
+      <div class="card-header">
+        <div id="judul"></div><!-- card-title -->
+        <nav class="nav nav-icon nav-icon-sm ms-auto">
+          <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
+          <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+        </nav>
+      </div><!-- card-header -->
+      <div class="card-body p-3 p-xl-4">
+        <div id="description"></div><!-- card-description -->
+        <div class="ht-300" id="content"></div><!-- content -->
+      </div><!-- card-body -->
+    </div><!-- card -->
+  </div><!-- col -->`]
 };
