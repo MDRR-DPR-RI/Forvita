@@ -93,6 +93,11 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->role->name }}</td>
                             <td>
+                                <button wire:click="$dispatch('openModal',
+                                                    { component: 'user-management.edit-user', arguments: { selectedUserID: {{$user->id}}}})"
+                                        class="btn btn-outline-primary">
+                                    Edit
+                                </button>
                                 <button type="submit" class="btn btn-outline-danger"
                                         wire:click="deleteUser({{ $user->id }})"
                                         wire:confirm="Are you sure you want to delete this user?">

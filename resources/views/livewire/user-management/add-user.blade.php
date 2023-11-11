@@ -31,7 +31,7 @@
                                 <select wire:model="roleID" name="roleID" id="roleID" class="form-select" aria-label="Default select example">
                                     <option selected>Select user role</option>
                                     @foreach($roles as $role)
-                                        <option value="{{$role->id}}">{{$role->name}}: {{$role->id}}</option>
+                                        <option value="{{$role->id}}">{{$role->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
