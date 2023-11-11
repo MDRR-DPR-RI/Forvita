@@ -54,12 +54,12 @@
             <thead>
             <tr>
                 <th scope="col" colspan="5"></th>
-{{--                <th scope="col">--}}
-{{--                    <button wire:click="$dispatch('openModal', { component: 'user-management.add-user'})"--}}
-{{--                            class="btn btn-outline-primary">--}}
-{{--                        Add User--}}
-{{--                    </button>--}}
-{{--                </th>--}}
+                <th scope="col">
+                    <button wire:click="$dispatch('openModal', { component: 'user-management.add-user'})"
+                            class="btn btn-outline-primary">
+                        Add User
+                    </button>
+                </th>
             </tr>
             <tr>
                 <th scope="col">No</th>
