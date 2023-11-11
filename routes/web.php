@@ -12,6 +12,7 @@ use App\Http\Controllers\SchedulerController;
 use App\Http\Controllers\TableauController;
 use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\UserController;
 use App\Livewire\Counter;
 use App\Models\Dashboard;
 use App\Models\Clean;
@@ -40,6 +41,7 @@ Route::post('/logout',  [AuthController::class, 'logout'])->middleware('auth');
 
 Route::get('/register', [AuthController::class, 'register_view'])->middleware('guest');
 Route::post('/register', [AuthController::class, 'register_submit'])->middleware('guest');
+Route::resource('/view-profile', UserController::class)->middleware('auth');
 
 Route::resource('/cluster', ClusterController::class)->middleware('auth');
 Route::resource('/dashboard', DashboardController::class)->middleware('auth');
