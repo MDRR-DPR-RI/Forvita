@@ -69,7 +69,6 @@
           </p>
         </div>
         <div class="row g-3" id="main">
-          {{-- <div id="indonesia-map" class="ht-300"></div> --}}
             {{-- CHART CONTENT WILL GOES HERE --}}
         </div><!-- row -->
         <div class="main-footer mt-5">
@@ -268,70 +267,6 @@
             </div>
         </div>
     </div>
-      
-    {{-- Modal Edit PROMPT--}}
-    <div class="modal fade" id="modalprompt" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Edit Prompt</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div><!-- modal-header -->
-          <form id="contentForm" action="/dashboard/content/" method="post">
-            @method('put')
-            @csrf
-            <div class="modal-body container text-center">
-              <label for="judul">Select Prompt:</label>
-              {{-- set on change function, when user add new prompt, then will show INPUT FIELD to enter new prompt --}}
-              <select id="selectPrompt" class="form-select" name="selectPrompt" onchange="checkForNewPrompt()">
-                @foreach ($prompts as $prompt)
-                  @if ($prompt->id == 3) <!-- IMPORTANT: UPDATE THIS IF $prompt->id is EQUAL with the prompt_id in table contents -->
-                    <option value="{{ $prompt->id }}" selected>{{ $prompt->body }}</option>
-                  @else
-                    <option value="{{ $prompt->id }}">{{ $prompt->body }}</option>
-                  @endif
-                
-                @endforeach
-                {{-- IF THE USER ADD NEW PROMPT THEN UPDATE THE prompt_id in contents(table) WITH next id of prompt(new id) --}}
-                @php
-                  // Calculate the next ID by adding 1 to the last prompt's ID
-                  $nextId = $prompts->isEmpty() ? 1 : $prompts->last()->id + 1;
-                @endphp
-                  <option value="{{ $nextId }}">Add New Prompt</option>
-              </select>
-              <!-- Add a new prompt input field initially hidden -->
-              <div id="newPromptInput" class="modal-body container text-center" style="display: none;">
-                <label for="newPrompt">Enter New Prompt:</label>
-                <input type="text" id="newPrompt" name="newPrompt" class="form-control">
-              </div>
-              <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
-
-              {{-- SCRIPT TO SHOW INPUT FIELD IF USER WANT TO ADD THEIR OWN/NEW PROMPT --}}
-                <script>
-                function checkForNewPrompt() {
-                  const select = document.getElementById('selectPrompt');
-                  const newPromptInput = document.getElementById('newPromptInput');
-                  const newPrompt = document.getElementById('newPrompt');
-
-                  if (select.value == {{ $nextId }}) {
-                    newPromptInput.style.display = 'block'; // Show the new prompt input
-                    newPrompt.required = true; // Make the new prompt field required
-                  } else {
-                    newPromptInput.style.display = 'none'; // Hide the new prompt input
-                    newPrompt.required = false; // Make the new prompt field not required
-                  }
-                }
-              </script>
-              
-            </div><!-- modal-body -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Update Prompt</button>
-          </form>
-          </div><!-- modal-footer -->
-        </div><!-- modal-content -->
-      </div><!-- modal-content -->
-    </div><!-- modal-fade -->
 
     {{-- Modal untuk Impor CSV --}}
     <div class="modal fade" id="importCSVModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
@@ -552,8 +487,14 @@
   });
 </script>
 
+
+<script src="/lib/jqvmap/jquery.vmap.min.js"></script>
+<script src="/lib/jqvmap/maps/jquery.vmap.indonesia.js"></script>
+<script src="/lib/jqvmap/maps/jquery.vmap.world.js"></script>
+
 <script src="/lib/apexcharts/apexcharts.min.js"></script>
 <script src="/js/db.data.js"></script>
+<script src="/js/main/possible-map-input.js"></script>
 <script src="/js/main/contents-config.js"></script>
 
 {{-- TABLEAU EMBED --}}
@@ -632,50 +573,6 @@ $("#tableContent").Grid({
 
 
 
-<script src="/lib/jqvmap/jquery.vmap.min.js"></script>
-<script src="/lib/jqvmap/maps/jquery.vmap.indonesia.js"></script>
-<script src="/lib/jqvmap/maps/jquery.vmap.world.js"></script>
-
-<script src="/js/vmap.sampledata.js"></script>
-
-<script>
-$('#indonesia-map').vectorMap({
-    map: 'indonesia_id',
-    backgroundColor: 'transparent',
-    borderColor: '#000',
-    borderOpacity: 0.75,
-    borderWidth: 1,
-    color: '#4a4949',
-    enableZoom: true,
-    hoverColor: '#00F',
-    hoverOpacity: 0.7,
-    selectedColor: '#00F',
-    selectedRegion: 'ID', // You can specify the region you want to highlight initially
-    // showTooltip: true,
-    scaleColors: ['#C8EEFF', '#006491'],
-    onRegionClick: function (event, code, region) {
-        // Add your custom click event handling here if needed
-        alert('You clicked on ' + region);
-    },
-    onRegionOver: function (event, code, region) {
-        console.log(code);
-        if (code === 'path11') {
-            // This is DKI Jakarta, so you can add your custom code to display population
-            var population = 10000000; // Replace with the actual population of DKI Jakarta
-            // $('#indonesia-map').vectorMap('set', 'colors', { 'path11': '#FF0000' });
-            console.log(population);
-            // $('#indonesia-map').vectorMap('tip', '<strong>DKI Jakarta</strong><br>Population: ' + population);
-        }
-    },
-    onRegionOut: function (event, code, region) {
-        // if (code === 'path11') {
-        //     // Restore the default color and tooltip
-        //     $('#indonesia-map').vectorMap('set', 'colors', { 'path11': '#4a4949' });
-        //     $('#indonesia-map').vectorMap('tip', '');
-        // }
-    }
-});
-</script>
 
 @endsection
 

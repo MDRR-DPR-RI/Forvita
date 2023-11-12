@@ -102,15 +102,10 @@ let htmlStructures = {
               </nav>
             </div><!-- card-header -->
             <div class="card-body p-4">
-                  <div class="row g-4">
-                <div class="col-md-6">
-                  <div id="description"></div><!-- card-description -->
-                  <div id="content" class="apex-chart-three"></div>
-                </div><!-- col -->
                 <div class="col-md-6">
                   <div class="d-flex">
                     <div>
-                      <h6 class="fw-semibold text-dark mb-1">AI Analysis</h6>
+                      <div id="description"></div><!-- card-description -->
                       <p class="fs-sm text-secondary mb-0" id="aiAnalysis">
                         <p class="card-text placeholder-glow" id="placeholder">
                           <span class="placeholder col-12">.............................................................</span>
@@ -119,11 +114,7 @@ let htmlStructures = {
                       </p>
                     </div><!-- div -->
                   </div><!-- d-flex -->
-                  <div>
-                     <a href="#modalprompt" class="btn btn-primary" data-bs-toggle="modal" data-content-id="id">Edit Prompt</a>
-                  </div>
                 </div><!-- col -->
-              </div><!-- row -->
             </div><!-- card-body -->
             
           </div><!-- card -->
@@ -226,8 +217,23 @@ let htmlStructures = {
             </div><!-- card-header -->
             <div class="card-body p-3 p-xl-4">
               <div id="description"></div><!-- card-description -->
-              <div class="row justify-content-center g-3 mb-2 mb-xl-4" id="content">
+              <div class="row justify-content-center g-3 mb-2 mb-xl-4" id="content"></div><!-- content -->
             </div><!-- card-body -->
           </div><!-- card -->
-        </div><!-- col -->`]
+        </div><!-- col -->`],
+  16: [`<div class="col-xl-">
+    <div class="card card-one">
+      <div class="card-header">
+        <div id="judul"></div><!-- card-title -->
+        <nav class="nav nav-icon nav-icon-sm ms-auto">
+          <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
+          <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+        </nav>
+      </div><!-- card-header -->
+      <div class="card-body p-3 p-xl-4">
+        <div id="description"></div><!-- card-description -->
+        <div class="ht-300" id="content"></div><!-- content -->
+      </div><!-- card-body -->
+    </div><!-- card -->
+  </div><!-- col -->`]
 };
