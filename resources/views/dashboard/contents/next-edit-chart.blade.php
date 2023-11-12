@@ -33,13 +33,12 @@
           </div>
           </div><br>
           <div>
-
-          <label for="card_description" class="form-label">Deskripsi Kartu</label>
-          @if ($content->chart->id == 11)
-              <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Kartu ini tidak memiliki deskripsi" disabled></textarea>
-          @else
-              <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Masukan deskripsi kartu disini..." required>{{ $content->card_description }}</textarea>
-          @endif
+            <label for="card_description" class="form-label">Deskripsi Kartu</label>
+            @if ($content->chart->id == 11)
+                <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Kartu ini tidak memiliki deskripsi" disabled></textarea>
+            @else
+                <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Masukan deskripsi kartu disini..." required>{{ $content->card_description }}</textarea>
+            @endif
           </div>
           <div> <br>
             @for ($i = 0; $i < $stackCount; $i++)
@@ -121,6 +120,58 @@
                     </tbody>
                 </table>    
             @endfor
+            @if ($content->chart_id == 8)
+                <div class="text-center">
+                <form id="contentForm" action="/dashboard/content/" method="post">
+                  @method('put')
+                  @csrf
+                  <div class="modal-body container text-center">
+                    <label for="judul">Select Prompt:</label>
+                    {{-- set on change function, when user add new prompt, then will show INPUT FIELD to enter new prompt --}}
+                    <select id="selectPrompt" class="form-select" name="selectPrompt" onchange="checkForNewPrompt()">
+                      @foreach ($prompts as $prompt)
+                        @if ($prompt->id == $content->prompt->id) <!-- IMPORTANT: UPDATE THIS IF $prompt->id is EQUAL with the prompt_id in table contents -->
+                          <option value="{{ $prompt->id }}" selected>{{ $prompt->body }}</option>
+                        @else
+                          <option value="{{ $prompt->id }}">{{ $prompt->body }}</option>
+                        @endif
+                      
+                      @endforeach
+                      {{-- IF THE USER ADD NEW PROMPT THEN UPDATE THE prompt_id in contents(table) WITH next id of prompt(new id) --}}
+                      @php
+                        // Calculate the next ID by adding 1 to the last prompt's ID
+                        $nextId = $prompts->isEmpty() ? 1 : $prompts->last()->id + 1;
+                      @endphp
+                        <option value="{{ $nextId }}">Tambah Prompt Baru</option>
+                    </select>
+                    <!-- Add a new prompt input field initially hidden -->
+                    <div id="newPromptInput" class="modal-body container text-center" style="display: none;">
+                      <label for="newPrompt">Enter New Prompt:</label>
+                      <input type="text" id="newPrompt" name="newPrompt" class="form-control">
+                    </div>
+                    <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
+
+                    {{-- SCRIPT TO SHOW INPUT FIELD IF USER WANT TO ADD THEIR OWN/NEW PROMPT --}}
+                      <script>
+                      function checkForNewPrompt() {
+                        const select = document.getElementById('selectPrompt');
+                        const newPromptInput = document.getElementById('newPromptInput');
+                        const newPrompt = document.getElementById('newPrompt');
+
+                        if (select.value == {{ $nextId }}) {
+                          newPromptInput.style.display = 'block'; // Show the new prompt input
+                          newPrompt.required = true; // Make the new prompt field required
+                        } else {
+                          newPromptInput.style.display = 'none'; // Hide the new prompt input
+                          newPrompt.required = false; // Make the new prompt field not required
+                        }
+                      }
+                    </script>
+                  </div><!-- modal-body -->
+                </form>
+              </div>
+            @endif
+         
           <input type="hidden" value="{{ $stackCount }}" name="stackCount">
           <input type="hidden" value="{{ $content->dashboard->id }}" name="dashboard_id">
           <div class="col d-flex justify-content-end">

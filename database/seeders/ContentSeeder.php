@@ -34,7 +34,7 @@ class ContentSeeder extends Seeder
             'card_grid' => 8,
             'x_value' => '[["Islam","Kristen","Budha","Hindu"], ["Islam","Kristen","Budha","Hindu"]]',
             'y_value' => '[["800","200","150","235"], [723,292,129,125]]',
-            'color' => '["#9f0230"]'
+            'color' => '["#9f0230", "#ff0000"]'
 
         ]);
         Content::create([

@@ -5,7 +5,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CsvImportController;
 use App\Http\Controllers\ApiImportController;
 use App\Http\Controllers\SchedulerController;
@@ -13,10 +12,6 @@ use App\Http\Controllers\TableauController;
 use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\UserController;
-use App\Livewire\Counter;
-use App\Models\Dashboard;
-use App\Models\Clean;
-use App\Models\Content;
 use Illuminate\Support\Facades\Route;
 
 /*
