@@ -93,8 +93,14 @@ class ClusterController extends Controller
         // Get first dashboard in cluster that's allowed for user
         $userDashboardIDs = Permission::where('user_id', Auth()->user()->id)
             ->pluck('dashboard_id');
-        $dashboard = Dashboard::where('cluster_id', $cluster_id)
-            ->whereIn('id', $userDashboardIDs)->first();
+        if (Auth()->user()->role->name === 'Admin'){
+            $dashboard = Dashboard::where('cluster_id', $cluster_id)->first();
+        }
+        else {
+            $dashboard = Dashboard::where('cluster_id', $cluster_id)
+                ->whereIn('id', $userDashboardIDs)->first();
+        }
+
         // if user forces cluster without any allowed dashboards
         if (is_null($dashboard)) {
             abort(403);
