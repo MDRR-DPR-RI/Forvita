@@ -5,17 +5,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CsvImportController;
 use App\Http\Controllers\ApiImportController;
 use App\Http\Controllers\SchedulerController;
 use App\Http\Controllers\TableauController;
 use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\UserManagementController;
-use App\Livewire\Counter;
-use App\Models\Dashboard;
-use App\Models\Clean;
-use App\Models\Content;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +36,7 @@ Route::post('/logout',  [AuthController::class, 'logout'])->middleware('auth');
 
 Route::get('/register', [AuthController::class, 'register_view'])->middleware('guest');
 Route::post('/register', [AuthController::class, 'register_submit'])->middleware('guest');
+Route::resource('/view-profile', UserController::class)->middleware('auth');
 
 Route::resource('/cluster', ClusterController::class)->middleware('auth');
 Route::resource('/dashboard', DashboardController::class)->middleware('auth');
@@ -75,7 +72,3 @@ Route::patch('database', [DatabaseController::class, 'update'])->middleware('adm
 Route::delete('database', [DatabaseController::class, 'destroy'])->middleware('admin');
 
 Route::get('user-management', [UserManagementController::class, 'index'])->middleware('admin');
-
-Route::post('https://visualisasi.dpr.go.id/trusted', function () {
-    return "kont";
-})->middleware('admin');

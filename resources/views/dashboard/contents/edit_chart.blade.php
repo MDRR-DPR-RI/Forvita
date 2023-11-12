@@ -10,7 +10,7 @@
 
 <div class="main main-app p-3 p-lg-4">
   <div class="container mt-5 mb-5">
-      @if (!in_array($content->chart->id, [ 5, 10, 11, 12, 14, 15]))
+      @if (!in_array($content->chart->id, [ 5, 10, 11, 12, 14, 15, 16])) {{-- list of chart that can only have 1 stack  --}}
         <div class="text-center d-flex justify-content-center align-items-center flex-column">
           <p>Berapa stack?</p>
             <select name="selectOption" id="selectOption">

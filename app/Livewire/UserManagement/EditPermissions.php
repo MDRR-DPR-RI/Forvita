@@ -18,6 +18,7 @@ class EditPermissions extends ModalComponent
     public array $selectedUsersID;
 
     public function mount()
+        // runs the first time the page is loaded
     {
         $this->allDashboards = Dashboard::all();
 
@@ -71,20 +72,22 @@ class EditPermissions extends ModalComponent
                 $permission->save();
             }
         }
+
+        // close modal and dispatch refreshUsers event
         $this->closeModalWithEvents([
-            UserListing::class => 'permissionsModified',
+            UserListing::class => 'refreshUsers',
         ]);
     }
 
     public function render()
+        // Runs each time the page renders for any reason
     {
+        // re-sort dashboard list
         $this->allDashboards = $this->allDashboards
             ->sortBy([
                 ['cluster_id'],
                 ['name'],
             ]);
-        return view('livewire.user-management.edit-permissions', [
-
-        ]);
+        return view('livewire.user-management.edit-permissions');
     }
 }
