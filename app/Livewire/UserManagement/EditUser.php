@@ -37,7 +37,6 @@ class EditUser extends ModalComponent
 
     public function editUser(): void
     {
-        error_log("Trying to change user.");
         $validated = $this->validate(
             [ // validation rules
                 'name' => 'required|max:255',
@@ -69,7 +68,6 @@ class EditUser extends ModalComponent
             ]);
         }
         $this->selectedUser->save();
-        error_log("Saved user changes.");
 
         $this->closeModalWithEvents([
             UserListing::class => 'refreshUsers',
