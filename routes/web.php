@@ -52,7 +52,7 @@ Route::post('/fetch-data', [AjaxController::class, 'data_cleans'])->middleware('
 Route::post('/fetch-dashboard', [AjaxController::class, 'data_dashboards'])->middleware('admin');
 
 // Import Data CSV
-Route::get('csv', [CsvImportController::class, 'show'])->middleware('admin');
+Route::get('csv', [CsvImportController::class, 'show'])->name('csv')->middleware('admin');
 Route::get('csv/create', [CsvImportController::class, 'createTable'])->name('csv.create')->middleware('admin');
 Route::get('csv/delete', [CsvImportController::class, 'deleteTable'])->name('csv.delete')->middleware('admin');
 Route::post('/import-csv', [CsvImportController::class, 'import'])->name('import.csv')->middleware('admin');

@@ -31,7 +31,7 @@
                 
             <div class="d-flex gap-2 mt-3 mt-md-0">
               @can('admin')
-                  <a href="#importCSVModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
+                  <a href="{{ route('csv') }}" class="btn btn-primary d-flex align-items-center gap-2">
                         <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import CSV
                   </a>
                   <a href="#importAPIModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
