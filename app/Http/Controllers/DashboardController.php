@@ -6,6 +6,7 @@ use App\Models\Dashboard;
 use Illuminate\Http\Request;
 use App\Models\Content;
 use App\Models\Clean;
+use Illuminate\Support\Facades\Gate;
 
 class DashboardController extends Controller
 {
@@ -48,6 +49,11 @@ class DashboardController extends Controller
         /**
          * Update y_value data everytime the dashboard was rendered 
          */
+        // Gate to check if user is authorized to see dashboard
+        if (! Gate::allows('show-dashboard', $dashboard)) {
+            abort(403);
+        }
+
 
         // Fetch all contents that in the dashboard
         $contents = Content::where('dashboard_id', $dashboard->id)->get();

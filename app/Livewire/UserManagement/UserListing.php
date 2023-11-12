@@ -14,9 +14,11 @@ class UserListing extends Component
     public Collection $users;
     public Collection $selectedUsers;
 
-    protected $listeners = ['permissionsModified' => '$refresh'];
+    protected $listeners = ['refreshUsers' => 'mount'];
 
     public function mount()
+        // runs the first time the page is loaded,
+        // and any other times event refreshUsers is dispatched.
     {
         $this->users = User::all();
     }
@@ -45,7 +47,6 @@ class UserListing extends Component
         $selectedUser = User::where('id', $userID)
             ->get();
         $this->selectedUsers = $this->selectedUsers->diff($selectedUser);
-//        $this->selectedUsersID = array_diff($this->selectedUsersID, array($userID));
     }
 
     public function deleteUser($userID): void
@@ -61,6 +62,7 @@ class UserListing extends Component
             ->delete();
     }
     public function render(): view
+        // Runs each time the page renders for any reason
     {
         return view('livewire.user-management.user-listing');
     }

@@ -15,23 +15,14 @@ class AddUser extends ModalComponent
     public string $email;
     public string $roleID;
     public string $password;
+    public string $resubmitPassword;
     public Collection $roles;
 
     public function mount(): void
+        // runs the first time the page is loaded
     {
         $this->roles = Role::all();
     }
-
-//    public function messages()
-//    {
-//        return [
-//            'name.required' => 'The :attribute is missing.',
-//            'name.max' => 'The :attribute is too long.',
-//
-//            'email.required' => 'The :attribute is missing.',
-//            'email.email' => 'The :attribute is not a valid email.',
-//        ];
-//    }
 
     public function addUser(): void
     {
@@ -39,14 +30,29 @@ class AddUser extends ModalComponent
             [ // validation rules
                 'name' => 'required|max:255',
                 'email' => 'required|email|unique:users',
+                'roleID' => 'required|exists:roles,id',
                 'password' => 'required|min:5|max:255',
-                'roleID' => 'required|exists:role,id'
+                'resubmitPassword' => 'same:password',
+            ],
+            [ // Messages when validation rule is broken
+                'roleID.required' => 'Please select a role.',
+                'roleID.exists' => 'The selected role is invalid.',
+                'resubmitPassword.same' => 'Password harus sama.',
             ],
         );
+
         $validated['password'] = Hash::make($validated['password']);
-        User::create($validated);
+        $createdUser = User::create($validated);
+
+        $createdUser->role_id = $this->roleID;
+        $createdUser->save();
+
+        $this->closeModalWithEvents([
+            UserListing::class => 'refreshUsers',
+        ]);
     }
     public function render() : View
+        // Runs each time the page renders for any reason
     {
         return view('livewire.user-management.add-user');
     }
