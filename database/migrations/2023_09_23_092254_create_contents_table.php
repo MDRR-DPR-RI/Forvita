@@ -20,6 +20,7 @@ return new class extends Migration
       $table->string('judul')->default('[]');
       $table->string('card_title')->nullable();
       $table->string('card_description', 10000)->nullable();
+      $table->string('domain_tableau')->nullable();
       $table->string('username_tableau')->nullable();
       $table->string('card_grid')->nullable();
       $table->json('x_value')->default('[[]]');

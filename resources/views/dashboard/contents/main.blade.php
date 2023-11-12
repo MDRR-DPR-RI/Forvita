@@ -30,10 +30,11 @@
             </div>
                 
             <div class="d-flex gap-2 mt-3 mt-md-0">
-              <form action="{{ route('refreshTicket') }}" method="post">
+              {{-- <form action="{{ route('refreshTicket') }}" method="post">
                 @csrf
+                <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
                 <button id="ticket-tableau" class="btn btn-primary"><i class="ri-bar-chart-2-line fs-18 lh-1"></i> Refresh Tableau</button>
-              </form>
+              </form> --}}
               @can('admin')
                   <a href="#importCSVModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
                         <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import CSV
@@ -219,14 +220,18 @@
                 <div class="modal-body">
                     <form action="/dashboard/content" method="POST">
                         @csrf
-                        <div class="mb-3">
-                          Contoh url
-                            <ol class="list-group">
-                              <li class="list-group-item">https://public.tableau.com/views/ThePeriodicTableofWine/periodictableauofwineEN?:language=en-US&:display_count=n&:origin=viz_share_link</li>
-                              <li class="list-group-item">https://public.tableau.com/views/SolarEnergyDashboardRWFD_16900452395200/SolarEnergyDashboard?:language=en-US&:display_count=n&:origin=viz_share_link</li>
-                            </ol>
-                        </div>
                         <div class="modal-body">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="mb-3">
+                                Contoh url
+                                  <ol class="list-group">
+                                    <li class="list-group-item">https://public.tableau.com/views/ThePeriodicTableofWine/periodictableauofwineEN?:language=en-US&:display_count=n&:origin=viz_share_link</li>
+                                    <li class="list-group-item">https://public.tableau.com/views/SolarEnergyDashboardRWFD_16900452395200/SolarEnergyDashboard?:language=en-US&:display_count=n&:origin=viz_share_link</li>
+                                  </ol>
+                              </div>
+                            </div>
+                          </div>
                           <div class="row">
                             <div class="col-lg-6 mb-3">
                               <label for="card_grid">Panjang Konten</label>
@@ -238,13 +243,18 @@
                             </div>
                             <div class="col-lg-6 mb-3">
                               <label for="username_tableau">Username Tableau</label>
-                              <input type="text" class="form-control" name="tableau_username" placeholder="Username akun di profil">
+                              <input type="text" class="form-control" name="username_tableau" placeholder="Masukkan jika menggunakan tableau private">
+                            </div>
+                            <div class="col-lg-6 mb-3">
+                              <label for="">URL Tableau Domain</label>
+                              <input type="text" class="form-control" name="domain_tableau" placeholder="https://visualisasi.dpr.go.id" value="" autofocus required>
+                            </div>
+                            <div class="col-lg-6 mb-3">
+                              <label>URL Tableau View</label>
+                              <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
+                              <input type="text" class="form-control" name="tableau_link" placeholder="views/ThePeriodicTableofWine/periodictableauofwineEN?:language=en-US&:display_count=n&:origin=viz_share_link" value="{{ $dashboard->card_description }}" autofocus required>
                             </div>
                           </div>
-                          <br>       
-                          <label>Masukan Tableau url:</label>
-                          <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
-                          <input type="text" class="form-control" name="tableau_link" placeholder="http:///public.tableau.com/...=viz_share_link" value="{{ $dashboard->card_description }}" autofocus required>
                         </div>
                         <div class="container">
                           <div class="row justify-content-end">
@@ -549,39 +559,47 @@
 {{-- TABLEAU EMBED --}}
 <script>
     // window.onbeforeunload = function() {
-    // function ticket_tableau() {
-    //   $.ajax({
-    //     url: "https://visualisasi.dpr.go.id/trusted",
-    //     contentType: "application/json; charset=utf-8",
-    //     type: "POST",    
-    //     data: {
-    //         username: 'mentee',
-    //         target_site: ''
-    //     },
-    //     headers: {
-    //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-
-    //     },
-    //     dataType: 'json',
-    //     success: function(response) {
-    //         alert(response);
-    //     },
-    //     error: function() {
-    //         console.log("Error");
-    //     }    
-    //   });    
-    // };
+    // $(document).ready(function () {
+    //     // Handle the button click event
+    //     $('#ticket-tableau').on('click', function () {
+    //         // Make an Ajax POST request
+    //         $.ajax({
+    //             url: 'https://visualisasi.dpr.go.id/trusted', // Adjust the URL according to your route
+    //             type: 'POST',
+    //             data: {
+    //                 _token: '{{ csrf_token() }}', // Include CSRF token for Laravel
+    //                 username: 'mentee'
+    //             },
+    //             success: function (response) {
+    //                 // Display the response in the specified container
+    //                 $('#response-container').html('<h1>Response Body:</h1><p>' + response + '</p>');
+    //             },
+    //             error: function (xhr, status, error) {
+    //                 console.error(xhr.responseText);
+    //             }
+    //         });
+    //     });
+    // });
     
-  let tableauViz, tableau_link, chart_id;
+  let tableauViz, tableau_domain, tableau_link, chart_id, tableau_embed, username;
   @foreach ($contents as $content)
   chart_id = {{ $content->chart_id }}
+  // username = {{ $content->username }}
   if (chart_id == 1) {
     tableauViz = document.getElementById(`tableauViz{{ $content->id }}`);
+    tableau_domain = '{{ $content->domain_tableau }}';
     tableau_link = '{{ $content->card_description }}';
+  
+  if ('{{ $content->username_tableau  !== null}}') {
+      tableau_embed = '{{ $content->domain_tableau }}/trusted/{{ $ticket }}/{{ $content->card_description }}';
+  } else {
+      tableau_embed = '{{ $content->domain_tableau }}/{{ $content->card_description }}';
+  }
 
-    console.log(tableau_link);
+    console.log(tableau_embed);
 
-    tableauViz.src = tableau_link;
+    
+      tableauViz.src = tableau_embed;
   }
   @endforeach
 </script>
