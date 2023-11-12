@@ -90,7 +90,15 @@ class ClusterController extends Controller
         $iconpicker = $cluster->icon_name;
         $request->session()->put('icon', $iconpicker);
 
-        $dashboard = Dashboard::where('cluster_id', $cluster_id)->first();
+        // Get first dashboard in cluster that's allowed for user
+        $userDashboardIDs = Permission::where('user_id', Auth()->user()->id)
+            ->pluck('dashboard_id');
+        $dashboard = Dashboard::where('cluster_id', $cluster_id)
+            ->whereIn('id', $userDashboardIDs)->first();
+        // if user forces cluster without any allowed dashboards
+        if (is_null($dashboard)) {
+            abort(403);
+        }
 
         return redirect('/dashboard/' . $dashboard->id);
     }
