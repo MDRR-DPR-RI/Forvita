@@ -102,15 +102,10 @@ let htmlStructures = {
               </nav>
             </div><!-- card-header -->
             <div class="card-body p-4">
-                  <div class="row g-4">
-                <div class="col-md-6">
-                  <div id="description"></div><!-- card-description -->
-                  <div id="content" class="apex-chart-three"></div>
-                </div><!-- col -->
                 <div class="col-md-6">
                   <div class="d-flex">
                     <div>
-                      <h6 class="fw-semibold text-dark mb-1">AI Analysis</h6>
+                      <div id="description"></div><!-- card-description -->
                       <p class="fs-sm text-secondary mb-0" id="aiAnalysis">
                         <p class="card-text placeholder-glow" id="placeholder">
                           <span class="placeholder col-12">.............................................................</span>
@@ -119,11 +114,7 @@ let htmlStructures = {
                       </p>
                     </div><!-- div -->
                   </div><!-- d-flex -->
-                  <div>
-                     <a href="#modalprompt" class="btn btn-primary" data-bs-toggle="modal" data-content-id="id">Edit Prompt</a>
-                  </div>
                 </div><!-- col -->
-              </div><!-- row -->
             </div><!-- card-body -->
             
           </div><!-- card -->
