@@ -19,9 +19,13 @@ class EditUser extends ModalComponent
     public string $resubmitPassword;
     public Collection $roles;
 
+    public bool $changePassword;
+
     public function mount(): void
         // runs the first time the page is loaded
     {
+        $this->changePassword = false;
+
         $this->roles = Role::all();
         $selectedUser = User::find($this->selectedUserID);
 
@@ -33,6 +37,7 @@ class EditUser extends ModalComponent
 
     public function editUser(): void
     {
+        error_log("Trying to change user.");
         $validated = $this->validate(
             [ // validation rules
                 'name' => 'required|max:255',
@@ -41,8 +46,8 @@ class EditUser extends ModalComponent
                 'email' => 'required|email|unique:users,email,'.$this->selectedUserID,
 
                 'roleID' => 'required|exists:roles,id',
-                'password' => 'required|min:5|max:255',
-                'resubmitPassword' => 'same:password',
+                'password' => 'exclude_if:changePassword,false|min:5|max:255',
+                'resubmitPassword' => 'exclude_if:changePassword,false|same:password',
             ],
             [ // Messages when validation rule is broken
                 'roleID.required' => 'Please select a role.',
@@ -51,10 +56,20 @@ class EditUser extends ModalComponent
             ],
         );
 
-        $validated['password'] = Hash::make($validated['password']);
-        $this->selectedUser->update($validated);
+
+        $this->selectedUser->update([
+            'name' => $this->name,
+            'email' => $this->email,
+        ]);
         $this->selectedUser->role_id = $this->roleID;
+        if ($this->changePassword) {
+            $this->password = Hash::make($validated['password']);
+            $this->selectedUser->update([
+                'password' => $this->password,
+            ]);
+        }
         $this->selectedUser->save();
+        error_log("Saved user changes.");
 
         $this->closeModalWithEvents([
             UserListing::class => 'refreshUsers',

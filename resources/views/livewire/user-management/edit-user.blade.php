@@ -1,6 +1,7 @@
 <div>
     {{--    Modal Edit User--}}
-    <div class="modal d-block" tabindex="-1" aria-hidden="true">
+    <div class="modal d-block" tabindex="-1" aria-hidden="true"
+         x-data="{ changePassword: false }">
         <form wire:submit="editUser">
             <div class="modal-dialog">
                 <!-- modal-content -->
@@ -36,13 +37,18 @@
                             </div>
                             <div>@error('roleID') {{ $message }} @enderror</div>
                         </div>
-                        <div class="form-group" style="text-align: left;">
+                        <div class="form-check" style="text-align: left;">
+                            <input class="form-check-input" type="checkbox" id="changePasswordCheck"
+                            x-on:click="changePassword = ! changePassword" wire:model="changePassword">
+                            <label class="form-check-label" for="changePasswordCheck">
+                                Change Password
+                            </label>
+                        </div>
+                        <div x-show="changePassword" class="form-group" style="text-align: left;">
                             <label for="password">Password</label>
                             <input wire:model.blur="password"
                                    type="password" id="password" name="password" class="form-control">
                             <div>@error('password') {{ $message }} @enderror</div>
-                        </div>
-                        <div class="form-group" style="text-align: left;">
                             <label for="resubmitPassword">Resubmit Password</label>
                             <input wire:model.blur="resubmitPassword"
                                    type="password" id="resubmitPassword" name="resubmitPassword" class="form-control">
