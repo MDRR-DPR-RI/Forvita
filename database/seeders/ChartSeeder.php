@@ -14,7 +14,7 @@ class ChartSeeder extends Seeder
     public function run(): void
     {
         Chart::create([
-            'name' => "Embad Tablue",
+            'name' => "Embed Tableau",
             'grid' => 12
         ]);
         Chart::create([
