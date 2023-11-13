@@ -17,9 +17,10 @@
                         <h5 class="card-title">Query Format</h5>
                         <p class="card-text">
                             Rules: <br>
-                            1. Three columns in order: <br>judul, keterangan, jumlah (Case sensitive!)<br>
-                            2. Groups of data needs to have the same judul with keterangan to describe the differences.<br>
-                            3. Don't have any null or empty string values in any columns.
+                            1. Five columns in order: <br>group, data, judul, keterangan, jumlah (Case sensitive!)<br>
+                            2. Groups of data needs to have the same group, data, and judul with keterangan to describe the differences.<br>
+                            3. Don't have any null or empty string values in any columns. <br>
+                            4. Different database drivers have different syntaxes.
                         </p>
                     </div>
                 </div>
@@ -31,16 +32,16 @@
                             <h5 class="card-title">Query Example</h5>
                             <p class="card-text">
                                 SELECT * <br>
-                                FROM (<br>
-                                SELECT 'total_dummy_data' AS judul, 'total_dummy_data_a' AS keterangan, sum(a) AS jumlah<br>
-                                FROM dataset.dummy_data<br>
-                                UNION<br>
-                                SELECT 'total_dummy_data' AS judul, 'total_dummy_data_b' AS keterangan, sum(b) AS jumlah<br>
-                                FROM dataset.dummy_data<br>
-                                UNION<br>
-                                SELECT 'total_dummy_data' AS judul, 'total_dummy_data_c' AS keterangan, sum(c) AS jumlah<br>
-                                FROM dataset.dummy_data<br>
-                                ) AS query;
+                                FROM ( <br>
+                                select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'a' as 'keterangan', sum(a) as 'jumlah' <br>
+                                from dummy_data <br>
+                                UNION <br>
+                                select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'b' as 'keterangan', sum(b) as 'jumlah' <br>
+                                from dummy_data <br>
+                                UNION <br>
+                                select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'c' as 'keterangan', sum(c) as 'jumlah' <br>
+                                from dummy_data <br>
+                                ) as query;
                             </p>
                         </div>
                     </div>
