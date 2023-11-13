@@ -114,6 +114,20 @@ class CleanSeeder extends Seeder
             'jumlah' => 260,
         ]);
         Clean::create([
+            'group' => "Anggota",
+            'data' => "Jenis Kelamin",
+            'judul' => "Jumlah Jenis Kelamin SDMA",
+            'keterangan' => "P",
+            'jumlah' => 912,
+        ]);
+        Clean::create([
+            'group' => "Anggota",
+            'data' => "Jenis Kelamin",
+            'judul' => "Jumlah Jenis Kelamin SDMA",
+            'keterangan' => "P",
+            'jumlah' => 720,
+        ]);
+        Clean::create([
             'group' => "Manusia",
             'data' => "Tubuh",
             'judul' => "Jumlah Bagian Tubuh",
@@ -182,6 +196,55 @@ class CleanSeeder extends Seeder
             'judul' => "Penjualan Ticket Bebek",
             'keterangan' => "Apr",
             'jumlah' => 93,
+        ]);
+        Clean::create([
+            'group' => "POPULASI",
+            'data' => "Populasi Indonesia",
+            'judul' => "Jumlah populasi yang ada di Indonesia",
+            'keterangan' => "DKI Jakarta",
+            'jumlah' => 93,
+        ]);
+        Clean::create([
+            'group' => "POPULASI",
+            'data' => "Populasi Indonesia",
+            'judul' => "Jumlah populasi yang ada di Indonesia",
+            'keterangan' => "Jawa Barat",
+            'jumlah' => 179,
+        ]);
+        Clean::create([
+            'group' => "POPULASI",
+            'data' => "Populasi Indonesia",
+            'judul' => "Jumlah populasi yang ada di Indonesia",
+            'keterangan' => "Kalimantan Tengah",
+            'jumlah' => 19,
+        ]);
+        Clean::create([
+            'group' => "POPULASI",
+            'data' => "Populasi Indonesia",
+            'judul' => "Jumlah populasi yang ada di Indonesia",
+            'keterangan' => "Kalimantan Timur",
+            'jumlah' => 49,
+        ]);
+        Clean::create([
+            'group' => "POPULASI",
+            'data' => "Populasi Indonesia",
+            'judul' => "Jumlah populasi yang ada di Indonesia",
+            'keterangan' => "Gorontalo",
+            'jumlah' => 29,
+        ]);
+        Clean::create([
+            'group' => "POPULASI",
+            'data' => "Populasi Malaysia",
+            'judul' => "Jumlah populasi yang ada di Malaysia",
+            'keterangan' => "kualalumpur",
+            'jumlah' => 12,
+        ]);
+        Clean::create([
+            'group' => "POPULASI",
+            'data' => "Populasi Malaysia",
+            'judul' => "Jumlah populasi yang ada di Malaysia",
+            'keterangan' => "sabah",
+            'jumlah' => 3,
         ]);
     }
 }

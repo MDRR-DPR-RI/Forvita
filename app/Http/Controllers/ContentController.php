@@ -33,7 +33,7 @@ class ContentController extends Controller
     public function store(Request $request)
     {
         // Create and store the content in the database
-        if ($request->tableau_link) { // 
+        if ($request->tableau_link) { // emebed tableau content
 
             $content = Content::create([
                 'chart_id' => 1,
@@ -45,7 +45,7 @@ class ContentController extends Controller
         }
 
         // store content in db
-        $content = Content::create([
+        $content = Content::create([ // basic content
             'chart_id' => $request->chart_id, // input hidden
             'dashboard_id' => $request->dashboard_id, // input hidden
             'card_grid' => $request->card_grid, // input hidden
@@ -67,6 +67,7 @@ class ContentController extends Controller
         // Query distinct(unique) "judul" values from the database
         $cleans = Clean::select('group', 'data', 'judul')
             ->distinct('judul')
+            ->orderBy('group')
             ->get();
 
         if (!$request->selected_judul) { // first edit chart page 
@@ -116,23 +117,6 @@ class ContentController extends Controller
             return $content->update([
                 'result_prompt' => $resultPrompt,
             ]);
-        }
-
-        // if user edit prompt in chartId = 8, then update prompt(id) in the content
-        $selectedPrompt = $request->input('selectPrompt');
-        if ($selectedPrompt) {
-            $content->update([
-                'prompt_id' => $selectedPrompt,
-            ]);
-            // if the user add their own prmopt then store the prompt to the prompt(table)
-            $newPrompt = $request->input('newPrompt');
-            if ($newPrompt) {
-                Prompt::create([
-                    'body' => $newPrompt,
-                ]);
-            }
-            // redirect with send dashboard_id variable to the dashboard routes
-            return redirect('/dashboard/' . $request->dashboard_id)->with('success', 'Successfully to update prompt');
         }
 
         // update content data x/y value
@@ -207,15 +191,24 @@ class ContentController extends Controller
                 'color' => json_encode($color_array),
             ]);
         }
-        // if ($selectedXValues) {
-        // } else { // if the user did not select any data(x_value) then update null
-        //     $content->update([
-        //         'data' => null,
-        //         'x_value' => null,
-        //         'y_value' => null
-        //     ]);
-        // }
-        // redirect with send dashboard_id variable to the dashboard routes
+
+        // if user edit prompt in chartId = 8, then update prompt(id) in the content
+        $selectedPrompt = $request->input('selectPrompt');
+        if ($selectedPrompt) {
+            $content->update([
+                'prompt_id' => $selectedPrompt,
+            ]);
+            // if the user add their own prmopt then store the prompt to the prompt(table)
+            $newPrompt = $request->input('newPrompt');
+            if ($newPrompt) {
+                $prompt =  Prompt::create([
+                    'body' => $newPrompt,
+                ]);
+                $content->update([
+                    'prompt_id' => $prompt->id,
+                ]);
+            }
+        }
         return redirect('/dashboard/' . $request->dashboard_id)->with('success', 'Successfully');
     }
 

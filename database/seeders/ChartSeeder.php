@@ -42,12 +42,12 @@ class ChartSeeder extends Seeder
             'grid' => 6
         ]);
         Chart::create([
-            'name' => "Bar Chart With AI Analyst",
-            'grid' => 12
+            'name' => "AI Analyst",
+            'grid' => 4
         ]);
         Chart::create([
             'name' => "Multiple Line Chart",
-            'grid' => 8
+            'grid' => 6
         ]);
         Chart::create([
             'name' => "Donut Chart",
@@ -55,15 +55,15 @@ class ChartSeeder extends Seeder
         ]);
         Chart::create([
             'name' => "Card",
-            'grid' => 8
+            'grid' => 2
         ]);
         Chart::create([
             'name' => "Table",
-            'grid' => 8
+            'grid' => 6
         ]);
         Chart::create([
             'name' => "Side Bar Chart",
-            'grid' => 8
+            'grid' => 6
         ]);
         Chart::create([
             'name' => "Pie Chart",
@@ -71,6 +71,10 @@ class ChartSeeder extends Seeder
         ]);
         Chart::create([
             'name' => "Group of Circle",
+            'grid' => 12
+        ]);
+        Chart::create([
+            'name' => "Map Indonesia",
             'grid' => 12
         ]);
     }

@@ -1095,7 +1095,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
       let yAxis = JSON.parse(contents[i].y_value)
       let colors = JSON.parse(contents[i].color)
 
-      console.log(yAxis);
+      // console.log(yAxis);
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -1175,7 +1175,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
       let yAxis = JSON.parse(contents[i].y_value)
       let colors = JSON.parse(contents[i].color)
 
-      console.log(yAxis);
+      // console.log(yAxis);
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -1347,7 +1347,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
       let yAxis = JSON.parse(contents[i].y_value)
       let colors = JSON.parse(contents[i].color)
 
-      console.log(yAxis);
+      // console.log(yAxis);
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -1386,7 +1386,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
       chartPie.render();
       console.log('render content ' + contents[i].id);
     } 
-    else if (contents[i].chart_id === 15) { // Nama 15
+    else if (contents[i].chart_id === 15) { // Group of Circle
 
       appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
 
@@ -1418,5 +1418,65 @@ function appendDescriptionToCard(containerSelector, card_description) {
         contentContainer.appendChild(newElement); // asign the element to the content
       }
     } 
+    else if (contents[i].chart_id === 16) { // Indonesia Map
+
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
+
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
+
+      // Assign the value to optionEigt
+      let judul = JSON.parse(contents[i].judul)[0]
+      let xAxis = JSON.parse(contents[i].x_value)[0]
+      let yAxis = JSON.parse(contents[i].y_value)[0]
+      let colors = JSON.parse(contents[i].color)
+      
+      var mapColor = {}
+      var index = 0
+      for (var code in possible_map_input) {
+        const province = xAxis[index] ? xAxis[index].replace(/\s/g, '').toLowerCase() : '';;
+        if (possible_map_input[code].includes(province)) {
+          var newObj = {
+            [code]: colors[index],
+          };
+          Object.assign(mapColor, newObj);
+          index++
+        }
+      }
+      // console.log(possible_map_input['path01']); // Output: ['aceh', 'ac']
+      $(`#content${contents[i].id}`).vectorMap({
+          map: 'indonesia_id',
+          backgroundColor: 'transparent',
+          borderColor: '#000',
+          borderOpacity: 0.75,
+          borderWidth: 1,
+          color: '#4a4949',
+          enableZoom: true,
+          hoverColor: '#00F',
+          hoverOpacity: 0.3,
+          selectedColor: '#00F',
+          selectedRegion: 'ID', 
+          scaleColors: ['#C8EEFF', '#006491'],
+          onRegionOver: function(event, code, region)
+          {
+            // console.log(code);
+            // console.log(region);
+          },
+          onLabelShow: function(event, label, code)
+          {
+             for (let index = 0; index < xAxis.length; index++) {
+                const province = xAxis[index].replace(/\s/g, '').toLowerCase();
+                if (possible_map_input[code].includes(province)) {
+                  label.text(judul + '. -' + xAxis[index] + " : " + yAxis[index]) 
+                }
+              }
+          },
+          onLoad: function (event, map) {
+              jQuery(`#content${contents[i].id}`).vectorMap('set', 'colors', mapColor);
+          },
+          
+      });
+    
+    } 
+
 
   }
