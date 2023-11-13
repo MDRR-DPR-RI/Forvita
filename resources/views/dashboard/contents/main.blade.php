@@ -6,6 +6,12 @@
 @endsection
 
 @section('page_content')
+<style>
+  .iconpicker-dropdown ul{
+    width: 500px;
+    top: 80px !important;
+  }
+</style>
 <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
 <link rel="stylesheet" href="/lib/jqvmap/jqvmap.min.css">
 <link href="/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -36,7 +42,7 @@
                 <button id="ticket-tableau" class="btn btn-primary"><i class="ri-bar-chart-2-line fs-18 lh-1"></i> Refresh Tableau</button>
               </form> --}}
               @can('admin')
-                  <a href="#importCSVModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
+                  <a href="{{ route('csv') }}" class="btn btn-primary d-flex align-items-center gap-2">
                         <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import CSV
                   </a>
                   <a href="#importAPIModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
@@ -195,8 +201,11 @@
                   <input type="text" class="form-control" name="dashboard_name" placeholder="Nama Dashboard" value="{{ $dashboard->name }}" autofocus required>
                   <label>Masukan Deskripsi Dashboard:</label>
                   <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..." required>{{ $dashboard->description }}</textarea>
-                  <label>Pilih Icon:</label>
-                  <input type="text" class="form-control iconpicker" value="{{ $dashboard->icon_name }}" name="icon" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+                  <label>Icon:</label>
+                  <div class="input-group mb-3">
+                    <label class="input-group-text iconOutput-edit" id="iconOutput-edit" for="iconInput-edit"><i class="{{ $dashboard->icon_name }}"></i></label>
+                    <input type="text" class="iconInput-edit form-control iconpicker-edit" value="{{ $dashboard->icon_name }}" name="icon" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+                  </div>
                 </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -361,6 +370,39 @@
 {{-- script to save into page into an image --}}
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 
+@push('addon-script')
+<script>
+(async () => {
+    const response = await fetch('https://unpkg.com/codethereal-iconpicker@1.2.1/dist/iconsets/bootstrap5.json')
+    const result = await response.json()
+
+    const iconpicker = new Iconpicker(document.querySelector(".iconpicker-edit"), {
+        icons: result,
+        showSelectedIn: document.querySelector(".selected-icon"),
+        searchable: true,
+        selectedClass: "selected",
+        containerClass: "my-picker",
+        hideOnSelect: true,
+        fade: true,
+        defaultValue: 'bi-alarm',
+        valueFormat: val => `bi ${val}`
+    });
+
+    iconpicker.set() // Set as empty
+    iconpicker.set('{{ $dashboard->icon_name }}') // Reset with a value
+
+    var iconValue = $('#iconInput-edit').value;
+    // var iconValue = $(this).val();
+
+    $(".iconInput-edit").on("blur", function() {
+      var iconValue = $(this).val();
+      // $(".iconOutput-edit").html(`<i class="${$(".iconInput-edit").val()}" ></i>`)
+      $("#iconOutput-edit").html(`<i class="${iconValue}" ></i>`);
+    });
+})()
+  
+</script>
+@endpush
 
 {{-- script to print content in the dashboard --}}
  <script>
