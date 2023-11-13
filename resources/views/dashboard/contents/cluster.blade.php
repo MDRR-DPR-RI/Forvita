@@ -96,8 +96,8 @@
     iconpicker.set() // Set as empty
     iconpicker.set('bi-alarm') // Reset with a value
 
-    $(".iconInput").on("blur", function() {
-      $(".iconOutput").html(`<i class="${$(".iconInput").val()}" ></i>`)
+    $(".iconpicker-dropdown").on("click", function() {
+      $(".iconOutputs").html(`<i class="${$(".iconInputs").val()}" ></i>`)
     });
 })()  
   

@@ -394,8 +394,8 @@
     var iconValue = $('#iconInput-edit').value;
     // var iconValue = $(this).val();
 
-    $(".iconInput-edit").on("blur", function() {
-      var iconValue = $(this).val();
+    $(".iconpicker-dropdown").on("click", function() {
+      var iconValue = $(".iconInput-edit").val();
       // $(".iconOutput-edit").html(`<i class="${$(".iconInput-edit").val()}" ></i>`)
       $("#iconOutput-edit").html(`<i class="${iconValue}" ></i>`);
     });
