@@ -70,10 +70,14 @@ class SchedulerController extends Controller
                 $queryResult = DB::select($scheduler->query);
             }
             foreach ($queryResult as $row) {
-                Clean::where('judul', $row->judul)
+                Clean::where('group', $row->group)
+                    ->where('data', $row->data)
+                    ->where('judul', $row->judul)
                     ->where('keterangan', $row->keterangan)
                     ->update(['newest' => False]);
                 Clean::create([
+                    'group' => $row->group,
+                    'data' => $row->data,
                     'judul' => $row->judul,
                     'keterangan' => $row->keterangan,
                     'jumlah' => $row->jumlah,
