@@ -33,7 +33,6 @@
                     <div class="d-block fs-40 lh-1 text-primary mb-1"><i class="{{ $cluster->icon_name }}"></i></div>
                     <h1 class="card-value mb-0 ls--1 fs-32" id="card-val">{{ $cluster->name }}</h1>
                     <label class="d-block mb-1 fw-medium text-dark">Di buat oleh : {{ $cluster->user->name }}</label>
-                    <small><span class="d-inline-flex text-danger">0.7% <i class="ri-arrow-down-line"></i></span> than last week</small>
                   </div>
                 </div>
               </a>
@@ -49,7 +48,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">New Cluster</h5>
+        <h5 class="modal-title">Cluster Baru</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="/cluster" method="post">
@@ -59,15 +58,15 @@
             <input type="text" class="form-control" name="cluster_name">
         </div>
         <div class="modal-body text-center">
-          <label>Pilih Icon</label>
+          <label>Pilih Ikon</label>
           <div class="input-group mb-3">
-            <label class="input-group-text iconOutput" for="iconInput" >Icon</label>
+            <label class="iconOutput input-group-text " for="iconInput" >Ikon</label>
             <input type="text" name="icon"  class="iconInput form-control iconpickers" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
           </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
         </div>
       </form>
     </div>
@@ -97,7 +96,7 @@
     iconpicker.set('bi-alarm') // Reset with a value
 
     $(".iconpicker-dropdown").on("click", function() {
-      $(".iconOutputs").html(`<i class="${$(".iconInputs").val()}" ></i>`)
+      $(".iconOutput").html(`<i class="${$(".iconInput").val()}" ></i>`)
     });
 })()  
   

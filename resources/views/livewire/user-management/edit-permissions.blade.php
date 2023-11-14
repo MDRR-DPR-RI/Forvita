@@ -6,14 +6,14 @@
                 <div class="modal-content">
                     <!-- modal-header -->
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Permissions</h5>
+                        <h5 class="modal-title">Ubah Perizinan</h5>
                         <button type="button" class="btn-close"
                                 wire:click="$dispatch('closeModal')" aria-label="Close"></button>
                     </div>
                     <!-- modal-body -->
                     <div class="modal-body container text-center">
                         <div style="text-align: left;">
-                            <label for="searchDashboardQuery">Search dashboards</label>
+                            <label for="searchDashboardQuery">Cari Dashboard</label>
                         </div>
                         <div wire:loading>
                             <h5>
@@ -24,13 +24,13 @@
                             <i class="ri-search-line"></i>
                             <input type="text" class="form-control" id="searchDashboardQuery"
                                    wire:model.live="searchDashboardQuery" wire:keydown="searchDashboard"
-                                   placeholder="Enter dashboard or cluster name">
+                                   placeholder="Masukkan nama dashboard atau cluster">
                         </div>
                         <table class="table">
                             <thead>
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Select</th>
+                                <th scope="col">Pilih</th>
                                 <th scope="col">Dashboard</th>
                                 <th scope="col">Cluster</th>
                             </tr>
@@ -44,13 +44,13 @@
                                             <button class="btn btn-outline-success"
                                                     wire:click="deselectDashboard({{ $dashboard->id }})">
                                                 <i class="ri-check-fill"></i>
-                                                Deselect Dashboard
+                                                Batalkan Pilih Dashboard
                                             </button>
                                         @else
                                             <button class="btn btn-outline-secondary"
                                                     wire:click="selectDashboard({{ $dashboard->id }})">
                                                 <i class="ri-add-fill"></i>
-                                                Select Dashboard
+                                                Pilih Dashboard
                                             </button>
                                         @endif
                                     </td>
@@ -65,10 +65,10 @@
                     <div class="modal-footer">
                         <button type="button"
                                 wire:click="$dispatch('closeModal')"
-                                class="btn btn-secondary">Close</button>
+                                class="btn btn-secondary">Tutup</button>
                         <button class="btn btn-primary"
                                 wire:click="editPermissions">
-                            Edit Permissions
+                            Ubah Perizinan
                         </button>
                     </div>
                 </div>

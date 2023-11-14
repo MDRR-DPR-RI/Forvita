@@ -43,25 +43,23 @@
               </form> --}}
               @can('admin')
                   <a href="{{ route('csv') }}" class="btn btn-primary d-flex align-items-center gap-2">
-                        <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import CSV
+                        <i class="ri-file-excel-2-line fs-18 lh-1"></i>Impor CSV
                   </a>
                   <a href="#importAPIModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
-                        <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import RESTful API
+                        <i class="ri-file-excel-2-line fs-18 lh-1"></i>Impor RESTful API
                   </a>
-                  <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-share-line fs-18 lh-1"></i>Share</button>
-                  <button class="btn btn-white d-flex align-items-center gap-2" id="capture"><i class="ri-printer-line fs-18 lh-1"></i>Print</button>
-                  <a href="#modal3" class="btn btn-primary d-flex align-items-center gap-2"  data-bs-toggle="modal"><i class="ri-bar-chart-2-line fs-18 lh-1"></i>Customize<span class="d-none d-sm-inline"> Dashboard</span></a>
+                  <a href="#modal3" class="btn btn-primary d-flex align-items-center gap-2"  data-bs-toggle="modal"><i class="ri-bar-chart-2-line fs-18 lh-1"></i>Kustomisasi<span class="d-none d-sm-inline">Dashboard</span></a>
               @endcan
             </div>
         </div>
         @if (session()->has('success'))
           <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Success!</strong> {{ session('success') }}.
+            <strong>Sukses!</strong> {{ session('success') }}.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         @elseif (session()->has('deleted'))
           <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Deleted!</strong> {{ session('deleted') }}.
+            <strong>Terhapus!</strong> {{ session('deleted') }}.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         @endif

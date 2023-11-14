@@ -126,7 +126,7 @@
                   @method('put')
                   @csrf
                   <div class="modal-body container text-center">
-                    <label for="judul">Select Prompt:</label>
+                    <label for="judul">Pilih Perintah:</label>
                     {{-- set on change function, when user add new prompt, then will show INPUT FIELD to enter new prompt --}}
                     <select id="selectPrompt" class="form-select" name="selectPrompt" onchange="checkForNewPrompt()">
                       @foreach ($prompts as $prompt)
@@ -142,11 +142,11 @@
                         // Calculate the next ID by adding 1 to the last prompt's ID
                         $nextId = $prompts->isEmpty() ? 1 : $prompts->last()->id + 1;
                       @endphp
-                        <option value="{{ $nextId }}">Tambah Prompt Baru</option>
+                        <option value="{{ $nextId }}">Tambah Perintah Baru</option>
                     </select>
                     <!-- Add a new prompt input field initially hidden -->
                     <div id="newPromptInput" class="modal-body container text-center" style="display: none;">
-                      <label for="newPrompt">Enter New Prompt:</label>
+                      <label for="newPrompt">Masukkan Perintah Baru:</label>
                       <input type="text" id="newPrompt" name="newPrompt" class="form-control">
                     </div>
                     <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >

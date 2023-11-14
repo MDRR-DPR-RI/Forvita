@@ -6,7 +6,7 @@
 </style>
   <div class="sidebar">
     <div class="sidebar-header">
-      <a href="/cluster" class="sidebar-logo">SATU DATA</a>
+      <a href="/cluster" class="sidebar-logo">SATUDATA</a>
     </div><!-- sidebar-header -->
         
     <div id="sidebarMenu" class="sidebar-body">
@@ -16,13 +16,13 @@
           <a href="#" class="nav-label">Admin</a>
           <ul class="nav nav-sidebar">
             <li class="nav-item">
-                <a href="/database" class="nav-link @isset($databases) @empty($schedulers) active @endempty @endisset"><i class="ri-pie-chart-2-fill"></i> <span>databases</span></a>
+                <a href="/database" class="nav-link @isset($databases) @empty($schedulers) active @endempty @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Databases</span></a>
             </li>
             <li class="nav-item">
-                <a href="/scheduler" class="nav-link @isset($schedulers)  active  @endisset"><i class="ri-pie-chart-2-fill"></i> <span>scheduler</span></a>
+                <a href="/scheduler" class="nav-link @isset($schedulers)  active  @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Queries</span></a>
             </li>
             <li class="nav-item">
-              <a href="/user-management" class="nav-link @isset($initialUsers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>User Management</span></a>
+              <a href="/user-management" class="nav-link @isset($initialUsers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Manajemen Pengguna</span></a>
             </li>
           </ul>
         @endcan
@@ -33,7 +33,7 @@
         <ul class="nav nav-sidebar">
           @can('admin')
             <li class="nav-item">
-              <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-primary">New Dashboard</span></a>
+              <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-primary">Tambah Dashboard</span></a>
             </li>
           @endcan
           @foreach ($dashboards as $index_dashboard)
