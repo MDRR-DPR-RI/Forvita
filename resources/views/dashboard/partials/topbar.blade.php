@@ -42,7 +42,7 @@
           <h5 class="mb-1 text-dark fw-semibold">{{ auth()->user()->name }}</h5>
           <p>{{ auth()->user()->role->name }}</p>
           <nav class="nav">
-            <a href="/view-profile"><i class="ri-profile-line"></i>Lihat Profil</a>
+            <a href="/profile"><i class="ri-profile-line"></i>Lihat Profil</a>
           </nav>
           <hr>
           <nav class="nav">
