@@ -34,11 +34,11 @@
 
     <div class="dropdown dropdown-profile ms-3 ms-xl-4">
       <a href="" class="dropdown-link" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-        <div class="avatar online"><img src="/img/img1.jpg" alt=""></div>
+        <div class="avatar online"><img src="{{ auth()->user()->getProfilePhotoURL() }}" alt=""></div>
       </a>
       <div class="dropdown-menu dropdown-menu-end mt-10-f">
         <div class="dropdown-menu-body">
-          <div class="avatar avatar-xl online mb-3"><img src="/img/img1.jpg" alt=""></div>
+          <div class="avatar avatar-xl online mb-3"><img src="{{ auth()->user()->getProfilePhotoURL() }}" alt=""></div>
           <h5 class="mb-1 text-dark fw-semibold">{{ auth()->user()->name }}</h5>
           <p>{{ auth()->user()->role->name }}</p>
           <nav class="nav">

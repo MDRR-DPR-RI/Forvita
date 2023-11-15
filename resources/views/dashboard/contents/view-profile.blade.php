@@ -28,7 +28,7 @@
 
 
     <div class="row g-3">
-        <form method="post" action="">
+        <form method="post" action="" enctype="multipart/form-data">
             @csrf
             <div class="card card-settings">
                 <div class="card-body p-0">
@@ -40,8 +40,10 @@
                                 <p>Gunakan foto profil yang menampilkan wajah Anda dengan jelas</p>
                             </div><!-- col -->
                             <div class="col-md">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1024px-Windows_10_Default_Profile_Picture.svg.png" style="height: 3rem" alt="..." class="mx-2">
-                                <input type="file" id="newProfilePicInput" class="form-control d-none mw-10" placeholder="Masukkan foto profil Anda">
+                                @php($fallbackProfilePhotoURL = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1024px-Windows_10_Default_Profile_Picture.svg.png')
+                                <img src="{{ $user->getProfilePhotoURL() }}" alt="Foto Profil" class="rounded-circle mr-2" height="50" width="50">
+
+                                <input type="file" name="profile_photo" id="newProfilePicInput" class="form-control d-none mw-10" placeholder="Masukkan foto profil Anda">
                                 <button onclick="$('#newProfilePicInput').click()" type="button" class="btn btn-white">Upload foto baru</button>
                                 <!-- TODO: handle selected file properly and display the preview -->
                             </div><!-- col -->

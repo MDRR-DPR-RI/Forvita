@@ -22,12 +22,21 @@ class UserController extends Controller
         $user = auth()->user();
 
         $data = $request->validate([
-            'password' => ['required', 'string', 'min:3', 'confirmed'],
+            'password' => ['nullable', 'string', 'min:5', 'max:255', 'confirmed'],
+            'profile_photo' => ['image'],
         ]);
 
-        User::where('id', $user->id)->update([
-            'password' => Hash::make($data['password'])
-        ]);
+        $updated_fields = array();
+
+        if ($data['password']) {
+            $updated_fields['password'] = Hash::make($data['password']);
+        }
+
+        if ($request->hasFile('profile_photo')) {
+            $updated_fields['profile_photo_path'] = $request->file('profile_photo')->store('public/profile-photos');
+        }
+
+        User::where('id', $user->id)->update($updated_fields);
 
         return redirect('/profile')->with('success', 'Profile updated!');
     }
