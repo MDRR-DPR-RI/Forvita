@@ -6,6 +6,7 @@ use App\Models\Dashboard;
 use Illuminate\Http\Request;
 use App\Models\Content;
 use App\Models\Clean;
+use App\Models\Share;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 
@@ -54,6 +55,10 @@ class DashboardController extends Controller
     if (!Gate::allows('show-dashboard', $dashboard)) {
       abort(403);
     }
+
+    $shares = Share::with([
+      'dashboard', 'user'
+    ])->get();
 
 
     // Fetch all contents that in the dashboard
@@ -121,7 +126,8 @@ class DashboardController extends Controller
     return view('dashboard.contents.main', [
       'dashboard' => $dashboard,
       'contents' => $contents,
-      'ticket' => $ticket
+      'ticket' => $ticket,
+      'shares' => $shares
     ]);
     // }
   }

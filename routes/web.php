@@ -11,6 +11,7 @@ use App\Http\Controllers\ApiImportController;
 use App\Http\Controllers\SchedulerController;
 use App\Http\Controllers\TableauController;
 use App\Http\Controllers\DatabaseController;
+use App\Http\Controllers\ShareController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +62,10 @@ Route::post('/import-csv', [CsvImportController::class, 'import'])->name('import
 
 // Import Data From RESTful API
 Route::post('/import-api', [ApiImportController::class, 'storeDataFromApi'])->name('import.api')->middleware('admin');
+
+// Share Public Dashboard
+Route::resource('/share', ShareController::class)->middleware('admin');
+Route::get('public/dashboard/{link}', [ShareController::class, 'index']);
 
 // Scheduler Routers
 Route::get('scheduler/execute', [SchedulerController::class, 'execute'])->middleware('admin');
