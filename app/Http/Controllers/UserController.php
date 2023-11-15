@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -33,7 +34,13 @@ class UserController extends Controller
         }
 
         if ($request->hasFile('profile_photo')) {
-            $updated_fields['profile_photo_path'] = $request->file('profile_photo')->store('public/profile-photos');
+            $storedFilePath = $request->file('profile_photo')->store('public/profile-photos');
+            if ($storedFilePath) {
+                // TODO: These are not atomic, there is a possibility that the
+                // file is stored but the database is not updated
+                Storage::delete($user->profile_photo_path);
+                $updated_fields['profile_photo_path'] = $storedFilePath;
+            }
         }
 
         User::where('id', $user->id)->update($updated_fields);
