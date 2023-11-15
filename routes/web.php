@@ -51,6 +51,8 @@ Route::post('/fetch-data', [AjaxController::class, 'data_cleans'])->middleware('
 // ajax call, +grant access when add user email in permission page
 Route::post('/fetch-dashboard', [AjaxController::class, 'data_dashboards'])->middleware('admin');
 
+Route::get('/filter-clean', [AjaxController::class, 'filter_clean_by_date'])->middleware('admin');
+
 // Import Data CSV
 Route::get('csv', [CsvImportController::class, 'show'])->name('csv')->middleware('admin');
 Route::get('csv/create', [CsvImportController::class, 'createTable'])->name('csv.create')->middleware('admin');

@@ -17,15 +17,16 @@ return new class extends Migration
       $table->foreignId('dashboard_id');
       $table->foreignId('prompt_id')->default(1);
       $table->string('result_prompt')->nullable();
-      $table->string('judul')->default('[]');
+      $table->string('judul')->default('[""]');
       $table->string('card_title')->nullable();
       $table->string('card_description', 10000)->nullable();
       $table->string('domain_tableau')->nullable();
       $table->string('username_tableau')->nullable();
       $table->string('card_grid')->nullable();
-      $table->json('x_value')->default('[[]]');
-      $table->json('y_value')->default('[[]]');
-      $table->json('color')->default('[]');
+      $table->json('x_value')->default('[[""]]');
+      $table->json('y_value')->default('[[""]]');
+      $table->json('color')->default('[""]');
+      $table->json('clean_created_at')->default('[""]');
       $table->timestamps();
     });
   }

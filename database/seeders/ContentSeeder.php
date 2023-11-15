@@ -16,7 +16,7 @@ class ContentSeeder extends Seeder
         Content::create([
             'chart_id' => 16,
             'dashboard_id' => 1,
-            'judul' => '["Jumlah populasi yang ganteng yang ada di Indonesia"]',
+            'judul' => '["Jumlah populasi yang ada di Indonesia"]',
             'card_title' => 'Jumlah populasi',
             'card_description' => 'Ini adalah Jumlah populasi',
             'card_grid' => 12,
@@ -30,7 +30,7 @@ class ContentSeeder extends Seeder
             'dashboard_id' => 1,
             'judul' => '["Jumlah penganut Agama Anggota", "Jumlah penganut Agama SDMA"]',
             'card_title' => 'Jumlah Agama',
-            'card_description' => 'Ini Description card',
+            'card_description' => 'Ini Description car  d',
             'card_grid' => 8,
             'x_value' => '[["Islam","Kristen","Budha","Hindu"], ["Islam","Kristen","Budha","Hindu"]]',
             'y_value' => '[["800","200","150","235"], [723,292,129,125]]',

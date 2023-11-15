@@ -52,4 +52,14 @@ class AjaxController extends Controller
             'dashboard_id' => $dashboard_id
         ]);
     }
+    public function filter_clean_by_date(Request $request)
+    {
+        $cleanDate = date('Y-m-d H:i:s', strtotime($request->clean_date));
+        $result = Clean::where('created_at', $request->clean_date)->get();
+
+        return response()->json([
+            'data' => $result,
+            'date' => $cleanDate
+        ]);
+    }
 }

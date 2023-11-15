@@ -47,30 +47,45 @@
                     $value = $$variableName; // $$ is used to create a variable variable
                     // Now, $value contains the value of $clean0, $clean1, etc. based on the value of $i
 
+                    $variableName2 = 'date' . $i;
+                    $value2 = $$variableName2;
+
                     $x_value_decodedArray = json_decode($content->x_value, true);
+                    $content_clean_created_at = json_decode($content->clean_created_at, true);
                     $colors_decodedArray = json_decode($content->color, true);
                     $loops = 0;
                 @endphp
                 <div class="card-body text-center d-flex justify-content-center align-items-center flex-column">
-                <label class="form-label mt-2">Pilih Nilai X data: {{ $value[0]['judul'] }}</label>
-                @if (in_array($content->chart->id, [1, 2, 3, 4, 7, 9, 13]))
-                  <label for="color_picker">Warna :</label>
-                  @if (isset($colors_decodedArray[$i]) && ($colors_decodedArray[$i] !== null))
-                    <input class="btn-icon" type="color" id="color_picker" name="color_picker{{ $i }}" value="{{ $colors_decodedArray[$i] }}">
-                  @else
-                    <input class="btn-icon" type="color" id="color_picker" name="color_picker{{ $i }}" value="#506fd9">
+                  <label class="form-label mt-2">Pilih Nilai X data: {{ $value[0]['judul'] }}</label>
+                  @if (in_array($content->chart->id, [1, 2, 3, 4, 7, 9, 13]))
+                    <label for="color_picker">Warna :</label>
+                    @if (isset($colors_decodedArray[$i]) && ($colors_decodedArray[$i] !== null))
+                      <input class="btn-icon" type="color" id="color_picker" name="color_picker{{ $i }}" value="{{ $colors_decodedArray[$i] }}">
+                    @else
+                      <input class="btn-icon" type="color" id="color_picker" name="color_picker{{ $i }}" value="#506fd9">
+                    @endif
                   @endif
-                @endif
                 </div>
-                <table class="table">
+                <div class="col-xl-2 d-flex justify-content-start">
+                  <select class="form-select" name="filter_date{{ $i }}" id="clean_date{{ $i }}">
+                    @foreach ($value2 as $clean_date)
+                        <option value="{{ ($clean_date->created_at) }}" 
+                          @if ( isset($content_clean_created_at[$i]) && $clean_date->created_at == $content_clean_created_at[$i])
+                            selected
+                          @endif
+                        >
+                          {{ ($clean_date->newest == 1) ? "(Data Terbaru) ". ($clean_date->created_at . " (" . $clean_date->created_at->diffForHumans() . ")"): ($clean_date->created_at . " (" . $clean_date->created_at->diffForHumans() . ")") }}
+                        </option>
+                    @endforeach
+                  </select>
+                </div>
+                <table class="table table-hover">
                     <thead>
                         <tr>
                         <th scope="col">
                             <div class="form-check">
                             <label class="form-check-label" for="selectAllCheckbox{{ $i }}">Pilih Semua</label>
-                            @if (isset($x_value_decodedArray[$i]) && 
-                                  ($x_value_decodedArray[$i] !== null && count($x_value_decodedArray[$i]) == count($value))
-                            )
+                            @if ( isset($x_value_decodedArray[$i]) && count($x_value_decodedArray[$i]) == count($value) )
                               <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" checked>
                             @else
                               <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" >
@@ -78,6 +93,7 @@
                             </div>
                         </th>
                         <th scope="col">Judul</th>
+                        <th scope="col">Status Data</th>
                         <th scope="col">Jumlah</th>
                         @if (in_array($content->chart->id, [5, 10, 14]))
                           <th scope="col">Warna</th>
@@ -86,12 +102,9 @@
                     </thead>
                     <tbody>
                       @foreach ($value as $clean)
-                        <tr class="table-row" data-judul="Item 1">
+                        <tr class="table-row{{ $i }}" data-judul="Item 1" data-created-at="{{ ($clean->created_at) }}">
                           <td scope="row">
-                            @if (
-                                  isset($x_value_decodedArray[$i]) && 
-                                  ($x_value_decodedArray[$i] !== null && in_array($clean->keterangan, $x_value_decodedArray[$i]))
-                              )
+                            @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
                                 <input class="checkbox-item{{ $i }}" type="checkbox" value="{{ $clean->keterangan }}" name="xValue{{ $i }}[]" checked >
                             @else
                               <input class="checkbox-item{{ $i }}" type="checkbox" value="{{ $clean->keterangan }}" name="xValue{{ $i }}[]" >
@@ -101,17 +114,18 @@
                             <input type="hidden" name="selectedJudul{{ $i }}" value="{{ $clean->judul }}">
                           </td>
                           <td>{{ $clean->judul }}</td>
+                         <td>{{ ($clean->newest == 1) ? "Terbaru" : ($clean->created_at . " (" . $clean->created_at->diffForHumans() . ")") }}</td>
+
                           <td>{{ $clean->jumlah }}</td>
                           @if (in_array($content->chart->id, [5, 10, 14, 16]))
                             <td>
-                            @if (isset($x_value_decodedArray[$i]) && 
-                                  ($x_value_decodedArray[$i] !== null && in_array($clean->keterangan, $x_value_decodedArray[$i])))
-                              <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker[]" value="{{ $colors_decodedArray[$loops] }}">
+                            @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
+                              <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker{{ $i }}[]" value="{{ $colors_decodedArray[$loops] }}">
                               @php
                                   $loops++
                               @endphp
                             @else
-                              <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker[]" value="#506fd9" disabled style="display: none">
+                              <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker{{ $i }}[]" value="#506fd9" disabled style="display: none">
                             @endif
                             </td>
                           @endif
@@ -175,8 +189,9 @@
           <input type="hidden" value="{{ $stackCount }}" name="stackCount">
           <input type="hidden" value="{{ $content->dashboard->id }}" name="dashboard_id">
           <div class="col d-flex justify-content-end">
+          
           {{-- BUG: when user edit chart and change the stack. the button is not disabled. make it disabled --}}
-            @if ($stackCount == count($x_value_decodedArray))
+            @if ( $stackCount == count($x_value_decodedArray))
               <button type="submit" class="btn btn-primary" id="selesaiBtn">Selesai</button>
             @else
               <button type="submit" class="btn btn-secondary" id="selesaiBtn" disabled>Selesai</button>
@@ -250,6 +265,64 @@
             })
             x++;
           })
+          
+          var clean_date = document.getElementById(`clean_date${index}`)
+          console.log(clean_date.value);
+
+          // $(`.table-row${index}`).hide();
+          // $(`.table-row${index}[data-created-at="${clean_date.value}"]`).show();
+
+          // Listen for changes on the select element
+          $(`#clean_date${index}`).change(function () {
+              clean_date = $(this).val();
+              console.log(clean_date);
+              var trContainer = $(`.table-row${index}`);
+              trContainer.empty(); // Remove content inside the table row
+
+              const newElement = `
+                  <td colspan="4">
+                      <p class="card-text placeholder-glow" id="placeholder">
+                        <span class="placeholder col-12"></span>
+                      </p>
+                  </td>
+              `;
+
+              trContainer.append(newElement); // Append the new content
+
+              $.ajax({
+                url: '/filter-clean',
+                method: 'GET',
+                data: { clean_date: clean_date },
+                success: function (data) {
+                  console.log(data.data);
+                  console.log(data.date);
+                  trContainer.empty()
+                    // Update the items container with the filtered data
+
+                  $.each(data.data, function (index, clean) {
+        var newRow = `
+                <td>
+                        <input class="checkbox-item${index}" type="checkbox" value="${clean.keterangan}" name="xValue${index}[]" >
+                    ${clean.keterangan}
+                    <input type="hidden" name="selectedJudul${index}" value="${clean.judul}">
+                </td>
+                <td>${clean.judul}</td>
+                <td>${(clean.newest == 1) ? "Terbaru" : (clean.created_at + " (" + clean.created_at_diffForHumans + ")")}</td>
+                <td>${clean.jumlah}</td>
+                <!-- Add the color input if needed -->
+        `;
+
+        trContainer.append(newRow);
+    });
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+              // Hide all rows
+              // $(`.table-row${index}`).hide();
+              // $(`.table-row${index}[data-created-at="${clean_date}"]`).show();
+          });
         }
 
         function updateSelesaiButton(counters, index) {
@@ -266,6 +339,7 @@
                 selesaiBtn.className = 'btn btn-secondary';
             }
         }
+        
     });
     
   </script>

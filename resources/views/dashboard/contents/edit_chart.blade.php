@@ -48,7 +48,7 @@
                 @endphp --}}
                 <tr>
                   <td scope="row">{{ $loop->iteration }}</td>
-                  <td>{{ $clean->group }}</td>
+                  <td>{{ $clean->grup }}</td>
                   <td>{{ $clean->data }}</td>
                   <td>{{ $clean->judul }}</td>
                   <td>

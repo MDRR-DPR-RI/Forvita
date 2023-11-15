@@ -56,13 +56,13 @@
         @csrf
         <div class="modal-body text-center">
             <label>Masukkan Nama Cluster Baru:</label>
-            <input type="text" class="form-control" name="cluster_name">
+            <input required type="text" class="form-control" name="cluster_name">
         </div>
         <div class="modal-body text-center">
           <label>Pilih Icon</label>
           <div class="input-group mb-3">
             <label class="input-group-text iconOutput" for="iconInput" >Icon</label>
-            <input type="text" name="icon"  class="iconInput form-control iconpickers" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+            <input required type="text" name="icon"  class="iconInput form-control iconpickers" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
           </div>
         </div>
         <div class="modal-footer">

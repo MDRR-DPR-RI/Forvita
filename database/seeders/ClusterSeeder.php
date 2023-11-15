@@ -16,11 +16,13 @@ class ClusterSeeder extends Seeder
         Cluster::create([
             'user_id' => 2,
             'name' => "Komisi",
+            'icon_name' => "bi bi-pie-chart",
         ]);
 
         Cluster::create([
             'user_id' => 1,
             'name' => "Pustekinfo",
+            'icon_name' => "bi bi-pie-chart",
         ]);
     }
 }

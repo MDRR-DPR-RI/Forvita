@@ -7,7 +7,7 @@ use App\Models\Content;
 use App\Models\Clean;
 use App\Models\Prompt;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 
 class ContentController extends Controller
 {
@@ -65,11 +65,10 @@ class ContentController extends Controller
      */
     public function show(Content $content, Request $request)
     {
-        // dd(($request->selected_judul));
         // Query distinct(unique) "judul" values from the database
-        $cleans = Clean::select('group', 'data', 'judul')
+        $cleans = Clean::select('grup', 'data', 'judul')
             ->distinct('judul')
-            ->orderBy('group')
+            ->orderBy('grup')
             ->get();
 
         if (!$request->selected_judul) { // first edit chart page 
@@ -79,7 +78,7 @@ class ContentController extends Controller
                 'cleans' => $cleans,
             ]);
         }
-        // NEXT>>
+        // NEXT_EDIT_CHART(PAGE2 AFTER SELECT JUDUL)>>
         $arr_selected_judul = explode(",", $request->selected_judul);
         // dd($arr_selected_judul);
         $data = [
@@ -88,10 +87,21 @@ class ContentController extends Controller
         ];
         $stackCount = 0;
         for ($i = 0; $i < count($arr_selected_judul); $i++) {
-            $clean_based_selected_val = Clean::where('judul', $arr_selected_judul[$i]) // take the cleans data based on selectedJudul
-                ->where('newest', true) // take the newest data
+            $content_judul = json_decode($content->judul, true);
+            if (isset($content_judul[$i]) && $arr_selected_judul[$i] == $content_judul[$i]) {
+                $data['clean' . $i] = Clean::where('judul', $arr_selected_judul[$i])
+                    ->where('created_at', json_decode($content->clean_created_at)[$i]) // HERE, WHERE CONTENT CLEAN CREATED AT
+                    ->get();
+            } else {
+                $data['clean' . $i] = Clean::where('judul', $arr_selected_judul[$i])
+                    ->where('newest', true)
+                    ->get();
+            }
+            $data['date' . $i] = Clean::select('newest', 'created_at')
+                ->orderBy('created_at', 'desc') // Order by the latest created_at
+                ->where('judul', $arr_selected_judul[$i])
+                ->distinct('created_at')
                 ->get();
-            $data['clean' . $i] = $clean_based_selected_val;
             $stackCount++;
         }
         $data['stackCount'] = $stackCount;
@@ -120,56 +130,21 @@ class ContentController extends Controller
                 'result_prompt' => $resultPrompt,
             ]);
         }
-
         // update content data x/y value
-        $stackCount = $request->stackCount;
         $x_value = [];
         $y_value = [];
         $color_array = [];
-        if ($stackCount > 1) { // stack chart / multiple stack
-            $judul_array = [];
-            for ($i = 0; $i < $request->stackCount; $i++) {
-                $selectedXValues = $request->input('xValue' . $i);
-                $x = [];
-                $y = [];
-                // dd($selectedXValues);
-                for ($j = 0; $j < count($selectedXValues); $j++) {
-                    $clean = Clean::where('keterangan', $selectedXValues[$j])
-                        ->where('judul', $request->input('selectedJudul' . $i))
-                        ->first(); // find row that = slectedXValues
-                    if ($clean) {
-                        // Convert the string to an integer and add it to the $y_value array
-                        $numericValue = intval($clean->jumlah);
-                        $x[] = $clean->keterangan;
-                        $y[] = $numericValue;
-                    }
-                }
-                $judul_array[] = $request->input('selectedJudul' . $i);
-                $x_value[] = $x;
-                $y_value[] = $y;
-                $color_array[] = $request->input('color_picker' . $i);
-            }
-            $content->update([
-                'judul' => $judul_array,
-                'card_title' => $request->card_title,
-                'card_description' => $request->card_description,
-                'card_grid' => $request->card_grid,
-                'result_prompt' => null,
-                'x_value' => json_encode($x_value),
-                'y_value' => json_encode($y_value),
-                'color' => json_encode($color_array),
-            ]);
-        } else { // single chart
+        $created_at = [];
+        $judul_array = [];
+        $color_array = [];
+        for ($i = 0; $i < $request->stackCount; $i++) {
+            $selectedXValues = $request->input('xValue' . $i);
             $x = [];
             $y = [];
-            $color_array = $request->input('color_picker');
-            if (gettype($color_array) != 'array') {
-                $color_array[] = $request->input('color_picker0');
-            }
-            // asign jumlah for all selectedValues
-            for ($i = 0; $i < count($request->input('xValue0')); $i++) {
-                $clean = Clean::where('keterangan', $request->input('xValue0')[$i])
-                    ->where('judul', $request->input('selectedJudul0'))
+            // dd($selectedXValues);
+            for ($j = 0; $j < count($selectedXValues); $j++) {
+                $clean = Clean::where('keterangan', $selectedXValues[$j])
+                    ->where('judul', $request->input('selectedJudul' . $i))
                     ->first(); // find row that = slectedXValues
                 if ($clean) {
                     // Convert the string to an integer and add it to the $y_value array
@@ -178,21 +153,31 @@ class ContentController extends Controller
                     $y[] = $numericValue;
                 }
             }
+            $judul_array[] = $request->input('selectedJudul' . $i);
             $x_value[] = $x;
             $y_value[] = $y;
-            $judul_array[] = $request->input('selectedJudul0');
-
-            $content->update([
-                'judul' => $judul_array,
-                'card_title' => $request->card_title,
-                'card_description' => $request->card_description,
-                'card_grid' => $request->card_grid,
-                'result_prompt' => null,
-                'x_value' => json_encode($x_value),
-                'y_value' => json_encode($y_value),
-                'color' => json_encode($color_array),
-            ]);
+            if (gettype($request->input('color_picker' . $i)) == 'array') {
+                $color_array = $request->input('color_picker' . $i);
+            } else {
+                $color_array[] = $request->input('color_picker' . $i);
+            }
+            $clean = Clean::where('judul', $request->input('selectedJudul' . $i))
+                ->where('created_at', $request->input('filter_date' . $i))
+                ->first();
+            $carbonDate = Carbon::parse($clean->created_at);
+            $created_at[] = $carbonDate->format('Y-m-d H:i:s');
         }
+        $content->update([
+            'judul' => $judul_array,
+            'card_title' => $request->card_title,
+            'card_description' => $request->card_description,
+            'card_grid' => $request->card_grid,
+            'result_prompt' => null,
+            'x_value' => json_encode($x_value),
+            'y_value' => json_encode($y_value),
+            'color' => json_encode($color_array),
+            'clean_created_at' => json_encode($created_at),
+        ]);
 
         // if user edit prompt in chartId = 8, then update prompt(id) in the content
         $selectedPrompt = $request->input('selectPrompt');

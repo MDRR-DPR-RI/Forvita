@@ -69,6 +69,9 @@ class SchedulerController extends Controller
             } else {
                 $queryResult = DB::select($scheduler->query);
             }
+            date_default_timezone_set('Asia/Jakarta');
+
+            $currentTimestamp = date('Y-m-d H:i:s'); // each time scheduler executed, use same TimeStamp to filter the data in next_edit_chart
             foreach ($queryResult as $row) {
                 Clean::where('judul', $row->judul)
                     ->where('keterangan', $row->keterangan)
@@ -77,6 +80,7 @@ class SchedulerController extends Controller
                     'judul' => $row->judul,
                     'keterangan' => $row->keterangan,
                     'jumlah' => $row->jumlah,
+                    'created_at' => $currentTimestamp
                 ]);
             }
         } catch (Exception $ex) {

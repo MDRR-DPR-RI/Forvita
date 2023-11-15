@@ -27,7 +27,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentioals)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/cluster');
+            return redirect('/cluster');
         }
         return back()->with('loginError', 'Login Failed!');
     }
