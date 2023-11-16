@@ -11,6 +11,7 @@ use App\Http\Controllers\ApiImportController;
 use App\Http\Controllers\SchedulerController;
 use App\Http\Controllers\TableauController;
 use App\Http\Controllers\DatabaseController;
+use App\Http\Controllers\ShareController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,9 @@ Route::post('/logout',  [AuthController::class, 'logout'])->middleware('auth');
 
 Route::get('/register', [AuthController::class, 'register_view'])->middleware('guest');
 Route::post('/register', [AuthController::class, 'register_submit'])->middleware('guest');
-Route::resource('/view-profile', UserController::class)->middleware('auth');
+
+Route::get('/profile', [UserController::class, 'show'])->middleware('auth');
+Route::post('/profile', [UserController::class, 'update'])->middleware('auth');
 
 Route::resource('/cluster', ClusterController::class)->middleware('auth');
 Route::resource('/dashboard', DashboardController::class)->middleware('auth');
@@ -51,6 +54,8 @@ Route::post('/fetch-data', [AjaxController::class, 'data_cleans'])->middleware('
 // ajax call, +grant access when add user email in permission page
 Route::post('/fetch-dashboard', [AjaxController::class, 'data_dashboards'])->middleware('admin');
 
+Route::get('/filter-clean', [AjaxController::class, 'filter_clean_by_date'])->middleware('admin');
+
 // Import Data CSV
 Route::get('csv', [CsvImportController::class, 'show'])->name('csv')->middleware('admin');
 Route::get('csv/create', [CsvImportController::class, 'createTable'])->name('csv.create')->middleware('admin');
@@ -59,6 +64,10 @@ Route::post('/import-csv', [CsvImportController::class, 'import'])->name('import
 
 // Import Data From RESTful API
 Route::post('/import-api', [ApiImportCon2troller::class, 'storeDataFromApi'])->name('import.api')->middleware('admin');
+
+// Share Public Dashboard
+Route::resource('/share', ShareController::class)->middleware('admin');
+Route::get('public/dashboard/{link}', [ShareController::class, 'index']);
 
 // Scheduler Routers
 Route::get('scheduler/execute', [SchedulerController::class, 'execute'])->middleware('admin');

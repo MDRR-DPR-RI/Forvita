@@ -9,29 +9,25 @@
 @section('page_content')
     <div class="main main-app p-3 p-lg-4">
         <h1> Databases </h1>
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
         <div class="row">
+            <div class="d-flex justify-content-end gap-2 mt-3 mb-3">
+                <a href="#databaseModal" class="btn btn-primary d-flex align-items-center gap-2"
+                data-action="add" data-bs-toggle="modal"><i class="ri-add-line"></i>
+                 <span class="d-none d-sm-inline">Tambah Database</span></a>
+            </div>
             <table class="table">
                 <thead>
                 <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Url</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">URL</th>
                     <th scope="col">Driver</th>
                     <th scope="col">Host</th>
                     <th scope="col">Port</th>
                     <th scope="col">Database</th>
                     <th scope="col">Username</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,7 +44,7 @@
                         <td>{{ $database->status }}</td>
                         <td>
                             {{--Test Database Connection--}}
-                            <a href="/database/test-connection?databaseID={{ $database->id }}" class="btn btn-success">Test Connection</a>
+                            <a href="/database/test-connection?databaseID={{ $database->id }}" class="btn btn-success">Tes Koneksi</a>
 
                             {{--Edit Database--}}
                             <a data-bs-toggle="modal" data-bs-target="#databaseModal"
@@ -62,26 +58,26 @@
                                data-bs-databaseDatabase="{{ $database->database }}"
                                data-bs-databaseUsername="{{ $database->username }}"
                                data-bs-databasePassword="{{ $database->password }}"
-                               class="btn btn-primary">Edit</a>
+                               class="btn btn-primary">Ubah</a>
 
                             {{--Delete Database--}}
                             <form action="/database" method="post">
                                 @method('delete')
                                 @csrf
                                 <input type="hidden" name="databaseID" value="{{ $database->id }}">
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger">Hapus</button>
                             </form>
                         </td>
                     </tr>
                 @endforeach
-                <tr>
+                {{-- <tr>
                     <td colspan="8"></td>
                     <td colspan="2">
                         <a href="#databaseModal" class="btn btn-primary d-flex align-items-center gap-2"
                            data-action="add" data-bs-toggle="modal"><i class="ri-add-line"></i>
-                            <span class="d-none d-sm-inline">Add Database</span></a>
+                            <span class="d-none d-sm-inline">Tambah Database</span></a>
                     </td>
-                </tr>
+                </tr> --}}
                 </tbody>
             </table>
         </div>
@@ -94,24 +90,24 @@
                     <div class="modal-content">
                         <!-- modal-header -->
                         <div class="modal-header">
-                            <h5 id="databaseModalTitle" class="modal-title">Add Database</h5>
+                            <h5 id="databaseModalTitle" class="modal-title">Tambah Database</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <!-- modal-body -->
                         <div class="modal-body container text-center">
                             <input type="hidden" id="databaseID" name="databaseID">
                             <div class="form-group">
-                                <label for="databaseName">Database Name</label>
-                                <input type="text" id="databaseName" name="name" class="form-control" required>
+                                <label for="databaseName">Nama Database</label>
+                                <input type="text" id="databaseName" name="databaseName" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="databaseUrl">Database Url (Will overwrite other settings)</label>
-                                <input type="text" id="databaseUrl" name="url" class="form-control">
+                                <label for="databaseUrl">URL Database (Akan Menggantikan Pengaturan Lain)</label>
+                                <input type="text" id="databaseUrl" name="databaseUrl" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databaseDriver">Database Driver</label>
                                 <div class="input-group width-150px">
-                                    <input type="text" id="databaseDriver" name="driver" class="form-control">
+                                    <input type="text" id="databaseDriver" name="databaseDriver" class="form-control">
                                     <div id="databaseDriverDropdown" class="btn-group">
                                         <button type="button" class="btn btn-outline-secondary dropdown-toggle"
                                                 data-bs-toggle="dropdown" aria-expanded="false"></button>
@@ -126,30 +122,30 @@
                             </div>
                             <div class="form-group">
                                 <label for="databaseHost">Database Host</label>
-                                <input type="text" id="databaseHost" name="host" class="form-control">
+                                <input type="text" id="databaseHost" name="databaseHost" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databasePort">Database Port</label>
-                                <input type="text" id="databasePort" name="port" class="form-control">
+                                <input type="text" id="databasePort" name="databasePort" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databaseDatabase">Database Database</label>
-                                <input type="text" id="databaseDatabase" name="database" class="form-control">
+                                <input type="text" id="databaseDatabase" name="databaseDatabase" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databaseUsername">Database Username</label>
-                                <input type="text" id="databaseUsername" name="username" class="form-control">
+                                <input type="text" id="databaseUsername" name="databaseUsername" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databasePassword">Database Password</label>
-                                <input type="password" id="databasePassword" name="password" class="form-control">
+                                <input type="password" id="databasePassword" name="databasePassword" class="form-control">
                             </div>
                         </div>
                         <!-- modal-footer -->
                         <div id="databaseModalFooter" class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                             @csrf
-                            <button data-action="add" id="databaseModalSubmitButton" type="submit" class="btn btn-primary">Add Database</button>
+                            <button data-action="add" id="databaseModalSubmitButton" type="submit" class="btn btn-primary">Tambahkan Database</button>
                         </div>
                     </div>
                 </div>
@@ -188,9 +184,9 @@
 
                     let databaseModalFooter = databaseModal.querySelector('#databaseModalFooter')
                     databaseModalFooter.innerHTML = `
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                         @csrf
-                        <button id="databaseModalSubmitButton" type="submit" class="btn btn-primary">Add Database</button>
+                        <button id="databaseModalSubmitButton" type="submit" class="btn btn-primary">Tambah Database</button>
                         `
                     return
                 }
@@ -236,7 +232,7 @@
 
                 let databaseModalFooter = databaseModal.querySelector('#databaseModalFooter')
                 databaseModalFooter.innerHTML = `
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 @method('patch')
                 @csrf
                 <button id="databaseModalSubmitButton" type="submit" class="btn btn-primary">Edit Database</button>`
