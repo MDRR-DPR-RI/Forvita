@@ -60,13 +60,13 @@ class SchedulerSeeder extends Seeder
             'name' => "postgre dummy data test",
             'query' => "SELECT *
                             FROM (
-                            SELECT 'dummy' as group, 'arithmetic dummies' as data, 'postgre_total_dummy_data' AS judul, 'total_dummy_data_a' AS keterangan, sum(a) AS jumlah
+                            SELECT 'dummy' as kelompok, 'arithmetic dummies' as data, 'postgre_total_dummy_data' AS judul, 'total_dummy_data_a' AS keterangan, sum(a) AS jumlah
                             FROM dummy_database.dummy_data_1
                             UNION
-                            SELECT 'dummy' as group, 'arithmetic dummies' as data, 'postgre_total_dummy_data' AS judul, 'total_dummy_data_b' AS keterangan, sum(b) AS jumlah
+                            SELECT 'dummy' as kelompok, 'arithmetic dummies' as data, 'postgre_total_dummy_data' AS judul, 'total_dummy_data_b' AS keterangan, sum(b) AS jumlah
                             FROM dummy_database.dummy_data_1
                             UNION
-                            SELECT 'dummy' as group, 'arithmetic dummies' as data, 'postgre_total_dummy_data' AS judul, 'total_dummy_data_c' AS keterangan, sum(c) AS jumlah
+                            SELECT 'dummy' as kelompok, 'arithmetic dummies' as data, 'postgre_total_dummy_data' AS judul, 'total_dummy_data_c' AS keterangan, sum(c) AS jumlah
                             FROM dummy_database.dummy_data_1
                         ) AS query;",
             'database_id' => $postgreDatabase->id
