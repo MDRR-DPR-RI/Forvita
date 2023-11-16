@@ -38,13 +38,13 @@
                             <p class="card-text">
                                 SELECT * <br>
                                 FROM ( <br>
-                                select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'a' as 'keterangan', sum(a) as 'jumlah' <br>
+                                select 'dummy' as kelompok, 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'a' as 'keterangan', sum(a) as 'jumlah' <br>
                                 from dummy_data <br>
                                 UNION <br>
-                                select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'b' as 'keterangan', sum(b) as 'jumlah' <br>
+                                select 'dummy' as kelompok, 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'b' as 'keterangan', sum(b) as 'jumlah' <br>
                                 from dummy_data <br>
                                 UNION <br>
-                                select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'c' as 'keterangan', sum(c) as 'jumlah' <br>
+                                select 'dummy' as kelompok, 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'c' as 'keterangan', sum(c) as 'jumlah' <br>
                                 from dummy_data <br>
                                 ) as query;
                             </p>
@@ -111,7 +111,7 @@
 {{--Add Scheduler Modal--}}
 <div class="modal fade" id="addSchedulerModal" tabindex="-1" aria-hidden="true">
     <form action="/scheduler" method="post">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <!-- modal-content -->
             <div class="modal-content">
                 <!-- modal-header -->
@@ -153,7 +153,7 @@
 {{--Edit Scheduler Modal--}}
 <div class="modal fade" id="editSchedulerModal" tabindex="-1" aria-hidden="true">
     <form action="/scheduler" method="post">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <!-- modal-content -->
             <div class="modal-content">
                 <!-- modal-header -->

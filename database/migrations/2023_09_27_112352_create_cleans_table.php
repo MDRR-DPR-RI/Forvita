@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cleans', function (Blueprint $table) {
             $table->id();
-            $table->string('grup')->nullable();
+            $table->string('kelompok')->nullable();
             $table->string('data')->nullable();
             $table->string('judul');
             $table->string('keterangan');

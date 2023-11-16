@@ -19,7 +19,7 @@ class CleanSeeder extends Seeder
 
 
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama Anggota",
             'keterangan' => "Islam",
@@ -29,7 +29,7 @@ class CleanSeeder extends Seeder
 
         ]);
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama Anggota",
             'keterangan' => "Kristen",
@@ -39,7 +39,7 @@ class CleanSeeder extends Seeder
 
         ]);
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama Anggota",
             'keterangan' => "Budha",
@@ -49,7 +49,7 @@ class CleanSeeder extends Seeder
 
         ]);
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama Anggota",
             'keterangan' => "Hindu",
@@ -59,7 +59,7 @@ class CleanSeeder extends Seeder
 
         ]);
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama Anggota",
             'keterangan' => "Konghucu",
@@ -69,7 +69,7 @@ class CleanSeeder extends Seeder
 
         ]);
         Clean::create([
-            'grup' => "SDMA",
+            'kelompok' => "SDMA",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama SDMA",
             'keterangan' => "Islam",
@@ -77,7 +77,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "SDMA",
+            'kelompok' => "SDMA",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama SDMA",
             'keterangan' => "Kristen",
@@ -85,7 +85,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "SDMA",
+            'kelompok' => "SDMA",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama SDMA",
             'keterangan' => "Budha",
@@ -93,7 +93,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "SDMA",
+            'kelompok' => "SDMA",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama SDMA",
             'keterangan' => "Hindu",
@@ -101,7 +101,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "SDMA",
+            'kelompok' => "SDMA",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama SDMA",
             'keterangan' => "Konghucu",
@@ -109,7 +109,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Jenis Kelamin",
             'judul' => "Jumlah Jenis Kelamin Anggota",
             'keterangan' => "L",
@@ -117,7 +117,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Jenis Kelamin",
             'judul' => "Jumlah Jenis Kelamin Anggota",
             'keterangan' => "P",
@@ -125,7 +125,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Jenis Kelamin",
             'judul' => "Jumlah Jenis Kelamin SDMA",
             'keterangan' => "P",
@@ -133,7 +133,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Jenis Kelamin",
             'judul' => "Jumlah Jenis Kelamin SDMA",
             'keterangan' => "P",
@@ -141,7 +141,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Manusia",
+            'kelompok' => "Manusia",
             'data' => "Tubuh",
             'judul' => "Jumlah Bagian Tubuh",
             'keterangan' => "Hidung",
@@ -149,7 +149,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Manusia",
+            'kelompok' => "Manusia",
             'data' => "Tubuh",
             'judul' => "Jumlah Bagian Tubuh",
             'keterangan' => "Tangan",
@@ -157,7 +157,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Ticket",
+            'kelompok' => "Ticket",
             'data' => "Penjualan Ticket",
             'judul' => "Penjualan Ticket Ayam",
             'keterangan' => "Jan",
@@ -165,7 +165,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Ticket",
+            'kelompok' => "Ticket",
             'data' => "Penjualan Ticket",
             'judul' => "Penjualan Ticket Ayam",
             'keterangan' => "Feb",
@@ -173,7 +173,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Ticket",
+            'kelompok' => "Ticket",
             'data' => "Penjualan Ticket",
             'judul' => "Penjualan Ticket Ayam",
             'keterangan' => "Mar",
@@ -181,7 +181,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Ticket",
+            'kelompok' => "Ticket",
             'data' => "Penjualan Ticket",
             'judul' => "Penjualan Ticket Ayam",
             'keterangan' => "Apr",
@@ -189,7 +189,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Ticket",
+            'kelompok' => "Ticket",
             'data' => "Penjualan Ticket",
             'judul' => "Penjualan Ticket Bebek",
             'keterangan' => "Jan",
@@ -197,7 +197,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Ticket",
+            'kelompok' => "Ticket",
             'data' => "Penjualan Ticket",
             'judul' => "Penjualan Ticket Bebek",
             'keterangan' => "Feb",
@@ -205,7 +205,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Ticket",
+            'kelompok' => "Ticket",
             'data' => "Penjualan Ticket",
             'judul' => "Penjualan Ticket Bebek",
             'keterangan' => "Mar",
@@ -213,7 +213,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "Ticket",
+            'kelompok' => "Ticket",
             'data' => "Penjualan Ticket",
             'judul' => "Penjualan Ticket Bebek",
             'keterangan' => "Apr",
@@ -221,7 +221,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "POPULASI",
+            'kelompok' => "POPULASI",
             'data' => "Populasi Indonesia",
             'judul' => "Jumlah populasi yang ada di Indonesia",
             'keterangan' => "DKI Jakarta",
@@ -229,7 +229,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "POPULASI",
+            'kelompok' => "POPULASI",
             'data' => "Populasi Indonesia",
             'judul' => "Jumlah populasi yang ada di Indonesia",
             'keterangan' => "Jawa Barat",
@@ -237,7 +237,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "POPULASI",
+            'kelompok' => "POPULASI",
             'data' => "Populasi Indonesia",
             'judul' => "Jumlah populasi yang ada di Indonesia",
             'keterangan' => "Kalimantan Tengah",
@@ -245,7 +245,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "POPULASI",
+            'kelompok' => "POPULASI",
             'data' => "Populasi Indonesia",
             'judul' => "Jumlah populasi yang ada di Indonesia",
             'keterangan' => "Kalimantan Timur",
@@ -253,7 +253,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "POPULASI",
+            'kelompok' => "POPULASI",
             'data' => "Populasi Indonesia",
             'judul' => "Jumlah populasi yang ada di Indonesia",
             'keterangan' => "Gorontalo",
@@ -261,7 +261,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "POPULASI",
+            'kelompok' => "POPULASI",
             'data' => "Populasi Malaysia",
             'judul' => "Jumlah populasi yang ada di Malaysia",
             'keterangan' => "kualalumpur",
@@ -269,7 +269,7 @@ class CleanSeeder extends Seeder
             'created_at' => $currentTimestamp
         ]);
         Clean::create([
-            'grup' => "POPULASI",
+            'kelompok' => "POPULASI",
             'data' => "Populasi Malaysia",
             'judul' => "Jumlah populasi yang ada di Malaysia",
             'keterangan' => "sabah",
@@ -284,7 +284,7 @@ class CleanSeeder extends Seeder
 
 
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama Anggota",
             'keterangan' => "Islam",
@@ -293,7 +293,7 @@ class CleanSeeder extends Seeder
             'created_at' => $americaTimestamp
         ]);
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama Anggota",
             'keterangan' => "Kristen",
@@ -302,7 +302,7 @@ class CleanSeeder extends Seeder
             'created_at' => $americaTimestamp
         ]);
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama Anggota",
             'keterangan' => "Budha",
@@ -311,7 +311,7 @@ class CleanSeeder extends Seeder
             'created_at' => $americaTimestamp
         ]);
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama Anggota",
             'keterangan' => "Hindu",
@@ -320,7 +320,7 @@ class CleanSeeder extends Seeder
             'created_at' => $americaTimestamp
         ]);
         Clean::create([
-            'grup' => "Anggota",
+            'kelompok' => "Anggota",
             'data' => "Agama",
             'judul' => "Jumlah penganut Agama Anggota",
             'keterangan' => "Konghucu",

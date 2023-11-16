@@ -28,13 +28,13 @@ class SchedulerSeeder extends Seeder
             'name' => "total_dummy_data",
             'query' => "SELECT *
                         FROM (
-                            select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'a' as 'keterangan', sum(a) as 'jumlah'
+                            select 'dummy' as kelompok, 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'a' as 'keterangan', sum(a) as 'jumlah'
                             from dummy_data
                             UNION
-                            select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'b' as 'keterangan', sum(b) as 'jumlah'
+                            select 'dummy' as kelompok, 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'b' as 'keterangan', sum(b) as 'jumlah'
                             from dummy_data
                             UNION
-                            select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'c' as 'keterangan', sum(c) as 'jumlah'
+                            select 'dummy' as kelompok, 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'c' as 'keterangan', sum(c) as 'jumlah'
                             from dummy_data
                         ) as query;",
         ]);
@@ -42,7 +42,7 @@ class SchedulerSeeder extends Seeder
             'name' => "total_alasan_cuti",
             'query' => "SELECT *
                         FROM (
-                        SELECT 'ppnasn' as 'group', 'sirajin' as 'data', 'total_alasan_cuti' AS 'judul', coalesce(cuti.keterangan, 'tidak ada alasan') as 'keterangan', count(*) as 'jumlah'
+                        SELECT 'ppnasn' as kelompok, 'sirajin' as 'data', 'total_alasan_cuti' AS 'judul', coalesce(cuti.keterangan, 'tidak ada alasan') as 'keterangan', count(*) as 'jumlah'
                         FROM db_sirajin_ppnasn.cuti as cuti
                         GROUP BY cuti.keterangan
                         ) AS query;",

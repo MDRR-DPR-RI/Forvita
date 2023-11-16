@@ -35,7 +35,7 @@
             <thead>
               <tr>
                 <th scope="col">No</th>
-                <th scope="col">Grup</th>
+                <th scope="col">Kelompok</th>
                 <th scope="col">Data</th>
                 <th scope="col">Judul</th>
                 <th scope="col">Pilih</th>
@@ -48,7 +48,7 @@
                 @endphp --}}
                 <tr>
                   <td scope="row">{{ $loop->iteration }}</td>
-                  <td>{{ $clean->grup }}</td>
+                  <td>{{ $clean->kelompok }}</td>
                   <td>{{ $clean->data }}</td>
                   <td>{{ $clean->judul }}</td>
                   <td>
