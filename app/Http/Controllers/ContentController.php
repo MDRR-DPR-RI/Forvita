@@ -66,9 +66,9 @@ class ContentController extends Controller
     public function show(Content $content, Request $request)
     {
         // Query distinct(unique) "judul" values from the database
-        $cleans = Clean::select('grup', 'data', 'judul')
+        $cleans = Clean::select('kelompok', 'data', 'judul')
             ->distinct('judul')
-            ->orderBy('grup')
+            ->orderBy('kelompok')
             ->get();
 
         if (!$request->selected_judul) { // first edit chart page 
