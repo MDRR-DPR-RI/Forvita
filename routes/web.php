@@ -58,7 +58,7 @@ Route::get('csv/delete', [CsvImportController::class, 'deleteTable'])->name('csv
 Route::post('/import-csv', [CsvImportController::class, 'import'])->name('import.csv')->middleware('admin');
 
 // Import Data From RESTful API
-Route::post('/import-api', [ApiImportController::class, 'storeDataFromApi'])->name('import.api')->middleware('admin');
+Route::post('/import-api', [ApiImportCon2troller::class, 'storeDataFromApi'])->name('import.api')->middleware('admin');
 
 // Scheduler Routers
 Route::get('scheduler/execute', [SchedulerController::class, 'execute'])->middleware('admin');

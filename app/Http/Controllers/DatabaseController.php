@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Database;
-use App\Models\Dashboard;
+use App\Services\DatabaseService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,26 +14,33 @@ use PDO;
 
 class DatabaseController extends Controller
 {
+    protected DatabaseService $databaseService;
+
+    public function __construct()
+    {
+        $this->databaseService = new DatabaseService();
+    }
 
     public function show(Request $request): View
     {
         return view('database.database', [
-            'databases' => Database::all(),
-            'currentParentPage' => 'Admin',
+            'databases' => $this->databaseService->getAllDatabases(),
         ]);
     }
     public function store(Request $request): RedirectResponse
     {
-        $database = Database::create([
-            'name' => $request->input('databaseName'),
-            'url' => $request->input('databaseUrl'),
-            'driver' => $request->input('databaseDriver'),
-            'host' => $request->input('databaseHost'),
-            'port' => $request->input('databasePort'),
-            'database' => $request->input('databaseDatabase'),
-            'username' => $request->input('databaseUsername'),
-            'password' => $request->input('databasePassword'),
+        $validated = $request->validate([
+            'name' => 'required',
+            'url' => '',
+            'driver' => '',
+            'host' => '',
+            'port' => 'numeric',
+            'database' => '',
+            'username' => '',
+            'password' => '',
         ]);
+
+        Database::create($validated);
 
         return redirect('database');
     }
@@ -43,18 +50,20 @@ class DatabaseController extends Controller
         $updateDatabaseID = $request->input('databaseID');
         $database = Database::find($updateDatabaseID);
 
-        $database->name = $request->input('databaseName');
-        $database->url = $request->input('databaseUrl');
-        $database->driver = $request->input('databaseDriver');
-        $database->host = $request->input('databaseHost');
-        $database->port = $request->input('databasePort');
-        $database->database = $request->input('databaseDatabase');
-        $database->username = $request->input('databaseUsername');
-        $database->password = $request->input('databasePassword');
+        $validated = $request->validate([
+            'name' => 'required',
+            'url' => '',
+            'driver' => '',
+            'host' => '',
+            'port' => 'numeric',
+            'database' => '',
+            'username' => '',
+            'password' => '',
+        ]);
 
+        $database->update($validated);
         $database->save();
 
-        error_log("Updated database with id $updateDatabaseID");
         return redirect('database');
     }
 
@@ -87,7 +96,8 @@ class DatabaseController extends Controller
 
         try {
             $this->changeDatabaseConnection('scheduler', $database);
-            $connectionStatus = DB::connection('scheduler')->getPdo()->getAttribute(PDO::ATTR_CONNECTION_STATUS);
+            $connectionStatus = DB::connection('scheduler')
+                ->getPdo()->getAttribute(PDO::ATTR_CONNECTION_STATUS);
             $database->status = $connectionStatus;
             $database->save();
 

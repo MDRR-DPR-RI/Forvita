@@ -23,7 +23,7 @@ class UserListing extends Component
         $this->users = User::all();
     }
 
-    public function searchUser()
+    public function searchUser(): void
     {
         $this->users = User::where('name', 'LIKE', "%".$this->searchUserQuery."%")
             ->orWhere('email', 'LIKE', "%".$this->searchUserQuery."%")
