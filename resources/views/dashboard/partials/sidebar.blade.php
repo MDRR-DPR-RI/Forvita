@@ -57,7 +57,7 @@
     <div class="sidebar-footer">
       <div class="sidebar-footer-top">
         <div class="sidebar-footer-thumb">
-          <img src="/img/img1.jpg" alt="">
+          <img src="{{ auth()->user()->getProfilePhotoURL() }}" alt="">
         </div><!-- sidebar-footer-thumb -->
         <div class="sidebar-footer-body">
           <h6><a href="../pages/profile.html">{{ auth()->user()->name }}</a></h6>
@@ -67,7 +67,7 @@
       </div><!-- sidebar-footer-top -->
       <div class="sidebar-footer-menu">
         <nav class="nav">
-          <a href="/view-profile"><i class="ri-profile-line"></i> View Profile</a>
+          <a href="/profile"><i class="ri-profile-line"></i> View Profile</a>
         <hr>
           <a href="#modalLogout" data-bs-toggle="modal"><i class="ri-logout-box-r-line"></i> Log Out</a>
         </nav>
