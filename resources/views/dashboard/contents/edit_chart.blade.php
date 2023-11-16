@@ -97,7 +97,10 @@
 
       // Initialize an array to store the selected checkboxes
       var selectedCheckboxes = {!! $content->judul !!};
-
+      if (selectedCheckboxes[0] == '') {
+        selectedCheckboxes.splice(0, 1); // Remove 1 element at the specified index
+      }
+      console.log(selectedCheckboxes);
       // Add an event listener to the 'selectOption' element for the 'change' event
       document.getElementById('selectOption').addEventListener('change', function() {
 
@@ -121,6 +124,7 @@
           if (this.checked) {
             // If the checkbox is checked, add its value to the selectedCheckboxes array
             selectedCheckboxes.push(this.value);
+            console.log(selectedCheckboxes);
 
             // Check if the number of selected checkboxes exceeds the maximum allowed
             if (selectedCheckboxes.length > maxSelection) {

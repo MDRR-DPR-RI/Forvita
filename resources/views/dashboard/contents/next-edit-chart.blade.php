@@ -68,13 +68,13 @@
                 </div>
                 <div class="col-xl-2 d-flex justify-content-start">
                   <select class="form-select" name="filter_date{{ $i }}" id="clean_date{{ $i }}">
-                    @foreach ($value2 as $clean_date)
-                        <option value="{{ ($clean_date->created_at) }}" 
-                          @if ( isset($content_clean_created_at[$i]) && $clean_date->created_at == $content_clean_created_at[$i])
+                    @foreach ($value2 as $clean)
+                        <option value="{{ ($clean->created_at) }}, {{ ($clean->judul) }}" 
+                          @if ( isset($content_clean_created_at[$i]) && $clean->created_at == $content_clean_created_at[$i])
                             selected
                           @endif
                         >
-                          {{ ($clean_date->newest == 1) ? "(Data Terbaru) ". ($clean_date->created_at . " (" . $clean_date->created_at->diffForHumans() . ")"): ($clean_date->created_at . " (" . $clean_date->created_at->diffForHumans() . ")") }}
+                          {{ ($clean->newest == 1) ? "(Data Terbaru) ". ($clean->created_at . " (" . $clean->created_at->diffForHumans() . ")") : ($clean->created_at . " (" . $clean->created_at->diffForHumans() . ")") }}
                         </option>
                     @endforeach
                   </select>
@@ -100,9 +100,9 @@
                         @endif
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="table_body{{ $i }}">
                       @foreach ($value as $clean)
-                        <tr class="table-row{{ $i }}" data-judul="Item 1" data-created-at="{{ ($clean->created_at) }}">
+                        <tr class="table-row{{ $i }}" data-judul="Item 1">
                           <td scope="row">
                             @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
                                 <input class="checkbox-item{{ $i }}" type="checkbox" value="{{ $clean->keterangan }}" name="xValue{{ $i }}[]" checked >
@@ -114,7 +114,7 @@
                             <input type="hidden" name="selectedJudul{{ $i }}" value="{{ $clean->judul }}">
                           </td>
                           <td>{{ $clean->judul }}</td>
-                         <td>{{ ($clean->newest == 1) ? "Terbaru" : ($clean->created_at . " (" . $clean->created_at->diffForHumans() . ")") }}</td>
+                         <td>{{ ($clean->newest == 1) ? "Terbaru" : ($clean->created_at)}}</td>
 
                           <td>{{ $clean->jumlah }}</td>
                           @if (in_array($content->chart->id, [5, 10, 14, 16]))
@@ -214,17 +214,17 @@
         // Create an array to keep track of checkbox counts for each group, initialize to 0
         const counters = new Array(stackCount).fill(0);
 
-        for (let index = 0; index < stackCount; index++) {
+        for (let i = 0; i < stackCount; i++) {
             // Listen for clicks on the "Select All" checkbox
-            $(`#selectAllCheckbox${index}`).click(function() {
+            $(`#selectAllCheckbox${i}`).click(function() {
               const isChecked = $(this).prop('checked');
               // Check/uncheck all item checkboxes in the current group
-              $(`.checkbox-item${index}`).prop('checked', isChecked);
-              counters[index] = isChecked ? $(`.checkbox-item${index}`).length : 0;
-              updateSelesaiButton(counters, index);
+              $(`.checkbox-item${i}`).prop('checked', isChecked);
+              counters[i] = isChecked ? $(`.checkbox-item${i}`).length : 0;
+              updateSelesaiButton(counters, i);
 
               // Enable or disable input color pickers based on "Select All" checkbox
-              const checkboxes = document.querySelectorAll(`.checkbox-item${index}`);
+              const checkboxes = document.querySelectorAll(`.checkbox-item${i}`);
               checkboxes.forEach(function(checkbox, checkboxIndex) {
                   const inputColorPicker = document.getElementById(`colorPicker${checkboxIndex + 1}`);
                   if (isChecked) {
@@ -237,17 +237,17 @@
               });
             });
             // Listen for changes on item checkboxes in the current group
-              counters[index] = $(`.checkbox-item${index}:checked`).length;
-            $(`.checkbox-item${index}`).on('change', function() {
+              counters[i] = $(`.checkbox-item${i}:checked`).length;
+            $(`.checkbox-item${i}`).on('change', function() {
                 // Check if all item checkboxes are checked in the current group
-              counters[index] = $(`.checkbox-item${index}:checked`).length;
-                updateSelesaiButton(counters, index);
+              counters[i] = $(`.checkbox-item${i}:checked`).length;
+                updateSelesaiButton(counters, i);
                 
                 // Uncheck the "Select All" checkbox if any individual checkbox is unchecked
-                if (counters[index] < $(`.checkbox-item${index}`).length) {
-                    $(`#selectAllCheckbox${index}`).prop('checked', false);
+                if (counters[i] < $(`.checkbox-item${i}`).length) {
+                    $(`#selectAllCheckbox${i}`).prop('checked', false);
                 } else {
-                    $(`#selectAllCheckbox${index}`).prop('checked', true);
+                    $(`#selectAllCheckbox${i}`).prop('checked', true);
                 }
           });
           var checkboxes = document.querySelectorAll('.checkbox-item0');
@@ -266,17 +266,16 @@
             x++;
           })
           
-          var clean_date = document.getElementById(`clean_date${index}`)
+          var clean_date = document.getElementById(`clean_date${i}`)
           console.log(clean_date.value);
 
-          // $(`.table-row${index}`).hide();
-          // $(`.table-row${index}[data-created-at="${clean_date.value}"]`).show();
-
           // Listen for changes on the select element
-          $(`#clean_date${index}`).change(function () {
+          $(`#clean_date${i}`).change(function () {
               clean_date = $(this).val();
               console.log(clean_date);
-              var trContainer = $(`.table-row${index}`);
+              var trContainer = $(`.table-row${i}`);//trow
+              var tbContainer = $(`#table_body${i}`); //tbody
+
               trContainer.empty(); // Remove content inside the table row
 
               const newElement = `
@@ -296,36 +295,86 @@
                 success: function (data) {
                   console.log(data.data);
                   console.log(data.date);
-                  trContainer.empty()
+                  trContainer.remove()
+                  var colorInput = '';
+                  $(`#selectAllCheckbox${i}`).prop('checked', false);
+
                     // Update the items container with the filtered data
-
                   $.each(data.data, function (index, clean) {
-        var newRow = `
-                <td>
-                        <input class="checkbox-item${index}" type="checkbox" value="${clean.keterangan}" name="xValue${index}[]" >
-                    ${clean.keterangan}
-                    <input type="hidden" name="selectedJudul${index}" value="${clean.judul}">
-                </td>
-                <td>${clean.judul}</td>
-                <td>${(clean.newest == 1) ? "Terbaru" : (clean.created_at + " (" + clean.created_at_diffForHumans + ")")}</td>
-                <td>${clean.jumlah}</td>
-                <!-- Add the color input if needed -->
-        `;
+                    @if (in_array($content->chart->id, [5, 10, 14, 16]))
+                        colorInput = `
+                            <td>
+                                <input type="color" id="colorPicker${index + 1}" name="color_picker${i}[]" value="#506fd9" disabled style="display: none">
+                            </td>
+                        `;  
+                    @endif
+                    var clean_createdAt = clean.created_at;
+                    let date = new Date(clean_createdAt);
+                    let formattedDate = date.toLocaleString('en-US', {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      second: '2-digit',
+                      hour12: false,  // Set to false for 24-hour format
+                      timeZone: 'UTC'
+                    });
 
-        trContainer.append(newRow);
-    });
+                    console.log();
+                    var newRow = `
+                      <tr class="table-row${i}" data-judul="Item 1">
+                        <td>
+                          <input class="checkbox-item${i}" type="checkbox" value="${clean.keterangan}" name="xValue${i}[]" >
+                            ${clean.keterangan}
+                          <input type="hidden" name="selectedJudul${i}" value="${clean.judul}">
+                        </td>
+                        <td>${clean.judul}</td>
+                        <td>${(clean.newest == 1) ? "Terbaru" : (formattedDate)}</td>
+                        <td>${clean.jumlah}</td>
+                        ${colorInput}
+                      </tr>
+                      `;
+                    tbContainer.append(newRow);
+                  });
+                  var checkboxes = document.querySelectorAll(`.checkbox-item${i}`);
+                  let x = 1;
+                  checkboxes.forEach(function(checkbox) {
+                    let inputColorPicker =  document.getElementById(`colorPicker${x}`)
+                    checkbox.addEventListener('change', function() {
+                      if (this.checked) {
+                        inputColorPicker.disabled = false 
+                        inputColorPicker.style.display = 'block'; 
+                      } else {
+                        inputColorPicker.disabled = true
+                        inputColorPicker.style.display = 'none'; 
+                      }
+                    })
+                    x++;
+                  })
+                  // Listen for changes on item checkboxes in the current group
+                  counters[i] = $(`.checkbox-item${i}:checked`).length;
+                  $(`.checkbox-item${i}`).on('change', function() {
+                      // Check if all item checkboxes are checked in the current group
+                    counters[i] = $(`.checkbox-item${i}:checked`).length;
+                      updateSelesaiButton(counters, i);
+                      
+                      // Uncheck the "Select All" checkbox if any individual checkbox is unchecked
+                      if (counters[i] < $(`.checkbox-item${i}`).length) {
+                          $(`#selectAllCheckbox${i}`).prop('checked', false);
+                      } else {
+                          $(`#selectAllCheckbox${i}`).prop('checked', true);
+                      }
+                  });
                 },
                 error: function (error) {
                     console.log(error);
                 }
             });
-              // Hide all rows
-              // $(`.table-row${index}`).hide();
-              // $(`.table-row${index}[data-created-at="${clean_date}"]`).show();
           });
         }
 
-        function updateSelesaiButton(counters, index) {
+        function updateSelesaiButton(counters, i) {
             // Get the "selesai" button element
             const selesaiBtn = document.getElementById('selesaiBtn');
             // Check if all counters have the same value

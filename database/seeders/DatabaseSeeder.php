@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             ChartSeeder::class,
             CleanSeeder::class,
             PromptSeeder::class,
-            ContentSeeder::class,
+            // ContentSeeder::class,
             // ... other seeders
         ]);
     }

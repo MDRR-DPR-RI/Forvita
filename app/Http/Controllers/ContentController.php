@@ -90,14 +90,14 @@ class ContentController extends Controller
             $content_judul = json_decode($content->judul, true);
             if (isset($content_judul[$i]) && $arr_selected_judul[$i] == $content_judul[$i]) {
                 $data['clean' . $i] = Clean::where('judul', $arr_selected_judul[$i])
-                    ->where('created_at', json_decode($content->clean_created_at)[$i]) // HERE, WHERE CONTENT CLEAN CREATED AT
+                    ->where('created_at', json_decode($content->clean_created_at)[$i])
                     ->get();
             } else {
                 $data['clean' . $i] = Clean::where('judul', $arr_selected_judul[$i])
                     ->where('newest', true)
                     ->get();
             }
-            $data['date' . $i] = Clean::select('newest', 'created_at')
+            $data['date' . $i] = Clean::select('newest', 'created_at', 'judul')
                 ->orderBy('created_at', 'desc') // Order by the latest created_at
                 ->where('judul', $arr_selected_judul[$i])
                 ->distinct('created_at')

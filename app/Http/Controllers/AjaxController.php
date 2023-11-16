@@ -54,8 +54,12 @@ class AjaxController extends Controller
     }
     public function filter_clean_by_date(Request $request)
     {
-        $cleanDate = date('Y-m-d H:i:s', strtotime($request->clean_date));
-        $result = Clean::where('created_at', $request->clean_date)->get();
+        $values = explode(', ', $request->clean_date);
+
+        $cleanDate = date('Y-m-d H:i:s', strtotime($values[0]));
+        $result = Clean::where('created_at', $values[0])
+            ->where('judul', $values[1])
+            ->get();
 
         return response()->json([
             'data' => $result,
