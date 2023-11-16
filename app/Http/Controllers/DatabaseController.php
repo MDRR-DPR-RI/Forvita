@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Database;
-use App\Models\Dashboard;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -54,7 +53,6 @@ class DatabaseController extends Controller
 
         $database->save();
 
-        error_log("Updated database with id $updateDatabaseID");
         return redirect('database');
     }
 
@@ -62,7 +60,6 @@ class DatabaseController extends Controller
     {
         $deleteDatabaseID = $request->input('databaseID');
         Database::destroy($deleteDatabaseID);
-        error_log("deleted database with id $deleteDatabaseID");
         return redirect('database');
     }
 
@@ -93,8 +90,7 @@ class DatabaseController extends Controller
 
         } catch(Exception $ex){
             $errorMessage = substr($ex, 0, 200);
-            error_log("Failed to connect: " . $errorMessage);
-            $database->status = "Failed to connect: " . $errorMessage;
+            $database->status = "Gagal untuk konek: " . $errorMessage;
             $database->save();
             return redirect('database');
         }

@@ -22,6 +22,6 @@ class Database extends Model
         ];
 
     protected $attributes = [
-        'status' => "not tested connection yet",
+        'status' => "Koneksi belum dicoba.",
     ];
 }
