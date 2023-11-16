@@ -38,7 +38,7 @@
                 <th scope="col">Grup</th>
                 <th scope="col">Data</th>
                 <th scope="col">Judul</th>
-                <th scope="col">Select</th>
+                <th scope="col">Pilih</th>
               </tr>
             </thead>
             <tbody>

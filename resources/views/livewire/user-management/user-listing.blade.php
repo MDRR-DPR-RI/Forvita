@@ -5,13 +5,13 @@
     @if(!is_null($selectedUsers) and !$selectedUsers->isEmpty())
         <div class="row row-cols-md-auto">
             <div class="col">
-                <h3>Selected Users</h3>
+                <h3>Pengguna yang Dipilih</h3>
             </div>
            <div class="col">
                <button wire:click="$dispatch('openModal', { component: 'user-management.edit-permissions',
                                  arguments: { selectedUsersID: {{json_encode($selectedUsers->pluck('id')->toArray())}}}})"
                        class="btn btn-outline-primary">
-                   Edit Selected Users Permissions
+                   Ubah Perizinan Pengguna
                </button>
            </div>
         </div>
@@ -39,12 +39,12 @@
         </div>
     @endif
 {{--    Search Users--}}
-    <label for="searchUserQuery">Search users</label>
+    <label for="searchUserQuery">Cari Pengguna</label>
     <div class="form-search">
         <i class="ri-search-line"></i>
         <input type="text" class="form-control" id="searchUserQuery"
                wire:model.live="searchUserQuery" wire:keydown="searchUser"
-               placeholder="Enter name or email">
+               placeholder="Masukkan nama atau email">
     </div>
     <div wire:loading>
         Loading...
@@ -57,17 +57,17 @@
                 <th scope="col">
                     <button wire:click="$dispatch('openModal', { component: 'user-management.add-user'})"
                             class="btn btn-outline-primary">
-                        Add User
+                        Tambahkan Pengguna
                     </button>
                 </th>
             </tr>
             <tr>
                 <th scope="col">No</th>
-                <th scope="col">Select</th>
-                <th scope="col">Name</th>
+                <th scope="col">Pilih</th>
+                <th scope="col">Nama</th>
                 <th scope="col">Email</th>
                 <th scope="col">Role</th>
-                <th scope="col">Actions</th>
+                <th scope="col">Aksi</th>
             </tr>
             </thead>
                 @foreach($users as $user)
@@ -79,13 +79,13 @@
                                 <button class="btn btn-outline-success"
                                         wire:click="deselectUser({{ $user->id }})">
                                     <i class="ri-check-fill"></i>
-                                    Deselect User
+                                    Batalkan Pilih Pengguna
                                 </button>
                             @else
                                 <button class="btn btn-outline-secondary"
                                         wire:click="selectUser({{ $user->id }})">
                                     <i class="ri-add-fill"></i>
-                                    Select User
+                                    Pilih Pengguna
                                 </button>
                             @endif
                             </td>
@@ -96,12 +96,12 @@
                                 <button wire:click="$dispatch('openModal',
                                                     { component: 'user-management.edit-user', arguments: { selectedUserID: {{$user->id}}}})"
                                         class="btn btn-outline-primary">
-                                    Edit
+                                    Ubah
                                 </button>
                                 <button type="submit" class="btn btn-outline-danger"
                                         wire:click="deleteUser({{ $user->id }})"
-                                        wire:confirm="Are you sure you want to delete this user?">
-                                    Delete
+                                        wire:confirm="Yakin ingin menghapus pengguna ini?">
+                                    Hapus
                                 </button>
                             </td>
                         </tr>
@@ -110,15 +110,15 @@
                                 <button wire:click="$dispatch('openModal', { component: 'user-management.edit-permissions',
                                  arguments: { selectedUsersID: {{json_encode(array($user->id))}}}})"
                                         class="btn btn-outline-primary">
-                                    Edit Permissions
+                                    Ubah Perizinan
                                 </button>
 
                                 <button x-show="! showPermissions{{$user->id}}"
                                         x-on:click="showPermissions{{$user->id}} = ! showPermissions{{$user->id}}"
-                                        class="btn btn-outline-primary">Show Permissions</button>
+                                        class="btn btn-outline-primary">Tampilkan Perizinan</button>
                                 <button x-show="showPermissions{{$user->id}}"
                                         x-on:click="showPermissions{{$user->id}} = ! showPermissions{{$user->id}}"
-                                        class="btn btn-outline-danger">Hide Permissions</button>
+                                        class="btn btn-outline-danger">Sembunyikan Perizinan</button>
 
                                 <div x-show="showPermissions{{$user->id}}">
                                     <table class="table">
@@ -127,7 +127,7 @@
                                             <th scope="col">No</th>
                                             <th scope="col">Dashboard</th>
                                             <th scope="col">Cluster</th>
-                                            <th scope="col">Actions</th>
+                                            <th scope="col">Aksi</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -139,7 +139,7 @@
                                                 <td>
                                                     <button type="submit" class="btn btn-outline-danger"
                                                             wire:click="deletePermission({{ $permission->id }})"
-                                                            wire:confirm="Are you sure you want to delete this permission?">
+                                                            wire:confirm="Yakin ingin menghapus perizinan ini?">
                                                         Delete
                                                     </button>
                                                 </td>

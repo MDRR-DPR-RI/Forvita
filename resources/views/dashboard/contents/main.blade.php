@@ -43,25 +43,110 @@
               </form> --}}
               @can('admin')
                   <a href="{{ route('csv') }}" class="btn btn-primary d-flex align-items-center gap-2">
-                        <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import CSV
+                        <i class="ri-file-excel-2-line fs-18 lh-1"></i>Impor CSV
                   </a>
                   <a href="#importAPIModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
-                        <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import RESTful API
+                        <i class="ri-file-excel-2-line fs-18 lh-1"></i>Impor RESTful API
                   </a>
-                  <button type="button" class="btn btn-white d-flex align-items-center gap-2"><i class="ri-share-line fs-18 lh-1"></i>Share</button>
+                  <a href="#modalShare" class="btn btn-white d-flex align-items-center gap-2" data-bs-toggle="modal"><i class="ri-share-line fs-18 lh-1"></i>Share</a>
                   <button class="btn btn-white d-flex align-items-center gap-2" id="capture"><i class="ri-printer-line fs-18 lh-1"></i>Print</button>
-                  <a href="#modal3" class="btn btn-primary d-flex align-items-center gap-2"  data-bs-toggle="modal"><i class="ri-bar-chart-2-line fs-18 lh-1"></i>Customize<span class="d-none d-sm-inline"> Dashboard</span></a>
+                  <a href="#modal3" class="btn btn-primary d-flex align-items-center gap-2"  data-bs-toggle="modal"><i class="ri-bar-chart-2-line fs-18 lh-1"></i>Kustomisasi<span class="d-none d-sm-inline">Dashboard</span></a>
               @endcan
             </div>
+            @can('admin')
+            <!-- Modal Share -->
+            <div class="modal" id="modalShare" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Share</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Apakah anda yakin ingin membuat link share?</p>
+                    <p>Orang lain mungkin akan melihat dashboard tanpa login</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <form action="/share" method="post">
+                      @csrf
+                      <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}">
+                      <button type="submit" class="btn btn-primary">Buat</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {{-- Modal Share--}}
+            <div class="modal fade" id="share-list" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Customize Dashboard {{ $dashboard->name }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div><!-- modal-header -->
+                  <div class="modal-body container ">
+                    <div class="row">
+                      <div class="col-12">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">ID Dashboard</th>
+                              <th scope="col">Nama Dashboard</th>
+                              <th scope="col">Nama Pembuat</th>
+                              <th scope="col">Link</th>
+                              <th scope="col">Aksi</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($shares as $key => $share)
+                            <tr>
+                              <th scope="row">{{ $key+1 }}</th>
+                              <td>{{ $share->dashboard_id }}</td>
+                              <td>{{ $share->dashboard->name }}</td>
+                              <td>{{ $share->user->name }}</td>
+                              <td>https://172.18.25.16/public/dashboard/{{ $share->link }}</td>
+                              <td>
+                                <form action="/share/{{ $share->id }}" method="post">
+                                  @method('delete')
+                                  @csrf
+                                  <button type="submit" class="btn btn-danger">Hapus</button>
+                                </form>
+                              </td>
+                            </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                
+                  </div> <!-- modal-body -->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+                  </div><!-- modal-footer -->
+                </div><!-- modal-content -->
+              </div><!-- modal-dialog -->
+            </div><!-- modal-fade -->
+            @endcan
+
+
         </div>
+        @if (session('status'))
+          <div class="alert alert-primary mb-3">
+              {{ session('status') }}
+          </div>
+        @endif
         @if (session()->has('success'))
           <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Success!</strong> {{ session('success') }}.
+            <strong>Sukses!</strong> {{ session('success') }}.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         @elseif (session()->has('deleted'))
           <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Deleted!</strong> {{ session('deleted') }}.
+            <strong>Terhapus!</strong> {{ session('deleted') }}.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         @endif
@@ -394,8 +479,8 @@
     var iconValue = $('#iconInput-edit').value;
     // var iconValue = $(this).val();
 
-    $(".iconInput-edit").on("blur", function() {
-      var iconValue = $(this).val();
+    $(".iconpicker-dropdown").on("click", function() {
+      var iconValue = $(".iconInput-edit").val();
       // $(".iconOutput-edit").html(`<i class="${$(".iconInput-edit").val()}" ></i>`)
       $("#iconOutput-edit").html(`<i class="${iconValue}" ></i>`);
     });

@@ -28,21 +28,21 @@ class SchedulerSeeder extends Seeder
             'name' => "total_dummy_data",
             'query' => "SELECT *
                         FROM (
-                            select 'total_dummy_data' as judul, 'total_dummy_data_a' as keterangan, sum(a) as jumlah
+                            select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'a' as 'keterangan', sum(a) as 'jumlah'
                             from dummy_data
-                                UNION
-                            select 'total_dummy_data' as judul, 'total_dummy_data_b' as keterangan, sum(b) as jumlah
+                            UNION
+                            select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'b' as 'keterangan', sum(b) as 'jumlah'
                             from dummy_data
-                                UNION
-                            select 'total_dummy_data' as judul, 'total_dummy_data_c' as keterangan, sum(c) as jumlah
+                            UNION
+                            select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'c' as 'keterangan', sum(c) as 'jumlah'
                             from dummy_data
-                            ) as query;",
+                        ) as query;",
         ]);
         Scheduler::create([
             'name' => "total_alasan_cuti",
             'query' => "SELECT *
                         FROM (
-                        SELECT 'total_alasan_cuti' AS judul, coalesce(cuti.keterangan, 'tidak ada alasan') as keterangan, count(*) as jumlah
+                        SELECT 'ppnasn' as 'group', 'sirajin' as 'data', 'total_alasan_cuti' AS 'judul', coalesce(cuti.keterangan, 'tidak ada alasan') as 'keterangan', count(*) as 'jumlah'
                         FROM db_sirajin_ppnasn.cuti as cuti
                         GROUP BY cuti.keterangan
                         ) AS query;",
@@ -59,15 +59,15 @@ class SchedulerSeeder extends Seeder
         Scheduler::create([
             'name' => "postgre dummy data test",
             'query' => "SELECT *
-                        FROM (
-                        SELECT 'postgre_total_dummy_data' AS judul, 'total_dummy_data_a' AS keterangan, sum(a) AS jumlah
-                        FROM dummy_database.dummy_data_1
-                        UNION
-                        SELECT 'postgre_total_dummy_data' AS judul, 'total_dummy_data_b' AS keterangan, sum(b) AS jumlah
-                        FROM dummy_database.dummy_data_1
-                        UNION
-                        SELECT 'postgre_total_dummy_data' AS judul, 'total_dummy_data_c' AS keterangan, sum(c) AS jumlah
-                        FROM dummy_database.dummy_data_1
+                            FROM (
+                            SELECT 'dummy' as group, 'arithmetic dummies' as data, 'postgre_total_dummy_data' AS judul, 'total_dummy_data_a' AS keterangan, sum(a) AS jumlah
+                            FROM dummy_database.dummy_data_1
+                            UNION
+                            SELECT 'dummy' as group, 'arithmetic dummies' as data, 'postgre_total_dummy_data' AS judul, 'total_dummy_data_b' AS keterangan, sum(b) AS jumlah
+                            FROM dummy_database.dummy_data_1
+                            UNION
+                            SELECT 'dummy' as group, 'arithmetic dummies' as data, 'postgre_total_dummy_data' AS judul, 'total_dummy_data_c' AS keterangan, sum(c) AS jumlah
+                            FROM dummy_database.dummy_data_1
                         ) AS query;",
             'database_id' => $postgreDatabase->id
         ]);

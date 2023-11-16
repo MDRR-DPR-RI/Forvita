@@ -73,10 +73,14 @@ class SchedulerController extends Controller
 
             $currentTimestamp = date('Y-m-d H:i:s'); // each time scheduler executed, use same TimeStamp to filter the data in next_edit_chart
             foreach ($queryResult as $row) {
-                Clean::where('judul', $row->judul)
+                Clean::where('group', $row->group)
+                    ->where('data', $row->data)
+                    ->where('judul', $row->judul)
                     ->where('keterangan', $row->keterangan)
                     ->update(['newest' => False]);
                 Clean::create([
+                    'group' => $row->group,
+                    'data' => $row->data,
                     'judul' => $row->judul,
                     'keterangan' => $row->keterangan,
                     'jumlah' => $row->jumlah,

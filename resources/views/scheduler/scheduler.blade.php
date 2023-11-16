@@ -8,18 +8,24 @@
 
 @section('page_content')
     <div class="main main-app p-3 p-lg-4">
-        <h1> Schedulers </h1>
+        <h1> Queries </h1>
         <div class="row">
             <div class="col">
                 {{--Query Format Card--}}
                 <div class="card" id="queryFormatCard" style="width: 22rem; margin-left: auto; margin-right: 0;">
                     <div class="card-body">
-                        <h5 class="card-title">Query Format</h5>
+                        <h5 class="card-title">Format Query</h5>
                         <p class="card-text">
-                            Rules: <br>
-                            1. Three columns in order: <br>judul, keterangan, jumlah (Case sensitive!)<br>
-                            2. Groups of data needs to have the same judul with keterangan to describe the differences.<br>
+                            Aturan: <br>
+                            1. Lima kolom dengan urutan: <br>kelompok, data, judul, keterangan, jumlah (case sensitive!)<br>
+                            2. Kelompok data harus memiliki kelompok, data, dan judul yang sama dengan keterangan untuk menjelaskan perbedaannya.<br>
+                            3. Tidak mempunyai nilai string null atau kosong di tiap kolomnya.<br>
+                            4. Tiap driver database mempunyai sintaks yang berbeda.
+                            {{-- Rules:
+                            1. Five columns in order: group, data, judul, keterangan, jumlah (Case sensitive!)
+                            2. Groups of data needs to have the same group, data, and judul with keterangan to describe the differences.
                             3. Don't have any null or empty string values in any columns.
+                            4. Different database drivers have different syntaxes. --}}
                         </p>
                     </div>
                 </div>
@@ -28,32 +34,37 @@
                 {{--Query Example Card--}}
                     <div class="card" id="queryExampleCard" style="width: 50rem;">
                         <div class="card-body">
-                            <h5 class="card-title">Query Example</h5>
+                            <h5 class="card-title">Contoh Query</h5>
                             <p class="card-text">
                                 SELECT * <br>
-                                FROM (<br>
-                                SELECT 'total_dummy_data' AS judul, 'total_dummy_data_a' AS keterangan, sum(a) AS jumlah<br>
-                                FROM dataset.dummy_data<br>
-                                UNION<br>
-                                SELECT 'total_dummy_data' AS judul, 'total_dummy_data_b' AS keterangan, sum(b) AS jumlah<br>
-                                FROM dataset.dummy_data<br>
-                                UNION<br>
-                                SELECT 'total_dummy_data' AS judul, 'total_dummy_data_c' AS keterangan, sum(c) AS jumlah<br>
-                                FROM dataset.dummy_data<br>
-                                ) AS query;
+                                FROM ( <br>
+                                select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'a' as 'keterangan', sum(a) as 'jumlah' <br>
+                                from dummy_data <br>
+                                UNION <br>
+                                select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'b' as 'keterangan', sum(b) as 'jumlah' <br>
+                                from dummy_data <br>
+                                UNION <br>
+                                select 'dummy' as 'group', 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'c' as 'keterangan', sum(c) as 'jumlah' <br>
+                                from dummy_data <br>
+                                ) as query;
                             </p>
                         </div>
                     </div>
+        </div>
+        <div class="d-flex justify-content-end gap-2 mt-3 mb-3">
+                <a href="#addSchedulerModal" class="btn btn-primary d-flex align-items-center gap-2"
+                   data-bs-toggle="modal"><i class="ri-add-line"></i>
+                    <span class="d-none d-sm-inline">Tambahkan Query</span></a>
         </div>
         <table class="table">
             <thead>
             <tr>
                 <th scope="col">No</th>
-                <th scope="col">Name</th>
+                <th scope="col">Nama</th>
                 <th scope="col">Query</th>
                 <th scope="col">Database</th>
                 <th scope="col">Status</th>
-                <th scope="col">Actions</th>
+                <th scope="col">Aksi</th>
             </tr>
             </thead>
             <tbody>
@@ -70,7 +81,7 @@
                     <td>{{ $scheduler->status }}</td>
                     <td>
                         {{--Execute Scheduler Query--}}
-                        <a href="/scheduler/execute?schedulerID={{ $scheduler->id }}" class="btn btn-success">Execute</a>
+                        <a href="/scheduler/execute?schedulerID={{ $scheduler->id }}" class="btn btn-success">Jalankan</a>
 
                         {{--Edit Scheduler--}}
                         <a data-bs-toggle="modal" data-bs-target="#editSchedulerModal"
@@ -81,28 +92,18 @@
 {{--                           @isset($scheduler->database_id)--}}
 {{--                               data-bs-schedulerDatabaseName="{{$scheduler->database->name}}"--}}
 {{--                           @endisset--}}
-                           class="btn btn-primary">Edit</a>
+                           class="btn btn-primary">Ubah</a>
 
                         {{--Delete Scheduler--}}
                         <form action="/scheduler" method="post">
                             @method('delete')
                             @csrf
                             <input type="hidden" name="schedulerID" value="{{ $scheduler->id }}">
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger">Hapus</button>
                         </form>
                     </td>
                 </tr>
             @endforeach
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td colspan="2">
-                    <a href="#addSchedulerModal" class="btn btn-primary d-flex align-items-center gap-2"
-                       data-bs-toggle="modal"><i class="ri-add-line"></i>
-                        <span class="d-none d-sm-inline">Add Scheduler</span></a>
-                </td>
-            </tr>
             </tbody>
         </table>
     </div>
@@ -115,13 +116,13 @@
             <div class="modal-content">
                 <!-- modal-header -->
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Scheduler</h5>
+                    <h5 class="modal-title">Tambahkan Penjadwal</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <!-- modal-body -->
                 <div class="modal-body container text-center">
                     <div class="form-group">
-                        <label for="schedulerName">Scheduler Name</label>
+                        <label for="schedulerName">Nama Penjadwal</label>
                         <input type="text" id="schedulerName" name="schedulerName" class="form-control" required>
                     </div>
                     <div class="form-group">
@@ -140,9 +141,9 @@
                 </div>
                 <!-- modal-footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                     @csrf
-                    <button type="submit" class="btn btn-primary">Add Scheduler</button>
+                    <button type="submit" class="btn btn-primary">Tambahkan Penjadwal</button>
                 </div>
             </div>
         </div>
@@ -157,7 +158,7 @@
             <div class="modal-content">
                 <!-- modal-header -->
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Scheduler (Name)</h5>
+                    <h5 class="modal-title">Edit Penjadwal (Name)</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <!-- modal-body -->

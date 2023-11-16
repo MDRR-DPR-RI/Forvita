@@ -6,7 +6,7 @@
 </style>
   <div class="sidebar">
     <div class="sidebar-header">
-      <a href="/cluster" class="sidebar-logo">SATU DATA</a>
+      <a href="/cluster" class="sidebar-logo">SATUDATA</a>
     </div><!-- sidebar-header -->
         
     <div id="sidebarMenu" class="sidebar-body">
@@ -16,13 +16,16 @@
           <a href="#" class="nav-label">Admin</a>
           <ul class="nav nav-sidebar">
             <li class="nav-item">
-                <a href="/database" class="nav-link @isset($databases) @empty($schedulers) active @endempty @endisset"><i class="ri-pie-chart-2-fill"></i> <span>databases</span></a>
+                <a href="/database" class="nav-link @isset($databases) @empty($schedulers) active @endempty @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Databases</span></a>
             </li>
             <li class="nav-item">
-                <a href="/scheduler" class="nav-link @isset($schedulers)  active  @endisset"><i class="ri-pie-chart-2-fill"></i> <span>scheduler</span></a>
+                <a href="/scheduler" class="nav-link @isset($schedulers)  active  @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Queries</span></a>
             </li>
             <li class="nav-item">
-              <a href="/user-management" class="nav-link @isset($initialUsers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>User Management</span></a>
+              <a href="/user-management" class="nav-link @isset($initialUsers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Manajemen Pengguna</span></a>
+            </li>
+            <li class="nav-item">
+              <a href="#share-list" class="nav-link" data-bs-toggle="modal"><i class="bi bi-share-fill"></i> <span>List Share Dashboard</span></a>
             </li>
           </ul>
         @endcan
@@ -33,7 +36,7 @@
         <ul class="nav nav-sidebar">
           @can('admin')
             <li class="nav-item">
-              <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-primary">New Dashboard</span></a>
+              <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-primary">Tambah Dashboard</span></a>
             </li>
           @endcan
           @foreach ($dashboards as $index_dashboard)
@@ -54,7 +57,7 @@
     <div class="sidebar-footer">
       <div class="sidebar-footer-top">
         <div class="sidebar-footer-thumb">
-          <img src="/img/img1.jpg" alt="">
+          <img src="{{ auth()->user()->getProfilePhotoURL() }}" alt="">
         </div><!-- sidebar-footer-thumb -->
         <div class="sidebar-footer-body">
           <h6><a href="../pages/profile.html">{{ auth()->user()->name }}</a></h6>
@@ -64,7 +67,7 @@
       </div><!-- sidebar-footer-top -->
       <div class="sidebar-footer-menu">
         <nav class="nav">
-          <a href="/view-profile"><i class="ri-profile-line"></i> View Profile</a>
+          <a href="/profile"><i class="ri-profile-line"></i> View Profile</a>
         <hr>
           <a href="#modalLogout" data-bs-toggle="modal"><i class="ri-logout-box-r-line"></i> Log Out</a>
         </nav>
@@ -133,9 +136,11 @@
     iconpicker.set() // Set as empty
     iconpicker.set('bi-alarm') // Reset with a value
 
-    $(".iconInputs").on("blur", function() {
+    $(".iconpicker-dropdown").on("click", function() {
       $(".iconOutputs").html(`<i class="${$(".iconInputs").val()}" ></i>`)
     });
+
+
 })()
 
 </script>    

@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function show()
     {
         $user = auth()->user();
 
@@ -19,51 +18,33 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function update(Request $request)
     {
-        //
-    }
+        $user = auth()->user();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $data = $request->validate([
+            'password' => ['nullable', 'string', 'min:5', 'max:255', 'confirmed'],
+            'profile_photo' => ['image'],
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
+        $updated_fields = array();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
-    }
+        if ($data['password']) {
+            $updated_fields['password'] = Hash::make($data['password']);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
+        if ($request->hasFile('profile_photo')) {
+            $storedFilePath = $request->file('profile_photo')->store('public/profile-photos');
+            if ($storedFilePath) {
+                // TODO: These are not atomic, there is a possibility that the
+                // file is stored but the database is not updated
+                Storage::delete($user->profile_photo_path);
+                $updated_fields['profile_photo_path'] = $storedFilePath;
+            }
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
+        User::where('id', $user->id)->update($updated_fields);
+
+        return redirect('/profile')->with('success', 'Profile updated!');
     }
 }

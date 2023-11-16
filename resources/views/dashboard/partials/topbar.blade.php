@@ -7,20 +7,21 @@
       <i class="ri-search-line"></i>
     </div><!-- form-search -->
 
+
     <div class="dropdown dropdown-skin">
       <a href="" class="dropdown-link" data-bs-toggle="dropdown" data-bs-auto-close="outside"><i class="ri-settings-3-line"></i></a>
       <div class="dropdown-menu dropdown-menu-end mt-10-f">
-        <label>Skin Mode</label>
+        <label>Tema</label>
         <nav id="skinMode" class="nav nav-skin">
-          <a href="" class="nav-link active">Light</a>
-          <a href="" class="nav-link">Dark</a>
+          <a href="" class="nav-link active">Terang</a>
+          <a href="" class="nav-link">Gelap</a>
         </nav>
         <hr>
-        <label>Sidebar Skin</label>
+        <label>Menu</label>
         <nav id="sidebarSkin" class="nav nav-skin">
-          <a href="" class="nav-link active">Default</a>
-          <a href="" class="nav-link">Prime</a>
-          <a href="" class="nav-link">Dark</a>
+          <a href="" class="nav-link active">Standar</a>
+          <a href="" class="nav-link">Terang</a>
+          <a href="" class="nav-link">Gelap</a>
         </nav>
         {{-- <hr>
         <label>Direction</label>
@@ -33,19 +34,19 @@
 
     <div class="dropdown dropdown-profile ms-3 ms-xl-4">
       <a href="" class="dropdown-link" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-        <div class="avatar online"><img src="/img/img1.jpg" alt=""></div>
+        <div class="avatar online"><img src="{{ auth()->user()->getProfilePhotoURL() }}" alt=""></div>
       </a>
       <div class="dropdown-menu dropdown-menu-end mt-10-f">
         <div class="dropdown-menu-body">
-          <div class="avatar avatar-xl online mb-3"><img src="/img/img1.jpg" alt=""></div>
+          <div class="avatar avatar-xl online mb-3"><img src="{{ auth()->user()->getProfilePhotoURL() }}" alt=""></div>
           <h5 class="mb-1 text-dark fw-semibold">{{ auth()->user()->name }}</h5>
           <p>{{ auth()->user()->role->name }}</p>
           <nav class="nav">
-            <a href="/view-profile"><i class="ri-profile-line"></i> View Profile</a>
+            <a href="/profile"><i class="ri-profile-line"></i>Lihat Profil</a>
           </nav>
           <hr>
           <nav class="nav">
-            <a href="#modalLogout" data-bs-toggle="modal"><i class="ri-logout-box-r-line"></i> Log Out</a>
+            <a href="#modalLogout" data-bs-toggle="modal"><i class="ri-logout-box-r-line"></i>Keluar</a>
           </nav>
         </div><!-- dropdown-menu-body -->
       </div><!-- dropdown-menu -->
@@ -57,17 +58,17 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Log Out</h5>
+        <h5 class="modal-title">Keluar</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Are you sure you want to log out?</p>
+        <p>Yakin Ingin Keluar?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
         <form action="/logout" method="post">
           @csrf
-          <button type="submit" class="btn btn-primary">Logout</button>
+          <button type="submit" class="btn btn-primary">Keluar</button>
         </form>
       </div>
     </div>

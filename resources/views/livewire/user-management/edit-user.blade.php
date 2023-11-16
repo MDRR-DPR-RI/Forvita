@@ -8,13 +8,13 @@
                 <div class="modal-content">
                     <!-- modal-header -->
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit User</h5>
+                        <h5 class="modal-title">Ubah Pengguna</h5>
                         <button type="button" class="btn-close" wire:click="$dispatch('closeModal')" aria-label="Close"></button>
                     </div>
                     <!-- modal-body -->
                     <div class="modal-body container text-center">
                         <div class="form-group" style="text-align: left;">
-                            <label for="name">Name</label>
+                            <label for="name">Nama</label>
                             <input type="text" id="name" name="name"
                                    wire:model.blur="name" class="form-control" required>
                             <div>@error('name') {{ $message }} @enderror</div>
@@ -41,15 +41,15 @@
                             <input class="form-check-input" type="checkbox" id="changePasswordCheck"
                             x-on:click="changePassword = ! changePassword" wire:model="changePassword">
                             <label class="form-check-label" for="changePasswordCheck">
-                                Change Password
+                                Ubah Kata Sandi
                             </label>
                         </div>
                         <div x-show="changePassword" class="form-group" style="text-align: left;">
-                            <label for="password">Password</label>
+                            <label for="password">Masukkan Kata Sandi</label>
                             <input wire:model.blur="password"
                                    type="password" id="password" name="password" class="form-control">
                             <div>@error('password') {{ $message }} @enderror</div>
-                            <label for="resubmitPassword">Resubmit Password</label>
+                            <label for="resubmitPassword">Masukkan Kata Sandi Kembali</label>
                             <input wire:model.blur="resubmitPassword"
                                    type="password" id="resubmitPassword" name="resubmitPassword" class="form-control">
                             <div>@error('resubmitPassword') {{ $message }} @enderror</div>
@@ -57,8 +57,8 @@
                     </div>
                     <!-- modal-footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" wire:click="$dispatch('closeModal')">Close</button>
-                        <button type="submit" class="btn btn-primary">Edit User</button>
+                        <button type="button" class="btn btn-secondary" wire:click="$dispatch('closeModal')">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Ubah Pengguna</button>
                     </div>
                 </div>
             </div>
