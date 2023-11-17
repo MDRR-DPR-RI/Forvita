@@ -13,22 +13,16 @@
       <div class="dropdown-menu dropdown-menu-end mt-10-f">
         <label>Tema</label>
         <nav id="skinMode" class="nav nav-skin">
-          <a href="" class="nav-link active">Terang</a>
-          <a href="" class="nav-link">Gelap</a>
+          <a href="" class="nav-link active">Prime</a>
+          <a href="" class="nav-link">Dark</a>
         </nav>
         <hr>
         <label>Menu</label>
         <nav id="sidebarSkin" class="nav nav-skin">
-          <a href="" class="nav-link active">Standar</a>
-          <a href="" class="nav-link">Terang</a>
-          <a href="" class="nav-link">Gelap</a>
+          <a href="" class="nav-link active">Default</a>
+          <a href="" class="nav-link">Prime</a>
+          <a href="" class="nav-link">Dark</a>
         </nav>
-        {{-- <hr>
-        <label>Direction</label>
-        <nav id="layoutDirection" class="nav nav-skin">
-          <a href="" class="nav-link active">LTR</a>
-          <a href="" class="nav-link">RTL</a>
-        </nav> --}}
       </div><!-- dropdown-menu -->
     </div><!-- dropdown -->
 
