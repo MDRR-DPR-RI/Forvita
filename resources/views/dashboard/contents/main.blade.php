@@ -48,8 +48,8 @@
                   <a href="#importAPIModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
                         <i class="ri-file-excel-2-line fs-18 lh-1"></i>Impor RESTful API
                   </a>
-                  <a href="#modalShare" class="btn btn-white d-flex align-items-center gap-2" data-bs-toggle="modal"><i class="ri-share-line fs-18 lh-1"></i>Share</a>
-                  <button class="btn btn-white d-flex align-items-center gap-2" id="capture"><i class="ri-printer-line fs-18 lh-1"></i>Print</button>
+                  <a href="#modalShare" class="btn btn-white d-flex align-items-center gap-2" data-bs-toggle="modal"><i class="ri-global-line fs-18 lh-1"></i>Publik</a>
+                  <button class="btn btn-white d-flex align-items-center gap-2" id="capture"><i class="bi bi-download fs-18 lh-1"></i>PNG</button>
                   <a href="#modal3" class="btn btn-primary d-flex align-items-center gap-2"  data-bs-toggle="modal"><i class="ri-bar-chart-2-line fs-18 lh-1"></i>Kustomisasi<span class="d-none d-sm-inline">Dashboard</span></a>
               @endcan
             </div>
@@ -59,19 +59,21 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title">Share</h5>
+                    <h5 class="modal-title">Publik Dashboard {{ $dashboard->name }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    <p>Apakah anda yakin ingin membuat link share?</p>
-                    <p>Orang lain mungkin akan melihat dashboard tanpa login</p>
+                    <p >Apakah anda ingin membuat dashboard ini publik?
+                    </p>
+                    <i class="text-secondary">Orang lain akan bisa melihat dashboard ini tanpa login</i>
+                    
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <form action="/share" method="post">
                       @csrf
                       <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}">
-                      <button type="submit" class="btn btn-primary">Buat</button>
+                      <button type="submit" class="btn btn-primary">Publik</button>
                     </form>
                   </div>
                 </div>
@@ -170,7 +172,7 @@
                 <table class="table" id="tableContent">
                   <thead>
                     <tr>
-                      <th scope="col">No</th>
+                      <th scope="col">#</th>
                       <th scope="col">Cluster ID</th>
                       <th scope="col">Nama</th>
                       <th scope="col">Grid</th>
@@ -209,7 +211,7 @@
         
           </div> <!-- modal-body -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
             {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
           </div><!-- modal-footer -->
         </div><!-- modal-content -->

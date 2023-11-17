@@ -24,14 +24,8 @@
             <li class="nav-item">
               <a href="/user-management" class="nav-link @isset($initialUsers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Manajemen Pengguna</span></a>
             </li>
-            <li class="nav-item">
-              <a href="#share-list" class="nav-link" data-bs-toggle="modal"><i class="bi bi-share-fill"></i> <span>List Share Dashboard</span></a>
-            </li>
           </ul>
-        @endcan
-
-
-        
+        @endcan    
         <a href="#" class="nav-label">Dashboard</a>
         <ul class="nav nav-sidebar">
           @can('admin')
@@ -50,6 +44,12 @@
           @endforeach
         </ul>
     @endif
+    <hr>
+    <ul class="nav nav-sidebar">
+      <li class="nav-item">
+          <a href="#share-list" class="nav-link" data-bs-toggle="modal"><i class="ri-global-line"></i> <span>Publik Dashboards</span></a>
+        </li>
+      </ul>
       </div><!-- nav-group -->
     </div><!-- sidebar-body -->
 
