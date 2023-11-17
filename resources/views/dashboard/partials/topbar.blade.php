@@ -2,9 +2,10 @@
   <div class="header-main px-3 px-lg-4">
     <a id="menuSidebar" href="#" class="menu-link me-3 me-lg-4"><i class="ri-menu-2-fill"></i></a>
 
-    <div class="form-search me-auto">
-      <input type="text" class="form-control" placeholder="Search">
-      <i class="ri-search-line"></i>
+    {{-- <div class="form-search me-auto"> --}}
+    <div class="me-auto">
+      {{-- <input type="text" class="form-control" placeholder="Search">
+      <i class="ri-search-line"></i> --}}
     </div><!-- form-search -->
 
 

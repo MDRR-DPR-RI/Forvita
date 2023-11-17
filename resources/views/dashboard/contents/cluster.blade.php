@@ -19,7 +19,7 @@
               <a href="#newCluster" data-bs-toggle="modal">
                   <div class="card card-one" style="height: 200px;">
                       <div class="card card-one d-flex justify-content-center align-items-center">
-                          <button class="btn btn-primary">+</button>
+                          <i class="bi bi-plus-lg" style="font-size: 6em;"></i>
                       </div>
                   </div>
               </a>
@@ -28,10 +28,13 @@
           @foreach ($clusters as $cluster)
             <div class="col-3">
               <a href="/cluster/{{ $cluster->id }}">
-                <div class="card card-one">
+                <div class="card card-one" style="height: 200px;">
                   <div class="card-body p-3">
                     <div class="d-block fs-40 lh-1 text-primary mb-1"><i class="{{ $cluster->icon_name }}"></i></div>
                     <h1 class="card-value mb-0 ls--1 fs-32" id="card-val">{{ $cluster->name }}</h1>
+                    @can('admin')
+                      <label class="d-block mb-1 fw-medium text-dark">{{ $cluster->dashboard->count() }} Dashboard</label>
+                    @endcan
                     <label class="d-block mb-1 fw-medium text-dark">Di buat oleh : {{ $cluster->user->name }}</label>
                   </div>
                 </div>
@@ -55,15 +58,11 @@
         @csrf
         <div class="modal-body text-center">
             <label>Masukkan Nama Cluster Baru:</label>
-            <input required type="text" class="form-control" name="cluster_name">
-        </div>
-        <div class="modal-body text-center">
-          <label>Pilih Ikon</label>
-          <div class="input-group mb-3">
+            <input required type="text" class="form-control" name="cluster_name"><br>
+          <label>Pilih Ikon</label> 
+          <div class="input-group">
             <label class="iconOutput input-group-text " for="iconInput" >Ikon</label>
             <input type="text" name="icon"  class="iconInput form-control iconpickers" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
-            <label class="input-group-text iconOutput" for="iconInput" >Icon</label>
-            <input required type="text" name="icon"  class="iconInput form-control iconpickers" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
           </div>
         </div>
         <div class="modal-footer">

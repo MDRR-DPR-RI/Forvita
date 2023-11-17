@@ -70,7 +70,7 @@ class ClusterController extends Controller
         Dashboard::create([
             'cluster_id' => $clusterId,
             'name' => 'Dshboard 1',
-            'description'=> 'description 1'
+            'description' => 'description 1'
         ]);
         return redirect('/cluster');
     }
@@ -93,10 +93,9 @@ class ClusterController extends Controller
         // Get first dashboard in cluster that's allowed for user
         $userDashboardIDs = Permission::where('user_id', Auth()->user()->id)
             ->pluck('dashboard_id');
-        if (Auth()->user()->role->name === 'Admin'){
+        if (Auth()->user()->role->name === 'Admin') {
             $dashboard = Dashboard::where('cluster_id', $cluster_id)->first();
-        }
-        else {
+        } else {
             $dashboard = Dashboard::where('cluster_id', $cluster_id)
                 ->whereIn('id', $userDashboardIDs)->first();
         }

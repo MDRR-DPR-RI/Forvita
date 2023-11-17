@@ -49,7 +49,7 @@ class GlobalVariableServiceProvider extends ServiceProvider
             view()->share('prompts', $prmopts);
         }
         // check if has these schema then sent as global variable. this will prevent error while migration
-        if (Schema::hasTable('prompts')) {
+        if (Schema::hasTable('shares')) {
             $shares = Share::with([
                 'dashboard', 'user'
             ])->get();

@@ -129,16 +129,16 @@
           </div><!-- modal-header -->
           <div class="modal-body container ">
             <div class="row">
-              <div class="col-xl-5">
+              <div class="col-xl-6">
                 <div class="text-center">
                   Pilihan Konten
                 </div>
                 <table class="table" id="tablePilihKontent">
                   <thead>
                     <tr>
-                      <th scope="col">Cluster ID</th>
+                      <th scope="col">Kartu ID</th>
                       <th scope="col">Nama</th>
-                      <th scope="col">Action</th>
+                      <th scope="col">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -154,10 +154,10 @@
                                 <input type="hidden" value="{{ $chart->id }}" name="chart_id">
                                 <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
                                 <input type="hidden" name="card_grid" value="{{ $chart->grid }}" >
-                                <button type="submit" class="btn btn-primary">Tambah</button>
+                                <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah Ke Dashboard"><i class="bi bi-plus-lg"></i></button>
                               </form>
                               @else
-                                <a href="#modalEmbedTab" class="btn btn-primary" data-bs-toggle="modal">Tambah</a>
+                                <a href="#modalEmbedTab" class="btn btn-primary" data-bs-toggle="modal"><i class="bi bi-plus-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah Ke Dashboard"></i></a>
                               @endif
                             </td>
                         </tr>
@@ -167,16 +167,16 @@
               </div>
               <div class="col">
                 <div class="text-center">
-                  Dashboard Kontent
+                  Dashboard Konten
                 </div>
                 <table class="table" id="tableContent">
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Cluster ID</th>
+                      <th scope="col">Kartu ID</th>
                       <th scope="col">Nama</th>
-                      <th scope="col">Grid</th>
-                      <th scope="col">Actions</th>
+                      <th scope="col">Panjang</th>
+                      <th scope="col">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -190,14 +190,18 @@
                             <div class="d-flex justify-content-center align-items-center">
                               {{-- Edit cards --}}
                               @if ($content->chart->id != 1)
-                                <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary">Edit</a>
+                                <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                  <i class="ri-pencil-fill"></i>
+                                </a>
                               @endif
                               
                               {{-- Delete cards --}}
                               <form action="/dashboard/content/{{ $content->id }}" method="post">
                                 @method('delete')
                                 @csrf
-                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                <button type="submit" class="btn btn-danger btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus">
+                                  <i class="bi bi-trash3"></i>
+                                </button>
                               </form>
                             </div>
                           </td>
@@ -406,6 +410,10 @@
 
 @push('addon-script')
 <script>
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 (async () => {
     const response = await fetch('https://unpkg.com/codethereal-iconpicker@1.2.1/dist/iconsets/bootstrap5.json')
     const result = await response.json()

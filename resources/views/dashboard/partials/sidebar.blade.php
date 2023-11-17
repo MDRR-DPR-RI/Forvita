@@ -16,23 +16,19 @@
           <a href="#" class="nav-label">Admin</a>
           <ul class="nav nav-sidebar">
             <li class="nav-item">
-                <a href="/database" class="nav-link @isset($databases) @empty($schedulers) active @endempty @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Databases</span></a>
+                <a href="/database" class="nav-link @isset($databases) @empty($schedulers) active @endempty @endisset"><i class="bi bi-database-fill-gear"></i> <span>Databases</span></a>
             </li>
             <li class="nav-item">
-                <a href="/scheduler" class="nav-link @isset($schedulers)  active  @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Queries</span></a>
+                <a href="/scheduler" class="nav-link @isset($schedulers)  active  @endisset"><i class="bi bi-gear-wide-connected"></i></i> <span>Queries</span></a>
             </li>
             <li class="nav-item">
-              <a href="/user-management" class="nav-link @isset($initialUsers) active @endisset"><i class="ri-pie-chart-2-fill"></i> <span>Manajemen Pengguna</span></a>
+              <a href="/user-management" class="nav-link @isset($initialUsers) active @endisset"><i class="bi bi-person-fill-gear"></i> <span>Manajemen Pengguna</span></a>
             </li>
           </ul>
         @endcan    
         <a href="#" class="nav-label">Dashboard</a>
         <ul class="nav nav-sidebar">
-          @can('admin')
-            <li class="nav-item">
-              <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-primary">Tambah Dashboard</span></a>
-            </li>
-          @endcan
+          
           @foreach ($dashboards as $index_dashboard)
             <li class="nav-item">
             @if (isset($dashboard->name))
@@ -42,14 +38,21 @@
             @endif
             </li>
           @endforeach
+          @can('admin')
+            <li class="nav-item">
+              <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-secondary btn-sm"></i>+ Dashboard</span></a>
+            </li>
+          @endcan
         </ul>
     @endif
-    <hr>
-    <ul class="nav nav-sidebar">
-      <li class="nav-item">
-          <a href="#share-list" class="nav-link" data-bs-toggle="modal"><i class="ri-global-line"></i> <span>Publik Dashboards</span></a>
-        </li>
-      </ul>
+    @can('admin')
+      <hr>
+      <ul class="nav nav-sidebar">
+        <li class="nav-item">
+            <a href="#share-list" class="nav-link" data-bs-toggle="modal"><i class="ri-global-line"></i> <span>Publik Dashboards</span></a>
+          </li>
+        </ul>
+    @endcan
       </div><!-- nav-group -->
     </div><!-- sidebar-body -->
 
@@ -67,9 +70,9 @@
       </div><!-- sidebar-footer-top -->
       <div class="sidebar-footer-menu">
         <nav class="nav">
-          <a href="/profile"><i class="ri-profile-line"></i> View Profile</a>
+          <a href="/profile"><i class="ri-profile-line"></i> Lihat Progile</a>
         <hr>
-          <a href="#modalLogout" data-bs-toggle="modal"><i class="ri-logout-box-r-line"></i> Log Out</a>
+          <a href="#modalLogout" data-bs-toggle="modal"><i class="ri-logout-box-r-line"></i> Keluar</a>
         </nav>
         <nav class="nav">
           <a style="pointer-events: none;"></a>
@@ -127,10 +130,11 @@
         <div class="modal-body container ">
           <div class="row">
             <div class="col-12">
-              <table class="table">
+              <table class="table" id="tableListPublic">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Nama Cluster</th>
                     <th scope="col">ID Dashboard</th>
                     <th scope="col">Nama Dashboard</th>
                     <th scope="col">Nama Pembuat</th>
@@ -141,7 +145,8 @@
                 <tbody>
                   @foreach ($shares as $key => $share)
                   <tr>
-                    <th scope="row">{{ $key+1 }}</th>
+                    <td scope="row">{{ $key+1 }}</td>
+                    <td>{{ $share->dashboard->cluster->name }}</td>
                     <td>{{ $share->dashboard_id }}</td>
                     <td>{{ $share->dashboard->name }}</td>
                     <td>{{ $share->user->name }}</td>
@@ -173,7 +178,14 @@
 
 
 @push('addon-script')
+<script src="/lib/gridjs-jquery/gridjs.production.min.js"></script>
 <script>
+$("#tableListPublic").Grid({
+  className: {
+    table: 'table table-hover'
+  },
+  search: true,
+});
  (async () => {
     const response = await fetch('https://unpkg.com/codethereal-iconpicker@1.2.1/dist/iconsets/bootstrap5.json')
     const result = await response.json()
