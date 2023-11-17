@@ -81,39 +81,96 @@
     </div><!-- sidebar-footer -->
   </div><!-- sidebar -->
 
+@can('admin')    
     {{-- MODAL NEW DASHBOARD --}}
     <div class="modal fade" id="newDashboard" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Dashboard Baru</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Dashboard Baru</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="/dashboard" method="post">
+            @csrf
+            <div class="modal-body text-center">
+                <label>Masukan Nama Dashboard:</label>
+                <input type="text" class="form-control" name="dashboard_name" placeholder="Nama dashboard" autofocus required>
+            </div> 
+          <div class="modal-body text-center">
+              <label>Masukan Deskripsi Dashboard:</label>
+              <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..." required></textarea>
+            </div>
+            <div class="modal-body text-center">
+            <label>Pilih Icon</label>
+              <div class="input-group mb-3">
+                <label class="iconOutputs input-group-text" for="iconInputs">Icon</label>
+                <input type="text" name="icon"  class="iconInputs form-control iconpicker" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" required/>
+              </div>   
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Tambah Dashboard</button>
+            </div>
+          </form>
+        </div>
       </div>
-      <form action="/dashboard" method="post">
-        @csrf
-        <div class="modal-body text-center">
-            <label>Masukan Nama Dashboard:</label>
-            <input type="text" class="form-control" name="dashboard_name" placeholder="Nama dashboard" autofocus required>
-        </div> 
-       <div class="modal-body text-center">
-          <label>Masukan Deskripsi Dashboard:</label>
-          <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..." required></textarea>
-        </div>
-        <div class="modal-body text-center">
-        <label>Pilih Icon</label>
-          <div class="input-group mb-3">
-            <label class="iconOutputs input-group-text" for="iconInputs">Icon</label>
-            <input type="text" name="icon"  class="iconInputs form-control iconpicker" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" required/>
-          </div>   
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-            <button type="submit" class="btn btn-primary">Tambah Dashboard</button>
-        </div>
-      </form>
     </div>
-  </div>
-</div>
+
+  {{-- Modal Share--}}
+  <div class="modal fade" id="share-list" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">List Publik Dashboard </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div><!-- modal-header -->
+        <div class="modal-body container ">
+          <div class="row">
+            <div class="col-12">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ID Dashboard</th>
+                    <th scope="col">Nama Dashboard</th>
+                    <th scope="col">Nama Pembuat</th>
+                    <th scope="col">Link</th>
+                    <th scope="col">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($shares as $key => $share)
+                  <tr>
+                    <th scope="row">{{ $key+1 }}</th>
+                    <td>{{ $share->dashboard_id }}</td>
+                    <td>{{ $share->dashboard->name }}</td>
+                    <td>{{ $share->user->name }}</td>
+                    <td>https://172.18.25.16/public/dashboard/{{ $share->link }}</td>
+                    <td>
+                      <form action="/share/{{ $share->id }}" method="post">
+                        @method('delete')
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                      </form>
+                    </td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+      
+        </div> <!-- modal-body -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+        </div><!-- modal-footer -->
+      </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+  </div><!-- modal-fade -->
+
+@endcan
+
 
 @push('addon-script')
 <script>

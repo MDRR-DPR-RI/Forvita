@@ -77,59 +77,6 @@
                 </div>
               </div>
             </div>
-
-            {{-- Modal Share--}}
-            <div class="modal fade" id="share-list" tabindex="-1" aria-hidden="true">
-              <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Customize Dashboard {{ $dashboard->name }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div><!-- modal-header -->
-                  <div class="modal-body container ">
-                    <div class="row">
-                      <div class="col-12">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">ID Dashboard</th>
-                              <th scope="col">Nama Dashboard</th>
-                              <th scope="col">Nama Pembuat</th>
-                              <th scope="col">Link</th>
-                              <th scope="col">Aksi</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @foreach ($shares as $key => $share)
-                            <tr>
-                              <th scope="row">{{ $key+1 }}</th>
-                              <td>{{ $share->dashboard_id }}</td>
-                              <td>{{ $share->dashboard->name }}</td>
-                              <td>{{ $share->user->name }}</td>
-                              <td>https://172.18.25.16/public/dashboard/{{ $share->link }}</td>
-                              <td>
-                                <form action="/share/{{ $share->id }}" method="post">
-                                  @method('delete')
-                                  @csrf
-                                  <button type="submit" class="btn btn-danger">Hapus</button>
-                                </form>
-                              </td>
-                            </tr>
-                            @endforeach
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                
-                  </div> <!-- modal-body -->
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
-                  </div><!-- modal-footer -->
-                </div><!-- modal-content -->
-              </div><!-- modal-dialog -->
-            </div><!-- modal-fade -->
             @endcan
 
 
@@ -175,7 +122,7 @@
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Customize Dashboard {{ $dashboard->name }}</h5>
+            <h5 class="modal-title">Kustomisasi Dashboard {{ $dashboard->name }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div><!-- modal-header -->
           <div class="modal-body container ">

@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\Chart;
 use App\Models\Prompt;
 use App\Models\Dashboard;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Share;
 use Illuminate\Support\Facades\Schema;
 
 class GlobalVariableServiceProvider extends ServiceProvider
@@ -47,6 +47,13 @@ class GlobalVariableServiceProvider extends ServiceProvider
         if (Schema::hasTable('prompts')) {
             $prmopts = Prompt::all();
             view()->share('prompts', $prmopts);
+        }
+        // check if has these schema then sent as global variable. this will prevent error while migration
+        if (Schema::hasTable('prompts')) {
+            $shares = Share::with([
+                'dashboard', 'user'
+            ])->get();
+            view()->share('shares', $shares);
         }
     }
 }

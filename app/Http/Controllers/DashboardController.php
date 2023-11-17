@@ -56,9 +56,7 @@ class DashboardController extends Controller
       abort(403);
     }
 
-    $shares = Share::with([
-      'dashboard', 'user'
-    ])->get();
+
 
 
     // Fetch all contents that in the dashboard
@@ -127,7 +125,6 @@ class DashboardController extends Controller
       'dashboard' => $dashboard,
       'contents' => $contents,
       'ticket' => $ticket,
-      'shares' => $shares
     ]);
     // }
   }
