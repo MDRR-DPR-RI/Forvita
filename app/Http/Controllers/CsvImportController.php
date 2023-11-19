@@ -10,7 +10,7 @@ use App\Models\ListImport;
 class CsvImportController extends Controller
 {
     public function show(){
-        return view('etc.tables.csv-file', ['csvFiles'=> ListImport::all()]);
+        return view('etc.tables.csv-file', ['csvFiles'=> ListImport::where('type','csv')->get()]);
     }
     public function import(Request $request)
     {
@@ -42,7 +42,8 @@ class CsvImportController extends Controller
         }else{
             DB::table('list_imports')->insert([
                 'name'=>$tableName,
-                'file'=>$fileName
+                'file'=>$fileName,
+                'type'=>'csv',
             ]);
 
             return redirect()->back()->with('success', 'CSV imported successfully with name : ' . $tableName);
@@ -97,7 +98,7 @@ class CsvImportController extends Controller
         }
     }
 
-    public function deleteTable(Request $request){
+    public function removeTable(Request $request){
         // Coba membuat tabel baru
         $request->validate(['id' => 'required']);
         $idImport = $request->query('id');
@@ -108,6 +109,25 @@ class CsvImportController extends Controller
             unlink($filePath); // Hapus file CSV karena tidak digunakan
             $data->delete();
             return redirect()->back()->with('success', 'CSV file success deleted!');
+        }else{
+            return redirect()->back()->with('deleted', 'Data not valid!');            
+        }
+    }
+
+    public function deleteTable(Request $request){
+        // Coba membuat tabel baru
+        $request->validate(['id' => 'required']);
+        $idImport = $request->query('id');
+        $data = ListImport::find($idImport);
+        if($data){
+            try{
+                Schema::dropIfExists($data->name);
+                $data->action=0;
+                $data->save();
+                return redirect()->back()->with('success', 'CSV table success deleted!');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('success', 'CSV table error deleted!');
+            }
         }else{
             return redirect()->back()->with('deleted', 'Data not valid!');            
         }

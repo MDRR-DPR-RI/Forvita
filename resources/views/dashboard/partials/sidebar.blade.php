@@ -19,10 +19,16 @@
                 <a href="/database" class="nav-link @isset($databases) @empty($schedulers) active @endempty @endisset"><i class="bi bi-database-fill-gear"></i> <span>Databases</span></a>
             </li>
             <li class="nav-item">
-                <a href="/scheduler" class="nav-link @isset($schedulers)  active  @endisset"><i class="bi bi-gear-wide-connected"></i></i> <span>Queries</span></a>
+                <a href="/scheduler" class="nav-link @isset($schedulers)  active  @endisset"><i class="bi bi-gear-wide-connected"></i> <span>Queries</span></a>
             </li>
             <li class="nav-item">
               <a href="/user-management" class="nav-link @isset($initialUsers) active @endisset"><i class="bi bi-person-fill-gear"></i> <span>Manajemen Pengguna</span></a>
+            </li>
+            <li class="nav-item">
+                <a href="/csv" class="nav-link @isset($csvFile) active @endisset"><i class="bi bi-file-earmark-spreadsheet-fill"></i> <span>CSV List</span></a>
+            </li>
+            <li class="nav-item">
+                <a href="/restapi" class="nav-link @isset($apiList) active @endisset"><i class="bi bi-link-45deg"></i> <span>API List</span></a>
             </li>
           </ul>
         @endcan    

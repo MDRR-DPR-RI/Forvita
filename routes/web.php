@@ -59,11 +59,18 @@ Route::get('/filter-clean', [AjaxController::class, 'filter_clean_by_date'])->mi
 // Import Data CSV
 Route::get('csv', [CsvImportController::class, 'show'])->name('csv')->middleware('admin');
 Route::get('csv/create', [CsvImportController::class, 'createTable'])->name('csv.create')->middleware('admin');
+Route::get('csv/remove', [CsvImportController::class, 'removeTable'])->name('csv.remove')->middleware('admin');
 Route::get('csv/delete', [CsvImportController::class, 'deleteTable'])->name('csv.delete')->middleware('admin');
+// import API
+Route::get('restapi', [ApiImportController::class, 'show'])->name('restapi')->middleware('admin');
+Route::get('restapi/create', [ApiImportController::class, 'createTable'])->name('restapi.create')->middleware('admin');
+Route::get('restapi/remove', [ApiImportController::class, 'deleteList'])->name('restapi.remove')->middleware('admin');
+Route::get('restapi/delete', [ApiImportController::class, 'deleteTable'])->name('restapi.delete')->middleware('admin');
+
 Route::post('/import-csv', [CsvImportController::class, 'import'])->name('import.csv')->middleware('admin');
 
 // Import Data From RESTful API
-Route::post('/import-api', [ApiImportController::class, 'storeDataFromApi'])->name('import.api')->middleware('admin');
+Route::post('/import-api', [ApiImportController::class, 'import'])->name('import.api')->middleware('admin');
 
 // Share Public Dashboard
 Route::resource('/share', ShareController::class)->middleware('admin');
