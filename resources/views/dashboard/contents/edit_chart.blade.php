@@ -10,23 +10,27 @@
 
 <div class="main main-app p-3 p-lg-4">
   <div class="container mt-5 mb-5">
-      @if (!in_array($content->chart->id, [ 5, 10, 11, 12, 14, 15, 16])) {{-- list of chart that can only have 1 stack  --}}
-        <div class="text-center d-flex justify-content-center align-items-center flex-column">
-          <p>Berapa stack?</p>
-            <select name="selectOption" id="selectOption">
-              @for ($index = 1; $index <= 5; $index++)
-                @if (count(json_decode($content->judul)) == $index)
-                  <option value="{{ $index }}" selected>{{ $index }}</option>
-                @else
-                  <option value="{{ $index }}">{{ $index }}</option>
-                @endif
-              @endfor
+      <div class="text-center d-flex justify-content-center align-items-center flex-column">
+        <div class="col-xl-1">
+          @if (in_array($content->chart->id, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])) {{-- list of chart that can have more than 1 stack  --}}
+            <p>Berapa Judul ?</p>
+                <select class="form-select" name="selectOption" id="selectOption">
+                  @for ($index = 1; $index <= 5; $index++)
+                    @if (count(json_decode($content->judul)) == $index)
+                      <option value="{{ $index }}" selected>{{ $index }}</option>
+                    @else
+                      <option value="{{ $index }}">{{ $index }}</option>
+                    @endif
+                  @endfor
+                </select>
+          @else
+            <select class="form-select" name="selectOption" id="selectOption" disabled>
+              <option value="1">1</option>
             </select>
+          @endif
         </div>
-      @else
-        <input type="hidden" id="selectOption" value="1">
-      @endif
-      <br>
+      </div>
+    <br>
     <div class="card">
       <div class="card-body">
         <div class="table-responsive">
@@ -90,7 +94,7 @@
 
       // Initialize the maximum selection to 1
       var maxSelection = document.getElementById('selectOption').value;
-      console.log(maxSelection);
+      
 
       // Get all elements with the class 'select-judul' and store them in an array
       var checkboxes = document.querySelectorAll('.select-judul');
@@ -100,7 +104,7 @@
       if (selectedCheckboxes[0] == '') {
         selectedCheckboxes.splice(0, 1); // Remove 1 element at the specified index
       }
-      console.log(selectedCheckboxes);
+      
       // Add an event listener to the 'selectOption' element for the 'change' event
       document.getElementById('selectOption').addEventListener('change', function() {
 
@@ -124,7 +128,7 @@
           if (this.checked) {
             // If the checkbox is checked, add its value to the selectedCheckboxes array
             selectedCheckboxes.push(this.value);
-            console.log(selectedCheckboxes);
+          
 
             // Check if the number of selected checkboxes exceeds the maximum allowed
             if (selectedCheckboxes.length > maxSelection) {
@@ -132,13 +136,13 @@
                 var checkbox = document.getElementById(selectedCheckboxes[0]);
                 checkbox.checked = false;
                 var firstCheckbox = selectedCheckboxes.shift();
-                console.log(selectedCheckboxes); // Output the updated selected checkboxes array
+               
             }
           } else {
             // If the checkbox is unchecked, find its index in the selectedCheckboxes array and remove it
             var index = selectedCheckboxes.indexOf(this.value);
             selectedCheckboxes.splice(index, 1);
-            console.log(selectedCheckboxes); // Output the updated selected checkboxes array
+           
           }
           if (selectedCheckboxes.length == maxSelection) {
               selectBtn.disabled = false;

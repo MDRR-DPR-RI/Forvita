@@ -70,7 +70,7 @@
       </div><!-- sidebar-footer-top -->
       <div class="sidebar-footer-menu">
         <nav class="nav">
-          <a href="/profile"><i class="ri-profile-line"></i> Lihat Progile</a>
+          <a href="/profile"><i class="ri-profile-line"></i> Lihat Profil</a>
         <hr>
           <a href="#modalLogout" data-bs-toggle="modal"><i class="ri-logout-box-r-line"></i> Keluar</a>
         </nav>

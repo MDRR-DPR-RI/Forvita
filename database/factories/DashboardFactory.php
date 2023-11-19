@@ -17,11 +17,7 @@ class DashboardFactory extends Factory
     public function definition(): array
     {
         $iconNames = [
-            'bi bi-pie-chart', 'bi bi-bar-chart', 'bi bi-line-chart', 'bi bi-pie-chart-fill',
-            'bi bi-arrow-up-circle', 'bi bi-arrow-down-circle', 'bi bi-arrow-left-circle', 'bi bi-arrow-right-circle',
-            'bi bi-file-text', 'bi bi-file-image', 'bi bi-file-music', 'bi bi-file-code',
-            'bi bi-headset', 'bi bi-mouse', 'bi bi-keyboard', 'bi bi-laptop',
-            'bi bi-camera', 'bi bi-telephone', 'bi bi-watch', 'bi bi-cloud'
+            'bi bi-pie-chart', 'bi bi-alarm-fill', 'bi bi-align-bottom', 'bi bi-align-center', 'bi bi-align-end', 'bi bi-people-fill'
         ];
         return [
             'cluster_id' => mt_rand(1, 2),

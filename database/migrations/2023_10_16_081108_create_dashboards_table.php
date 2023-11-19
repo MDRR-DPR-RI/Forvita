@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('dashboards', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cluster_id');
-            $table->string('icon_name')->nullable();
+            $table->string('icon_name')->default('bi bi-alarm');
             $table->string('name');
             $table->string('description');
             $table->timestamps();

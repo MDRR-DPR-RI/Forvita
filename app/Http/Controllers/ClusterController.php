@@ -69,10 +69,11 @@ class ClusterController extends Controller
         $clusterId = $cluster->id;
         Dashboard::create([
             'cluster_id' => $clusterId,
-            'name' => 'Dshboard 1',
-            'description' => 'description 1'
+            'name' => 'Dshboard-' . $request->cluster_name,
+            'description' => 'Description ' . $request->cluster_name,
+            'icon_name' => $request->input('icon'),
         ]);
-        return redirect('/cluster');
+        return redirect()->back()->with('success', "Berhasil Membuat Cluster Baru: $request->cluster_name");
     }
 
     /**
@@ -129,6 +130,7 @@ class ClusterController extends Controller
      */
     public function destroy(Cluster $cluster)
     {
-        //
+        Cluster::destroy($cluster->id);
+        return redirect()->back()->with('deleted', "Cluster $cluster->name berhasil dihapus!");
     }
 }

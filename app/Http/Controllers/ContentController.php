@@ -36,7 +36,7 @@ class ContentController extends Controller
         if ($request->tableau_link) { // emebed tableau content
 
             $content = Content::create([
-                'chart_id' => 1,
+                'chart_id' => 18,
                 'dashboard_id' => $request->dashboard_id, // input hidden
                 'card_grid' => $request->card_grid,
                 'domain_tableau' => $request->domain_tableau,

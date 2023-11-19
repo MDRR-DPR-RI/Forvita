@@ -13,6 +13,17 @@
   }
 </style>
  <div class="main main-app p-3 p-lg-4">
+    @if (session()->has('success'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Sukses!</strong> {{ session('success') }}.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @elseif (session()->has('deleted'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Terhapus!</strong> {{ session('deleted') }}.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
         <div class="row g-3">
           @can ('admin')
             <div class="col-3">
@@ -33,9 +44,20 @@
                     <div class="d-block fs-40 lh-1 text-primary mb-1"><i class="{{ $cluster->icon_name }}"></i></div>
                     <h1 class="card-value mb-0 ls--1 fs-32" id="card-val">{{ $cluster->name }}</h1>
                     @can('admin')
-                      <label class="d-block mb-1 fw-medium text-dark">{{ $cluster->dashboard->count() }} Dashboard</label>
+                      <i class="mb-0 fw-medium text-dark">{{ $cluster->dashboard->count() }} Dashboard</i>
                     @endcan
-                    <label class="d-block mb-1 fw-medium text-dark">Di buat oleh : {{ $cluster->user->name }}</label>
+                  <div class="row">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <label class="d-block fw-medium text-dark">Di buat oleh : {{ $cluster->user->name }}</label>  
+                      @can('admin')
+                        <div class="d-flex">
+                          <a data-id="{{ $cluster->id }}" data-name="{{ $cluster->name }}" href="#delete_cluster" class="modalDelete btn btn-danger" data-bs-toggle="modal">
+                            <i data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Cluster" class="bi bi-trash3"></i>
+                          </a>
+                        </div>
+                      @endcan
+                    </div>
+                    </div>
                   </div>
                 </div>
               </a>
@@ -46,33 +68,59 @@
             <span>&copy; 2023. DPR RI</span>
         </div><!-- main-footer -->
     </div><!-- main -->
+
+@can('admin')
+
     {{-- MODAL NEW CLUSTER --}}
     <div class="modal fade" id="newCluster" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Cluster Baru</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cluster Baru</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="/cluster" method="post">
+            @csrf
+            <div class="modal-body text-center">
+                <label>Masukkan Nama Cluster Baru:</label>
+                <input required type="text" class="form-control" name="cluster_name"><br>
+              <label>Pilih Ikon</label> 
+              <div class="input-group">
+                <label class="iconOutput input-group-text " for="iconInput" >Ikon</label>
+                <input type="text" name="icon"  class="iconInput form-control iconpickers" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary">Selesai</button>
+            </div>
+          </form>
+        </div>
       </div>
-      <form action="/cluster" method="post">
-        @csrf
-        <div class="modal-body text-center">
-            <label>Masukkan Nama Cluster Baru:</label>
-            <input required type="text" class="form-control" name="cluster_name"><br>
-          <label>Pilih Ikon</label> 
-          <div class="input-group">
-            <label class="iconOutput input-group-text " for="iconInput" >Ikon</label>
-            <input type="text" name="icon"  class="iconInput form-control iconpickers" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
+    </div>
+        {{-- Modal delete dashboard --}}
+        <div class="modal" id="delete_cluster" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalTitle"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p id="deleteClusterMessage"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+              <form id="deleteClusterForm" method="post">
+                @method('delete')
+                @csrf
+                <button type="submit" class="btn btn-danger">Hapus</button>
+              </form>
+            </div>
           </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
         </div>
-      </form>
-    </div>
-  </div>
-</div>
+    @endcan
 @endsection
 
 @push('addon-script')
@@ -101,5 +149,19 @@
     });
 })()  
   
+  $(document).on("click", ".modalDelete", function () {
+    var cluster_id = $(this).data('id');
+    var cluster_name = $(this).data('name');
+    
+    $("#bookId").val(cluster_id);
+    
+    $("#modalTitle").html(`Hapus Cluster ${cluster_name}`);
+    $("#deleteClusterMessage").html(`Apakah kamu ingin menghapus cluster ${cluster_name}?`);
+
+    // Update the action attribute of the form with the cluster_id
+    var formAction = "/cluster/" + cluster_id;
+    
+    $("#deleteClusterForm").attr("action", formAction);
+  });
 </script>
 @endpush

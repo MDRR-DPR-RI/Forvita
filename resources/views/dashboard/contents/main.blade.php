@@ -17,15 +17,12 @@
 <link href="/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     <div class="main main-app p-3 p-lg-4">
-      {{-- <div class="container-fluid">
-            <tableau-viz class="mt-3 mb-3" id="tableauViz"></tableau-viz>
-        </div> --}}
         <div class="d-md-flex align-items-center justify-content-between mb-4">
             <div>
                 <ol class="breadcrumb fs-sm mb-1">
                 <li class="breadcrumb-item"><a href="/cluster">{{ session('cluster_name') }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $dashboard->name }}</li>
-                </ol>
+                </ol> 
                 <h4 class="main-title mb-0">Dashboard {{ $dashboard->name }}
                 @can('admin')
                   <a href="#edit_dashboard_name" data-bs-toggle="modal">
@@ -36,11 +33,6 @@
             </div>
                 
             <div class="d-flex gap-2 mt-3 mt-md-0">
-              {{-- <form action="{{ route('refreshTicket') }}" method="post">
-                @csrf
-                <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
-                <button id="ticket-tableau" class="btn btn-primary"><i class="ri-bar-chart-2-line fs-18 lh-1"></i> Refresh Tableau</button>
-              </form> --}}
               @can('admin')
                   <a href="{{ route('csv') }}" class="btn btn-primary d-flex align-items-center gap-2">
                         <i class="ri-file-excel-2-line fs-18 lh-1"></i>Impor CSV
@@ -143,12 +135,52 @@
                   </thead>
                   <tbody>
                     @foreach ($charts as $chart)
+                    @if ($loop->iteration == 1)
                         <tr>
-                          <td scope="row">{{ $loop->iteration }}</td>
-                          <td ">{{ $chart->name }}</td>
-                          {{-- Add new card --}}
                           <td>
-                            @if ($chart->id != 1)
+                            <div class="text-center">
+                              Line Chart
+                            </div>
+                          </td>
+                        </tr>
+                    @elseif ($loop->iteration == 7)
+                        <tr>
+                          <td>
+                            <div class="text-center">
+                              Bar Chart
+                            </div>
+                          </td>
+                        </tr>
+                    @elseif ($loop->iteration == 13)
+                        <tr>
+                          <td>
+                            <div class="text-center">
+                              Column Chart
+                            </div>
+                          </td>
+                        </tr>
+                    @elseif ($loop->iteration == 16)
+                        <tr>
+                          <td>
+                            <div class="text-center">
+                              Donut & Pie Chart
+                            </div>
+                          </td>
+                        </tr>
+                        @elseif ($loop->iteration == 18)
+                        <tr>
+                          <td>
+                            <div class="text-center">
+                              Pilihan Lain
+                            </div>
+                          </td>
+                        </tr>
+                    @endif
+                        <tr>
+                          <td>{{ $chart->id }}</td>
+                          <td ">{{ $chart->name }}</td>
+                          <td>
+                            @if ($chart->id != 18)
                               <form action="/dashboard/content" method="post">
                                 @csrf
                                 <input type="hidden" value="{{ $chart->id }}" name="chart_id">
@@ -182,14 +214,14 @@
                   <tbody>
                     @foreach ($contents as $content)
                         <tr>
-                          <td scope="row">{{ $loop->iteration }}</td>
+                          <td>{{ $loop->iteration }}</td>
                           <td>{{ $content->chart->id }}</td>
                           <td>{{ $content->chart->name }}</td>
                           <td>{{ $content->card_grid }}</td>
                           <td>
                             <div class="d-flex justify-content-center align-items-center">
                               {{-- Edit cards --}}
-                              @if ($content->chart->id != 1)
+                              @if ($content->chart->id != 18)
                                 <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                   <i class="ri-pencil-fill"></i>
                                 </a>
@@ -477,13 +509,13 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     containerContent.innerHTML += htmlContent;
 
     // add AI analysis for chartId = 8
-    if (chartId === 8 && y_value && x_value) {
+    if (chartId === 20 && y_value && x_value) {
       // Use unique identifier to select elements
       const aiAnalysisElement = `#aiAnalysis${unique}`;
       const placeholderElement = `#placeholder${unique}`;
       if (!result_prompt) { // if there is no result_prompt in the content so do ajax call to do the analysis then asign the result prompt to the content(table in db)
         let inputString = `Please perform data analysis based on ${prompt} on the following data: I have '${x_value}' each with respective totals of '${y_value}' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start dengan kalimat =  Data menunjukkan bahwa.....`
-        console.log(`prompt to api: ${inputString}` );
+        
 
         $(document).ready(function() {
           $.ajax({
@@ -496,8 +528,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             }),
             success: function (response) {
               const result = response.message;
-              console.log("analysis result : " + result)
-
+             
               // Set the result in the HTML element
               $(aiAnalysisElement).text(result);
 
@@ -515,7 +546,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (response) {
-                    console.log("success to update the result_prompt");
+                  
                 },
                 error: function (error) {
                   console.error(error);
@@ -583,34 +614,12 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
 {{-- TABLEAU EMBED --}}
 <script>
-    // window.onbeforeunload = function() {
-    // $(document).ready(function () {
-    //     // Handle the button click event
-    //     $('#ticket-tableau').on('click', function () {
-    //         // Make an Ajax POST request
-    //         $.ajax({
-    //             url: 'https://visualisasi.dpr.go.id/trusted', // Adjust the URL according to your route
-    //             type: 'POST',
-    //             data: {
-    //                 _token: '{{ csrf_token() }}', // Include CSRF token for Laravel
-    //                 username: 'mentee'
-    //             },
-    //             success: function (response) {
-    //                 // Display the response in the specified container
-    //                 $('#response-container').html('<h1>Response Body:</h1><p>' + response + '</p>');
-    //             },
-    //             error: function (xhr, status, error) {
-    //                 console.error(xhr.responseText);
-    //             }
-    //         });
-    //     });
-    // });
     
   let tableauViz, tableau_domain, tableau_link, chart_id, tableau_embed, username;
   @foreach ($contents as $content)
   chart_id = {{ $content->chart_id }}
   // username = {{ $content->username }}
-  if (chart_id == 1) {
+  if (chart_id == 18) {
     tableauViz = document.getElementById(`tableauViz{{ $content->id }}`);
     tableau_domain = '{{ $content->domain_tableau }}';
     tableau_link = '{{ $content->card_description }}';
@@ -620,24 +629,22 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   } else {
       tableau_embed = '{{ $content->domain_tableau }}/{{ $content->card_description }}';
   }
-
-    console.log(tableau_embed);
-
-    
       tableauViz.src = tableau_embed;
   }
   @endforeach
 </script>
 
 {{-- TABLE CUSTOMIZE DASHBOARD CONFIG --}}
-<script src="/lib/gridjs-jquery/gridjs.production.min.js"></script>
 <script>
 
 $("#tablePilihKontent").Grid({
   className: {
     table: 'table table-hover'
   },
-  pagination: true,
+ pagination: {
+    limit:7,
+    summary: false,
+  },
   search: true,
   sort: true,
   resizable: true

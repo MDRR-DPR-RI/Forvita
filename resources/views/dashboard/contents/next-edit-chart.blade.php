@@ -13,7 +13,8 @@
       <div class="row">
           <div class="col-8">
               <label for="card_title" class="form-label">Judul Kartu</label>
-              @if ($content->chart->id == 11)
+              @if ($content->chart->id == 21) 
+              {{-- id for chart=card --}}
                 <input type="text" class="form-control" placeholder="Kartu ini tidak memiliki judul" aria-label="card_title" name="card_title" disabled>
               @else
                 <input type="text" class="form-control" placeholder="Judul" aria-label="card_title" name="card_title" value="{{ $content->card_title }}" required>
@@ -34,7 +35,8 @@
           </div><br>
           <div>
             <label for="card_description" class="form-label">Deskripsi Kartu</label>
-            @if ($content->chart->id == 11)
+              {{-- id for chart=card --}}
+            @if ($content->chart->id == 21 || $content->chart->id == 20)
                 <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Kartu ini tidak memiliki deskripsi" disabled></textarea>
             @else
                 <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Masukan deskripsi kartu disini..." required>{{ $content->card_description }}</textarea>
@@ -57,9 +59,9 @@
                 @endphp
                 <div class="card-body text-center d-flex justify-content-center align-items-center flex-column">
                   <label class="form-label mt-2">Pilih Nilai X data: {{ $value[0]['judul'] }}</label>
-                  @if (in_array($content->chart->id, [1, 2, 3, 4, 7, 9, 13]))
+                  @if (in_array($content->chart->id, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]))
                     <label for="color_picker">Warna :</label>
-                    @if (isset($colors_decodedArray[$i]) && ($colors_decodedArray[$i] !== null))
+                    @if (isset($colors_decodedArray[$i]) && ($colors_decodedArray[$i] !== ""))
                       <input class="btn-icon" type="color" id="color_picker" name="color_picker{{ $i }}" value="{{ $colors_decodedArray[$i] }}">
                     @else
                       <input class="btn-icon" type="color" id="color_picker" name="color_picker{{ $i }}" value="#506fd9">
@@ -95,7 +97,7 @@
                         <th scope="col">Judul</th>
                         <th scope="col">Status Data</th>
                         <th scope="col">Jumlah</th>
-                        @if (in_array($content->chart->id, [5, 10, 14]))
+                        @if (in_array($content->chart->id, [16, 17, 19, 24]))
                           <th scope="col">Warna</th>
                         @endif
                         </tr>
@@ -117,7 +119,7 @@
                          <td>{{ ($clean->newest == 1) ? "Terbaru" : ($clean->created_at)}}</td>
 
                           <td>{{ $clean->jumlah }}</td>
-                          @if (in_array($content->chart->id, [5, 10, 14, 16]))
+                          @if (in_array($content->chart->id, [16, 17, 19, 24]))
                             <td>
                             @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
                               <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker{{ $i }}[]" value="{{ $colors_decodedArray[$loops] }}">
@@ -134,7 +136,7 @@
                     </tbody>
                 </table>    
             @endfor
-            @if ($content->chart_id == 8)
+            @if ($content->chart_id == 20)
                 <div class="text-center">
                 <form id="contentForm" action="/dashboard/content/" method="post">
                   @method('put')
@@ -267,12 +269,10 @@
           })
           
           var clean_date = document.getElementById(`clean_date${i}`)
-          console.log(clean_date.value);
 
           // Listen for changes on the select element
           $(`#clean_date${i}`).change(function () {
               clean_date = $(this).val();
-              console.log(clean_date);
               var trContainer = $(`.table-row${i}`);//trow
               var tbContainer = $(`#table_body${i}`); //tbody
 
@@ -293,15 +293,13 @@
                 method: 'GET',
                 data: { clean_date: clean_date },
                 success: function (data) {
-                  console.log(data.data);
-                  console.log(data.date);
                   trContainer.remove()
                   var colorInput = '';
                   $(`#selectAllCheckbox${i}`).prop('checked', false);
 
                     // Update the items container with the filtered data
                   $.each(data.data, function (index, clean) {
-                    @if (in_array($content->chart->id, [5, 10, 14, 16]))
+                    @if (in_array($content->chart->id, [16, 17, 19, 24]))
                         colorInput = `
                             <td>
                                 <input type="color" id="colorPicker${index + 1}" name="color_picker${i}[]" value="#506fd9" disabled style="display: none">
@@ -321,7 +319,6 @@
                       timeZone: 'UTC'
                     });
 
-                    console.log();
                     var newRow = `
                       <tr class="table-row${i}" data-judul="Item 1">
                         <td>

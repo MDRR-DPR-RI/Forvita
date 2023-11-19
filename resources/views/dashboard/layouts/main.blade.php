@@ -55,6 +55,7 @@
 
   {{-- script for all contents --}}
   <script src="/lib/jquery/jquery.min.js"></script>
+  <script src="/lib/gridjs-jquery/gridjs.production.min.js"></script>
   <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
   <script src="/lib/iconpicker-master/dist/iconpicker.js"></script>

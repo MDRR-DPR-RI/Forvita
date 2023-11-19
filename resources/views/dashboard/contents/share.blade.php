@@ -17,15 +17,8 @@
 <link href="/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     <div class="container mt-3 p-3 p-lg-4">
-      {{-- <div class="container-fluid">
-            <tableau-viz class="mt-3 mb-3" id="tableauViz"></tableau-viz>
-        </div> --}}
         <div class="d-md-flex align-items-center justify-content-between mb-4">
             <div>
-                {{-- <ol class="breadcrumb fs-sm mb-1">
-                <li class="breadcrumb-item"><a href="/cluster">{{ session('cluster_name') }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $item->dashboard->name }}</li>
-                </ol> --}}
                 <h4 class="main-title mb-0">Dashboard {{ $item->dashboard->name }}</h4>
             </div>
             <div class="d-flex gap-2 mt-3 mt-md-0">
@@ -86,13 +79,12 @@
     containerContent.innerHTML += htmlContent;
 
     // add AI analysis for chartId = 8
-    if (chartId === 8 && y_value && x_value) {
+    if (chartId === 20 && y_value && x_value) {
       // Use unique identifier to select elements
       const aiAnalysisElement = `#aiAnalysis${unique}`;
       const placeholderElement = `#placeholder${unique}`;
       if (!result_prompt) { // if there is no result_prompt in the content so do ajax call to do the analysis then asign the result prompt to the content(table in db)
         let inputString = `Please perform data analysis based on ${prompt} on the following data: I have '${x_value}' each with respective totals of '${y_value}' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start dengan kalimat =  Data menunjukkan bahwa.....`
-        console.log(`prompt to api: ${inputString}` );
 
         $(document).ready(function() {
           $.ajax({
@@ -105,7 +97,6 @@
             }),
             success: function (response) {
               const result = response.message;
-              console.log("analysis result : " + result)
 
               // Set the result in the HTML element
               $(aiAnalysisElement).text(result);
@@ -208,9 +199,6 @@
       tableau_embed = '{{ $content->domain_tableau }}/{{ $content->card_description }}';
   }
 
-    console.log(tableau_embed);
-
-    
       tableauViz.src = tableau_embed;
   }
   @endforeach
