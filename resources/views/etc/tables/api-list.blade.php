@@ -26,7 +26,7 @@
         @can('admin')
         <div class="d-flex gap-2 mt-3 mt-md-0">
                 <a href="#importAPIModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
-                    <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import RESTful API
+                    <i class="bi bi-link-45deg"></i>Import RESTful API
                 </a>
         </div>
         <div class="mt-3">
@@ -132,8 +132,8 @@
             {
                 name: "{{$apiList->name}}", 
                 file: "{{$apiList->file}}",
-                status: `{!! $apiList->action ? "<button class='btn btn-success w-50'>create</button>" : "<button class='btn btn-danger w-50'>not create</button>" !!}`, 
-                action: `{!! $apiList->action ? "<a href='". route('restapi.delete',['id'=> $apiList->id ]) ."' class='btn btn-warning w-50'>Delete Table</a>" : "<a href='". route('restapi.create',['id'=> $apiList->id ]) ."' class='btn btn-primary w-50'>Create Table</a>" !!} <br/><a href='{{ route("restapi.remove",['id'=>$apiList->id]) }}' class="mt-2 btn btn-danger w-50">Delete List</a>`},
+                status: `{!! $apiList->action ? "<span class='badge badge-pill bg-success w-80'>Berhasil Dibuat</span>" : "<span class='badge badge-pill bg-danger w-80'>Belum Dijalankan</span>" !!}`, 
+                action: `{!! $apiList->action ? "<a href='". route('restapi.delete',['id'=> $apiList->id ]) ."' class='btn btn-warning w-50'>Hapus Tabel</a>" : "<a href='". route('restapi.create',['id'=> $apiList->id ]) ."' class='btn btn-primary w-50'>Buat Tabel</a>" !!} <br/><a href='{{ route("restapi.remove",['id'=>$apiList->id]) }}' class="mt-2 btn btn-danger w-50">Hapus List</a>`},
         @endforeach
     ];
 
