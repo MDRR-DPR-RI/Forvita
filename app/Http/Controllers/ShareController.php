@@ -23,7 +23,7 @@ class ShareController extends Controller
     // Fetch all contents that in the dashboard
     $contents = Content::where('dashboard_id', $item->dashboard_id)->get();
 
-    $usernames = Content::where('chart_id', 1)->pluck('username_tableau')->unique();
+    $usernames = Content::where('chart_id', 18)->pluck('username_tableau')->unique();
 
     $ticket = ''; // Initialize the ticket variable outside the loop
 
@@ -34,7 +34,7 @@ class ShareController extends Controller
         // Make a POST request
         $response = Http::post('https://visualisasi.dpr.go.id/trusted?username=' . $username);
         $responseBody = $response->body();
-
+        // dd($responseBody);
         // Assuming $responseBody is a string, you might concatenate it if it's an array or handle it accordingly
         $ticket .= $responseBody; // Adjust this based on the actual structure of $responseBody
       }

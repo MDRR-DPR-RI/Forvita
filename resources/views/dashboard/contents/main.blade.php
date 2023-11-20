@@ -567,7 +567,9 @@
   } else {
       tableau_embed = '{{ $content->domain_tableau }}/{{ $content->card_description }}';
   }
-      tableauViz.src = tableau_embed;
+    console.log(tableau_embed);
+
+    tableauViz.src = tableau_embed;
   }
   @endforeach
 </script>

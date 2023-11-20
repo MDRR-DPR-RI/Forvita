@@ -188,7 +188,7 @@
   @foreach ($contents as $content)
   chart_id = {{ $content->chart_id }}
   // username = {{ $content->username }}
-  if (chart_id == 1) {
+  if (chart_id == 18) {
     tableauViz = document.getElementById(`tableauViz{{ $content->id }}`);
     tableau_domain = '{{ $content->domain_tableau }}';
     tableau_link = '{{ $content->card_description }}';
@@ -198,7 +198,7 @@
   } else {
       tableau_embed = '{{ $content->domain_tableau }}/{{ $content->card_description }}';
   }
-
+      console.log(tableau_embed);
       tableauViz.src = tableau_embed;
   }
   @endforeach

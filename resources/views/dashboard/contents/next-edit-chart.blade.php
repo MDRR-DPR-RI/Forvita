@@ -194,7 +194,8 @@
           
           {{-- BUG: when user edit chart and change the stack. the button is not disabled. make it disabled --}}
             @if ( $stackCount == count($x_value_decodedArray))
-              <button type="submit" class="btn btn-primary" id="selesaiBtn">Selesai</button>
+              {{-- <a  href="#validation" data-bs-toggle="modal" type="submit" class="btn btn-primary" id="selesaiBtn">Selesai</a > --}}
+              <button type="submit" class="btn btn-secondary" id="selesaiBtn">Selesai</button>
             @else
               <button type="submit" class="btn btn-secondary" id="selesaiBtn" disabled>Selesai</button>
             @endif
@@ -205,6 +206,40 @@
     </div><!-- main-footer --> --}}
   </div><!-- main-app -->
 </form>
+
+    {{-- MODAL NEW DASHBOARD --}}
+    <div class="modal fade" id="validation" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Validasi Data</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="/dashboard" method="post">
+            @csrf
+            <div class="modal-body text-center">
+                <label>Masukan Nama Dashboard:</label>
+                <input type="text" class="form-control" name="dashboard_name" placeholder="Nama dashboard" autofocus required>
+            </div> 
+          <div class="modal-body text-center">
+              <label>Masukan Deskripsi Dashboard:</label>
+              <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..." required></textarea>
+            </div>
+            <div class="modal-body text-center">
+            <label>Pilih Icon</label>
+              <div class="input-group mb-3">
+                <label class="iconOutputs input-group-text" for="iconInputs">Icon</label>
+                <input type="text" name="icon"  class="iconInputs form-control iconpicker" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" required/>
+              </div>   
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Tambah Dashboard</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
 @endsection
 
