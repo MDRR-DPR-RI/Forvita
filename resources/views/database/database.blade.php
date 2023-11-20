@@ -42,30 +42,36 @@
                         <td>{{ $database->database }}</td>
                         <td>{{ $database->username }}</td>
                         <td>{{ $database->status }}</td>
-                        <td>
+                        <td class="d-flex justify-content-start">
                             {{--Test Database Connection--}}
-                            <a href="/database/test-connection?databaseID={{ $database->id }}" class="btn btn-success">Tes Koneksi</a>
+                            <a href="/database/test-connection?databaseID={{ $database->id }}" class="btn btn-success btn-icon">
+                                <i class="bi bi-database-fill-up" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tes Koneksi"></i>
+                            </a>
 
                             {{--Edit Database--}}
                             <a data-bs-toggle="modal" data-bs-target="#databaseModal"
-                               data-action="edit"
-                               data-bs-databaseID="{{ $database->id }}"
-                               data-bs-databaseName="{{ $database->name }}"
-                               data-bs-databaseUrl="{{ $database->url }}"
-                               data-bs-databaseDriver="{{ $database->driver }}"
-                               data-bs-databaseHost="{{ $database->host }}"
-                               data-bs-databasePort="{{ $database->port }}"
-                               data-bs-databaseDatabase="{{ $database->database }}"
-                               data-bs-databaseUsername="{{ $database->username }}"
-                               data-bs-databasePassword="{{ $database->password }}"
-                               class="btn btn-primary">Ubah</a>
+                            data-action="edit"
+                            data-bs-databaseID="{{ $database->id }}"
+                            data-bs-databaseName="{{ $database->name }}"
+                            data-bs-databaseUrl="{{ $database->url }}"
+                            data-bs-databaseDriver="{{ $database->driver }}"
+                            data-bs-databaseHost="{{ $database->host }}"
+                            data-bs-databasePort="{{ $database->port }}"
+                            data-bs-databaseDatabase="{{ $database->database }}"
+                            data-bs-databaseUsername="{{ $database->username }}"
+                            data-bs-databasePassword="{{ $database->password }}"
+                            class="btn btn-primary btn-icon">
+                                <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah" class="ri-pencil-fill"></i>
+                            </a>
 
                             {{--Delete Database--}}
                             <form action="/database" method="post">
                                 @method('delete')
                                 @csrf
                                 <input type="hidden" name="databaseID" value="{{ $database->id }}">
-                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                <button type="submit" class="btn btn-danger btn-icon" >
+                                    <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus" class="bi bi-trash3"></i>
+                                </button>
                             </form>
                         </td>
                     </tr>
@@ -236,6 +242,10 @@
                 @method('patch')
                 @csrf
                 <button id="databaseModalSubmitButton" type="submit" class="btn btn-primary">Edit Database</button>`
+            })
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
             })
         </script>
 @endsection

@@ -79,9 +79,11 @@
                         <td>localhost</td>
                     @endisset
                     <td>{{ $scheduler->status }}</td>
-                    <td>
+                    <td class="d-flex justify-content-start">
                         {{--Execute Scheduler Query--}}
-                        <a href="/scheduler/execute?schedulerID={{ $scheduler->id }}" class="btn btn-success">Jalankan</a>
+                        <a href="/scheduler/execute?schedulerID={{ $scheduler->id }}" class="btn btn-success btn-icon">
+                            <i class="bi bi-gear" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jalankan"></i>
+                        </a>
 
                         {{--Edit Scheduler--}}
                         <a data-bs-toggle="modal" data-bs-target="#editSchedulerModal"
@@ -92,14 +94,18 @@
 {{--                           @isset($scheduler->database_id)--}}
 {{--                               data-bs-schedulerDatabaseName="{{$scheduler->database->name}}"--}}
 {{--                           @endisset--}}
-                           class="btn btn-primary">Ubah</a>
+                           class="btn btn-primary btn-icon">
+                                <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah" class="ri-pencil-fill"></i>
+                           </a>
 
                         {{--Delete Scheduler--}}
                         <form action="/scheduler" method="post">
                             @method('delete')
                             @csrf
                             <input type="hidden" name="schedulerID" value="{{ $scheduler->id }}">
-                            <button type="submit" class="btn btn-danger">Hapus</button>
+                            <button type="submit" class="btn btn-danger btn-icon">
+                                <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus" class="bi bi-trash3"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>

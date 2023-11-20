@@ -210,18 +210,16 @@ let htmlStructures = {
               <div id="judul"></div><!-- card-title -->
             </div><!-- card-header -->
             <div class="card-body p-4">
-                <div class="col-md-6">
-                  <div class="d-flex">
-                    <div>
-                      <p class="fs-sm text-secondary mb-0" id="aiAnalysis">
-                        <p class="card-text placeholder-glow" id="placeholder">
-                          <span class="placeholder col-12">.............................................................</span>
-                          <span class="placeholder col-18">.............................................................</span>
-                        </p>
+                <div class="d-flex">
+                  <div>
+                    <p class="fs-sm text-secondary mb-0" id="aiAnalysis">
+                      <p class="card-text placeholder-glow" id="placeholder">
+                        <span class="placeholder col-12">.............................................................</span>
+                        <span class="placeholder col-18">.............................................................</span>
                       </p>
-                    </div><!-- div -->
-                  </div><!-- d-flex -->
-                </div><!-- col -->
+                    </p>
+                  </div><!-- div -->
+                </div><!-- d-flex -->
             </div><!-- card-body -->
             
           </div><!-- card -->

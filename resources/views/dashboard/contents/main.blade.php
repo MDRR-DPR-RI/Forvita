@@ -186,7 +186,7 @@
                                 <input type="hidden" value="{{ $chart->id }}" name="chart_id">
                                 <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
                                 <input type="hidden" name="card_grid" value="{{ $chart->grid }}" >
-                                <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah Ke Dashboard"><i class="bi bi-plus-lg"></i></button>
+                                <button type="submit" class="btn btn-primary btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah Ke Dashboard"><i class="bi bi-plus-lg"></i></button>
                               </form>
                               @else
                                 <a href="#modalEmbedTab" class="btn btn-primary" data-bs-toggle="modal"><i class="bi bi-plus-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah Ke Dashboard"></i></a>
@@ -222,7 +222,7 @@
                             <div class="d-flex justify-content-center align-items-center">
                               {{-- Edit cards --}}
                               @if ($content->chart->id != 18)
-                                <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                <a href="/dashboard/content/{{ $content->id }}" class="btn btn-primary btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Ubah">
                                   <i class="ri-pencil-fill"></i>
                                 </a>
                               @endif
@@ -569,9 +569,9 @@
   @endforeach
   $(document).ready(function () {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
     $('a[data-bs-toggle="modal"]').on('click', function () {
 
       // Update the form action attribute with the content ID
