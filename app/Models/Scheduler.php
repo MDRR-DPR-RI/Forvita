@@ -16,7 +16,7 @@ class Scheduler extends Model
             'status',
         ];
     protected $attributes = [
-        'status' => "not executed yet",
+        'status' => "Belum dijalankan.",
         'database_id' => null,
     ];
     public function database(): BelongsTo

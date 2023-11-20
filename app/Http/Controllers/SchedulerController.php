@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clean;
-use App\Models\Dashboard;
 use App\Models\Database;
 use App\Models\Scheduler;
 use Exception;
@@ -46,14 +45,12 @@ class SchedulerController extends Controller
         $scheduler->database_id = $request->input('schedulerDatabaseID');
         $scheduler->save();
 
-        error_log("Updated scheduler with id $updateSchedulerID");
         return redirect('scheduler');
     }
     public function destroy(Request $request): RedirectResponse
     {
         $deleteSchedulerID = $request->input('schedulerID');
         Scheduler::destroy($deleteSchedulerID);
-        error_log("deleted scheduler with id $deleteSchedulerID");
         return redirect('scheduler');
     }
     public function execute(Request $request)
@@ -89,13 +86,12 @@ class SchedulerController extends Controller
             }
         } catch (Exception $ex) {
             $errorMessage = substr($ex, 0, 200);
-            error_log("Failed to execute query: " . $errorMessage);
-            $scheduler->status = "Failed to run: " . $errorMessage;
+            $scheduler->status = "Gagal menjalankan: " . $errorMessage;
             $scheduler->save();
             return redirect('scheduler');
         }
 
-        $scheduler->status = "Ran successfully!";
+        $scheduler->status = "Berhasil dijalankan!";
         $scheduler->save();
         return redirect('scheduler');
     }
