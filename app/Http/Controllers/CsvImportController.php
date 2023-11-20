@@ -9,8 +9,12 @@ use App\Models\ListImport;
 
 class CsvImportController extends Controller
 {
-    public function show(){
-        return view('etc.tables.csv-file', ['csvFiles'=> ListImport::all()]);
+    public function show()
+    {
+        return view('etc.tables.csv-file', [
+            'csvFiles' => ListImport::where('type', 'csv')
+                ->get()
+        ]);
     }
     public function import(Request $request)
     {
@@ -32,29 +36,31 @@ class CsvImportController extends Controller
         // Ambil nama tabel dari input pengguna
         $tableName = $request->input('tableName');
 
-        if(Schema::hasTable($tableName)){
+        if (Schema::hasTable($tableName)) {
             return redirect()->back()->with('deleted', 'Failed to import! The name is exits from tables!');
         }
 
         $isExists = ListImport::where('name', $tableName)->exists();
-        if($isExists){
+        if ($isExists) {
             return redirect()->back()->with('deleted', 'CSV imported failed because data is exits!');
-        }else{
+        } else {
             DB::table('list_imports')->insert([
-                'name'=>$tableName,
-                'file'=>$fileName
+                'name' => $tableName,
+                'file' => $fileName,
+                'type' => 'csv',
             ]);
 
             return redirect()->back()->with('success', 'CSV imported successfully with name : ' . $tableName);
         }
     }
 
-    public function createTable(Request $request){
+    public function createTable(Request $request)
+    {
         // Coba membuat tabel baru
         $request->validate(['id' => 'required']);
         $idImport = $request->query('id');
         $data = ListImport::find($idImport);
-        if($data){
+        if ($data) {
             $tableName = $data->name;
             $fileName = $data->file;
             $filePath = storage_path("app/csv/{$fileName}");
@@ -80,7 +86,7 @@ class CsvImportController extends Controller
 
                 // Hapus file CSV setelah selesai diimpor
                 // unlink($filePath);
-                $data->action=1;
+                $data->action = 1;
                 $data->save();
 
                 // Redirect atau kembalikan respon yang diinginkan
@@ -88,28 +94,49 @@ class CsvImportController extends Controller
             } catch (\Exception $e) {
                 // Tangani semua jenis pengecualian dan abaikan pesan error
                 // unlink($filePath); // Hapus file CSV karena tidak digunakan
-                $data->action=1;
+                $data->action = 1;
                 $data->save();
                 return redirect()->back()->with('success', 'CSV imported successfully and new table created: ' . $e);
             }
-        }else{
-            return redirect()->back()->with('deleted', 'Data not valid!');            
+        } else {
+            return redirect()->back()->with('deleted', 'Data not valid!');
         }
     }
 
-    public function deleteTable(Request $request){
+    public function removeTable(Request $request)
+    {
         // Coba membuat tabel baru
         $request->validate(['id' => 'required']);
         $idImport = $request->query('id');
         $data = ListImport::find($idImport);
-        if($data){
+        if ($data) {
             // Tangani semua jenis pengecualian dan abaikan pesan error
             $filePath = storage_path("app/csv/{$data->file}");
             unlink($filePath); // Hapus file CSV karena tidak digunakan
             $data->delete();
             return redirect()->back()->with('success', 'CSV file success deleted!');
-        }else{
-            return redirect()->back()->with('deleted', 'Data not valid!');            
+        } else {
+            return redirect()->back()->with('deleted', 'Data not valid!');
+        }
+    }
+
+    public function deleteTable(Request $request)
+    {
+        // Coba membuat tabel baru
+        $request->validate(['id' => 'required']);
+        $idImport = $request->query('id');
+        $data = ListImport::find($idImport);
+        if ($data) {
+            try {
+                Schema::dropIfExists($data->name);
+                $data->action = 0;
+                $data->save();
+                return redirect()->back()->with('success', 'CSV table success deleted!');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('success', 'CSV table error deleted!');
+            }
+        } else {
+            return redirect()->back()->with('deleted', 'Data not valid!');
         }
     }
 }

@@ -25,8 +25,8 @@
     <div class="main main-app p-3 p-lg-4">
         @can('admin')
         <div class="d-flex gap-2 mt-3 mt-md-0">
-                <a href="#importCSVModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
-                    <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import CSV
+                <a href="#importAPIModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
+                    <i class="bi bi-link-45deg"></i>Import RESTful API
                 </a>
         </div>
         <div class="mt-3">
@@ -61,26 +61,31 @@
         </table>
         @endcan
     </div>
-    {{-- Modal untuk Impor CSV --}}
-    <div class="modal fade" id="importCSVModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+    {{-- Modal untuk Impor From RESTful API --}}
+    <div class="modal fade" id="importAPIModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="importModalLabel">Import CSV File</h5>
+                    <h5 class="modal-title" id="importModalLabel">Import from RESTful API</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('import.csv') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('import.api') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
+                          Example url
+                            <ol class="list-group list-group-numbered">
+                              <li class="list-group-item">https://catfact.ninja/fact</li>
+                              <li class="list-group-item">https://www.dpr.go.id/rest/?method=getAgendaPerBulan&tahun=2015&bulan=02&tipe=json</li>
+                            </ol>
                             <label for="tableName" class="form-label">Table Name</label>
                             <input class="form-control" type="text" id="tableName" name="tableName" required>
                         </div>
                         <div class="mb-3">
-                            <label for="csvFile" class="form-label">Choose CSV File</label>
-                            <input class="form-control" type="file" id="csvFile" name="csvFile" accept=".csv" required>
+                            <label for="api_url" class="form-label">Enter URL</label>
+                            <input class="form-control" type="text" id="api_url" name="api_url" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Import CSV</button>
+                        <button type="submit" class="btn btn-primary">Import</button>
                     </form>
                 </div>
             </div>
@@ -123,12 +128,12 @@
 
     //   data
     var localData = [
-        @foreach($csvFiles as $csvFile)
+        @foreach($apiLists as $apiList)
             {
-                name: "{{$csvFile->name}}", 
-                file: "{{$csvFile->file}}",
-                status: `{!! $csvFile->action ? "<span class='badge badge-pill bg-success w-50'>Berhasil Dibuat</span>" : "<span class='badge badge-pill bg-danger w-50'>Belum Dijalankan</span>" !!}`, 
-                action: `{!! $csvFile->action ? "<a href='". route('csv.delete',['id'=> $csvFile->id ]) ."' class='btn btn-warning w-50'>Hapus Tabel</a>" : "<a href='". route('csv.create',['id'=> $csvFile->id ]) ."' class='btn btn-primary w-50'>Buat Tabel</a>" !!} <br/><a href='{{ route("csv.remove",['id'=>$csvFile->id]) }}' class="mt-2 btn btn-danger w-50">Hapus File</a>`},
+                name: "{{$apiList->name}}", 
+                file: "{{$apiList->file}}",
+                status: `{!! $apiList->action ? "<span class='badge badge-pill bg-success w-80'>Berhasil Dibuat</span>" : "<span class='badge badge-pill bg-danger w-80'>Belum Dijalankan</span>" !!}`, 
+                action: `{!! $apiList->action ? "<a href='". route('restapi.delete',['id'=> $apiList->id ]) ."' class='btn btn-warning w-50'>Hapus Tabel</a>" : "<a href='". route('restapi.create',['id'=> $apiList->id ]) ."' class='btn btn-primary w-50'>Buat Tabel</a>" !!} <br/><a href='{{ route("restapi.remove",['id'=>$apiList->id]) }}' class="mt-2 btn btn-danger w-50">Hapus List</a>`},
         @endforeach
     ];
 

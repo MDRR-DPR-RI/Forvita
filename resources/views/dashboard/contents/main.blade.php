@@ -34,12 +34,6 @@
                 
             <div class="d-flex gap-2 mt-3 mt-md-0">
               @can('admin')
-                  <a href="{{ route('csv') }}" class="btn btn-primary d-flex align-items-center gap-2">
-                        <i class="ri-file-excel-2-line fs-18 lh-1"></i>Impor CSV
-                  </a>
-                  <a href="#importAPIModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
-                        <i class="ri-file-excel-2-line fs-18 lh-1"></i>Impor RESTful API
-                  </a>
                   <a href="#modalShare" class="btn btn-white d-flex align-items-center gap-2" data-bs-toggle="modal"><i class="ri-global-line fs-18 lh-1"></i>Publik</a>
                   <button class="btn btn-white d-flex align-items-center gap-2" id="capture"><i class="bi bi-download fs-18 lh-1"></i>PNG</button>
                   <a href="#modal3" class="btn btn-primary d-flex align-items-center gap-2"  data-bs-toggle="modal"><i class="ri-bar-chart-2-line fs-18 lh-1"></i>Kustomisasi<span class="d-none d-sm-inline">Dashboard</span></a>
@@ -341,63 +335,6 @@
                             </div>
                           </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- Modal untuk Impor CSV --}}
-    <div class="modal fade" id="importCSVModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="importModalLabel">Import CSV File</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('import.csv') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="tableName" class="form-label">Table Name</label>
-                            <input class="form-control" type="text" id="tableName" name="tableName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="csvFile" class="form-label">Choose CSV File</label>
-                            <input class="form-control" type="file" id="csvFile" name="csvFile" accept=".csv" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Import CSV</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- Modal untuk Impor From RESTful API --}}
-    <div class="modal fade" id="importAPIModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="importModalLabel">Import from RESTful API</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('import.api') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="mb-3">
-                          Example url
-                            <ol class="list-group list-group-numbered">
-                              <li class="list-group-item">https://catfact.ninja/fact</li>
-                              <li class="list-group-item">https://www.dpr.go.id/rest/?method=getAgendaPerBulan&tahun=2015&bulan=02&tipe=json</li>
-                            </ol>
-                            <label for="tableName" class="form-label">Table Name</label>
-                            <input class="form-control" type="text" id="tableName" name="tableName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="api_url" class="form-label">Enter URL</label>
-                            <input class="form-control" type="text" id="api_url" name="api_url" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Import</button>
                     </form>
                 </div>
             </div>

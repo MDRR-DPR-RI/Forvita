@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("name");
             $table->string("file");
             $table->boolean("action")->default(false);
+            $table->string("type");
             $table->timestamps();
         });
     }
