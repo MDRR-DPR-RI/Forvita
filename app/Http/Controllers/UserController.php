@@ -38,7 +38,9 @@ class UserController extends Controller
             if ($storedFilePath) {
                 // TODO: These are not atomic, there is a possibility that the
                 // file is stored but the database is not updated
-                Storage::delete($user->profile_photo_path);
+                if ($user->profile_photo_path) {
+                    Storage::delete($user->profile_photo_path);
+                }
                 $updated_fields['profile_photo_path'] = $storedFilePath;
             }
         }
