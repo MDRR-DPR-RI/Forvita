@@ -10,7 +10,7 @@ var possible_map_input = {
     path09: ['kep.bangkabelitung', 'kep.babel', 'bangkabelitung', 'babel', 'bangkabelitunng', 'bangkabeliitung', 'bangkabelitug', 'bangkabeliitungg', 'bangkabelitnug', 'bangkabeitung', 'bangkabelitnugg', 'bangkabelitun', 'bangkabelitumg', 'bangkabelittung'],
     path10: ['kepulauanriau','kep.kepulauanriau', 'kep.riau', 'kepri', 'kepulauanria', 'kepulauanriay', 'kepulauanriaw', 'kepulauanjriau', 'kepulauanrai', 'kepulauanriaa', 'kepulauanriai', 'kepulauanriak', 'kepulauanroau', 'kepulauanriua'],
     path11: ['jakarta', 'dkijakarta', 'dkijkt', 'dki', 'jakrta', 'jakartaa', 'jaakarta', 'jakartat', 'jkaarta', 'jakata', 'jakarat', 'jakatra', 'djikarta', 'jakart'],
-    path12: ['jawabarat', 'jabar', 'jawabarat', 'jawbar', 'jwabarat', 'jawabrata', 'jwabarrat', 'jwabaraat', 'jawabart', 'jawabbarat', 'jawabratt', 'jawabrataa', 'jawabrta', 'jawabaratt'],
+    path12: ['jawabarat', 'jabar', 'jawbar', 'jwabarat', 'jawabrata', 'jwabarrat', 'jwabaraat', 'jawabart', 'jawabbarat', 'jawabratt', 'jawabrataa', 'jawabrta', 'jawabaratt'],
     path13: ['jawatengah', 'jateng', 'jawatenga', 'jawatengahh', 'jawatenggah', 'jawatengaha', 'jawateengah', 'jawatengahg', 'jawateenggah', 'jawatengahj', 'jawatengaha', 'jawatengahn'],
     path14: ['banten', 'bt', 'bantn', 'baten', 'bantenn', 'batenn', 'batennn', 'bantenm', 'bantten', 'banttenn', 'banteen', 'bantn'],
     path15: ['jawatimur', 'jatim', 'jawatimurr', 'jawatimr', 'jawatimura', 'jawatimmur', 'jawatimu', 'jawattimur', 'jawatimuurr', 'jawatimuhr', 'jawatimuara', 'jawatimuur'],

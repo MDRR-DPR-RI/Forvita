@@ -321,22 +321,44 @@ function appendDescriptionToCard(containerSelector, card_description) {
   judulContainer.appendChild(newElement);// asign the element to the content
 }
 
+function mergeArrays(x, y) {
+  // Find the union of all keys in subarrays of x
+  const allKeys = [...new Set(x.flat())];
+
+  // Create the new arrays
+  const resultX = Array.from({ length: x.length }, () => [...allKeys]);
+  const resultY = Array.from({ length: y.length }, () => Array(allKeys.length).fill(0));
+
+  // Fill in the values from the original arrays
+  for (let i = 0; i < x.length; i++) {
+    for (let j = 0; j < x[i].length; j++) {
+      const key = x[i][j];
+      const value = y[i][j];
+      const index = resultX[i].indexOf(key);
+      resultY[i][index] = value;
+    }
+  }
+
+  return { x: resultX, y: resultY };
+}
+
+
 // Loop through the contents array to find the matching chart_id
   for (var i = 0; i < contents.length; i++) {
-    let maxValue;
+
+    const result = mergeArrays(JSON.parse(contents[i].x_value), JSON.parse(contents[i].y_value));
+    
+    const judul = JSON.parse(contents[i].judul)
+    let xAxis = result.x[0]
+    const yAxis = result.y
+    const colors = JSON.parse(contents[i].color)
+
     if (contents[i].chart_id === 1) { // Line Chart
 
       appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -346,7 +368,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionLine.series.push(newSeries);
       }
-      optionLine.xaxis.categories = xAxis[0];
+      optionLine.xaxis.categories = xAxis;
       optionLine.colors = colors;
       optionLine.chart.type = 'line'; // type line chart
       optionLine.stroke.curve = 'straight'; 
@@ -363,13 +385,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -379,12 +394,11 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionLine.series.push(newSeries);
       }
-      optionLine.xaxis.categories = xAxis[0];
+      optionLine.xaxis.categories = xAxis;
       optionLine.colors = colors;
       optionLine.chart.type = 'line'; // type line chart
       optionLine.stroke.curve = 'smooth'; 
       
-
       var lineArea = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionLine );
       lineArea.render();
       optionLine.series = [];
@@ -396,13 +410,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -412,12 +419,11 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionLine.series.push(newSeries);
       }
-      optionLine.xaxis.categories = xAxis[0];
+      optionLine.xaxis.categories = xAxis;
       optionLine.colors = colors;
       optionLine.chart.type = 'line'; // type area chart
       optionLine.stroke.curve = 'stepline'; 
       
-
       var lineArea = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionLine );
       lineArea.render();
       optionLine.series = [];
@@ -429,13 +435,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -445,12 +444,11 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionLine.series.push(newSeries);
       }
-      optionLine.xaxis.categories = xAxis[0];
+      optionLine.xaxis.categories = xAxis;
       optionLine.colors = colors;
       optionLine.chart.type = 'area'; // type area chart
       optionLine.stroke.curve = 'straight'; 
       
-
       var lineArea = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionLine );
       lineArea.render();
       optionLine.series = [];
@@ -462,13 +460,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -478,7 +469,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionLine.series.push(newSeries);
       }
-      optionLine.xaxis.categories = xAxis[0];
+      optionLine.xaxis.categories = xAxis;
       optionLine.colors = colors;
       optionLine.chart.type = 'area'; // type area chart
       optionLine.stroke.curve = 'smooth'; 
@@ -495,13 +486,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -511,12 +495,11 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionLine.series.push(newSeries);
       }
-      optionLine.xaxis.categories = xAxis[0];
+      optionLine.xaxis.categories = xAxis;
       optionLine.colors = colors;
       optionLine.chart.type = 'area'; // type area chart
       optionLine.stroke.curve = 'stepline'; 
       
-
       var lineArea = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionLine );
       lineArea.render();
       optionLine.series = [];
@@ -528,13 +511,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -544,7 +520,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionBarSide.series.push(newSeries);
       }
-      optionBarSide.xaxis.categories = xAxis[0];
+      optionBarSide.xaxis.categories = xAxis;
       optionBarSide.colors = colors;
 
       var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
@@ -558,14 +534,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
-      // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
         var newSeries = {
@@ -574,7 +542,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionBarSideRev.series.push(newSeries);
       }
-      optionBarSideRev.xaxis.categories = xAxis[0];
+      optionBarSideRev.xaxis.categories = xAxis;
       optionBarSideRev.colors = colors;
       // optionBarSideRev.chart.stacked = true;
 
@@ -589,13 +557,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionFour
-
-      let judul = JSON.parse(contents[i].judul)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let colors = JSON.parse(contents[i].color)
-
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -607,7 +568,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
       }
 
       // asign the value to the chart configuration
-      optionBarSide.xaxis.categories = xAxis[0];
+      optionBarSide.xaxis.categories = xAxis;
       optionBarSide.colors = colors;
       optionBarSide.plotOptions.bar.borderRadius = 15;
 
@@ -623,13 +584,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
      // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -639,7 +593,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionBarSideRev.series.push(newSeries);
       }
-      optionBarSideRev.xaxis.categories = xAxis[0];
+      optionBarSideRev.xaxis.categories = xAxis;
       optionBarSideRev.colors = colors;
       optionBarSideRev.plotOptions.bar.borderRadius = 15;
 
@@ -655,13 +609,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -671,7 +618,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionBarSide.series.push(newSeries);
       }
-      optionBarSide.xaxis.categories = xAxis[0];
+      optionBarSide.xaxis.categories = xAxis;
       optionBarSide.colors = colors;
       optionBarSide.chart.stacked = true;
 
@@ -688,13 +635,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
      // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -704,7 +644,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionBarSideRev.series.push(newSeries);
       }
-      optionBarSideRev.xaxis.categories = xAxis[0];
+      optionBarSideRev.xaxis.categories = xAxis;
       optionBarSideRev.colors = colors;
       optionBarSideRev.chart.stacked = true;
 
@@ -722,13 +662,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -738,7 +671,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionBarSide.series.push(newSeries);
       }
-      optionBarSide.xaxis.categories = xAxis[0];
+      optionBarSide.xaxis.categories = xAxis;
       optionBarSide.colors = colors;
       optionBarSide.plotOptions.bar.horizontal = false;
 
@@ -748,7 +681,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
       optionBarSide.series = [];
       optionBarSide.plotOptions.bar.horizontal = true;
 
-      
     } 
     else if (contents[i].chart_id === 14) { // Column chart with border radius
 
@@ -756,13 +688,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
      // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -772,7 +697,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionBarSide.series.push(newSeries);
       }
-      optionBarSide.xaxis.categories = xAxis[0];
+      optionBarSide.xaxis.categories = xAxis;
       optionBarSide.colors = colors;
       optionBarSide.plotOptions.bar.borderRadius = 15;
       optionBarSide.plotOptions.bar.horizontal = false;
@@ -784,7 +709,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
       optionBarSide.plotOptions.bar.borderRadius = 0;
       optionBarSide.plotOptions.bar.horizontal = true;
 
-      
     } 
     else if (contents[i].chart_id === 15) { // Stacked Column Chart
 
@@ -792,13 +716,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -808,11 +725,10 @@ function appendDescriptionToCard(containerSelector, card_description) {
         };
         optionBarSide.series.push(newSeries);
       }
-      optionBarSide.xaxis.categories = xAxis[0];
+      optionBarSide.xaxis.categories = xAxis;
       optionBarSide.colors = colors;
       optionBarSide.plotOptions.bar.horizontal = false;
       optionBarSide.chart.stacked = true;
-
 
       var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
       chartBar.render();
@@ -821,7 +737,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
       optionBarSide.plotOptions.bar.horizontal = true;
       optionBarSide.chart.stacked = false;
 
-      
     } 
     else if (contents[i].chart_id === 16) { // Donut chart
 
@@ -829,15 +744,8 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-
-      // Assign the value to optionEigt
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-      let colors = JSON.parse(contents[i].color)
-
-      
       // asign the value to the chart configuration
-      optionDonut.labels = xAxis[0];
+      optionDonut.labels = xAxis;
       optionDonut.series = yAxis[0];
       optionDonut.chart.type = 'donut';
       optionDonut.colors = colors;
@@ -851,15 +759,11 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let xAxis = JSON.parse(contents[i].x_value)
-      let yAxis = JSON.parse(contents[i].y_value)
-
-      
       // asign the value to the chart configuration
-      optionDonut.labels = xAxis[0];
+      optionDonut.labels = xAxis;
       optionDonut.series = yAxis[0];
       optionDonut.chart.type = 'pie';
+      optionDonut.colors = colors;
 
       var chartPie = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionDonut);
       chartPie.render();
@@ -885,24 +789,21 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let judul = JSON.parse(contents[i].judul)[0]
-      let xAxis = JSON.parse(contents[i].x_value)[0]
-      let yAxis = JSON.parse(contents[i].y_value)[0]
-      let colors = JSON.parse(contents[i].color)
-      
       var mapColor = {}
-      var index = 0
       for (var code in possible_map_input) {
-        const province = xAxis[index] ? xAxis[index].replace(/\s/g, '').toLowerCase() : '';;
-        if (possible_map_input[code].includes(province)) {
-          var newObj = {
-            [code]: colors[index],
-          };
-          Object.assign(mapColor, newObj);
-          index++
+        for (let index = 0; index < xAxis.length; index++) {
+          const province = xAxis[index] ? xAxis[index].replace(/\s/g, '').toLowerCase() : ''; 
+          console.log(province);
+          if (possible_map_input[code].includes(province)) {
+            var newObj = {
+              [code]: colors[index],
+            };
+            Object.assign(mapColor, newObj);
+            index++
+          }
         }
       }
+      console.log(mapColor);
       // console.log(possible_map_input['path01']); // Output: ['aceh', 'ac']
       $(`#content${contents[i].id}`).vectorMap({
           map: 'indonesia_id',
@@ -919,7 +820,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
           scaleColors: ['#C8EEFF', '#006491'],
           onRegionOver: function(event, code, region)
           {
-            // console.log(code);
+            console.log(code);
             // console.log(region);
           },
           onLabelShow: function(event, label, code)
@@ -927,7 +828,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
               for (let index = 0; index < xAxis.length; index++) {
                 const province = xAxis[index].replace(/\s/g, '').toLowerCase();
                 if (possible_map_input[code].includes(province)) {
-                  label.text(judul + '. -' + xAxis[index] + " : " + yAxis[index]) 
+                  label.text(judul[0] + '. -' + xAxis[index] + " : " + yAxis[0][index]) 
                 }
               }
           },
@@ -945,24 +846,21 @@ function appendDescriptionToCard(containerSelector, card_description) {
     } 
     else if (contents[i].chart_id === 21) { // card
 
-      const y_value = JSON.parse(contents[i].y_value)[0];
-      const x_value = JSON.parse(contents[i].x_value)[0];
-
       // reference to the card container element
       const cardContainer = document.querySelector(`#content${contents[i].id}`);
 
       // Clear any previous content
       cardContainer.innerHTML = '';
 
-      // Iterate over the elements based on y_value.length
-      for (let j = 0; j < y_value.length; j++) {
+      // Iterate over the elements based on yAxis[0].length
+      for (let j = 0; j < yAxis[0].length; j++) {
         const newElement = document.createElement('div');
         newElement.className = 'col-6 col-sm';
         newElement.innerHTML = `
           <div class="card card-one">
             <div class="card-body p-3">
-              <h1 class="card-value mb-0 ls--1 fs-32" id="card-val">${y_value[j]}</h1>
-              <label class="d-block mb-1 fw-medium text-dark">${x_value[j]}</label>
+              <h1 class="card-value mb-0 ls--1 fs-32" id="card-val">${xAxis[j]}</h1>
+              <label class="d-block mb-1 fw-medium text-dark">${yAxis[0][j]}</label>
             </div>
           </div>
         `;
@@ -976,10 +874,6 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-
-      const y_value = JSON.parse(contents[i].y_value)[0];
-      const x_value = JSON.parse(contents[i].x_value)[0];
-
       // reference to the card container element
       const tableDataContainer = document.querySelector(`#content${contents[i].id}`);
 
@@ -987,13 +881,13 @@ function appendDescriptionToCard(containerSelector, card_description) {
       tableDataContainer.innerHTML = '';
 
       // Iterate over the elements based on y_value.length
-      for (let j = 0; j < y_value.length; j++) {
+      for (let j = 0; j < xAxis.length; j++) {
         const newElement = document.createElement('tr');
         newElement.className = 'table-row';
         newElement.innerHTML = `
         <td scope="row">${j+1}</td>
-        <td>${x_value[j]}</td>
-        <td>${y_value[j]}</td>
+        <td>${xAxis[j]}</td>
+        <td>${yAxis[0][j]}</td>
         `;
         tableDataContainer.appendChild(newElement); // asign the element to the content
       }
@@ -1004,11 +898,7 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionEigt
-      let xAxis = JSON.parse(contents[i].x_value)[0]
-      let yAxis = JSON.parse(contents[i].y_value)[0]
-
-      let max = Math.max(...yAxis);
+      let max = Math.max(...yAxis[0]);
       // reference to the card container element
       const contentContainer = document.querySelector(`#content${contents[i].id}`);
 
@@ -1016,14 +906,14 @@ function appendDescriptionToCard(containerSelector, card_description) {
       contentContainer.innerHTML = '';
 
       // Iterate over the elements based on y_value.length
-      for (let j = 0; j < yAxis.length; j++) {
-        let gray = max == yAxis[j] // find if max or not, if then make the circle = bg-gray 
+      for (let j = 0; j < yAxis[0].length; j++) {
+        let gray = max == yAxis[0][j] // find if max or not, if then make the circle = bg-gray 
         const newElement = document.createElement('div');
         newElement.className = 'col-6 col-sm-4 col-md';
         newElement.innerHTML = `
           <div class="finance-item">
             <div class="finance-item-circle ${gray ? 'bg-gray-400' : ''}">
-              <h1>${yAxis[j]}</h1>
+              <h1>${yAxis[0][j]}</h1>
               <label class="text-center">${xAxis[j]}</label>
             </div><!-- finance-item-circle -->
           </div><!-- finance-item --> `;
@@ -1046,15 +936,8 @@ function appendDescriptionToCard(containerSelector, card_description) {
 
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
-      // Assign the value to optionFour
-
-      let judul = JSON.parse(contents[i].judul)[0]
-      let yAxis = JSON.parse(contents[i].y_value)[0]
-      let xAxis = JSON.parse(contents[i].x_value)[0]
-      let colors = JSON.parse(contents[i].color)
-
       // asign the value to the chart configuration
-      optionRadial.series = yAxis;
+      optionRadial.series = yAxis[0];
       optionRadial.labels = xAxis;
       optionRadial.colors = colors;
 
@@ -1062,238 +945,4 @@ function appendDescriptionToCard(containerSelector, card_description) {
       radialBar.render();
 
     }
-
-    // else if (contents[i].chart_id === 2) { // Column bar chart
-
-    //   appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-    //   appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
-    //   // Assign the value to optionEigt
-    //   let judul = JSON.parse(contents[i].judul)
-    //   let xAxis = JSON.parse(contents[i].x_value)
-    //   let yAxis = JSON.parse(contents[i].y_value)
-    //   let colors = JSON.parse(contents[i].color)
-
-    //   
-    //   // asign the value to the chart configuration
-    //   for (let index = 0; index < judul.length; index++) {
-    //     // Create a new series object
-    //     var newSeries = {
-    //       name: judul[index], // Set the new name
-    //       data: yAxis[index]    // Set the new data
-    //     };
-    //     optionColumn.series.push(newSeries);
-    //   }
-    //   optionColumn.xaxis.categories = xAxis[0];
-    //   optionColumn.colors = colors;
-
-    //   var chartColumn = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionColumn);
-    //   chartColumn.render();
-    //   optionColumn.series = [];
-    //   
-    // } 
-    // else if (contents[i].chart_id === 3) { // Stacked bar chart
-
-    //   appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-    //   appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
-    //   // Assign the value to optionEigt
-    //   let judul = JSON.parse(contents[i].judul)
-    //   let xAxis = JSON.parse(contents[i].x_value)
-    //   let yAxis = JSON.parse(contents[i].y_value)
-    //   let colors = JSON.parse(contents[i].color)
-    //   console.log(colors);
-
-    //   
-    //   // asign the value to the chart configuration
-    //   for (let index = 0; index < judul.length; index++) {
-    //     // Create a new series object
-    //     var newSeries = {
-    //       name: judul[index], // Set the new name
-    //       data: yAxis[index]    // Set the new data
-    //     };
-    //     optionStacked.series.push(newSeries);
-    //   }
-    //   optionStacked.colors = colors;
-    //   optionStacked.xaxis.categories = xAxis[0];
-
-    //   var stackedBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionStacked );
-    //   stackedBar.render();
-    //   optionStacked.series = [];
-    //   
-    // } 
-    // else if (contents[i].chart_id === 5) { // bar chart with border radius
-
-    //   appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-    //   appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
-    //   // Assign the value to optionFour
-
-    //   let judul = JSON.parse(contents[i].judul)[0]
-    //   let yAxis = JSON.parse(contents[i].y_value)[0]
-    //   let xAxis = JSON.parse(contents[i].x_value)[0]
-    //   let colors = JSON.parse(contents[i].color)
-
-    //   var newSeries = {
-    //       name: judul, // Set the new name
-    //       data: yAxis    // Set the new data
-    //   };
-    //   optionStacked.series.push(newSeries);
-    //   // asign the value to the chart configuration
-    //   optionStacked.xaxis.categories = xAxis;
-    //   optionStacked.colors = colors;
-    //   optionStacked.plotOptions.bar.borderRadius = 12;
-
-    //   var barRadius = new ApexCharts(document.querySelector('#content' + contents[i].id), optionStacked);
-    //   barRadius.render();
-
-    //   optionLine.series = [];
-    // }
-   
-    // else if (contents[i].chart_id === 7) { // Stacked Side Bar Chart
-
-    //   appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-    //   appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
-    //   // Assign the value to optionEigt
-    //   let judul = JSON.parse(contents[i].judul)
-    //   let xAxis = JSON.parse(contents[i].x_value)
-    //   let yAxis = JSON.parse(contents[i].y_value)
-    //   let colors = JSON.parse(contents[i].color)
-
-    //   
-    //   // asign the value to the chart configuration
-    //   for (let index = 0; index < judul.length; index++) {
-    //     // Create a new series object
-    //     var newSeries = {
-    //       name: judul[index], // Set the new name
-    //       data: yAxis[index]    // Set the new data
-    //     };
-    //     optionBarSide.series.push(newSeries);
-    //   }
-    //   optionBarSide.xaxis.categories = xAxis[0];
-    //   optionBarSide.colors = colors;
-    //   optionBarSide.chart.stacked = true;
-
-    //   var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
-    //   chartBar.render();
-    //   optionBarSide.series = [];
-    //   
-    // } 
-   
-    // else if (contents[i].chart_id === 9) { // Line Chart
-
-    //   appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-    //   appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-    //   // Assign the value to optionEigt
-    //   let judul = JSON.parse(contents[i].judul)
-    //   let xAxis = JSON.parse(contents[i].x_value)
-    //   let yAxis = JSON.parse(contents[i].y_value)
-    //   let colors = JSON.parse(contents[i].color)
-
-    //   
-    //   // asign the value to the chart configuration
-
-    //   for (let index = 0; index < judul.length; index++) {
-    //     // Create a new series object
-    //     var newSeries = {
-    //       name: judul[index], // Set the new name
-    //       data: yAxis[index]    // Set the new data
-    //     };
-    //     optionLine.series.push(newSeries);
-    //   }
-    //   optionLine.xaxis.categories = xAxis[0];
-    //   optionLine.colors = colors;
-    //   optionLine.chart.type = 'line'; // type line chart
-    //   optionLine.stroke.curve = 'straight'; 
-
-    //   var chartLine = new ApexCharts(document.querySelector('#content' + contents[i].id), optionLine);
-    //   chartLine.render();
-    //   optionLine.series = [];
-    //   
-    // } 
-    // else if (contents[i].chart_id === 10) { // Donut chart
-
-    //   appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-    //   appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
-
-    //   // Assign the value to optionEigt
-    //   let xAxis = JSON.parse(contents[i].x_value)
-    //   let yAxis = JSON.parse(contents[i].y_value)
-    //   let colors = JSON.parse(contents[i].color)
-
-    //   
-    //   // asign the value to the chart configuration
-    //   optionDonut.labels = xAxis[0];
-    //   optionDonut.series = yAxis[0];
-    //   optionDonut.chart.type = 'donut';
-    //   optionDonut.colors = colors;
-
-    //   var chartDonut = new ApexCharts(document.querySelector('#content' + contents[i].id), optionDonut);
-    //   chartDonut.render();
-    // } 
-    
-   
-    // else if (contents[i].chart_id === 13) { // Side Bar Chart
-
-    //   appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-    //   appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
-    //   // Assign the value to optionEigt
-    //   let judul = JSON.parse(contents[i].judul)
-    //   let xAxis = JSON.parse(contents[i].x_value)
-    //   let yAxis = JSON.parse(contents[i].y_value)
-    //   let colors = JSON.parse(contents[i].color)
-
-    //   
-    //   // asign the value to the chart configuration
-    //   for (let index = 0; index < judul.length; index++) {
-    //     // Create a new series object
-    //     var newSeries = {
-    //       name: judul[index], // Set the new name
-    //       data: yAxis[index]    // Set the new data
-    //     };
-    //     optionBarSide.series.push(newSeries);
-    //   }
-    //   optionBarSide.xaxis.categories = xAxis[0];
-    //   optionBarSide.colors = colors;
-
-    //   var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
-    //   chartBar.render();
-
-    //   optionBarSide.series = [];
-    //   
-    // } 
-    // else if (contents[i].chart_id === 14) { // Pie Chart
-
-    //   appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-    //   appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
-    //   // Assign the value to optionEigt
-    //   let xAxis = JSON.parse(contents[i].x_value)
-    //   let yAxis = JSON.parse(contents[i].y_value)
-
-    //   
-    //   // asign the value to the chart configuration
-    //   optionDonut.labels = xAxis[0];
-    //   optionDonut.series = yAxis[0];
-    //   optionDonut.chart.type = 'pie';
-
-    //   var chartPie = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionDonut);
-    //   chartPie.render();
-    //   
-    // } 
-    
-  
-
-
   }
