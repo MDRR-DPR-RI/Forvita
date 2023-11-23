@@ -48,7 +48,7 @@
                     @endcan
                   <div class="row">
                     <div class="d-flex justify-content-between align-items-center">
-                      <label class="d-block fw-medium text-dark">Di buat oleh : {{ $cluster->user->name }}</label>  
+                      <label class="d-block fw-medium text-dark">Dibuat oleh: {{ $cluster->user->name }}</label>  
                       @can('admin')
                         <div class="d-flex">
                           <a data-id="{{ $cluster->id }}" data-name="{{ $cluster->name }}" href="#delete_cluster" class="modalDelete btn btn-danger" data-bs-toggle="modal">

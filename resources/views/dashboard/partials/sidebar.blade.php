@@ -55,7 +55,7 @@
       <hr>
       <ul class="nav nav-sidebar">
         <li class="nav-item">
-            <a href="#share-list" class="nav-link" data-bs-toggle="modal"><i class="ri-global-line"></i> <span>Publik Dashboards</span></a>
+            <a href="#share-list" class="nav-link" data-bs-toggle="modal"><i class="ri-global-line"></i> <span>Dashboard Publik</span></a>
           </li>
         </ul>
     @endcan
@@ -130,7 +130,7 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">List Publik Dashboard </h5>
+          <h5 class="modal-title">List Dashboard Publik</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div><!-- modal-header -->
         <div class="modal-body container ">

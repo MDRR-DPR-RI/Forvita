@@ -36,7 +36,7 @@
               @can('admin')
                   <a href="#modalShare" class="btn btn-white d-flex align-items-center gap-2" data-bs-toggle="modal"><i class="ri-global-line fs-18 lh-1"></i>Publik</a>
                   <button class="btn btn-white d-flex align-items-center gap-2" id="capture"><i class="bi bi-download fs-18 lh-1"></i>PNG</button>
-                  <a href="#modal3" class="btn btn-primary d-flex align-items-center gap-2"  data-bs-toggle="modal"><i class="ri-bar-chart-2-line fs-18 lh-1"></i>Kustomisasi<span class="d-none d-sm-inline">Dashboard</span></a>
+                  <a href="#modal3" class="btn btn-primary d-flex align-items-center gap-2"  data-bs-toggle="modal"><i class="ri-bar-chart-2-line fs-18 lh-1"></i>Kustomisasi Dashboard</span></a>
               @endcan
             </div>
             @can('admin')
