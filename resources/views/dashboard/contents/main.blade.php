@@ -119,6 +119,17 @@
                 <div class="text-center">
                   Pilihan Konten
                 </div>
+                {{-- TODO MAKE THE UI PERFECT FOR THIS OPTION SELECT --}}
+            
+                <div class="mt-2">
+                  <select class="form-select" id="customLimitSelector">
+                    <option value="7">6</option>
+                    <option value="12">10</option>
+                    <option value="18">15</option>
+                    <option value="25">20</option>
+                    <!-- Add more options as needed -->
+                  </select>
+                </div>
                 <table class="table" id="tablePilihKontent">
                   <thead>
                     <tr>
@@ -577,7 +588,7 @@
 {{-- TABLE CUSTOMIZE DASHBOARD CONFIG --}}
 <script>
 
-$("#tablePilihKontent").Grid({
+var gridInstance =  $("#tablePilihKontent").Grid({
   className: {
     table: 'table table-hover'
   },
@@ -599,6 +610,48 @@ $("#tableContent").Grid({
   sort: true,
   resizable: true
 });
+
+
+var table = document.getElementById('tablePilihKontent');
+
+    $("#customLimitSelector").on('change', function() {
+    // Get the configuration object of the existing Grid.js instance
+    var gridElement = gridInstance.config;
+
+    // Generate a new ID for the container element of the existing Grid.js instance
+    var newGridId = new Date().getTime();
+    gridElement.container.id = newGridId;
+
+    // Get the selected limit from the dropdown
+    var selectedLimit = parseInt($(this).val());
+
+    // Generate a new ID for the table element
+    var newId = 'tablePilihKontent_' + new Date().getTime();
+
+    // Set the new ID to the existing table element
+    table.id = newId;
+
+    // Log the modified configuration object to the console
+    console.log(gridElement);
+
+    // Remove the existing Grid.js instance's container element
+    $("#" + newGridId).remove();
+
+    // Reinitialize the Grid.js instance with the new table ID and limit
+    gridInstance = $("#" + newId).Grid({
+      className: {
+        table: 'table table-hover'
+      },
+      pagination: {
+        limit: selectedLimit, // New limit
+        summary: false,
+      },
+      search: true,
+      sort: true,
+      resizable: true
+    });
+
+  });
 
 </script>
 
