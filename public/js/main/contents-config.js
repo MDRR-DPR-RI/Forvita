@@ -790,11 +790,11 @@ function mergeArrays(x, y) {
       appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
       var mapColor = {}
-      for (var code in possible_map_input) {
+      for (var code in possible_map_indonesia_input) {
         for (let index = 0; index < xAxis.length; index++) {
           const province = xAxis[index] ? xAxis[index].replace(/\s/g, '').toLowerCase() : ''; 
           console.log(province);
-          if (possible_map_input[code].includes(province)) {
+          if (possible_map_indonesia_input[code].includes(province)) {
             var newObj = {
               [code]: colors[index],
             };
@@ -804,7 +804,7 @@ function mergeArrays(x, y) {
         }
       }
       console.log(mapColor);
-      // console.log(possible_map_input['path01']); // Output: ['aceh', 'ac']
+      // console.log(possible_map_indonesia_input['path01']); // Output: ['aceh', 'ac']
       $(`#content${contents[i].id}`).vectorMap({
           map: 'indonesia_id',
           backgroundColor: 'transparent',
@@ -827,7 +827,7 @@ function mergeArrays(x, y) {
           {
               for (let index = 0; index < xAxis.length; index++) {
                 const province = xAxis[index].replace(/\s/g, '').toLowerCase();
-                if (possible_map_input[code].includes(province)) {
+                if (possible_map_indonesia_input[code].includes(province)) {
                   label.text(judul[0] + '. -' + xAxis[index] + " : " + yAxis[0][index]) 
                 }
               }
@@ -945,4 +945,59 @@ function mergeArrays(x, y) {
       radialBar.render();
 
     }
+    else if (contents[i].chart_id === 25) { // World Map
+
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
+
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
+
+      var mapColor = {}
+      for (var code in possible_map_world_input) {
+        for (let index = 0; index < xAxis.length; index++) {
+          const province = xAxis[index] ? xAxis[index].replace(/\s/g, '').toLowerCase() : ''; 
+          console.log(province);
+          if (possible_map_world_input[code].includes(province)) {
+            var newObj = {
+              [code]: colors[index],
+            };
+            Object.assign(mapColor, newObj);
+            index++
+          }
+        }
+      }
+      console.log(mapColor);
+      $(`#content${contents[i].id}`).vectorMap({
+          map: 'world_en',
+          backgroundColor: 'transparent',
+          borderColor: '#000',
+          borderOpacity: 0.75,
+          borderWidth: 1,
+          color: '#4a4949',
+          enableZoom: true,
+          hoverColor: '#00F',
+          hoverOpacity: 0.3,
+          selectedColor: '#00F',
+          selectedRegion: 'ID', 
+          scaleColors: ['#C8EEFF', '#006491'],
+          onRegionOver: function(event, code, region)
+          {
+            console.log(code);
+            // console.log(region);
+          },
+          onLabelShow: function(event, label, code)
+          {
+              for (let index = 0; index < xAxis.length; index++) {
+                const province = xAxis[index].replace(/\s/g, '').toLowerCase();
+                if (possible_map_world_input[code].includes(province)) {
+                  label.text(judul[0] + '. -' + xAxis[index] + " : " + yAxis[0][index]) 
+                }
+              }
+          },
+          onLoad: function (event, map) {
+              jQuery(`#content${contents[i].id}`).vectorMap('set', 'colors', mapColor);
+          },
+          
+      });
+    
+    } 
   }

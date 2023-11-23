@@ -200,7 +200,7 @@ let htmlStructures = {
       </div><!-- card-header -->
       <div class="card-body p-3 p-xl-4">
         <div id="description"></div><!-- card-description -->
-        <div class="ht-300" id="content"></div><!-- content -->
+        <div class="ht-350" id="content"></div><!-- content -->
       </div><!-- card-body -->
     </div><!-- card -->
   </div><!-- col -->`],
@@ -271,106 +271,20 @@ let htmlStructures = {
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`],
-  // 2: [`<div class="col-xl-">
-  //         <div class="card card-one">
-  //           <div class="card-header">
-  //             <div id="judul"></div><!-- card-title -->
-  //           </div><!-- card-header -->
-  //           <div class="card-body p-4">
-  //             <div id="description"></div><!-- card-description -->
-  //             <div id="content"></div>
-  //           </div><!-- card-body -->
-  //         </div><!-- card -->
-  //       </div><!-- col -->`],
-  // 3: [`<div class="col-xl-">
-  //         <div class="card card-one">
-  //           <div class="card-header">
-  //             <div id="judul"></div><!-- card-title -->
-  //           </div><!-- card-header -->
-  //           <div class="card-body p-4">
-  //             <div id="description"></div><!-- card-description -->
-  //             <div id="content"></div>
-  //           </div><!-- card-body -->
-  //         </div><!-- card -->
-  //       </div><!-- col -->`],
-  // 5: [`<div class="col-xl-">
-  //         <div class="card card-one">
-  //           <div class="card-header">
-  //             <div id="judul"></div><!-- card-title -->
-  //           </div><!-- card-header -->
-  //           <div class="card-body p-4">
-  //             <div id="description"></div><!-- card-description -->
-  //             <div id="content"></div>
-  //           </div><!-- card-body -->
-  //         </div><!-- card -->
-  //       </div><!-- col -->`],
-
-  // 7: [`<div class="col-xl-">
-  //         <div class="card card-one">
-  //           <div class="card-header">
-  //             <div id="judul"></div><!-- card-title -->
-  //           </div><!-- card-header -->
-  //           <div class="card-body p-4">
-  //             <div id="description"></div><!-- card-description -->
-  //             <div id="content"></div>
-  //           </div><!-- card-body -->
-  //         </div><!-- card -->
-  //       </div><!-- col -->`],
- 
-  // 9: [`<div class="col-xl-">
-  //         <div class="card card-one">
-  //           <div class="card-header">
-  //             <div id="judul"></div><!-- card-title -->
-  //           </div><!-- card-header -->
-  //           <div class="card-body p-4">
-  //             <div id="description"></div><!-- card-description -->
-  //             <div id="content"></div>
-  //           </div><!-- card-body -->
-  //         </div><!-- card -->
-  //       </div><!-- col -->`],
-  // 10: [`<div class="col-xl-">
-  //   <div class="card card-one">
-  //     <div class="card-header">
-  //       <div id="judul"></div><!-- card-title -->
-  //       <nav class="nav nav-icon nav-icon-sm ms-auto">
-  //         <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
-  //         <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
-  //       </nav>
-  //     </div><!-- card-header -->
-  //     <div class="card-body p-4">
-  //       <div id="description"></div><!-- card-description -->
-  //       <div id="content"></div>
-  //     </div><!-- card-body -->
-  //       </div><!-- card -->
-  //       </div><!-- col -->`],
- 
- 
-  // 13: [`<div class="col-xl-">
-  //         <div class="card card-one">
-  //           <div class="card-header">
-  //             <div id="judul"></div><!-- card-title -->
-  //           </div><!-- card-header -->
-  //           <div class="card-body p-4">
-  //             <div id="description"></div><!-- card-description -->
-  //             <div id="content"></div>
-  //           </div><!-- card-body -->
-  //         </div><!-- card -->
-  //       </div><!-- col -->`],
-  // 14: [`<div class="col-xl-">
-  //       <div class="card card-one">
-  //         <div class="card-header">
-  //           <div id="judul"></div><!-- card-title -->
-  //           <nav class="nav nav-icon nav-icon-sm ms-auto">
-  //             <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
-  //             <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
-  //           </nav>
-  //         </div><!-- card-header -->
-  //         <div class="card-body p-4">
-  //           <div id="description"></div><!-- card-description -->
-  //           <div id="content"></div>
-  //         </div><!-- card-body -->
-  //       </div><!-- card -->
-  //     </div><!-- col -->`],
- 
+    25: [`<div class="col-xl-">
+      <div class="card card-one">
+        <div class="card-header">
+          <div id="judul"></div><!-- card-title -->
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+            <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
+            <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+          </nav>
+        </div><!-- card-header -->
+        <div class="card-body p-3 p-xl-4">
+          <div id="description"></div><!-- card-description -->
+          <div class="ht-350"  id="content"></div><!-- content -->
+        </div><!-- card-body -->
+      </div><!-- card -->
+    </div><!-- col -->`],
 
 };

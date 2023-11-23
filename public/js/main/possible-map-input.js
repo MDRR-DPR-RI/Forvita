@@ -1,4 +1,4 @@
-var possible_map_input = {
+var possible_map_indonesia_input = {
     path01: ['aceh', 'ac', 'ach', 'ache', 'ace', 'aech', 'aseh', 'acah', 'acch', 'acey', 'aceg', 'aveh', 'acfh', 'acej'],
     path02: ['sumaterautara', 'sumut', 'sumateratarah', 'sumateratara', 'sumateratarta', 'sumateraturra', 'sumaterutara', 'sumateratar', 'sumateratrra', 'sumaterautra', 'sumateruatara', 'sumaterautrara'],
     path03: ['sumaterabarat', 'sumbar', 'sumaterbarat', 'sumaterabarta', 'sumateraabarat', 'sumaterabarrat', 'sumaterbarata', 'sumaterabart', 'sumaterabaratr', 'sumaterabatrat', 'sumaterbaratara', 'sumaterabarrata'],
@@ -34,3 +34,8 @@ var possible_map_input = {
     path33: ['papua', 'ppua', 'papuua', 'papuas', 'papuaa', 'ppaua', 'paua', 'papau', 'ppua', 'papa', 'papuaa', 'pppua'],
     path34: ['papuabarat', 'pabar', 'pabara', 'pabarata', 'pabaratr', 'pabaratat', 'pabuart', 'papuart', 'pabarat', 'pabaratt', 'pabarrat', 'pabaratt'],
 };
+
+var possible_map_world_input = {
+    id: ["indonesia", "id"],
+    au: ["australia", "au"],
+}

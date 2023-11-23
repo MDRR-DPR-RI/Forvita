@@ -91,7 +91,7 @@ class ChartSeeder extends Seeder
             'grid' => 12
         ]);
         Chart::create([
-            'name' => "Map Indonesia",
+            'name' => "Peta Indonesia",
             'grid' => 12
         ]);
         Chart::create([
@@ -113,6 +113,10 @@ class ChartSeeder extends Seeder
         Chart::create([
             'name' => "Radial Bar (%)",
             'grid' => 4
+        ]);
+        Chart::create([
+            'name' => "Peta Dunia",
+            'grid' => 12
         ]);
     }
 }
