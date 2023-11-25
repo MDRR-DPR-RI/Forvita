@@ -56,33 +56,48 @@ class DashboardController extends Controller
       abort(403);
     }
 
-    // Fetch all contents that in the dashboard
     $contents = Content::where('dashboard_id', $dashboard->id)->get();
-
     $usernames = Content::where('chart_id', 18)->pluck('username_tableau')->unique();
 
-    $ticket = ''; // Initialize the ticket variable outside the loop
+    // Initialize an associative array to store tickets for each username
+    $tickets = [];
 
-    // dd($username);
     foreach ($usernames as $username) {
       // Check if username is not null before making the POST request
       if ($username !== null) {
         // Make a POST request
         $response = Http::post('https://visualisasi.dpr.go.id/trusted?username=' . $username);
-        $responseBody = $response->body();
 
-        // dd($responseBody);
+        // Check if the request was successful before accessing the response body
+        if ($response->successful()) {
+          $responseBody = $response->body();
 
-        // Assuming $responseBody is a string, you might concatenate it if it's an array or handle it accordingly
-        $ticket .= $responseBody; // Adjust this based on the actual structure of $responseBody
+          // Assuming $responseBody is a string, you might concatenate it if it's an array or handle it accordingly
+          // Store the ticket information in the associative array
+          $tickets[$username] = $responseBody;
+        } else {
+          // Handle the case where the request was not successful
+          // You might want to log an error or take other appropriate action
+        }
       }
     }
+
+    // Iterate through the $contents collection and update each model with the corresponding ticket
+    foreach ($contents as $content) {
+      // Assuming $content->username_tableau exists and is not null
+      $username = $content->username_tableau;
+
+      // Check if the username has a corresponding ticket in the $tickets array
+      if (isset($tickets[$username])) {
+        // Add the ticket information to the model
+        $content->ticket = $tickets[$username];
+      }
+    }
+
     return view('dashboard.contents.main', [
       'dashboard' => $dashboard,
       'contents' => $contents,
-      'ticket' => $ticket
     ]);
-    // }
   }
 
   /**

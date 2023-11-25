@@ -11,6 +11,11 @@
     width: 500px;
     top: 80px !important;
   }
+
+  .required-field::after {
+    content: "*" !important;
+    color: red !important;
+}
 </style>
 <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
 <link rel="stylesheet" href="/lib/jqvmap/jqvmap.min.css">
@@ -48,27 +53,41 @@
                     <h5 class="modal-title">Publik Dashboard {{ $dashboard->name }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <div class="modal-body">
-                    <p >Apakah anda ingin membuat dashboard ini publik?
-                    </p>
-                    <i class="text-secondary">Orang lain akan bisa melihat dashboard ini tanpa login</i>
-                    
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <form action="/share" method="post">
-                      @csrf
-                      <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}">
-                      <button type="submit" class="btn btn-primary">Publik</button>
-                    </form>
-                  </div>
+                  <form action="/share" method="post">
+                  @csrf
+                    <div class="modal-body">
+                        <div class="required-field">Expired Publik Dashboard</div>
+                        <input class="flatpickr flatpickr-input form-control active" name="expired" type="text" placeholder="Pilih tanggal dan jam" data-id="datetime" readonly="readonly">                  
+                    </div>
+                    <div class="m-3">
+                      <p >Apakah anda ingin membuat dashboard ini publik?
+                      </p>
+                      <i class="text-secondary">Orang lain akan bisa melihat dashboard ini tanpa login</i>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}">
+                        <button type="submit" class="btn btn-primary">Publik</button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
             @endcan
+    
+          </div>
 
-
-        </div>
+        @if ($errors->any())
+          <div class="alert alert-danger">
+            <ul>
+              @foreach ($errors->all() as $error)
+              {{-- <li>{{ $error }}</li> --}}
+              <li>Mohon Masukkan Tanggal Expired Dashboard</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
         @if (session('status'))
           <div class="alert alert-primary mb-3">
               {{ session('status') }}
@@ -385,10 +404,23 @@
 {{-- include all assets (html-structures) --}}
 <script src="/js/main/html-structures.js"></script>
 
+<script src="/lib/datetime/flatpickr.js"></script>
+
 {{-- script to save into page into an image --}}
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 
 @push('addon-script')
+
+<script>
+  $(".flatpickr").flatpickr(
+    {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    minDate: "today",
+}
+  );
+</script>
+
 <script>
 
 (async () => {
@@ -574,7 +606,7 @@
     tableau_link = '{{ $content->card_description }}';
   
   if ('{{ $content->username_tableau  !== null}}') {
-      tableau_embed = '{{ $content->domain_tableau }}/trusted/{{ $ticket }}/{{ $content->card_description }}';
+      tableau_embed = '{{ $content->domain_tableau }}/trusted/{{ $content->ticket }}/{{ $content->card_description }}';
   } else {
       tableau_embed = '{{ $content->domain_tableau }}/{{ $content->card_description }}';
   }

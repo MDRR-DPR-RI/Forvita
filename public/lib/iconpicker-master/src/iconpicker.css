@@ -1,0 +1,51 @@
+.iconpicker-dropdown {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.iconpicker-dropdown.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.iconpicker-dropdown ul {
+  position: absolute;
+  width: 250px;
+  height: 200px;
+  background: #fff;
+  overflow: scroll;
+  -webkit-box-shadow: 0 0 28px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 28px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  z-index: 999;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  left: 0;
+  list-style: none;
+}
+
+.iconpicker-dropdown ul li {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #b2b2b273;
+  cursor: pointer;
+  margin: 0.1rem;
+}
+
+.iconpicker-dropdown ul li.selected {
+  background-color: #007eff;
+  color: #fff;
+}
+
+.iconpicker-dropdown ul li.hidden {
+  display: none;
+}
+/*# sourceMappingURL=iconpicker.css.map */

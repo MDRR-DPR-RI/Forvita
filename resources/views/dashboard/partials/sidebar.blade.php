@@ -133,18 +133,18 @@
           <h5 class="modal-title">List Publik Dashboard </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div><!-- modal-header -->
-        <div class="modal-body container ">
+        <div class="modal-body container">
           <div class="row">
-            <div class="col-12">
+            <div class="col-12 overflow-auto">
               <table class="table" id="tableListPublic">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nama Cluster</th>
-                    <th scope="col">ID Dashboard</th>
                     <th scope="col">Nama Dashboard</th>
-                    <th scope="col">Nama Pembuat</th>
                     <th scope="col">Link</th>
+                    <th scope="col">Expired</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Aksi</th>
                   </tr>
                 </thead>
@@ -153,15 +153,22 @@
                   <tr>
                     <td scope="row">{{ $key+1 }}</td>
                     <td>{{ $share->dashboard->cluster->name }}</td>
-                    <td>{{ $share->dashboard_id }}</td>
                     <td>{{ $share->dashboard->name }}</td>
-                    <td>{{ $share->user->name }}</td>
                     <td>https://172.18.25.16/public/dashboard/{{ $share->link }}</td>
+                    <td>{{ $share->expired }}</td>
                     <td>
+                      @if ($share->expired > now())
+                        <span class="badge bg-success">Aktif</span>
+                        @else
+                        <span class="badge bg-warning">Inaktif</span>
+                      @endif
+                    </td>
+                    <td class="d-flex">
+                      <a href="/share/{{ $share->id }}" class="btn btn-warning btn-icon"><i class="bi bi-pencil"></i></a>
                       <form action="/share/{{ $share->id }}" method="post">
                         @method('delete')
                         @csrf
-                        <button type="submit" class="btn btn-danger">Hapus</button>
+                        <button type="submit" class="btn btn-danger btn-icon"><i class="bi bi-trash"></i></button>
                       </form>
                     </td>
                   </tr>
