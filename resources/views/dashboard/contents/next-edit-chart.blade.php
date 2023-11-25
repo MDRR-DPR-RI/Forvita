@@ -87,7 +87,7 @@
                         <th scope="col">
                             <div class="form-check">
                             <label class="form-check-label" for="selectAllCheckbox{{ $i }}">Pilih Semua</label>
-                            @if ( $x_value_decodedArray[$i][0] !== "" && count($x_value_decodedArray[$i]) == count($value) )
+                            @if ( isset($x_value_decodedArray[$i]) && $x_value_decodedArray[$i] !== "" && count($x_value_decodedArray[$i]) == count($value) )
                               <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" checked>
                             @else
                               <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" >

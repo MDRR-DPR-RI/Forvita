@@ -3,7 +3,12 @@ let htmlStructures = {
   1: [`<div class="col-xl-">
         <div class="card card-one">
           <div class="card-header">
-            <div id="judul"></div><!-- card-title -->
+            <div id="judul"></div>
+            <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
           </div><!-- card-header -->
           <div class="card-body p-4">
             <div id="description"></div><!-- card-description -->
@@ -14,7 +19,12 @@ let htmlStructures = {
   2: [`<div class="col-xl-">
         <div class="card card-one">
           <div class="card-header">
-            <div id="judul"></div><!-- card-title -->
+            <div id="judul"></div>
+            <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
           </div><!-- card-header -->
           <div class="card-body p-4">
             <div id="description"></div><!-- card-description -->
@@ -25,7 +35,12 @@ let htmlStructures = {
   3: [`<div class="col-xl-">
         <div class="card card-one">
           <div class="card-header">
-            <div id="judul"></div><!-- card-title -->
+            <div id="judul"></div>
+            <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
           </div><!-- card-header -->
           <div class="card-body p-4">
             <div id="description"></div><!-- card-description -->
@@ -36,7 +51,12 @@ let htmlStructures = {
   4: [`<div class="col-xl-">
         <div class="card card-one">
           <div class="card-header">
-            <div id="judul"></div><!-- card-title -->
+            <div id="judul"></div>
+            <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
           </div><!-- card-header -->
           <div class="card-body p-4">
             <div id="description"></div><!-- card-description -->
@@ -47,7 +67,12 @@ let htmlStructures = {
   5: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-4">
           <div id="description"></div><!-- card-description -->
@@ -58,7 +83,12 @@ let htmlStructures = {
   6: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-4">
           <div id="description"></div><!-- card-description -->
@@ -69,7 +99,12 @@ let htmlStructures = {
   7: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-4">
           <div id="description"></div><!-- card-description -->
@@ -80,7 +115,12 @@ let htmlStructures = {
   8: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-4">
           <div id="description"></div><!-- card-description -->
@@ -91,7 +131,12 @@ let htmlStructures = {
   9: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-4">
           <div id="description"></div><!-- card-description -->
@@ -102,7 +147,12 @@ let htmlStructures = {
   10: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-4">
           <div id="description"></div><!-- card-description -->
@@ -113,7 +163,12 @@ let htmlStructures = {
   11: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-4">
           <div id="description"></div><!-- card-description -->
@@ -124,7 +179,12 @@ let htmlStructures = {
   12: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-4">
           <div id="description"></div><!-- card-description -->
@@ -135,7 +195,12 @@ let htmlStructures = {
   13: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-4">
           <div id="description"></div><!-- card-description -->
@@ -146,7 +211,12 @@ let htmlStructures = {
   14: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-4">
           <div id="description"></div><!-- card-description -->
@@ -157,7 +227,12 @@ let htmlStructures = {
   15: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-4">
           <div id="description"></div><!-- card-description -->
@@ -168,7 +243,12 @@ let htmlStructures = {
   16: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-4">
           <div id="description"></div><!-- card-description -->
@@ -179,7 +259,12 @@ let htmlStructures = {
   17: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
+          <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-4">
           <div id="description"></div><!-- card-description -->
@@ -192,10 +277,11 @@ let htmlStructures = {
   19: [`<div class="col-xl-">
     <div class="card card-one">
       <div class="card-header">
-        <div id="judul"></div><!-- card-title -->
+        <div id="judul"></div>
         <nav class="nav nav-icon nav-icon-sm ms-auto">
-          <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
-          <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
+          <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+            <i class="bi bi-arrows-fullscreen mx-2"></i>
+          </a>
         </nav>
       </div><!-- card-header -->
       <div class="card-body p-3 p-xl-4">
@@ -207,7 +293,12 @@ let htmlStructures = {
   20: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-header" >
-              <div id="judul"></div><!-- card-title -->
+              <div id="judul"></div>
+              <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
             </div><!-- card-header -->
             <div class="card-body p-4">
                 <div class="d-flex">
@@ -231,7 +322,12 @@ let htmlStructures = {
     22: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-header">
-              <div id="judul"></div><!-- card-title -->
+              <div id="judul"></div>
+              <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
             </div><!-- card-header -->
             <div class="card-body p-3 p-xl-4">
               <div id="description"></div><!-- card-description -->
@@ -252,7 +348,12 @@ let htmlStructures = {
     23: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-header">
-              <div id="judul"></div><!-- card-title -->
+              <div id="judul"></div>
+              <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
             </div><!-- card-header -->
             <div class="card-body p-3 p-xl-4">
               <div id="description"></div><!-- card-description -->
@@ -263,7 +364,12 @@ let htmlStructures = {
     24: [`<div class="col-xl-">
           <div class="card card-one">
             <div class="card-header">
-              <div id="judul"></div><!-- card-title -->
+              <div id="judul"></div>
+              <nav class="nav nav-icon nav-icon-sm ms-auto">
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
             </div><!-- card-header -->
             <div class="card-body p-4">
               <div id="description"></div><!-- card-description -->
@@ -274,15 +380,16 @@ let htmlStructures = {
     25: [`<div class="col-xl-">
       <div class="card card-one">
         <div class="card-header">
-          <div id="judul"></div><!-- card-title -->
+          <div id="judul"></div>
           <nav class="nav nav-icon nav-icon-sm ms-auto">
-            <a href="" class="nav-link"><i class="ri-refresh-line"></i></a>
-            <a href="" class="nav-link"><i class="ri-more-2-fill"></i></a>
-          </nav>
+              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
+                <i class="bi bi-arrows-fullscreen mx-2"></i>
+              </a>
+            </nav>
         </div><!-- card-header -->
         <div class="card-body p-3 p-xl-4">
           <div id="description"></div><!-- card-description -->
-          <div class="ht-350"  id="content"></div><!-- content -->
+          <div class="ht-350" id="content"></div><!-- content -->
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`],
