@@ -128,7 +128,7 @@
                 name: "{{$csvFile->name}}", 
                 file: "{{$csvFile->file}}",
                 status: `{!! $csvFile->action ? "<span class='badge badge-pill bg-success w-50'>Berhasil Dibuat</span>" : "<span class='badge badge-pill bg-danger w-50'>Belum Dijalankan</span>" !!}`, 
-                action: `{!! $csvFile->action ? "<a href='". route('csv.delete',['id'=> $csvFile->id ]) ."' class='btn btn-warning w-50'>Hapus Tabel</a>" : "<a href='". route('csv.create',['id'=> $csvFile->id ]) ."' class='btn btn-primary w-50'>Buat Tabel</a>" !!} <br/><a href='{{ route("csv.remove",['id'=>$csvFile->id]) }}' class="mt-2 btn btn-danger w-50">Hapus File</a>`},
+                action: `{!! $csvFile->action ? "<a href='". route('csv.delete',['id'=> $csvFile->id ]) ."' class='btn btn-warning w-50'>Hapus Tabel</a>" : "<a href='". route('csv.create',['id'=> $csvFile->id ]) ."' class='btn btn-primary w-50'>Buat Tabel</a>" !!} <br/><a href='{{ route("csv.remove",['id'=>$csvFile->id]) }}' class="mt-2 btn btn-danger w-50">Hapus File</a><br/><a href='{{ route("csv.view",['id'=>$csvFile->id]) }}' class="mt-2 btn btn-dark w-50">view</a>`},
         @endforeach
     ];
 

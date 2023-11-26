@@ -133,7 +133,7 @@
                 name: "{{$apiList->name}}", 
                 file: "{{$apiList->file}}",
                 status: `{!! $apiList->action ? "<span class='badge badge-pill bg-success w-80'>Berhasil Dibuat</span>" : "<span class='badge badge-pill bg-danger w-80'>Belum Dijalankan</span>" !!}`, 
-                action: `{!! $apiList->action ? "<a href='". route('restapi.delete',['id'=> $apiList->id ]) ."' class='btn btn-warning w-50'>Hapus Tabel</a>" : "<a href='". route('restapi.create',['id'=> $apiList->id ]) ."' class='btn btn-primary w-50'>Buat Tabel</a>" !!} <br/><a href='{{ route("restapi.remove",['id'=>$apiList->id]) }}' class="mt-2 btn btn-danger w-50">Hapus List</a>`},
+                action: `{!! $apiList->action ? "<a href='". route('restapi.delete',['id'=> $apiList->id ]) ."' class='btn btn-warning w-50'>Hapus Tabel</a>" : "<a href='". route('restapi.create',['id'=> $apiList->id ]) ."' class='btn btn-primary w-50'>Buat Tabel</a>" !!} <br/><a href='{{ route("restapi.remove",['id'=>$apiList->id]) }}' class="mt-2 btn btn-danger w-50">Hapus List</a><br/><a href='{{ route("restapi.view",['id'=>$apiList->id]) }}' class="mt-2 btn btn-dark w-50">view</a>`},
         @endforeach
     ];
 

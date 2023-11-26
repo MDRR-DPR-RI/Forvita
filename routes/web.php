@@ -58,11 +58,15 @@ Route::get('/filter-clean', [AjaxController::class, 'filter_clean_by_date'])->mi
 
 // Import Data CSV
 Route::get('csv', [CsvImportController::class, 'show'])->name('csv')->middleware('admin');
+Route::get('csv/view', [CsvImportController::class, 'viewTable'])->name('csv.view')->middleware('admin');
+Route::get('csv/view/target', [CsvImportController::class, 'handleFile'])->name('csv.target')->middleware('admin');
 Route::get('csv/create', [CsvImportController::class, 'createTable'])->name('csv.create')->middleware('admin');
 Route::get('csv/remove', [CsvImportController::class, 'removeTable'])->name('csv.remove')->middleware('admin');
 Route::get('csv/delete', [CsvImportController::class, 'deleteTable'])->name('csv.delete')->middleware('admin');
 // import API
 Route::get('restapi', [ApiImportController::class, 'show'])->name('restapi')->middleware('admin');
+Route::get('restapi/view', [ApiImportController::class, 'viewTable'])->name('restapi.view')->middleware('admin');
+// Route::get('restapi/view/target', [CsvImportController::class, 'handleFile'])->name('csv.target')->middleware('admin');
 Route::get('restapi/create', [ApiImportController::class, 'createTable'])->name('restapi.create')->middleware('admin');
 Route::get('restapi/remove', [ApiImportController::class, 'deleteList'])->name('restapi.remove')->middleware('admin');
 Route::get('restapi/delete', [ApiImportController::class, 'deleteTable'])->name('restapi.delete')->middleware('admin');
