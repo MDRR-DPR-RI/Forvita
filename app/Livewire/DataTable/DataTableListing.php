@@ -11,6 +11,7 @@ use Livewire\WithPagination;
 
 class DataTableListing extends Component
 {
+    use WithPagination;
     public string $searchSchemaQuery;
     public string $searchTableQuery;
 
@@ -50,7 +51,7 @@ class DataTableListing extends Component
     {
         return view('livewire.data-table.data-table-listing', [
             'datatables' => $this->searchDatatable($this->searchSchemaQuery, $this->searchTableQuery)
-                ->paginate(15),
+                ->paginate(25),
         ]);
     }
 }
