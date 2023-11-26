@@ -100,4 +100,26 @@ class ShareController extends Controller
     // redirect with send dashboard_id variable to the dashboard routes
     return back()->with('deleted', "Share has been deleted!");
   }
+
+  public function show($id)
+  {
+    $share = Share::findorFail($id);
+
+    return view('dashboard.contents.edit_share', [
+      'share' => $share
+    ]);
+  }
+
+  public function update(Request $request,  $id)
+  {
+    $request->validate([
+      'link' => 'required',
+    ]);
+
+    $data = $request->all();
+    $item = Share::findorFail($id);
+    $item->update($data);
+
+    return back()->with('status', 'Dashboard Publik berhasil di Update!');
+  }
 }
