@@ -16,65 +16,65 @@ class ChartSeeder extends Seeder
         // LINE CHART
         Chart::create([
             'name' => "Line Chart",
-            'grid' => 6
+            'grid' => 4
         ]);
         Chart::create([
             'name' => "Line Chart (smooth)",
-            'grid' => 6
+            'grid' => 4
         ]);
         Chart::create([
             'name' => "Line Chart (stepline)",
-            'grid' => 6
+            'grid' => 4
         ]);
         Chart::create([
             'name' => "Line Area Chart",
-            'grid' => 6
+            'grid' => 4
         ]);
         Chart::create([
             'name' => "Line Area Chart (smooth)",
-            'grid' => 6
+            'grid' => 4
         ]);
         Chart::create([ // id=6
             'name' => "Line Area Chart (stepline)",
-            'grid' => 6
+            'grid' => 4
         ]);
         // BAR AND COLUMN CHART
         Chart::create([ // id=7
             'name' => "Bar Chart",
-            'grid' => 6
+            'grid' => 4
         ]);
         Chart::create([
             'name' => "Bar Chart (reversed)",
-            'grid' => 6
+            'grid' => 4
         ]);
         Chart::create([ // id=9
             'name' => "Bar Chart With Border Radius",
-            'grid' => 6
+            'grid' => 4
         ]);
         Chart::create([
             'name' => "Bar Chart With Border Radius (reversed)",
-            'grid' => 6
+            'grid' => 4
         ]);
         Chart::create([ // id=11
             'name' => "Stacked Bar Chart",
-            'grid' => 6
+            'grid' => 4
         ]);
         Chart::create([ // id=12
             'name' => "Stacked Bar Chart (reversed)",
-            'grid' => 6
+            'grid' => 4
         ]);
         // column chart
         Chart::create([ // id = 13
             'name' => "Column Chart",
-            'grid' => 6
+            'grid' => 4
         ]);
         Chart::create([
             'name' => "Column Chart With Border Radius",
-            'grid' => 6
+            'grid' => 4
         ]);
         Chart::create([ // id=15
             'name' => "Stacked Column Chart",
-            'grid' => 6
+            'grid' => 4
         ]);
         // Donut and Pie Chart
         Chart::create([
@@ -92,7 +92,7 @@ class ChartSeeder extends Seeder
         ]);
         Chart::create([
             'name' => "Peta Indonesia",
-            'grid' => 12
+            'grid' => 8
         ]);
         Chart::create([
             'name' => "AI Analisis",
@@ -104,11 +104,11 @@ class ChartSeeder extends Seeder
         ]);
         Chart::create([
             'name' => "Tabel",
-            'grid' => 6
+            'grid' => 4
         ]);
         Chart::create([
             'name' => "Kumpulan Lingkaran",
-            'grid' => 12
+            'grid' => 6
         ]);
         Chart::create([
             'name' => "Radial Bar (%)",
@@ -116,7 +116,7 @@ class ChartSeeder extends Seeder
         ]);
         Chart::create([
             'name' => "Peta Dunia",
-            'grid' => 12
+            'grid' => 8
         ]);
     }
 }

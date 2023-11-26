@@ -346,6 +346,23 @@ function mergeArrays(x, y) {
 // Loop through the contents array to find the matching chart_id
   for (var i = 0; i < contents.length; i++) {
 
+    const chartIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,19,22,23,24,25]
+
+    if (chartIds.includes(contents[i].chart_id)) { //emebed tableau doesn't have title and desc
+
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
+      appendTitleToCard(`#title_card_zoom${contents[i].id}`, contents[i].card_title);
+
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
+      appendDescriptionToCard(`#desc_card_zoom${contents[i].id}`, contents[i].card_description);
+      
+    } else if(contents[i].chart_id == 20) { // card ai analysis doesn't have description
+      
+      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
+      appendTitleToCard(`#title_card_zoom${contents[i].id}`, contents[i].card_title);
+      
+    }
+
     const result = mergeArrays(JSON.parse(contents[i].x_value), JSON.parse(contents[i].y_value));
     
     const judul = JSON.parse(contents[i].judul)
@@ -354,12 +371,6 @@ function mergeArrays(x, y) {
     const colors = JSON.parse(contents[i].color)
 
     if (contents[i].chart_id === 1) { // Line Chart
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-      appendTitleToCard(`#title_card_zoom${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-      appendDescriptionToCard(`#desc_card_zoom${contents[i].id}`, contents[i].card_description);
 
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
@@ -384,11 +395,7 @@ function mergeArrays(x, y) {
       
     } 
     else if (contents[i].chart_id === 2) { // Line Chart (smooth)
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -404,16 +411,14 @@ function mergeArrays(x, y) {
       optionLine.stroke.curve = 'smooth'; 
       
       var lineArea = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionLine );
+      var lineAreaModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionLine );
       lineArea.render();
+      lineAreaModal.render();
       optionLine.series = [];
       
     } 
     else if (contents[i].chart_id === 3) { // Line Chart (stepline)
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -429,16 +434,14 @@ function mergeArrays(x, y) {
       optionLine.stroke.curve = 'stepline'; 
       
       var lineArea = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionLine );
+      var lineAreaModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionLine );
       lineArea.render();
+      lineAreaModal.render();
       optionLine.series = [];
       
     } 
     else if (contents[i].chart_id === 4) { // Line Area Chart
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -454,16 +457,14 @@ function mergeArrays(x, y) {
       optionLine.stroke.curve = 'straight'; 
       
       var lineArea = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionLine );
+      var lineAreaModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionLine );
       lineArea.render();
+      lineAreaModal.render();
       optionLine.series = [];
       
     } 
     else if (contents[i].chart_id === 5) { // Line Area Chart (smooth)
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -480,15 +481,13 @@ function mergeArrays(x, y) {
       
 
       var lineArea = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionLine );
+      var lineAreaModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionLine );
       lineArea.render();
+      lineAreaModal.render();
       optionLine.series = [];
       
     }
     else if (contents[i].chart_id === 6) { // Line Area Chart (stepline)
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
@@ -505,16 +504,14 @@ function mergeArrays(x, y) {
       optionLine.stroke.curve = 'stepline'; 
       
       var lineArea = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionLine );
+      var lineAreaModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionLine );
       lineArea.render();
+      lineAreaModal.render();
       optionLine.series = [];
       
     } 
     else if (contents[i].chart_id === 7) { // Bar Chart
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -528,16 +525,14 @@ function mergeArrays(x, y) {
       optionBarSide.colors = colors;
 
       var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
+      var chartBarModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionBarSide);
       chartBar.render();
+      chartBarModal.render();
       optionBarSide.series = [];
       
     } 
     else if (contents[i].chart_id === 8) { // Bar Chart (reversed)
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
         var newSeries = {
@@ -551,16 +546,14 @@ function mergeArrays(x, y) {
       // optionBarSideRev.chart.stacked = true;
 
       var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSideRev);
+      var chartBarModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionBarSideRev);
       chartBar.render();
+      chartBarModal.render();
       optionBarSideRev.series = [];
       
     } 
     else if (contents[i].chart_id === 9) { // bar chart with border radius
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -577,16 +570,14 @@ function mergeArrays(x, y) {
       optionBarSide.plotOptions.bar.borderRadius = 15;
 
       var barRadius = new ApexCharts(document.querySelector('#content' + contents[i].id), optionBarSide);
+      var barRadiusModal = new ApexCharts(document.querySelector('#card_content_zoom' + contents[i].id), optionBarSide);
       barRadius.render();
+      barRadiusModal.render();
 
       optionBarSide.plotOptions.bar.borderRadius = 0;
       optionBarSide.series = [];
     }
     else if (contents[i].chart_id === 10) { // bar chart with border radius (reversed)
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
      // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
@@ -602,16 +593,14 @@ function mergeArrays(x, y) {
       optionBarSideRev.plotOptions.bar.borderRadius = 15;
 
       var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSideRev);
+      var chartBarModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionBarSideRev);
       chartBar.render();
+      chartBarModal.render();
       optionBarSideRev.series = [];
       optionBarSideRev.plotOptions.bar.borderRadius = 0;
       
     } 
     else if (contents[i].chart_id === 11) { // Stacked Bar Chart
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
@@ -627,18 +616,16 @@ function mergeArrays(x, y) {
       optionBarSide.chart.stacked = true;
 
       var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
+      var chartBarModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionBarSide);
       chartBar.render();
+      chartBarModal.render();
 
       optionBarSide.series = [];
       optionBarSide.chart.stacked = false;
       
     } 
     else if (contents[i].chart_id === 12) { // Stacked bar chart  (reversed)
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
      // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -653,7 +640,9 @@ function mergeArrays(x, y) {
       optionBarSideRev.chart.stacked = true;
 
       var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSideRev);
+      var chartBarModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionBarSideRev);
       chartBar.render();
+      chartBarModal.render();
 
       optionBarSideRev.series = [];
       optionBarSideRev.chart.stacked = false;
@@ -661,10 +650,6 @@ function mergeArrays(x, y) {
       
     } 
     else if (contents[i].chart_id === 13) { // Column Chart
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
@@ -680,18 +665,16 @@ function mergeArrays(x, y) {
       optionBarSide.plotOptions.bar.horizontal = false;
 
       var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
+      var chartBarModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionBarSide);
       chartBar.render();
+      chartBarModal.render();
 
       optionBarSide.series = [];
       optionBarSide.plotOptions.bar.horizontal = true;
 
     } 
     else if (contents[i].chart_id === 14) { // Column chart with border radius
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
      // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -707,7 +690,9 @@ function mergeArrays(x, y) {
       optionBarSide.plotOptions.bar.horizontal = false;
 
       var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
+      var chartBarModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionBarSide);
       chartBar.render();
+      chartBarModal.render();
 
       optionBarSide.series = [];
       optionBarSide.plotOptions.bar.borderRadius = 0;
@@ -715,11 +700,7 @@ function mergeArrays(x, y) {
 
     } 
     else if (contents[i].chart_id === 15) { // Stacked Column Chart
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       // asign the value to the chart configuration
       for (let index = 0; index < judul.length; index++) {
         // Create a new series object
@@ -735,7 +716,9 @@ function mergeArrays(x, y) {
       optionBarSide.chart.stacked = true;
 
       var chartBar = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionBarSide);
+      var chartBarModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionBarSide);
       chartBar.render();
+      chartBarModal.render();
 
       optionBarSide.series = [];
       optionBarSide.plotOptions.bar.horizontal = true;
@@ -743,11 +726,7 @@ function mergeArrays(x, y) {
 
     } 
     else if (contents[i].chart_id === 16) { // Donut chart
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       // asign the value to the chart configuration
       optionDonut.labels = xAxis;
       optionDonut.series = yAxis[0];
@@ -755,13 +734,11 @@ function mergeArrays(x, y) {
       optionDonut.colors = colors;
 
       var chartDonut = new ApexCharts(document.querySelector('#content' + contents[i].id), optionDonut);
+      var chartDonutModal = new ApexCharts(document.querySelector('#card_content_zoom' + contents[i].id), optionDonut);
       chartDonut.render();
+      chartDonutModal.render();
     } 
     else if (contents[i].chart_id === 17) { // Pie Chart
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
 
       // asign the value to the chart configuration
       optionDonut.labels = xAxis;
@@ -770,7 +747,9 @@ function mergeArrays(x, y) {
       optionDonut.colors = colors;
 
       var chartPie = new ApexCharts(document.querySelector(`#content${contents[i].id}`), optionDonut);
+      var chartPieModal = new ApexCharts(document.querySelector(`#card_content_zoom${contents[i].id}`), optionDonut);
       chartPie.render();
+      chartPieModal.render();
       
     } 
     else if (contents[i].chart_id === 18) { // Tableau
@@ -788,11 +767,7 @@ function mergeArrays(x, y) {
 
     } 
     else if (contents[i].chart_id === 19) { // Indonesia Map
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       var mapColor = {}
       for (var code in possible_map_indonesia_input) {
         for (let index = 0; index < xAxis.length; index++) {
@@ -839,11 +814,45 @@ function mergeArrays(x, y) {
           },
           
       });
-    
+
+      $(`#card_content_zoom${contents[i].id}`).vectorMap({
+          map: 'indonesia_id',
+          backgroundColor: 'transparent',
+          borderColor: '#000',
+          borderOpacity: 0.75,
+          borderWidth: 1,
+          color: '#4a4949',
+          enableZoom: true,
+          hoverColor: '#00F',
+          hoverOpacity: 0.3,
+          selectedColor: '#00F',
+          selectedRegion: 'ID', 
+          scaleColors: ['#C8EEFF', '#006491'],
+          onRegionOver: function(event, code, region)
+          {
+            console.log(code);
+            // console.log(region);
+          },
+          onLabelShow: function(event, label, code)
+          {
+              for (let index = 0; index < xAxis.length; index++) {
+                const province = xAxis[index].replace(/\s/g, '').toLowerCase();
+                if (possible_map_indonesia_input[code].includes(province)) {
+                  label.text(judul[0] + '. -' + xAxis[index] + " : " + yAxis[0][index]) 
+                }
+              }
+          },
+          onLoad: function (event, map) {
+              jQuery(`#card_content_zoom${contents[i].id}`).vectorMap('set', 'colors', mapColor);
+          },
+          
+      });
+        $(`#card_content_zoom${contents[i].id}`).trigger('resize');
+
     } 
     else if (contents[i].chart_id === 20) { // AI Analyst
-      
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
+
+      //configuration in main.blade. should move here   
 
     } 
     else if (contents[i].chart_id === 21) { // card
@@ -871,16 +880,14 @@ function mergeArrays(x, y) {
       }
     }
      else if (contents[i].chart_id === 22) { // table
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       // reference to the card container element
       const tableDataContainer = document.querySelector(`#content${contents[i].id}`);
+      // const tableDataContainerModal = document.querySelector(`#card_content_zoom${contents[i].id}`);
 
       // Clear any previous content
       tableDataContainer.innerHTML = '';
+      // tableDataContainerModal.innerHTML = '';
 
       // Iterate over the elements based on y_value.length
       for (let j = 0; j < xAxis.length; j++) {
@@ -892,14 +899,11 @@ function mergeArrays(x, y) {
         <td>${yAxis[0][j]}</td>
         `;
         tableDataContainer.appendChild(newElement); // asign the element to the content
+        // tableDataContainerModal.appendChild(newElement); // asign the element to the content
       }
     }
     else if (contents[i].chart_id === 23) { // Group of Circle
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       let max = Math.max(...yAxis[0]);
       // reference to the card container element
       const contentContainer = document.querySelector(`#content${contents[i].id}`);
@@ -933,26 +937,20 @@ function mergeArrays(x, y) {
       // });
     } 
     else if (contents[i].chart_id === 24) { // Option radial (%)
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       // asign the value to the chart configuration
       optionRadial.series = yAxis[0];
       optionRadial.labels = xAxis;
       optionRadial.colors = colors;
 
       var radialBar = new ApexCharts(document.querySelector('#content' + contents[i].id), optionRadial);
+      var radialBarModal = new ApexCharts(document.querySelector('#card_content_zoom' + contents[i].id), optionRadial);
       radialBar.render();
+      radialBarModal.render();
 
     }
     else if (contents[i].chart_id === 25) { // World Map
-
-      appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
-
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-
+      
       var mapColor = {}
       for (var code in possible_map_world_input) {
         for (let index = 0; index < xAxis.length; index++) {
@@ -977,7 +975,6 @@ function mergeArrays(x, y) {
           hoverColor: '#00F',
           hoverOpacity: 0.3,
           selectedColor: '#00F',
-          selectedRegion: 'ID', 
           scaleColors: ['#C8EEFF', '#006491'],
           onRegionOver: function(event, code, region)
           {
@@ -1010,7 +1007,6 @@ function mergeArrays(x, y) {
           hoverColor: '#00F',
           hoverOpacity: 0.3,
           selectedColor: '#00F',
-          selectedRegion: 'ID', 
           scaleColors: ['#C8EEFF', '#006491'],
           onRegionOver: function(event, code, region)
           {
@@ -1027,7 +1023,7 @@ function mergeArrays(x, y) {
               }
           },
           onLoad: function (event, map) {
-              jQuery(`#content${contents[i].id}`).vectorMap('set', 'colors', mapColor);
+              jQuery(`#card_content_zoom${contents[i].id}`).vectorMap('set', 'colors', mapColor);
           },
           
       });

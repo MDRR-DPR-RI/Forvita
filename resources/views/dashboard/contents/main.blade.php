@@ -386,9 +386,17 @@
               <h5 class="modal-title" id="title_card_zoom{{ $content->id }}"></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body " >
               <div id="desc_card_zoom{{ $content->id }}"></div>
-              <div class="ht-350" id="card_content_zoom{{ $content->id }}"></div>
+              @if ($content->chart->id == 19  )
+              {{-- NOTE: THIS IS NOT RESPOONSIVE TO THE MOBILE VIEW. BECAUSE NOT USING BOOTSTRAP CLASS/STYLE.  --}}
+                <div class="mx-2" style="width: 1150px; height: 700px;" id="card_content_zoom{{ $content->id }}"></div>
+              @elseif($content->chart->id == 25)
+              {{-- NOTE: THIS IS NOT RESPOONSIVE TO THE MOBILE VIEW. BECAUSE NOT USING BOOTSTRAP CLASS/STYLE.  --}}
+                <div class="mx-5" style="width: 1000px; height: 800px;" id="card_content_zoom{{ $content->id }}"></div>
+              @else
+                <div id="card_content_zoom{{ $content->id }}"></div>
+              @endif
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -676,8 +684,6 @@ var table = document.getElementById('tablePilihKontent');
   });
 
 </script>
-
-
 
 
 @endsection

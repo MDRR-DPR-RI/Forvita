@@ -324,9 +324,6 @@ let htmlStructures = {
             <div class="card-header">
               <div id="judul"></div>
               <nav class="nav nav-icon nav-icon-sm ms-auto">
-              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
-                <i class="bi bi-arrows-fullscreen mx-2"></i>
-              </a>
             </nav>
             </div><!-- card-header -->
             <div class="card-body p-3 p-xl-4">
@@ -350,9 +347,6 @@ let htmlStructures = {
             <div class="card-header">
               <div id="judul"></div>
               <nav class="nav nav-icon nav-icon-sm ms-auto">
-              <a href="#modal_card_zoom" data-bs-toggle="modal" class="nav-link">
-                <i class="bi bi-arrows-fullscreen mx-2"></i>
-              </a>
             </nav>
             </div><!-- card-header -->
             <div class="card-body p-3 p-xl-4">
