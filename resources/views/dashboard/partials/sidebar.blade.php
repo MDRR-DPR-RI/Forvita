@@ -158,18 +158,20 @@
                     <td>{{ $share->expired }}</td>
                     <td>
                       @if ($share->expired > now())
-                        <span class="badge bg-success">Aktif</span>
+                        <span class="btn btn-success btn-sm">Aktif</span>
                         @else
-                        <span class="badge bg-warning">Inaktif</span>
+                        <span class="btn btn-warning btn-sm">Inaktif</span>
                       @endif
                     </td>
-                    <td class="d-flex">
-                      <a href="/share/{{ $share->id }}" class="btn btn-warning btn-icon"><i class="bi bi-pencil"></i></a>
-                      <form action="/share/{{ $share->id }}" method="post">
-                        @method('delete')
-                        @csrf
-                        <button type="submit" class="btn btn-danger btn-icon"><i class="bi bi-trash"></i></button>
-                      </form>
+                    <td>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <a href="/share/{{ $share->id }}" class="btn btn-primary btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Ubah"><i class="bi bi-pencil"></i></a>
+                        <form action="/share/{{ $share->id }}" method="post">
+                          @method('delete')
+                          @csrf
+                          <button type="submit" class="btn btn-danger btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>
+                        </form>
+                      </div>
                     </td>
                   </tr>
                   @endforeach
