@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Dashboard;
 use Illuminate\Http\Request;
 use App\Models\Content;
-use App\Models\Clean;
-use App\Models\Share;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 

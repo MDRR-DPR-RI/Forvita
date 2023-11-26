@@ -396,6 +396,35 @@
         </div>
     @endcan
 
+    {{-- Modal ZOOM CARDS --}}
+    @foreach ($contents as $content)
+      <div class="modal" id="modal_card_zoom{{ $content->id }}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="title_card_zoom{{ $content->id }}"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body " >
+              <div id="desc_card_zoom{{ $content->id }}"></div>
+              @if ($content->chart->id == 19  )
+              {{-- NOTE: THIS IS NOT RESPOONSIVE TO THE MOBILE VIEW. BECAUSE NOT USING BOOTSTRAP CLASS/STYLE.  --}}
+                <div class="mx-2" style="width: 1150px; height: 700px;" id="card_content_zoom{{ $content->id }}"></div>
+              @elseif($content->chart->id == 25)
+              {{-- NOTE: THIS IS NOT RESPOONSIVE TO THE MOBILE VIEW. BECAUSE NOT USING BOOTSTRAP CLASS/STYLE.  --}}
+                <div class="mx-5" style="width: 1000px; height: 800px;" id="card_content_zoom{{ $content->id }}"></div>
+              @else
+                <div id="card_content_zoom{{ $content->id }}"></div>
+              @endif
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    @endforeach
+
 @endsection
 
 
@@ -479,6 +508,7 @@
     htmlContent = htmlContent.replace('id="placeholder"', `id="placeholder${unique}"`); // set the unique id for placeholder
     htmlContent = htmlContent.replace('data-content-id="id"', `data-content-id="${contentId}"`); // set the data-content-id with its id to send into a modal
     htmlContent = htmlContent.replace('class="col-xl-"', `class="col-xl-${content_grid}"`); 
+    htmlContent = htmlContent.replace('href="#modal_card_zoom"', `href="#modal_card_zoom${contentId}"`); // set the unique id for each content
     
 
     // Create a containerContent element and set its innerHTML
@@ -587,10 +617,10 @@
 <script src="/lib/jqvmap/jquery.vmap.min.js"></script>
 <script src="/lib/jqvmap/maps/jquery.vmap.indonesia.js"></script>
 <script src="/lib/jqvmap/maps/jquery.vmap.world.js"></script>
+<script src="/js/main/possible-map-input.js"></script>
 
 <script src="/lib/apexcharts/apexcharts.min.js"></script>
 <script src="/js/db.data.js"></script>
-<script src="/js/main/possible-map-input.js"></script>
 <script src="/js/main/contents-config.js"></script>
 
 {{-- TABLEAU EMBED --}}
@@ -686,8 +716,6 @@ var table = document.getElementById('tablePilihKontent');
   });
 
 </script>
-
-
 
 
 @endsection

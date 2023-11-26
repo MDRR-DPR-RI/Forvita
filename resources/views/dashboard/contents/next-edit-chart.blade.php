@@ -87,7 +87,7 @@
                         <th scope="col">
                             <div class="form-check">
                             <label class="form-check-label" for="selectAllCheckbox{{ $i }}">Pilih Semua</label>
-                            @if ( isset($x_value_decodedArray[$i]) && count($x_value_decodedArray[$i]) == count($value) )
+                            @if ( isset($x_value_decodedArray[$i]) && $x_value_decodedArray[$i] !== "" && count($x_value_decodedArray[$i]) == count($value) )
                               <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" checked>
                             @else
                               <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" >
@@ -97,7 +97,7 @@
                         <th scope="col">Judul</th>
                         <th scope="col">Status Data</th>
                         <th scope="col">Jumlah</th>
-                        @if (in_array($content->chart->id, [16, 17, 19, 24]))
+                        @if (in_array($content->chart->id, [16, 17, 19, 24, 25]))
                           <th scope="col">Warna</th>
                         @endif
                         </tr>
@@ -119,7 +119,7 @@
                          <td>{{ ($clean->newest == 1) ? "Terbaru" : ($clean->created_at)}}</td>
 
                           <td>{{ $clean->jumlah }}</td>
-                          @if (in_array($content->chart->id, [16, 17, 19, 24]))
+                          @if (in_array($content->chart->id, [16, 17, 19, 24, 25]))
                             <td>
                             @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
                               <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker{{ $i }}[]" value="{{ $colors_decodedArray[$loops] }}">
@@ -194,8 +194,7 @@
           
           {{-- BUG: when user edit chart and change the stack. the button is not disabled. make it disabled --}}
             @if ( $stackCount == count($x_value_decodedArray))
-              {{-- <a  href="#validation" data-bs-toggle="modal" type="submit" class="btn btn-primary" id="selesaiBtn">Selesai</a > --}}
-              <button type="submit" class="btn btn-secondary" id="selesaiBtn">Selesai</button>
+              <button type="submit" class="btn btn-primary" id="selesaiBtn">Selesai</button>
             @else
               <button type="submit" class="btn btn-secondary" id="selesaiBtn" disabled>Selesai</button>
             @endif
@@ -206,40 +205,6 @@
     </div><!-- main-footer --> --}}
   </div><!-- main-app -->
 </form>
-
-    {{-- MODAL NEW DASHBOARD --}}
-    <div class="modal fade" id="validation" tabindex="-1">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Validasi Data</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <form action="/dashboard" method="post">
-            @csrf
-            <div class="modal-body text-center">
-                <label>Masukan Nama Dashboard:</label>
-                <input type="text" class="form-control" name="dashboard_name" placeholder="Nama dashboard" autofocus required>
-            </div> 
-          <div class="modal-body text-center">
-              <label>Masukan Deskripsi Dashboard:</label>
-              <textarea class="form-control" name="dashboard_description" rows="3" placeholder="Deskripsi dashboard..." required></textarea>
-            </div>
-            <div class="modal-body text-center">
-            <label>Pilih Icon</label>
-              <div class="input-group mb-3">
-                <label class="iconOutputs input-group-text" for="iconInputs">Icon</label>
-                <input type="text" name="icon"  class="iconInputs form-control iconpicker" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" required/>
-              </div>   
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-primary">Tambah Dashboard</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
 
 @endsection
 
@@ -334,7 +299,7 @@
 
                     // Update the items container with the filtered data
                   $.each(data.data, function (index, clean) {
-                    @if (in_array($content->chart->id, [16, 17, 19, 24]))
+                    @if (in_array($content->chart->id, [16, 17, 19, 24, 25]))
                         colorInput = `
                             <td>
                                 <input type="color" id="colorPicker${index + 1}" name="color_picker${i}[]" value="#506fd9" disabled style="display: none">
@@ -350,7 +315,7 @@
                       hour: '2-digit',
                       minute: '2-digit',
                       second: '2-digit',
-                      hour12: false,  // Set to false for 24-hour format
+                      hour12: false,  // Set to false for 24, 25-hour format
                       timeZone: 'UTC'
                     });
 
