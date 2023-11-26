@@ -194,7 +194,7 @@
     tableau_link = '{{ $content->card_description }}';
   
   if ('{{ $content->username_tableau  !== null}}') {
-      tableau_embed = '{{ $content->domain_tableau }}/trusted/{{ $ticket }}/{{ $content->card_description }}';
+      tableau_embed = '{{ $content->domain_tableau }}/trusted/{{ $content->ticket }}/{{ $content->card_description }}';
   } else {
       tableau_embed = '{{ $content->domain_tableau }}/{{ $content->card_description }}';
   }

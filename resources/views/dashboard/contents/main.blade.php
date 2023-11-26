@@ -11,6 +11,11 @@
     width: 500px;
     top: 80px !important;
   }
+
+  .required-field::after {
+    content: "*" !important;
+    color: red !important;
+}
 </style>
 <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
 <link rel="stylesheet" href="/lib/jqvmap/jqvmap.min.css">
@@ -48,27 +53,41 @@
                     <h5 class="modal-title">Publik Dashboard {{ $dashboard->name }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <div class="modal-body">
-                    <p >Apakah anda ingin membuat dashboard ini publik?
-                    </p>
-                    <i class="text-secondary">Orang lain akan bisa melihat dashboard ini tanpa login</i>
-                    
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <form action="/share" method="post">
-                      @csrf
-                      <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}">
-                      <button type="submit" class="btn btn-primary">Publik</button>
-                    </form>
-                  </div>
+                  <form action="/share" method="post">
+                  @csrf
+                    <div class="modal-body">
+                        <div class="required-field">Expired Publik Dashboard</div>
+                        <input class="flatpickr flatpickr-input form-control active" name="expired" type="text" placeholder="Pilih tanggal dan jam" data-id="datetime" readonly="readonly">                  
+                    </div>
+                    <div class="m-3">
+                      <p >Apakah anda ingin membuat dashboard ini publik?
+                      </p>
+                      <i class="text-secondary">Orang lain akan bisa melihat dashboard ini tanpa login</i>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}">
+                        <button type="submit" class="btn btn-primary">Publik</button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
             @endcan
+    
+          </div>
 
-
-        </div>
+        @if ($errors->any())
+          <div class="alert alert-danger">
+            <ul>
+              @foreach ($errors->all() as $error)
+              {{-- <li>{{ $error }}</li> --}}
+              <li>Mohon Masukkan Tanggal Expired Dashboard</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
         @if (session('status'))
           <div class="alert alert-primary mb-3">
               {{ session('status') }}
@@ -377,6 +396,35 @@
         </div>
     @endcan
 
+    {{-- Modal ZOOM CARDS --}}
+    @foreach ($contents as $content)
+      <div class="modal" id="modal_card_zoom{{ $content->id }}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="title_card_zoom{{ $content->id }}"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body " >
+              <div id="desc_card_zoom{{ $content->id }}"></div>
+              @if ($content->chart->id == 19  )
+              {{-- NOTE: THIS IS NOT RESPOONSIVE TO THE MOBILE VIEW. BECAUSE NOT USING BOOTSTRAP CLASS/STYLE.  --}}
+                <div class="mx-2" style="width: 1150px; height: 700px;" id="card_content_zoom{{ $content->id }}"></div>
+              @elseif($content->chart->id == 25)
+              {{-- NOTE: THIS IS NOT RESPOONSIVE TO THE MOBILE VIEW. BECAUSE NOT USING BOOTSTRAP CLASS/STYLE.  --}}
+                <div class="mx-5" style="width: 1000px; height: 800px;" id="card_content_zoom{{ $content->id }}"></div>
+              @else
+                <div id="card_content_zoom{{ $content->id }}"></div>
+              @endif
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    @endforeach
+
 @endsection
 
 
@@ -385,10 +433,23 @@
 {{-- include all assets (html-structures) --}}
 <script src="/js/main/html-structures.js"></script>
 
+<script src="/lib/datetime/flatpickr.js"></script>
+
 {{-- script to save into page into an image --}}
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 
 @push('addon-script')
+
+<script>
+  $(".flatpickr").flatpickr(
+    {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    minDate: "today",
+}
+  );
+</script>
+
 <script>
 
 (async () => {
@@ -447,6 +508,7 @@
     htmlContent = htmlContent.replace('id="placeholder"', `id="placeholder${unique}"`); // set the unique id for placeholder
     htmlContent = htmlContent.replace('data-content-id="id"', `data-content-id="${contentId}"`); // set the data-content-id with its id to send into a modal
     htmlContent = htmlContent.replace('class="col-xl-"', `class="col-xl-${content_grid}"`); 
+    htmlContent = htmlContent.replace('href="#modal_card_zoom"', `href="#modal_card_zoom${contentId}"`); // set the unique id for each content
     
 
     // Create a containerContent element and set its innerHTML
@@ -555,10 +617,10 @@
 <script src="/lib/jqvmap/jquery.vmap.min.js"></script>
 <script src="/lib/jqvmap/maps/jquery.vmap.indonesia.js"></script>
 <script src="/lib/jqvmap/maps/jquery.vmap.world.js"></script>
+<script src="/js/main/possible-map-input.js"></script>
 
 <script src="/lib/apexcharts/apexcharts.min.js"></script>
 <script src="/js/db.data.js"></script>
-<script src="/js/main/possible-map-input.js"></script>
 <script src="/js/main/contents-config.js"></script>
 
 {{-- TABLEAU EMBED --}}
@@ -574,7 +636,7 @@
     tableau_link = '{{ $content->card_description }}';
   
   if ('{{ $content->username_tableau  !== null}}') {
-      tableau_embed = '{{ $content->domain_tableau }}/trusted/{{ $ticket }}/{{ $content->card_description }}';
+      tableau_embed = '{{ $content->domain_tableau }}/trusted/{{ $content->ticket }}/{{ $content->card_description }}';
   } else {
       tableau_embed = '{{ $content->domain_tableau }}/{{ $content->card_description }}';
   }
@@ -654,8 +716,6 @@ var table = document.getElementById('tablePilihKontent');
   });
 
 </script>
-
-
 
 
 @endsection
