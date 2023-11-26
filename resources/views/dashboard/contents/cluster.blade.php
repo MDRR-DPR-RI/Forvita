@@ -40,15 +40,17 @@
             <div class="col-3">
               <a href="/cluster/{{ $cluster->id }}">
                 <div class="card card-one" style="height: 200px;">
-                  <div class="card-body p-3">
-                    <div class="d-block fs-40 lh-1 text-primary mb-1"><i class="{{ $cluster->icon_name }}"></i></div>
-                    <h1 class="card-value mb-0 ls--1 fs-32" id="card-val">{{ $cluster->name }}</h1>
+                  <div class="card-body p-3 text-center">
+                    <div class="d-block fs-40 lh-1 text-primary my-1 mt-3"><i class="{{ $cluster->icon_name }}"></i></div>
+                    <h1 class="text-dark">{{ $cluster->name }}</h1>
                     @can('admin')
                       <i class="mb-0 fw-medium text-dark">{{ $cluster->dashboard->count() }} Dashboard</i>
                     @endcan
                   <div class="row">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <label class="d-block fw-medium text-dark">Dibuat oleh: {{ $cluster->user->name }}</label>  
+                    <div class=" 
+                      {{ (Auth()->user()->role->name == "Admin") ? "d-flex justify-content-between" : "" }}
+                      align-items-center">
+                      <label class="d-block fw-medium text-dark">Di buat oleh : {{ $cluster->user->name }}</label>  
                       @can('admin')
                         <div class="d-flex">
                           <a data-id="{{ $cluster->id }}" data-name="{{ $cluster->name }}" href="#delete_cluster" class="modalDelete btn btn-danger" data-bs-toggle="modal">
