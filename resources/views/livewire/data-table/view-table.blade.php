@@ -29,12 +29,13 @@
                         @foreach($rows as $row)
                             <tr>
                                 @foreach($row as $value)
-                                    <td>{{$value}}</td>
+                                    <td nowrap="nowrap">{{$value}}</td>
                                 @endforeach
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+                    {{ $rows->links() }}
                 </div>
                 <!-- modal-footer -->
                 <div class="modal-footer">
