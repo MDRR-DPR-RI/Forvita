@@ -210,7 +210,7 @@
                                 <input type="hidden" value="{{ $chart->id }}" name="chart_id">
                                 <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
                                 <input type="hidden" name="card_grid" value="{{ $chart->grid }}" >
-                                <button type="submit" class="btn btn-primary btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah Ke Dashboard"><i class="bi bi-plus-lg"></i></button>
+                                <button type="submit" class="btn btn-primary btn-icon mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah Ke Dashboard"><i class="bi bi-plus-lg"></i></button>
                               </form>
                               @else
                                 <a href="#modalEmbedTab" class="btn btn-primary" data-bs-toggle="modal"><i class="bi bi-plus-lg" data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah Ke Dashboard"></i></a>
@@ -255,7 +255,7 @@
                               <form action="/dashboard/content/{{ $content->id }}" method="post">
                                 @method('delete')
                                 @csrf
-                                <button type="submit" class="btn btn-danger btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus">
+                                <button type="submit" class="btn btn-danger btn-icon mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus">
                                   <i class="bi bi-trash3"></i>
                                 </button>
                               </form>
@@ -577,19 +577,6 @@
       $(`#placeholder${unique}`).empty();
     }
   @endforeach
-  $(document).ready(function () {
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
-    $('a[data-bs-toggle="modal"]').on('click', function () {
-
-      // Update the form action attribute with the content ID
-      var formAction = '/dashboard/content/' + contentId;
-      $('#contentForm').attr('action', formAction);
-    });
-  });
-
 </script>
 
 {{-- script for save dashboard content into an image  --}}

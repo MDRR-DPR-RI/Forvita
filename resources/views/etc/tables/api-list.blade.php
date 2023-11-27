@@ -132,8 +132,23 @@
             {
                 name: "{{$apiList->name}}", 
                 file: "{{$apiList->file}}",
-                status: `{!! $apiList->action ? "<span class='btn btn-success w-80'>Berhasil Dibuat</span>" : "<span class='btn btn-danger w-80'>Belum Dijalankan</span>" !!}`, 
-                action: `<div class='d-flex justify-content-center p-2'>{!! $apiList->action ? "<a href='". route('restapi.delete',['id'=> $apiList->id ]) ."' class='btn-icon mx-1 btn btn-warning'><i class='bi bi-trash-fill'></i></a>" : "<a href='". route('restapi.create',['id'=> $apiList->id ]) ."' class='btn-icon mx-1 btn btn-primary'><i class='bi bi-plus-square-fill'></i></a>" !!} <a href='{{ route("restapi.remove",['id'=>$apiList->id]) }}' class="btn-icon mx-1 btn btn-danger"><i class='bi bi-file-earmark-excel'></i></a><a href='{{ route("restapi.view",['id'=>$apiList->id]) }}' class="btn-icon mx-1 btn btn-secondary"><i class='bi bi-eye-fill'></i></a></div>`
+                status: `{!! $apiList->action ? "<span class='btn btn-success btn-sm'>Berhasil Dibuat</span>" : "<span class='btn btn-danger btn-sm'>Belum Dijalankan</span>" !!}`, 
+                action: `<div class='d-flex justify-content-center p-2'>
+                            {!! $apiList->action ?
+                                "<a href='". route('restapi.delete',['id'=> $apiList->id ]) ."' class='btn-icon mx-1 btn btn-warning'>
+                                    <i class='bi bi-trash-fill'></i>
+                                </a>" :
+                                "<a href='". route('restapi.create',['id'=> $apiList->id ]) ."' class='btn-icon mx-1 btn btn-success'>
+                                    <i class='bi bi-gear' ></i>
+                                </a>" !!} 
+                                
+                                <a href='{{ route("restapi.remove",['id'=>$apiList->id]) }}' class="btn-icon mx-1 btn btn-danger">
+                                    <i class='bi bi-file-earmark-excel'></i>
+                                </a>
+                                <a href='{{ route("restapi.view",['id'=>$apiList->id]) }}' class="btn-icon mx-1 btn btn-secondary">
+                                    <i class='bi bi-eye-fill'></i>
+                                </a>
+                            </div>`
             },
         @endforeach
     ];

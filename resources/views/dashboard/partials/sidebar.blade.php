@@ -174,7 +174,7 @@
                         <form action="/share/{{ $share->id }}" method="post">
                           @method('delete')
                           @csrf
-                          <button type="submit" class="btn btn-danger btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>
+                          <button type="submit" class="btn btn-danger btn-icon mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>
                         </form>
                       </div>
                     </td>
