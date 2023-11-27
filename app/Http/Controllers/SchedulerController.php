@@ -64,8 +64,8 @@ class SchedulerController extends Controller
         try { // should move this to services
             $schedulerDatabase = $scheduler->database;
             if ($schedulerDatabase) {
-                (new DatabaseController())->changeDatabaseConnection('scheduler', $schedulerDatabase);
-                $queryResult = DB::connection('scheduler')->select($scheduler->query);
+                (new DatabaseController())->changeDatabaseConnection($schedulerDatabase->name, $schedulerDatabase);
+                $queryResult = DB::connection($schedulerDatabase->name)->select($scheduler->query);
             } else {
                 $queryResult = DB::select($scheduler->query);
             }

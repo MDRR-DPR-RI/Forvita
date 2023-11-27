@@ -8,6 +8,15 @@
 
 @section('page_content')
     <div class="main main-app p-3 p-lg-4">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <h1> Databases </h1>
         <div class="row">
             <div class="d-flex justify-content-end gap-2 mt-3 mb-3">
@@ -104,16 +113,16 @@
                             <input type="hidden" id="databaseID" name="databaseID">
                             <div class="form-group">
                                 <label for="databaseName">Nama Database</label>
-                                <input type="text" id="databaseName" name="databaseName" class="form-control" required>
+                                <input type="text" id="databaseName" name="name" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="databaseUrl">URL Database (Akan Menggantikan Pengaturan Lain)</label>
-                                <input type="text" id="databaseUrl" name="databaseUrl" class="form-control">
+                                <input type="text" id="databaseUrl" name="url" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databaseDriver">Database Driver</label>
                                 <div class="input-group width-150px">
-                                    <input type="text" id="databaseDriver" name="databaseDriver" class="form-control">
+                                    <input type="text" id="databaseDriver" name="driver" class="form-control">
                                     <div id="databaseDriverDropdown" class="btn-group">
                                         <button type="button" class="btn btn-outline-secondary dropdown-toggle"
                                                 data-bs-toggle="dropdown" aria-expanded="false"></button>
@@ -128,23 +137,23 @@
                             </div>
                             <div class="form-group">
                                 <label for="databaseHost">Database Host</label>
-                                <input type="text" id="databaseHost" name="databaseHost" class="form-control">
+                                <input type="text" id="databaseHost" name="host" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databasePort">Database Port</label>
-                                <input type="text" id="databasePort" name="databasePort" class="form-control">
+                                <input type="text" id="databasePort" name="port" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databaseDatabase">Database Database</label>
-                                <input type="text" id="databaseDatabase" name="databaseDatabase" class="form-control">
+                                <input type="text" id="databaseDatabase" name="database" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databaseUsername">Database Username</label>
-                                <input type="text" id="databaseUsername" name="databaseUsername" class="form-control">
+                                <input type="text" id="databaseUsername" name="username" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="databasePassword">Database Password</label>
-                                <input type="password" id="databasePassword" name="databasePassword" class="form-control">
+                                <input type="password" id="databasePassword" name="password" class="form-control">
                             </div>
                         </div>
                         <!-- modal-footer -->
