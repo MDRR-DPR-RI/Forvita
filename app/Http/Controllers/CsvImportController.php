@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
@@ -35,6 +37,7 @@ class CsvImportController extends Controller
 
         // Ambil nama tabel dari input pengguna
         $tableName = $request->input('tableName');
+        $tableName = str_replace(' ', '_', $tableName);
 
         if (Schema::hasTable($tableName)) {
             return redirect()->back()->with('deleted', 'Failed to import! The name is exits from tables!');
@@ -72,7 +75,7 @@ class CsvImportController extends Controller
                 // Buat tabel baru dengan nama dari input pengguna
                 Schema::create($tableName, function ($table) use ($headers) {
                     foreach ($headers as $header) {
-                        $table->string($header)->nullable();
+                        $table->string($header,5000)->nullable();
                     }
                 });
 
@@ -100,6 +103,44 @@ class CsvImportController extends Controller
             }
         } else {
             return redirect()->back()->with('deleted', 'Data not valid!');
+        }
+    }
+
+    public function handleFile(Request $request)
+    {
+        // Coba membuat tabel baru
+        $request->validate(['id' => 'required']);
+        $idImport = $request->query('id');
+        $data = ListImport::find($idImport);
+        if ($data) {
+            $tableName = $data->name;
+            $fileName = $data->file;
+            $filePath = storage_path("app/csv/{$fileName}");
+            if (file_exists($filePath)) {
+                $content = file_get_contents($filePath);
+    
+                return response($content)
+                    ->header('Content-Type', 'text/csv')
+                    ->header('Content-Disposition', 'attachment; filename="' . $fileName . '"');
+            }
+        }
+
+        abort(404, 'CSV file not found');
+    }
+
+    public function viewTable(Request $request)
+    {
+        // Coba membuat tabel baru
+        $request->validate(['id' => 'required']);
+        $idImport = $request->query('id');
+        $data = ListImport::find($idImport);
+        if ($data) {
+            return view('etc.view.csv-view', [
+                'dataCSV' => $data
+            ]);
+            
+        } else {
+            return redirect()->back()->with('deleted', 'Error to view Data!');
         }
     }
 

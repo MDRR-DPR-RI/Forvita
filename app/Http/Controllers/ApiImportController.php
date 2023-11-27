@@ -98,6 +98,23 @@ class ApiImportController extends Controller
         }
     }
 
+
+    public function viewTable(Request $request)
+    {
+        // Coba membuat tabel baru
+        $request->validate(['id' => 'required']);
+        $idImport = $request->query('id');
+        $data = ListImport::find($idImport);
+        if ($data) {
+            return view('etc.view.api-view', [
+                'dataAPI' => $data
+            ]);
+            
+        } else {
+            return redirect()->back()->with('deleted', 'Error to view Data!');
+        }
+    }
+
     public function fetchDataFromApi($apiUrl)
     {
         $response = Http::get($apiUrl);

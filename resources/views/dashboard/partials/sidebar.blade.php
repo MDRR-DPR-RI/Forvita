@@ -30,6 +30,9 @@
             <li class="nav-item">
               <a href="/user-management" class="nav-link @isset($initialUsers) active @endisset"><i class="bi bi-person-fill-gear"></i> <span>Manajemen Pengguna</span></a>
             </li>
+            <li class="nav-item">
+              <a href="/data-table" class="nav-link @isset($datatables) active @endisset"><i class="ri-file-excel-2-line fs-18 lh-1"></i> <span>Tabel Data</span></a>
+            </li>
           </ul>
         @endcan    
         <a href="#" class="nav-label">Dashboard</a>
@@ -154,7 +157,9 @@
                     <td scope="row">{{ $key+1 }}</td>
                     <td>{{ $share->dashboard->cluster->name }}</td>
                     <td>{{ $share->dashboard->name }}</td>
-                    <td>https://172.18.25.16/public/dashboard/{{ $share->link }}</td>
+                    <td>
+                      <a href="https://172.18.25.16/public/dashboard/{{ $share->link }}">https://172.18.25.16/public/dashboard/{{ $share->link }}</a>
+                    </td>
                     <td>{{ $share->expired }}</td>
                     <td>
                       @if ($share->expired > now())
