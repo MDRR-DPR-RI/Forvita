@@ -99,7 +99,7 @@
         </div><!-- row -->
         <div class="main-footer mt-5">
             <span>&copy; 2023. DPR RI</span>
-            @can('admin')
+            @can('user')
               <a href="#delete_dashboard" class="btn btn-danger" data-bs-toggle="modal">Hapus Dashboard</a>
             @endcan
         </div><!-- main-footer -->
@@ -341,7 +341,7 @@
         </div>
     </div>
 
-    @can('admin')
+    @can('user')
         {{-- Modal delete dashboard --}}
         <div class="modal" id="delete_dashboard" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
