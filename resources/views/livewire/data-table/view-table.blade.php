@@ -20,8 +20,8 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            @foreach($firstRow as $key => $value)
-                                <th scope="col">{{$key}}</th>
+                            @foreach($columnNames as $columnName)
+                                <th scope="col">{{$columnName->column_name}}</th>
                             @endforeach
                         </tr>
                         </thead>
