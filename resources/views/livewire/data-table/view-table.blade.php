@@ -1,7 +1,7 @@
 <div>
     <div class="modal d-block"
          tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
             <!-- modal-content -->
             <div class="modal-content">
                 <!-- modal-header -->
