@@ -11,7 +11,6 @@ use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\EmbedTableauController;
 use App\Http\Controllers\ApiImportController;
 use App\Http\Controllers\SchedulerController;
-use App\Http\Controllers\TableauController;
 use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\ShareController;
 use App\Http\Controllers\UserManagementController;
@@ -38,8 +37,8 @@ Route::get('/login',  [AuthController::class, 'login_view'])->name('login')->mid
 Route::post('/login',  [AuthController::class, 'login_submit'])->middleware('guest');
 
 // Login Google
-Route::get('/auth/google', 'GoogleController@redirectToGoogle')->name('auth.google');
-Route::get('/auth/google/callback', 'GoogleController@handleGoogleCallback');
+Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 Route::post('/logout',  [AuthController::class, 'logout'])->middleware('auth');
 
