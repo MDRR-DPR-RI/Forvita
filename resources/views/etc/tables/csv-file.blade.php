@@ -130,17 +130,17 @@
                 status: `{!! $csvFile->action ? "<span class='btn-sm btn btn-success'>Berhasil Dibuat</span>" : "<span class='btn btn-danger btn-sm'>Belum Dijalankan</span>" !!}`, 
                 action: `<div class='d-flex justify-content-center p-2'>
                             {!! $csvFile->action ? 
-                                "<a href='". route('csv.delete',['id'=> $csvFile->id ]) ."' class='btn-icon mx-1 btn btn-warning'>
-                                    <i class='bi bi-trash-fill'></i>
+                                "<a href='". route('csv.delete',['id'=> $csvFile->id ]) ."' class='btn-icon mx-1 btn btn-warning' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Hapus Tabel'>
+                                    <i class='bi bi-file-earmark-excel'></i>
                                 </a>" : 
-                                "<a href='". route('csv.create',['id'=> $csvFile->id ]) ."' class='btn-icon mx-1 btn btn-primary'>
+                                "<a href='". route('csv.create',['id'=> $csvFile->id ]) ."' class='btn-icon mx-1 btn btn-success' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Jalankan \/ Buat Tabel'>
                                     <i class='bi bi-gear'></i>
                                 </a>" !!} 
                                 
-                                <a href='{{ route("csv.remove",['id'=>$csvFile->id]) }}' class="btn-icon mx-1 btn btn-danger">
-                                    <i class='bi bi-file-earmark-excel'></i>
+                                <a href='{{ route("csv.remove",['id'=>$csvFile->id]) }}' class="btn-icon mx-1 btn btn-danger" data-bs-toggle='tooltip' data-bs-placement='bottom' title='Hapus List'>
+                                    <i class='bi bi-trash-fill'></i>
                                 </a>
-                                <a href='{{ route("csv.view",['id'=>$csvFile->id]) }}' class="btn-icon mx-1 btn btn-secondary">
+                                <a href='{{ route("csv.view",['id'=>$csvFile->id]) }}' class="btn-icon mx-1 btn btn-secondary" data-bs-toggle='tooltip' data-bs-placement='bottom' title='Lihat'>
                                     <i class='bi bi-eye-fill'></i>
                                 </a>
                             </div>`
