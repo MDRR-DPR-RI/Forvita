@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\ContentController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\ShareController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\UserController;
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +36,10 @@ Route::redirect('/', '/login');
 
 Route::get('/login',  [AuthController::class, 'login_view'])->name('login')->middleware('guest'); //loginpage
 Route::post('/login',  [AuthController::class, 'login_submit'])->middleware('guest');
+
+// Login Google
+Route::get('/auth/google', 'GoogleController@redirectToGoogle')->name('auth.google');
+Route::get('/auth/google/callback', 'GoogleController@handleGoogleCallback');
 
 Route::post('/logout',  [AuthController::class, 'logout'])->middleware('auth');
 
