@@ -6,6 +6,7 @@ use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CsvImportController;
+use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\EmbedTableauController;
 use App\Http\Controllers\ApiImportController;
 use App\Http\Controllers\SchedulerController;
@@ -94,4 +95,8 @@ Route::post('database', [DatabaseController::class, 'store'])->middleware('admin
 Route::patch('database', [DatabaseController::class, 'update'])->middleware('admin');
 Route::delete('database', [DatabaseController::class, 'destroy'])->middleware('admin');
 
+// User Management Routers
 Route::get('user-management', [UserManagementController::class, 'index'])->middleware('admin');
+
+// Data Tables Routers
+Route::get('data-table', [DataTableController::class, 'index'])->middleware('admin');
