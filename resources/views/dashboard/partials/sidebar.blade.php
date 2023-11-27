@@ -157,7 +157,9 @@
                     <td scope="row">{{ $key+1 }}</td>
                     <td>{{ $share->dashboard->cluster->name }}</td>
                     <td>{{ $share->dashboard->name }}</td>
-                    <td>https://172.18.25.16/public/dashboard/{{ $share->link }}</td>
+                    <td>
+                      <a href="https://172.18.25.16/public/dashboard/{{ $share->link }}">https://172.18.25.16/public/dashboard/{{ $share->link }}</a>
+                    </td>
                     <td>{{ $share->expired }}</td>
                     <td>
                       @if ($share->expired > now())
