@@ -328,5 +328,23 @@ class CleanSeeder extends Seeder
             'newest' => false, // ini tidak akan di render ketika milih data di edit_chart view
             'created_at' => $americaTimestamp
         ]);
+
+        Clean::create([
+            'kelompok' => "POPULASI",
+            'data' => "Populasi Dunia",
+            'judul' => "Jumlah populasi yang ada di seluruh dunia",
+            'keterangan' => "Indonesia",
+            'jumlah' => 273800000,
+            'created_at' => $currentTimestamp
+        ]);
+
+        Clean::create([
+            'kelompok' => "POPULASI",
+            'data' => "Populasi Dunia",
+            'judul' => "Jumlah populasi yang ada di seluruh dunia",
+            'keterangan' => "Australia",
+            'jumlah' => 25690000,
+            'created_at' => $currentTimestamp
+        ]);
     }
 }

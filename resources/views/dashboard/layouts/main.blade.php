@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="/lib/remixicon/fonts/remixicon.css">
     <link rel="stylesheet" href="/lib/apexcharts/apexcharts.css">
     <link rel="stylesheet" href="/lib/prismjs/themes/prism.min.css">
+    <link rel="stylesheet" href="/lib/datetime/flatpickr.min.css">
 
 
     <link rel="stylesheet" href="/lib/bootstrap-icons/bootstrap-icons.css">
@@ -59,7 +60,6 @@
   <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
   <script src="/lib/iconpicker-master/dist/iconpicker.js"></script>
-
 
 
   <script src="/js/script.js"></script>

@@ -87,7 +87,7 @@
                         <th scope="col">
                             <div class="form-check">
                             <label class="form-check-label" for="selectAllCheckbox{{ $i }}">Pilih Semua</label>
-                            @if ( isset($x_value_decodedArray[$i]) && count($x_value_decodedArray[$i]) == count($value) )
+                            @if ( isset($x_value_decodedArray[$i]) && $x_value_decodedArray[$i] !== "" && count($x_value_decodedArray[$i]) == count($value) )
                               <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" checked>
                             @else
                               <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" >
@@ -97,7 +97,7 @@
                         <th scope="col">Judul</th>
                         <th scope="col">Status Data</th>
                         <th scope="col">Jumlah</th>
-                        @if (in_array($content->chart->id, [16, 17, 19, 24]))
+                        @if (in_array($content->chart->id, [16, 17, 19, 24, 25]))
                           <th scope="col">Warna</th>
                         @endif
                         </tr>
@@ -119,7 +119,7 @@
                          <td>{{ ($clean->newest == 1) ? "Terbaru" : ($clean->created_at)}}</td>
 
                           <td>{{ $clean->jumlah }}</td>
-                          @if (in_array($content->chart->id, [16, 17, 19, 24]))
+                          @if (in_array($content->chart->id, [16, 17, 19, 24, 25]))
                             <td>
                             @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
                               <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker{{ $i }}[]" value="{{ $colors_decodedArray[$loops] }}">
@@ -299,7 +299,7 @@
 
                     // Update the items container with the filtered data
                   $.each(data.data, function (index, clean) {
-                    @if (in_array($content->chart->id, [16, 17, 19, 24]))
+                    @if (in_array($content->chart->id, [16, 17, 19, 24, 25]))
                         colorInput = `
                             <td>
                                 <input type="color" id="colorPicker${index + 1}" name="color_picker${i}[]" value="#506fd9" disabled style="display: none">
@@ -315,7 +315,7 @@
                       hour: '2-digit',
                       minute: '2-digit',
                       second: '2-digit',
-                      hour12: false,  // Set to false for 24-hour format
+                      hour12: false,  // Set to false for 24, 25-hour format
                       timeZone: 'UTC'
                     });
 

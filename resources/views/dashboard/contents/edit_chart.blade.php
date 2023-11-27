@@ -75,7 +75,7 @@
       @csrf
       <div class="col d-flex justify-content-end">
         <input type="hidden" name="selected_judul" id="selected_judul" value="{{implode(',', json_decode($content->judul)) }}">
-        @if ($content->card_title)
+        @if ($content->judul != '[""]')
           <button class="btn btn-primary" id="selectBtn">Selanjutnya</button>
         @else
           <button class="btn btn-secondary" id="selectBtn" disabled>Selanjutnya</button>

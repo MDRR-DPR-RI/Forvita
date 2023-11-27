@@ -30,6 +30,9 @@
             <li class="nav-item">
               <a href="/user-management" class="nav-link @isset($initialUsers) active @endisset"><i class="bi bi-person-fill-gear"></i> <span>Manajemen Pengguna</span></a>
             </li>
+            <li class="nav-item">
+              <a href="/data-table" class="nav-link @isset($datatables) active @endisset"><i class="ri-file-excel-2-line fs-18 lh-1"></i> <span>Tabel Data</span></a>
+            </li>
           </ul>
         @endcan    
         <a href="#" class="nav-label">Dashboard</a>
@@ -55,7 +58,7 @@
       <hr>
       <ul class="nav nav-sidebar">
         <li class="nav-item">
-            <a href="#share-list" class="nav-link" data-bs-toggle="modal"><i class="ri-global-line"></i> <span>Publik Dashboards</span></a>
+            <a href="#share-list" class="nav-link" data-bs-toggle="modal"><i class="ri-global-line"></i> <span>Dashboard Publik</span></a>
           </li>
         </ul>
     @endcan
@@ -130,21 +133,21 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">List Publik Dashboard </h5>
+          <h5 class="modal-title">List Dashboard Publik</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div><!-- modal-header -->
-        <div class="modal-body container ">
+        <div class="modal-body container">
           <div class="row">
-            <div class="col-12">
+            <div class="col-12 overflow-auto">
               <table class="table" id="tableListPublic">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nama Cluster</th>
-                    <th scope="col">ID Dashboard</th>
                     <th scope="col">Nama Dashboard</th>
-                    <th scope="col">Nama Pembuat</th>
                     <th scope="col">Link</th>
+                    <th scope="col">Expired</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Aksi</th>
                   </tr>
                 </thead>
@@ -153,16 +156,27 @@
                   <tr>
                     <td scope="row">{{ $key+1 }}</td>
                     <td>{{ $share->dashboard->cluster->name }}</td>
-                    <td>{{ $share->dashboard_id }}</td>
                     <td>{{ $share->dashboard->name }}</td>
-                    <td>{{ $share->user->name }}</td>
-                    <td>https://172.18.25.16/public/dashboard/{{ $share->link }}</td>
                     <td>
-                      <form action="/share/{{ $share->id }}" method="post">
-                        @method('delete')
-                        @csrf
-                        <button type="submit" class="btn btn-danger">Hapus</button>
-                      </form>
+                      <a href="https://172.18.25.16/public/dashboard/{{ $share->link }}" target="_blank">https://172.18.25.16/public/dashboard/{{ $share->link }}</a>
+                    </td>
+                    <td>{{ $share->expired }}</td>
+                    <td>
+                      @if ($share->expired > now())
+                        <span class="btn btn-success btn-sm">Aktif</span>
+                        @else
+                        <span class="btn btn-warning btn-sm">Inaktif</span>
+                      @endif
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <a href="/share/{{ $share->id }}" class="btn btn-primary btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Ubah"><i class="bi bi-pencil"></i></a>
+                        <form action="/share/{{ $share->id }}" method="post">
+                          @method('delete')
+                          @csrf
+                          <button type="submit" class="btn btn-danger btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>
+                        </form>
+                      </div>
                     </td>
                   </tr>
                   @endforeach

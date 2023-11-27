@@ -41,7 +41,7 @@
                             </div><!-- col -->
                             <div class="col-md">
                                 @php($fallbackProfilePhotoURL = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1024px-Windows_10_Default_Profile_Picture.svg.png')
-                                <img src="{{ $user->getProfilePhotoURL() }}" alt="Foto Profil" class="rounded-circle mr-2" height="50" width="50">
+                                <img src="{{ $user->getProfilePhotoURL() }}" id="profilePhoto" alt="Foto Profil" class="rounded-circle mr-2" height="50" width="50">
 
                                 <input type="file" name="profile_photo" id="newProfilePicInput" class="form-control d-none mw-10" placeholder="Masukkan foto profil Anda">
                                 <button onclick="$('#newProfilePicInput').click()" type="button" class="btn btn-white">Upload foto baru</button>
@@ -106,6 +106,17 @@
         </form>
 
     </div>
+
+    <script>
+        document.getElementById('newProfilePicInput').addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePhoto').src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        });
+    </script>
 
     <div class="main-footer mt-5">
         <span>&copy; 2023. DPR RI</span>
