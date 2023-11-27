@@ -47,9 +47,9 @@
             @endif
             </li>
           @endforeach
-          @can('admin')
+          @can('user')
             <li class="nav-item">
-              <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-secondary btn-sm"></i>+ Dashboard</span></a>
+              <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-secondary btn-sm"></i>Tambah Dashboard</span></a>
             </li>
           @endcan
         </ul>
@@ -93,7 +93,7 @@
     </div><!-- sidebar-footer -->
   </div><!-- sidebar -->
 
-@can('admin')    
+@can('user')    
     {{-- MODAL NEW DASHBOARD --}}
     <div class="modal fade" id="newDashboard" tabindex="-1">
       <div class="modal-dialog">
@@ -158,7 +158,7 @@
                     <td>{{ $share->dashboard->cluster->name }}</td>
                     <td>{{ $share->dashboard->name }}</td>
                     <td>
-                      <a href="https://172.18.25.16/public/dashboard/{{ $share->link }}">https://172.18.25.16/public/dashboard/{{ $share->link }}</a>
+                      <a href="https://172.18.25.16/public/dashboard/{{ $share->link }}" target="_blank">https://172.18.25.16/public/dashboard/{{ $share->link }}</a>
                     </td>
                     <td>{{ $share->expired }}</td>
                     <td>

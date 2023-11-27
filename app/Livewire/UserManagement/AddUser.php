@@ -35,8 +35,8 @@ class AddUser extends ModalComponent
                 'resubmitPassword' => 'same:password',
             ],
             [ // Messages when validation rule is broken
-                'roleID.required' => 'Please select a role.',
-                'roleID.exists' => 'The selected role is invalid.',
+                'roleID.required' => 'Mohon pilih salah satu role.',
+                'roleID.exists' => 'Role yang dipilih tidak valid.',
                 'resubmitPassword.same' => 'Password harus sama.',
             ],
         );

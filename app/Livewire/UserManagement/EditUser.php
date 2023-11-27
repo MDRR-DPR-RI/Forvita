@@ -49,8 +49,8 @@ class EditUser extends ModalComponent
                 'resubmitPassword' => 'exclude_if:changePassword,false|same:password',
             ],
             [ // Messages when validation rule is broken
-                'roleID.required' => 'Please select a role.',
-                'roleID.exists' => 'The selected role is invalid.',
+                'roleID.required' => 'Mohon pilih salah satu role.',
+                'roleID.exists' => 'Role yang dipilih tidak valid',
                 'resubmitPassword.same' => 'Password harus sama.',
             ],
         );
