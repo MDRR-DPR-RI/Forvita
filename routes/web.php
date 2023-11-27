@@ -6,6 +6,7 @@ use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CsvImportController;
+use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\EmbedTableauController;
 use App\Http\Controllers\ApiImportController;
 use App\Http\Controllers\SchedulerController;
@@ -58,11 +59,15 @@ Route::get('/filter-clean', [AjaxController::class, 'filter_clean_by_date'])->mi
 
 // Import Data CSV
 Route::get('csv', [CsvImportController::class, 'show'])->name('csv')->middleware('admin');
+Route::get('csv/view', [CsvImportController::class, 'viewTable'])->name('csv.view')->middleware('admin');
+Route::get('csv/view/target', [CsvImportController::class, 'handleFile'])->name('csv.target')->middleware('admin');
 Route::get('csv/create', [CsvImportController::class, 'createTable'])->name('csv.create')->middleware('admin');
 Route::get('csv/remove', [CsvImportController::class, 'removeTable'])->name('csv.remove')->middleware('admin');
 Route::get('csv/delete', [CsvImportController::class, 'deleteTable'])->name('csv.delete')->middleware('admin');
 // import API
 Route::get('restapi', [ApiImportController::class, 'show'])->name('restapi')->middleware('admin');
+Route::get('restapi/view', [ApiImportController::class, 'viewTable'])->name('restapi.view')->middleware('admin');
+// Route::get('restapi/view/target', [CsvImportController::class, 'handleFile'])->name('csv.target')->middleware('admin');
 Route::get('restapi/create', [ApiImportController::class, 'createTable'])->name('restapi.create')->middleware('admin');
 Route::get('restapi/remove', [ApiImportController::class, 'deleteList'])->name('restapi.remove')->middleware('admin');
 Route::get('restapi/delete', [ApiImportController::class, 'deleteTable'])->name('restapi.delete')->middleware('admin');
@@ -90,4 +95,8 @@ Route::post('database', [DatabaseController::class, 'store'])->middleware('admin
 Route::patch('database', [DatabaseController::class, 'update'])->middleware('admin');
 Route::delete('database', [DatabaseController::class, 'destroy'])->middleware('admin');
 
+// User Management Routers
 Route::get('user-management', [UserManagementController::class, 'index'])->middleware('admin');
+
+// Data Tables Routers
+Route::get('data-table', [DataTableController::class, 'index'])->middleware('admin');
