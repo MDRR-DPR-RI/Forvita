@@ -418,6 +418,9 @@
               @endif
             </div>
             <div class="modal-footer">
+            <div id="custom-tooltip" data-toggle="tooltip" data-placement="bottom" title="Your Tooltip Content"></div>
+              {{-- IMPORTANT: TOOLTIP IN MODAL GABISA. TURU BGT --}}
+              <div id="tooltip"></div>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
           </div>
@@ -504,8 +507,6 @@
     htmlContent = htmlContent.replace('id="content"', `id="${unique}"`); // set the unique id for each content
     htmlContent = htmlContent.replace('id="judul"', `id="judul${unique}"`); // set the unique id for each judul content
     htmlContent = htmlContent.replace('id="description"', `id="description${unique}"`); // set the unique id for each description content
-    htmlContent = htmlContent.replace('id="aiAnalysis"', `id="aiAnalysis${unique}"`); // set the unique id for aiAnalysis
-    htmlContent = htmlContent.replace('id="placeholder"', `id="placeholder${unique}"`); // set the unique id for placeholder
     htmlContent = htmlContent.replace('data-content-id="id"', `data-content-id="${contentId}"`); // set the data-content-id with its id to send into a modal
     htmlContent = htmlContent.replace('class="col-xl-"', `class="col-xl-${content_grid}"`); 
     htmlContent = htmlContent.replace('href="#modal_card_zoom"', `href="#modal_card_zoom${contentId}"`); // set the unique id for each content
@@ -514,68 +515,6 @@
     // Create a containerContent element and set its innerHTML
     containerContent = document.getElementById('main');
     containerContent.innerHTML += htmlContent;
-
-    // add AI analysis for chartId = 8
-    if (chartId === 20 && y_value && x_value) {
-      // Use unique identifier to select elements
-      const aiAnalysisElement = `#aiAnalysis${unique}`;
-      const placeholderElement = `#placeholder${unique}`;
-      if (!result_prompt) { // if there is no result_prompt in the content so do ajax call to do the analysis then asign the result prompt to the content(table in db)
-        let inputString = `Please perform data analysis based on ${prompt} on the following data: I have '${x_value}' each with respective totals of '${y_value}' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start dengan kalimat =  Data menunjukkan bahwa.....`
-        
-
-        $(document).ready(function() {
-          $.ajax({
-            type: 'POST',
-            url: 'http://127.0.0.1:3000/ask',
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            data: JSON.stringify({
-              prompt: inputString
-            }),
-            success: function (response) {
-              const result = response.message;
-             
-              // Set the result in the HTML element
-              $(aiAnalysisElement).text(result);
-
-              // Empty the placeholder content
-              $(placeholderElement).empty();
-
-              // store the result prompt into the db (table "contents")
-              $.ajax({
-                url: `/dashboard/content/${contentId}`, // Include the content ID
-                method: 'put', // Use POST
-                data: {
-                  result: result // Your data to update
-                },
-                headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (response) {
-                  
-                },
-                error: function (error) {
-                  console.error(error);
-                  console.error("woy error when try to access the resource api");
-                }
-              });
-            },
-            error: function (error) {
-              console.error(error);
-              $(aiAnalysisElement).text("API Error");
-              $(placeholderElement).empty();
-            }
-          });
-        });
-      } else { // if there is a result then no need to do ajax call, just show the result_prompt
-        $(aiAnalysisElement).text(result_prompt);
-        $(placeholderElement).empty();
-      }
-    } else {
-      $(`#aiAnalysis${unique}`).text("NO DATA");
-      $(`#placeholder${unique}`).empty();
-    }
   @endforeach
 </script>
 

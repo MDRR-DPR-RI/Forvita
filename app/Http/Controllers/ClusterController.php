@@ -131,6 +131,7 @@ class ClusterController extends Controller
     public function destroy(Cluster $cluster)
     {
         Cluster::destroy($cluster->id);
-        return redirect()->back()->with('deleted', "Cluster $cluster->name berhasil dihapus!");
+        Dashboard::where('cluster_id', $cluster->id)->delete();
+        return redirect()->back()->with('deleted', "Cluster $cluster->name berhasil dihapus !");
     }
 }

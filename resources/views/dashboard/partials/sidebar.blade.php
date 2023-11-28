@@ -58,7 +58,7 @@
       <hr>
       <ul class="nav nav-sidebar">
         <li class="nav-item">
-            <a href="#share-list" class="nav-link" data-bs-toggle="modal"><i class="ri-global-line"></i> <span>Dashboard Publik</span></a>
+            <a href="#share-list" class="nav-link @isset($share) active @endisset" data-bs-toggle="modal" ><i class="ri-global-line"></i> <span>Dashboard Publik</span></a>
           </li>
         </ul>
     @endcan

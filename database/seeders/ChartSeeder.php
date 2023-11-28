@@ -96,7 +96,7 @@ class ChartSeeder extends Seeder
         ]);
         Chart::create([
             'name' => "AI Analisis",
-            'grid' => 4
+            'grid' => 2
         ]);
         Chart::create([
             'name' => "Kartu",

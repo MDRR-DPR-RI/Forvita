@@ -87,6 +87,7 @@ Route::get('scheduler', [SchedulerController::class, 'show'])->middleware('admin
 Route::post('scheduler', [SchedulerController::class, 'store'])->middleware('admin');
 Route::patch('scheduler', [SchedulerController::class, 'update'])->middleware('admin');
 Route::delete('scheduler', [SchedulerController::class, 'destroy'])->middleware('admin');
+Route::delete('remove/cleans', [SchedulerController::class, 'remove_cleans'])->middleware('admin');
 
 // Database Routers
 Route::get('database/test-connection', [DatabaseController::class, 'testConnection'])->middleware('admin');

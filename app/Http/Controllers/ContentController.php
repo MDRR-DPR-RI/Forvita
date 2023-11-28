@@ -8,6 +8,7 @@ use App\Models\Clean;
 use App\Models\Prompt;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 
 class ContentController extends Controller
 {
@@ -181,10 +182,26 @@ class ContentController extends Controller
 
         // if user edit prompt in chartId = 8, then update prompt(id) in the content
         $selectedPrompt = $request->input('selectPrompt');
+        $prompt = Prompt::where('body', $selectedPrompt)->first();
         if ($selectedPrompt) {
-            $content->update([
-                'prompt_id' => $selectedPrompt,
+            $ask_url = 'http://localhost:3000/ask';
+            // Assuming $x_value and $y_value are arrays
+            $x_value_str = implode(', ', ($x_value[0])); // Convert array to comma-separated string
+            $y_value_str = implode(', ', ($y_value[0])); // Convert array to comma-separated string
+
+            $inputString = "Please perform data analysis based on $selectedPrompt on the following data: I have '$x_value_str' each with respective totals of '$y_value_str'. . Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start with kalimat =  Data menunjukkan bahwa..... ";
+            $response = Http::post($ask_url, [
+                'prompt' => $inputString, // Your request parameters
             ]);
+
+            $responseData = $response->json();
+
+            if ($responseData) {
+                $content->update([
+                    'prompt_id' => $prompt->id,
+                    'card_description' => $response['message']
+                ]);
+            }
             // if the user add their own prmopt then store the prompt to the prompt(table)
             $newPrompt = $request->input('newPrompt');
             if ($newPrompt) {

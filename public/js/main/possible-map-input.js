@@ -222,6 +222,10 @@ var possible_map_world_input={
     ag: ["antiguaandbarbuda", "antigua", "barbuda", "ag"],
     kn: ["saintkittsandnevis", "sainkitts", "navis", 'kn',],
     gd: ["grenada", "greneda", "gd"],
-    re: ["reunion", "re"]
+    re: ["reunion", "re"],
+    bb: ["barbados", 'bb'],
+    lc: ["saintlucia", 'lc', "saint", "lucia", "sainlucia"],
+    dm: ["dominica", 'dm', "dominika"],
+
 
 };

@@ -99,4 +99,9 @@ class SchedulerController extends Controller
         $scheduler->save();
         return redirect('scheduler');
     }
+    public function remove_cleans(Request $request)
+    {
+        Clean::where('judul', $request->judul_data)->delete();
+        return redirect()->back()->with('deleted', "Data $request->judul_data berhasil dihapus !");
+    }
 }

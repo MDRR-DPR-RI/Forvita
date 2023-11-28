@@ -10,6 +10,14 @@
 @method('put')
 @csrf
   <div class="main main-app p-3 p-lg-4">
+    <div class="container mt-5 mb-5">
+      <div>
+        <ol class="breadcrumb fs-sm mb-0">
+          <li class="breadcrumb-item"><p>{{ $dashboard->name }}</p></li>
+          <li class="breadcrumb-item active" aria-current="page">{{ $content->chart->name }}</li>
+        </ol> 
+        <h4 class="main-title mb-0">Konfigurasi Untuk Kartu {{ $content->chart->name }}</h4>
+      </div> <hr>
       <div class="row">
           <div class="col-8">
               <label for="card_title" class="form-label">Judul Kartu</label>
@@ -17,7 +25,7 @@
               {{-- id for chart=card --}}
                 <input type="text" class="form-control" placeholder="Kartu ini tidak memiliki judul" aria-label="card_title" name="card_title" disabled>
               @else
-                <input type="text" class="form-control" placeholder="Judul" aria-label="card_title" name="card_title" value="{{ $content->card_title }}" required>
+                <input type="text" class="form-control" placeholder="Masukan judul kartu disini..." aria-label="card_title" name="card_title" value="{{ $content->card_title }}" required>
               @endif
           </div>
           <div class="col">
@@ -34,11 +42,15 @@
           </div>
           </div><br>
           <div>
-            <label for="card_description" class="form-label">Deskripsi Kartu</label>
               {{-- id for chart=card --}}
-            @if ($content->chart->id == 21 || $content->chart->id == 20)
+            @if ($content->chart->id == 20)
+                <label for="card_description" class="form-label">Hasil Analisis AI</label>
+                <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Belum ada hasil analisis AI." disabled>{{ $content->card_description }}</textarea>
+            @elseif($content->chart->id == 20)
+                <label for="card_description" class="form-label">Deskripsi Kartu</label>
                 <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Kartu ini tidak memiliki deskripsi" disabled></textarea>
             @else
+                <label for="card_description" class="form-label">Deskripsi Kartu</label>
                 <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Masukan deskripsi kartu disini..." required>{{ $content->card_description }}</textarea>
             @endif
           </div>
@@ -86,12 +98,12 @@
                         <tr>
                         <th scope="col">
                             <div class="form-check">
-                            <label class="form-check-label" for="selectAllCheckbox{{ $i }}">Pilih Semua</label>
                             @if ( isset($x_value_decodedArray[$i]) && $x_value_decodedArray[$i] !== "" && count($x_value_decodedArray[$i]) == count($value) )
                               <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" checked>
                             @else
                               <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" >
                             @endif
+                            <label class="form-check-label" for="selectAllCheckbox{{ $i }}">Pilih Semua</label>
                             </div>
                         </th>
                         <th scope="col">Judul</th>
@@ -146,10 +158,10 @@
                     {{-- set on change function, when user add new prompt, then will show INPUT FIELD to enter new prompt --}}
                     <select id="selectPrompt" class="form-select" name="selectPrompt" onchange="checkForNewPrompt()">
                       @foreach ($prompts as $prompt)
-                        @if ($prompt->id == $content->prompt->id) <!-- IMPORTANT: UPDATE THIS IF $prompt->id is EQUAL with the prompt_id in table contents -->
-                          <option value="{{ $prompt->id }}" selected>{{ $prompt->body }}</option>
+                        @if ($prompt->id == $content->prompt->id)
+                          <option value="{{ $prompt->body }}" selected>{{ $prompt->body }}</option>
                         @else
-                          <option value="{{ $prompt->id }}">{{ $prompt->body }}</option>
+                          <option value="{{ $prompt->body }}">{{ $prompt->body }}</option>
                         @endif
                       
                       @endforeach
@@ -186,6 +198,7 @@
                   </div><!-- modal-body -->
                 </form>
               </div>
+              <br>
             @endif
          
           <input type="hidden" value="{{ $stackCount }}" name="stackCount">
@@ -203,6 +216,7 @@
     {{-- <div class="main-footer mt-5">
       <span>&copy; 2023. DPR RI</span>
     </div><!-- main-footer --> --}}
+    </div><!-- main-app -->
   </div><!-- main-app -->
 </form>
 
