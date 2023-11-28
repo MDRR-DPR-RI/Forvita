@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class GoogleController extends Controller
 {
@@ -25,15 +26,16 @@ class GoogleController extends Controller
                 Auth::login($findUser);
                 return redirect()->intended('cluster');
             } else {
+                $randomPassword = Str::random(12);
                 $newUser = User::create([
                     'role_id' => 3, // Sesuaikan dengan role ID yang sesuai
                     'name' => $user->name,
                     'email' => $user->email,
-                    'password' => Hash::make('password'), // Sesuaikan dengan logika hash password Anda
+                    'password' => Hash::make($randomPassword), // Sesuaikan dengan logika hash password Anda
                 ]);
 
                 Auth::login($newUser);
-                return redirect()->intended('cluster');
+                return redirect()->intended('cluster')->with('google', "$randomPassword");
             }
         } catch (\Exception $e) {
             // Log or handle the exception appropriately
