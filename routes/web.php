@@ -12,6 +12,7 @@ use App\Http\Controllers\EmbedTableauController;
 use App\Http\Controllers\ApiImportController;
 use App\Http\Controllers\SchedulerController;
 use App\Http\Controllers\DatabaseController;
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\ShareController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\UserController;
@@ -105,3 +106,8 @@ Route::get('user-management', [UserManagementController::class, 'index'])->middl
 
 // Data Tables Routers
 Route::get('data-table', [DataTableController::class, 'index'])->middleware('admin');
+
+// Import Excel
+Route::get('excel', [ExcelController::class, 'index'])->name('excel')->middleware('admin');
+Route::get('/exportexcel', [ExcelController::class, 'ExcelExport'])->name('exportexcel')->middleware('admin');
+Route::post('/importexcel', [ExcelController::class, 'excelimport'])->name('importexcel')->middleware('admin');
