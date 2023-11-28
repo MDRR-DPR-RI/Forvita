@@ -65,8 +65,12 @@
          <div class="divider"><span>Atau Masuk Dengan</span></div>
 
          <div class="row gx-2">
-           <div class="col"><button class="btn btn-google"><i class="ri-google-fill"></i> Google</button></div>
-         </div><!-- row -->
+          <div class="col">
+            <a href="{{ route('auth.google') }}" class="btn btn-google">
+            <i class="ri-google-fill"></i> Google
+            </a>
+          </div>
+          </div>
        </div><!-- card-body -->
        <div class="card-footer">
        </div><!-- card-footer -->
