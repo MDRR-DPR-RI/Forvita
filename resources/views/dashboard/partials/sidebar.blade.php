@@ -205,6 +205,9 @@ $("#tableListPublic").Grid({
     table: 'table table-hover'
   },
   search: true,
+  pagination: true,
+  pagination: true,
+  sort: true,
 });
  (async () => {
     const response = await fetch('https://unpkg.com/codethereal-iconpicker@1.2.1/dist/iconsets/bootstrap5.json')

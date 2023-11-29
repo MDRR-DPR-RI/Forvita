@@ -381,7 +381,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <p>Apakah kamu ingin menghapus dashboard {{ $dashboard->name }}?</p>
+              <p>Apakah anda ingin menghapus dashboard {{ $dashboard->name }}?</p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

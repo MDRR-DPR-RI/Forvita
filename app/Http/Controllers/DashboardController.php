@@ -43,7 +43,7 @@ class DashboardController extends Controller
 
     if (auth()->user()->role->name == 'User') {
       Permission::create([
-        'user_id'=> auth()->user()->id,
+        'user_id' => auth()->user()->id,
         'dashboard_id' => $dashboard->id
       ]);
       // Retrieve the existing array from the session
@@ -142,6 +142,7 @@ class DashboardController extends Controller
    */
   public function destroy(Dashboard $dashboard, Request $request)
   {
+    Content::where('dashboard_id', $dashboard->id)->delete(); // remove all dashboard in this dashboard
     // Delete the dashboard with the given ID
     $is_deleted = Dashboard::destroy($dashboard->id);
 

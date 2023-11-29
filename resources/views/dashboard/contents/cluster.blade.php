@@ -174,7 +174,7 @@
     $("#bookId").val(cluster_id);
     
     $("#modalTitle").html(`Hapus Cluster ${cluster_name}`);
-    $("#deleteClusterMessage").html(`Apakah kamu ingin menghapus cluster ${cluster_name}?`);
+    $("#deleteClusterMessage").html(`Apakah anda ingin menghapus cluster ${cluster_name}?`);
 
     // Update the action attribute of the form with the cluster_id
     var formAction = "/cluster/" + cluster_id;
