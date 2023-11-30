@@ -835,47 +835,7 @@ function mergeArrays(x, y) {
               for (let index = 0; index < xAxis.length; index++) {
                 const province = xAxis[index].replace(/\s/g, '').toLowerCase();
                 if (possible_map_indonesia_input[code].includes(province)) {
-                  var element = document.getElementById('tooltip');
-            
-                  $(element).tooltip('dispose');
-                  // IMPORTANT: labal.ext() did not working on modal, idk why
-                  // Initialize Bootstrap Tooltip
-                  $(element).tooltip({
-                      title: judul[0] + '. -' + xAxis[index] + " : " + yAxis[0][index], // Set your tooltip content
-                      placement: 'bottom', // Set the placement of the tooltip (top, bottom, left, right)
-                  });
-                  // Assuming label is a NodeList or an array of elements
-                  var labelElement = label[0];
-                  console.log(labelElement);
-
-                  // Get the style attribute value
-                  var styleAttribute = labelElement.getAttribute('style');
-
-                  // Split the style attribute value into individual properties
-                  var styleProperties = styleAttribute.split(';');
-
-                  // Initialize variables to store left and top positions
-                  var leftPosition = null;
-                  var topPosition = null;
-
-                  // Loop through each style property to find left and top
-                  styleProperties.forEach(function(property) {
-                    var [key, value] = property.split(':').map(s => s.trim());
-                    if (key === 'left') {
-                      leftPosition = parseFloat(value);
-                    } else if (key === 'top') {
-                      topPosition = parseFloat(value);
-                    }
-                  });
-                  // Now, leftPosition and topPosition hold the numeric values
-                  // You can use these variables as needed in your code
-
-                  // Update tooltip content dynamically if needed
-                  $(element).attr('data-original-title', 'Updated tooltip content');
-                  // Get cursor coordinates
-                  
-                  // Update tooltip position
-                  $(element).tooltip('show').offset({ top: topPosition, left: leftPosition });
+                  label.text(judul[0] + '. -' + xAxis[index] + " : " + yAxis[0][index]) 
                 }
               }
           },
@@ -1055,47 +1015,7 @@ function mergeArrays(x, y) {
               for (let index = 0; index < xAxis.length; index++) {
                 const country = xAxis[index].replace(/\s/g, '').toLowerCase();
                 if (possible_map_world_input[code].includes(country)) {
-                  var element = document.getElementById('tooltip');
-                  $(element).tooltip('dispose');
-
-                  // IMPORTANT: labal.ext() did not working on modal, idk why
-                  // Initialize Bootstrap Tooltip
-                  $(element).tooltip({
-                      title: judul[0] + '. -' + xAxis[index] + " : " + yAxis[0][index], // Set your tooltip content
-                      placement: 'top', // Set the placement of the tooltip (top, bottom, left, right)
-                  });
-                  // Assuming label is a NodeList or an array of elements
-                  var labelElement = label[0];
-
-                  // Get the style attribute value
-                  var styleAttribute = labelElement.getAttribute('style');
-
-                  // Split the style attribute value into individual properties
-                  var styleProperties = styleAttribute.split(';');
-
-                  // Initialize variables to store left and top positions
-                  var leftPosition = null;
-                  var topPosition = null;
-
-                  // Loop through each style property to find left and top
-                  styleProperties.forEach(function(property) {
-                    var [key, value] = property.split(':').map(s => s.trim());
-                    if (key === 'left') {
-                      leftPosition = parseFloat(value);
-                    } else if (key === 'top') {
-                      topPosition = parseFloat(value);
-                    }
-                  });
-                  // Now, leftPosition and topPosition hold the numeric values
-                  // You can use these variables as needed in your code
-
-                  // Update tooltip content dynamically if needed
-                  $(element).attr('data-original-title', 'Updated tooltip content');
-                  // Get cursor coordinates
-                  
-                  // Update tooltip position
-                  $(element).tooltip('show').offset({ top: topPosition, left: leftPosition });
-
+                  label.text(judul[0] + '. -' + xAxis[index] + " : " + yAxis[0][index]) 
                 }
               }
           },

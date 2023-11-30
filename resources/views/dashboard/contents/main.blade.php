@@ -425,7 +425,6 @@
             <div class="modal-footer">
             <div id="custom-tooltip" data-toggle="tooltip" data-placement="bottom" title="Your Tooltip Content"></div>
               {{-- IMPORTANT: TOOLTIP IN MODAL GABISA. TURU BGT --}}
-              <div id="tooltip"></div>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
           </div>
