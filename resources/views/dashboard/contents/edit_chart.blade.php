@@ -50,6 +50,7 @@
               <th scope="col">Kelompok</th>
               <th scope="col">Data</th>
               <th scope="col">Judul</th>
+              <th scope="col">Terakhir Diperbarui</th>
               <th scope="col">Aksi</th>
             </tr>
           </thead>
@@ -73,6 +74,7 @@
                 <td>{{ $clean->kelompok }}</td>
                 <td>{{ $clean->data }}</td>
                 <td>{{ $clean->judul }}</td>
+                <td>{{ ($clean->created_at . " (" . $clean->created_at->diffForHumans() . ")") }}</td>
                 <td>
                     <a href="#delete_cleans" class="modalDelete btn btn-danger" data-bs-toggle="modal"
                       data-data_judul="{{ $clean->judul }}"

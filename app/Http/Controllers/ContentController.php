@@ -9,6 +9,7 @@ use App\Models\Prompt;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
 
 class ContentController extends Controller
 {
@@ -67,10 +68,12 @@ class ContentController extends Controller
     public function show(Content $content, Request $request)
     {
         // Query distinct(unique) "judul" values from the database
-        $cleans = Clean::select('kelompok', 'data', 'judul')
-            ->distinct('judul')
+
+        $cleans = Clean::select('kelompok', 'data', 'judul', DB::raw('MAX(created_at) as created_at'))
+            ->groupBy('kelompok', 'data', 'judul')  // Include all selected columns in GROUP BY
             ->orderBy('kelompok')
             ->get();
+
 
         if (!$request->selected_judul) { // first edit chart page 
             return view('dashboard.contents.edit_chart', [
