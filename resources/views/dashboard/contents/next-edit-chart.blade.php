@@ -64,6 +64,7 @@
                     $variableName2 = 'date' . $i;
                     $value2 = $$variableName2;
 
+                    $judul_decodedArray = json_decode($content->judul, true);
                     $x_value_decodedArray = json_decode($content->x_value, true);
                     $content_clean_created_at = json_decode($content->clean_created_at, true);
                     $colors_decodedArray = json_decode($content->color, true);
@@ -204,9 +205,8 @@
           <input type="hidden" value="{{ $stackCount }}" name="stackCount">
           <input type="hidden" value="{{ $content->dashboard->id }}" name="dashboard_id">
           <div class="col d-flex justify-content-end">
-          
           {{-- BUG: when user edit chart and change the stack. the button is not disabled. make it disabled --}}
-            @if ( $stackCount == count($x_value_decodedArray))
+            @if ( $x_value_decodedArray[0][0] !== "" && $stackCount == count($x_value_decodedArray) && $judul_decodedArray == $selected_judul )
               <button type="submit" class="btn btn-primary" id="selesaiBtn">Selesai</button>
             @else
               <button type="submit" class="btn btn-secondary" id="selesaiBtn" disabled>Selesai</button>
@@ -389,7 +389,7 @@
             // Get the "selesai" button element
             const selesaiBtn = document.getElementById('selesaiBtn');
             // Check if all counters have the same value
-            if (counters.every(count => count === counters[0]) && counters[0] > 0) {
+            if (counters.every(count => count > 0) && counters[0] > 0) {
                 // Enable the "selesai" button and change its class to primary
                 selesaiBtn.disabled = false;
                 selesaiBtn.className = 'btn btn-primary';

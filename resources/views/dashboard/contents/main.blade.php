@@ -103,6 +103,11 @@
             <strong>Terhapus!</strong> {{ session('deleted') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
+        @elseif (session()->has('error'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
         @endif
         <div class="col-xl-12">
           <p class="mb-5">{{ $dashboard->description }}

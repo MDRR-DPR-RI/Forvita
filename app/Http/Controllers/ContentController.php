@@ -88,6 +88,7 @@ class ContentController extends Controller
         $data = [
             'dashboard' => $content->dashboard,
             'content' => $content,
+            'selected_judul' => $arr_selected_judul
         ];
         $stackCount = 0;
         for ($i = 0; $i < count($arr_selected_judul); $i++) {
@@ -126,97 +127,93 @@ class ContentController extends Controller
      */
     public function update(Request $request, Content $content)
     {
-
-        // after AI Analysis, asign result_prompt to the content
-        $resultPrompt = $request->input('result');
-        if ($resultPrompt) {
-            return $content->update([
-                'result_prompt' => $resultPrompt,
+        try {
+            // update content data x/y value
+            $x_value = [];
+            $y_value = [];
+            $color_array = [];
+            $created_at = [];
+            $judul_array = [];
+            $color_array = [];
+            for ($i = 0; $i < $request->stackCount; $i++) {
+                $selectedXValues = $request->input('xValue' . $i);
+                $x = [];
+                $y = [];
+                // dd($selectedXValues);
+                for ($j = 0; $j < count($selectedXValues); $j++) {
+                    $clean = Clean::where('keterangan', $selectedXValues[$j])
+                        ->where('judul', $request->input('selectedJudul' . $i))
+                        ->first(); // find row that = slectedXValues
+                    if ($clean) {
+                        // Convert the string to an integer and add it to the $y_value array
+                        $numericValue = intval($clean->jumlah);
+                        $x[] = $clean->keterangan;
+                        $y[] = $numericValue;
+                    }
+                }
+                $judul_array[] = $request->input('selectedJudul' . $i);
+                $x_value[] = $x;
+                $y_value[] = $y;
+                if (gettype($request->input('color_picker' . $i)) == 'array') {
+                    $color_array = $request->input('color_picker' . $i);
+                } else {
+                    $color_array[] = $request->input('color_picker' . $i);
+                }
+                $clean = Clean::where('judul', $request->input('selectedJudul' . $i))
+                    ->where('created_at', $request->input('filter_date' . $i))
+                    ->first();
+                $carbonDate = Carbon::parse($clean->created_at);
+                $created_at[] = $carbonDate->format('Y-m-d H:i:s');
+            }
+            $content->update([
+                'judul' => $judul_array,
+                'card_title' => $request->card_title,
+                'card_description' => $request->card_description,
+                'card_grid' => $request->card_grid,
+                'result_prompt' => null,
+                'x_value' => json_encode($x_value),
+                'y_value' => json_encode($y_value),
+                'color' => json_encode($color_array),
+                'clean_created_at' => json_encode($created_at),
             ]);
-        }
-        // update content data x/y value
-        $x_value = [];
-        $y_value = [];
-        $color_array = [];
-        $created_at = [];
-        $judul_array = [];
-        $color_array = [];
-        for ($i = 0; $i < $request->stackCount; $i++) {
-            $selectedXValues = $request->input('xValue' . $i);
-            $x = [];
-            $y = [];
-            // dd($selectedXValues);
-            for ($j = 0; $j < count($selectedXValues); $j++) {
-                $clean = Clean::where('keterangan', $selectedXValues[$j])
-                    ->where('judul', $request->input('selectedJudul' . $i))
-                    ->first(); // find row that = slectedXValues
-                if ($clean) {
-                    // Convert the string to an integer and add it to the $y_value array
-                    $numericValue = intval($clean->jumlah);
-                    $x[] = $clean->keterangan;
-                    $y[] = $numericValue;
+
+            // if user edit prompt in chartId = 8, then update prompt(id) in the content
+            $selectedPrompt = $request->input('selectPrompt');
+            $prompt = Prompt::where('body', $selectedPrompt)->first();
+            if ($selectedPrompt) {
+                $ask_url = 'http://localhost:3000/ask';
+                // Assuming $x_value and $y_value are arrays
+                $x_value_str = implode(', ', ($x_value[0])); // Convert array to comma-separated string
+                $y_value_str = implode(', ', ($y_value[0])); // Convert array to comma-separated string
+
+                $inputString = "Please perform data analysis based on $selectedPrompt on the following data: I have '$x_value_str' each with respective totals of '$y_value_str'. . Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start with kalimat =  Data menunjukkan bahwa..... ";
+                $response = Http::post($ask_url, [
+                    'prompt' => $inputString, // Your request parameters
+                ]);
+
+                $responseData = $response->json();
+
+                if ($responseData) {
+                    $content->update([
+                        'prompt_id' => $prompt->id,
+                        'card_description' => $response['message'] // store result prompt in card_desc
+                    ]);
+                }
+                // if the user add their own prmopt then store the prompt to the prompt(table)
+                $newPrompt = $request->input('newPrompt');
+                if ($newPrompt) {
+                    $prompt =  Prompt::create([
+                        'body' => $newPrompt,
+                    ]);
+                    $content->update([
+                        'prompt_id' => $prompt->id,
+                    ]);
                 }
             }
-            $judul_array[] = $request->input('selectedJudul' . $i);
-            $x_value[] = $x;
-            $y_value[] = $y;
-            if (gettype($request->input('color_picker' . $i)) == 'array') {
-                $color_array = $request->input('color_picker' . $i);
-            } else {
-                $color_array[] = $request->input('color_picker' . $i);
-            }
-            $clean = Clean::where('judul', $request->input('selectedJudul' . $i))
-                ->where('created_at', $request->input('filter_date' . $i))
-                ->first();
-            $carbonDate = Carbon::parse($clean->created_at);
-            $created_at[] = $carbonDate->format('Y-m-d H:i:s');
+            return redirect('/dashboard/' . $request->dashboard_id)->with('success', 'Successfully');
+        } catch (\Throwable $th) {
+            return redirect('/dashboard/' . $request->dashboard_id)->with('error', "Coba Lagi!");
         }
-        $content->update([
-            'judul' => $judul_array,
-            'card_title' => $request->card_title,
-            'card_description' => $request->card_description,
-            'card_grid' => $request->card_grid,
-            'result_prompt' => null,
-            'x_value' => json_encode($x_value),
-            'y_value' => json_encode($y_value),
-            'color' => json_encode($color_array),
-            'clean_created_at' => json_encode($created_at),
-        ]);
-
-        // if user edit prompt in chartId = 8, then update prompt(id) in the content
-        $selectedPrompt = $request->input('selectPrompt');
-        $prompt = Prompt::where('body', $selectedPrompt)->first();
-        if ($selectedPrompt) {
-            $ask_url = 'http://localhost:3000/ask';
-            // Assuming $x_value and $y_value are arrays
-            $x_value_str = implode(', ', ($x_value[0])); // Convert array to comma-separated string
-            $y_value_str = implode(', ', ($y_value[0])); // Convert array to comma-separated string
-
-            $inputString = "Please perform data analysis based on $selectedPrompt on the following data: I have '$x_value_str' each with respective totals of '$y_value_str'. . Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start with kalimat =  Data menunjukkan bahwa..... ";
-            $response = Http::post($ask_url, [
-                'prompt' => $inputString, // Your request parameters
-            ]);
-
-            $responseData = $response->json();
-
-            if ($responseData) {
-                $content->update([
-                    'prompt_id' => $prompt->id,
-                    'card_description' => $response['message']
-                ]);
-            }
-            // if the user add their own prmopt then store the prompt to the prompt(table)
-            $newPrompt = $request->input('newPrompt');
-            if ($newPrompt) {
-                $prompt =  Prompt::create([
-                    'body' => $newPrompt,
-                ]);
-                $content->update([
-                    'prompt_id' => $prompt->id,
-                ]);
-            }
-        }
-        return redirect('/dashboard/' . $request->dashboard_id)->with('success', 'Successfully');
     }
 
     /**
