@@ -55,7 +55,7 @@ class DashboardController extends Controller
       // Store the modified array back into the session
       session(['dashboard_ids' => $dashboardIds]);
     }
-    return redirect('/dashboard/' . $dashboard->id)->with('success', "Berhasil Membuat Dashboard Baru: $dashboard->name");
+    return redirect('/dashboard/' . $dashboard->id)->with('success', "Berhasil Membuat Dashboard baru: $dashboard->name");
   }
 
   /**

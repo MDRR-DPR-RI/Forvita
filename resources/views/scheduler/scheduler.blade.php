@@ -9,6 +9,23 @@
 @section('page_content')
     <link href="/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <div class="main main-app p-3 p-lg-4">
+        @if (session('warning'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ session('warning') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if (session()->has('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Sukses!</strong> {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @elseif (session()->has('deleted'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Terhapus!</strong> {{ session('deleted') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @endif
         <h1> Queries </h1>
         <div class="row">
             <div class="col">

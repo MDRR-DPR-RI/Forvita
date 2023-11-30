@@ -11,8 +11,12 @@ use App\Models\ListImport;
 
 class ApiImportController extends Controller
 {
-    public function show(){
-        return view('etc.tables.api-list', ['apiLists'=> ListImport::where('type','api')->get()]);
+    public function show()
+    {
+        return view('etc.tables.api-list', [
+            'apiLists' => ListImport::where('type', 'api')->get(),
+            'pageApi' => true
+        ]);
     }
 
     public function import(Request $request)
@@ -20,21 +24,21 @@ class ApiImportController extends Controller
         $url = $request->input('api_url');
         $tableName = $request->input('tableName') . '_' . time();
 
-        if(Schema::hasTable($tableName)){
-            return redirect()->back()->with('deleted', 'Failed to import! The name is exits from tables!');
+        if (Schema::hasTable($tableName)) {
+            return redirect()->back()->with('deleted', 'Gagal mengimpor! Nama sudah ada dalam tabel!');
         }
 
         $isExists = ListImport::where('name', $tableName)->exists();
-        if($isExists){
-            return redirect()->back()->with('deleted', 'API imported failed because name is exits!');
-        }else{
+        if ($isExists) {
+            return redirect()->back()->with('deleted', 'Gagal mengimpor API karena nama sudah ada!');
+        } else {
             DB::table('list_imports')->insert([
-                'name'=>$tableName,
-                'file'=>$url,
-                'type'=>'api',
+                'name' => $tableName,
+                'file' => $url,
+                'type' => 'api',
             ]);
 
-            return redirect()->back()->with('success', 'API imported successfully with name : ' . $tableName);
+            return redirect()->back()->with('success', 'API berhasil diimpor dengan nama: ' . $tableName);
         }
     }
 
@@ -43,65 +47,63 @@ class ApiImportController extends Controller
         $request->validate(['id' => 'required']);
         $idImport = $request->query('id');
         $data = ListImport::find($idImport);
-        if($data){
+        if ($data) {
             $tableName = $data->name;
             $url = $data->file;
-            // Fetch JSON data from the API
+            // Ambil data JSON dari API
             $jsonData = $this->fetchDataFromApi($url);
 
-            // Initialize variables to hold column names
-            $firstRow = reset($jsonData); // Get the first element of the JSON data
+            // Inisialisasi variabel untuk menyimpan nama kolom
+            $firstRow = reset($jsonData);
             $columnNames = [];
 
-            // Check the data type of the first element (object or string)
+            // Periksa tipe data dari elemen pertama (objek atau string)
             if (gettype($firstRow) == 'string') {
-                // If it's a string, extract column names from the JSON keys
+                // Jika itu string, ekstrak nama kolom dari kunci JSON
                 $columnNames = array_keys($jsonData);
             } else {
-                // If it's an array, assume nested JSON and extract column names from the second row
+                // Jika itu array, asumsikan JSON bersarang dan ekstrak nama kolom dari baris kedua
                 if (gettype($firstRow) == 'array') {
-                    $secondRow = reset($firstRow); // Get the first element of the nested array
+                    $secondRow = reset($firstRow);
                     $columnNames = array_keys($secondRow);
                 }
             }
 
-            // Create a new database table with the generated table name and dynamic columns
+            // Buat tabel database baru dengan nama tabel yang dihasilkan dan kolom dinamis
             Schema::create($tableName, function (Blueprint $table) use ($columnNames) {
                 $table->id();
                 $table->timestamps();
 
-                // Create table columns based on the extracted column names
+                // Buat kolom tabel berdasarkan nama kolom yang diekstrak
                 foreach ($columnNames as $columnName) {
-                    $table->string($columnName, 1000); // Define a string column with a maximum length of 1000 characters
+                    $table->string($columnName, 1000); // Tentukan kolom string dengan panjang maksimum 1000 karakter
                 }
             });
 
-            // Insert JSON data into the newly created table
+            // Masukkan data JSON ke dalam tabel yang baru dibuat
             if (gettype($firstRow) == 'string') {
-                // If it's a string, insert the whole JSON object as a single row
+                // Jika itu string, masukkan seluruh objek JSON sebagai satu baris
                 DB::table($tableName)->insert($jsonData);
             } else {
-                // If it's an array, insert each nested JSON object as separate rows
+                // Jika itu array, masukkan setiap objek JSON bersarang sebagai baris terpisah
                 if (gettype($firstRow) == 'array') {
                     foreach ($firstRow as $row) {
                         DB::table($tableName)->insert($row);
                     }
                 }
             }
-            $data->action=1;
+            $data->action = 1;
             $data->save();
 
-            // Redirect back to the previous page with a success message
-            return redirect()->back()->with('success', 'Import successful, and a new table created: ' . $tableName);
-        }else{
-            return redirect()->back()->with('deleted', 'Data not valid!');
+            // Redirect kembali ke halaman sebelumnya dengan pesan keberhasilan
+            return redirect()->back()->with('success', 'Import berhasil, dan tabel baru dibuat: ' . $tableName);
+        } else {
+            return redirect()->back()->with('deleted', 'Data tidak valid!');
         }
     }
 
-
     public function viewTable(Request $request)
     {
-        // Coba membuat tabel baru
         $request->validate(['id' => 'required']);
         $idImport = $request->query('id');
         $data = ListImport::find($idImport);
@@ -109,9 +111,8 @@ class ApiImportController extends Controller
             return view('etc.view.api-view', [
                 'dataAPI' => $data
             ]);
-            
         } else {
-            return redirect()->back()->with('deleted', 'Error to view Data!');
+            return redirect()->back()->with('deleted', 'Error melihat Data!');
         }
     }
 
@@ -120,46 +121,46 @@ class ApiImportController extends Controller
         $response = Http::get($apiUrl);
 
         if ($response->successful()) {
-            // If the request was successful, you can extract the JSON data.
+            // Jika permintaan berhasil, Anda dapat mengekstrak data JSON.
             $jsonData = $response->json();
 
-            // Now, $jsonData contains the JSON response data from the API.
+            // Sekarang, $jsonData berisi data respons JSON dari API.
             return $jsonData;
         } else {
-            // Handle the case where the request was not successful (e.g., error handling).
+            // Tangani kasus di mana permintaan tidak berhasil (mis., penanganan kesalahan).
             return null;
         }
     }
 
-    public function deleteList(Request $request){
-        // Coba membuat tabel baru
+    public function deleteList(Request $request)
+    {
         $request->validate(['id' => 'required']);
         $idImport = $request->query('id');
         $data = ListImport::find($idImport);
-        if($data){
+        if ($data) {
             $data->delete();
-            return redirect()->back()->with('success', 'API list success deleted!');
-        }else{
-            return redirect()->back()->with('deleted', 'Data not valid!');            
+            return redirect()->back()->with('deleted', 'Daftar API berhasil dihapus!');
+        } else {
+            return redirect()->back()->with('deleted', 'Data tidak valid!');
         }
     }
 
-    public function deleteTable(Request $request){
-        // Coba membuat tabel baru
+    public function deleteTable(Request $request)
+    {
         $request->validate(['id' => 'required']);
         $idImport = $request->query('id');
         $data = ListImport::find($idImport);
-        if($data){
-            try{
+        if ($data) {
+            try {
                 Schema::dropIfExists($data->name);
-                $data->action=0;
+                $data->action = 0;
                 $data->save();
-                return redirect()->back()->with('success', 'API table success deleted!');
+                return redirect()->back()->with('deleted', 'Tabel API berhasil dihapus!');
             } catch (\Exception $e) {
-                return redirect()->back()->with('success', 'API table error deleted!');
+                return redirect()->back()->with('success', 'Tabel API error dihapus!');
             }
-        }else{
-            return redirect()->back()->with('deleted', 'Data not valid!');            
+        } else {
+            return redirect()->back()->with('deleted', 'Data tidak valid!');
         }
     }
 }

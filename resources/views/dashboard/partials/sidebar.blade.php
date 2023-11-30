@@ -22,10 +22,10 @@
                 <a href="/scheduler" class="nav-link @isset($schedulers)  active  @endisset"><i class="bi bi-gear-wide-connected"></i> <span>Queries</span></a>
             </li>
             <li class="nav-item">
-                <a href="/csv" class="nav-link @isset($csvFiles) active @endisset"><i class="ri-file-excel-2-line fs-18 lh-1"></i> <span>CSV List</span></a>
+                <a href="/csv" class="nav-link @isset($pageCsv) active @endisset"><i class="ri-file-excel-2-line fs-18 lh-1"></i> <span>CSV List</span></a>
             </li>
             <li class="nav-item">
-                <a href="/restapi" class="nav-link @isset($apiList) active @endisset"><i class="bi bi-link-45deg"></i> <span>API List</span></a>
+                <a href="/restapi" class="nav-link @isset($pageApi) active @endisset"><i class="bi bi-link-45deg"></i> <span>API List</span></a>
             </li>
             <li class="nav-item">
               <a href="/user-management" class="nav-link @isset($initialUsers) active @endisset"><i class="bi bi-person-fill-gear"></i> <span>Manajemen Pengguna</span></a>

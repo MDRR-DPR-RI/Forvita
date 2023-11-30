@@ -45,7 +45,7 @@ class ContentController extends Controller
                 'username_tableau' => $request->username_tableau,
                 'card_description' => $request->tableau_link, // store tableau url in the content_description coloumn
             ]);
-            return redirect()->back()->with('success', 'Successfully to embed Tableau');
+            return redirect()->back()->with('success', 'Berhasil untuk embed Tableau');
         }
 
         // store content in db
@@ -225,8 +225,8 @@ class ContentController extends Controller
     public function destroy(Content $content)
     {
         Content::destroy($content->id);
-
+        $cName = $content->chart->name;
         // redirect with send dashboard_id variable to the dashboard routes
-        return redirect('/dashboard/' . $content->dashboard->id)->with('deleted', "Chart has been deleted!");
+        return redirect('/dashboard/' . $content->dashboard->id)->with('deleted', "Kartu $cName Berhasil Dihapus!");
     }
 }
