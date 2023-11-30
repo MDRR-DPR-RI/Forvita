@@ -7,6 +7,8 @@
 @parent
 
 @section('page_content')
+    <link href="/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
     <div class="main main-app p-3 p-lg-4">
         <h1> Databases </h1>
         <div class="row">
@@ -15,7 +17,7 @@
                 data-action="add" data-bs-toggle="modal"><i class="ri-add-line"></i>
                  <span class="d-none d-sm-inline">Tambah Database</span></a>
             </div>
-            <table class="table">
+            <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                 <tr>
                     <th scope="col">No</th>
@@ -248,9 +250,16 @@
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
         </script>
+        
+
 @endsection
 
 @section('custom_script')
+          <!-- Page level plugins -->
+        <script src="/lib/datatables/jquery.dataTables.min.js"></script>
+        <script src="/lib/datatables/dataTables.bootstrap4.min.js"></script>
 
+        <!-- Page level custom scripts -->
+        <script src="/js/demo/datatables-demo.js"></script>
 @endsection
 
