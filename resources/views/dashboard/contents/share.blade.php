@@ -107,67 +107,6 @@
     // Create a containerContent element and set its innerHTML
     containerContent = document.getElementById('main');
     containerContent.innerHTML += htmlContent;
-
-    // add AI analysis for chartId = 8
-    if (chartId === 20 && y_value && x_value) {
-      // Use unique identifier to select elements
-      const aiAnalysisElement = `#aiAnalysis${unique}`;
-      const placeholderElement = `#placeholder${unique}`;
-      if (!result_prompt) { // if there is no result_prompt in the content so do ajax call to do the analysis then asign the result prompt to the content(table in db)
-        let inputString = `Please perform data analysis based on ${prompt} on the following data: I have '${x_value}' each with respective totals of '${y_value}' Key 1 corresponds to Key 1. Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start dengan kalimat =  Data menunjukkan bahwa.....`
-
-        $(document).ready(function() {
-          $.ajax({
-            type: 'POST',
-            url: 'http://localhost:3000/ask',
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            data: JSON.stringify({
-              prompt: inputString
-            }),
-            success: function (response) {
-              const result = response.message;
-
-              // Set the result in the HTML element
-              $(aiAnalysisElement).text(result);
-
-              // Empty the placeholder content
-              $(placeholderElement).empty();
-
-              // store the result prompt into the db (table "contents")
-              $.ajax({
-                url: `/dashboard/content/${contentId}`, // Include the content ID
-                method: 'put', // Use POST
-                data: {
-                  result: result // Your data to update
-                },
-                headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (response) {
-                    console.log("success to update the result_prompt");
-                },
-                error: function (error) {
-                  console.error(error);
-                  console.error("woy error when try to access the resource api");
-                }
-              });
-            },
-            error: function (error) {
-              console.error(error);
-              $(aiAnalysisElement).text("API Error");
-              $(placeholderElement).empty();
-            }
-          });
-        });
-      } else { // if there is a result then no need to do ajax call, just show the result_prompt
-        $(aiAnalysisElement).text(result_prompt);
-        $(placeholderElement).empty();
-      }
-    } else {
-      $(`#aiAnalysis${unique}`).text("NO DATA");
-      $(`#placeholder${unique}`).empty();
-    }
   @endforeach
   $(document).ready(function () {
     $('a[data-bs-toggle="modal"]').on('click', function () {
@@ -183,21 +122,22 @@
 {{-- script for save dashboard content into an image  --}}
 <script>
   document.getElementById('capture').addEventListener('click', function () {
-    const content = document.getElementById('main');
-    html2canvas(content).then(function (canvas) {
-        // Convert the canvas to an image
-        const image = new Image();
-        image.src = canvas.toDataURL('image/png');
-        const dynamicFilename = '{{ $dashboard->name }}'; // dashboard name to save as filename
+      const content = document.getElementById('main');
 
-        // Create an anchor element to trigger the download
-        const link = document.createElement('a');
-        link.href = image.src;
-        link.download = dynamicFilename + '-captured_image.png'; // Set the filename for the download
+      html2canvas(content, { scale: 5, logging: true }).then(function (canvas) {asd
+          // Convert the canvas to an image
+          const image = new Image();
+          image.src = canvas.toDataURL('image/png');
+          const dynamicFilename = '{{ $dashboard->name }}'; // dashboard name to save as filename
 
-        // Trigger a click on the anchor element to initiate the download
-        link.click();
-    });
+          // Create an anchor element to trigger the download
+          const link = document.createElement('a');
+          link.href = image.src;
+          link.download = dynamicFilename + '-captured_image.png'; // Set the filename for the download
+
+          // Trigger a click on the anchor element to initiate the download
+          link.click();
+      });
   });
 </script>
 
@@ -228,7 +168,6 @@
   } else {
       tableau_embed = '{{ $content->domain_tableau }}/{{ $content->card_description }}';
   }
-      console.log(tableau_embed);
       tableauViz.src = tableau_embed;
   }
   @endforeach

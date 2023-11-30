@@ -220,7 +220,6 @@
     
       $(document).on("click", ".modalDelete", function () {
         var data_judul = $(this).data('data_judul');
-        console.log(data_judul);
         // var cluster_name = $(this).data('name');
         
         // $("#bookId").val(cluster_id);

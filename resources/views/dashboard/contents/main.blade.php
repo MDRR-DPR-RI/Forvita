@@ -514,7 +514,6 @@
     htmlContent = htmlContent.replace('data-content-id="id"', `data-content-id="${contentId}"`); // set the data-content-id with its id to send into a modal
     htmlContent = htmlContent.replace('class="col-xl-"', `class="col-xl-${content_grid}"`); 
     htmlContent = htmlContent.replace('href="#modal_card_zoom"', `href="#modal_card_zoom${contentId}"`); // set the unique id for each content
-    
 
     // Create a containerContent element and set its innerHTML
     containerContent = document.getElementById('main');
@@ -525,24 +524,24 @@
 {{-- script for save dashboard content into an image  --}}
 <script>
   document.getElementById('capture').addEventListener('click', function () {
-    const content = document.getElementById('main');
-    html2canvas(content).then(function (canvas) {
-        // Convert the canvas to an image
-        const image = new Image();
-        image.src = canvas.toDataURL('image/png');
-        const dynamicFilename = '{{ $dashboard->name }}'; // dashboard name to save as filename
+      const content = document.getElementById('main');
 
-        // Create an anchor element to trigger the download
-        const link = document.createElement('a');
-        link.href = image.src;
-        link.download = dynamicFilename + '-captured_image.png'; // Set the filename for the download
+      html2canvas(content, { scale: 5, logging: true }).then(function (canvas) {asd
+          // Convert the canvas to an image
+          const image = new Image();
+          image.src = canvas.toDataURL('image/png');
+          const dynamicFilename = '{{ $dashboard->name }}'; // dashboard name to save as filename
 
-        // Trigger a click on the anchor element to initiate the download
-        link.click();
-    });
+          // Create an anchor element to trigger the download
+          const link = document.createElement('a');
+          link.href = image.src;
+          link.download = dynamicFilename + '-captured_image.png'; // Set the filename for the download
+
+          // Trigger a click on the anchor element to initiate the download
+          link.click();
+      });
   });
 </script>
-
 
 <script src="/lib/jqvmap/jquery.vmap.min.js"></script>
 <script src="/lib/jqvmap/maps/jquery.vmap.indonesia.js"></script>
@@ -565,13 +564,11 @@
     tableau_domain = '{{ $content->domain_tableau }}';
     tableau_link = '{{ $content->card_description }}';
   
-  if ('{{ $content->username_tableau  !== null}}') {
-      tableau_embed = '{{ $content->domain_tableau }}/trusted/{{ $content->ticket }}/{{ $content->card_description }}';
-  } else {
-      tableau_embed = '{{ $content->domain_tableau }}/{{ $content->card_description }}';
-  }
-    console.log(tableau_embed);
-
+    if ('{{ $content->username_tableau  !== null}}') {
+        tableau_embed = '{{ $content->domain_tableau }}/trusted/{{ $content->ticket }}/{{ $content->card_description }}';
+    } else {
+        tableau_embed = '{{ $content->domain_tableau }}/{{ $content->card_description }}';
+    }
     tableauViz.src = tableau_embed;
   }
   @endforeach
@@ -603,7 +600,6 @@ $("#tableContent").Grid({
   resizable: true
 });
 
-
 var table = document.getElementById('tablePilihKontent');
 
     $("#customLimitSelector").on('change', function() {
@@ -622,9 +618,6 @@ var table = document.getElementById('tablePilihKontent');
 
     // Set the new ID to the existing table element
     table.id = newId;
-
-    // Log the modified configuration object to the console
-    console.log(gridElement);
 
     // Remove the existing Grid.js instance's container element
     $("#" + newGridId).remove();

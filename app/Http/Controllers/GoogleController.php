@@ -24,7 +24,7 @@ class GoogleController extends Controller
 
             if ($findUser) {
                 Auth::login($findUser);
-                return redirect()->intended('cluster');
+                return redirect('cluster');
             } else {
                 $randomPassword = Str::random(12);
                 $newUser = User::create([
@@ -35,11 +35,11 @@ class GoogleController extends Controller
                 ]);
 
                 Auth::login($newUser);
-                return redirect()->intended('cluster')->with('google', "$randomPassword");
+                return redirect('cluster')->with('google', "$randomPassword");
             }
         } catch (\Exception $e) {
-            // Log or handle the exception appropriately
-            dd($e);
+            $message = $e->getMessage();
+            return redirect()->back()->with('loginError', "$message");
         }
     }
 }

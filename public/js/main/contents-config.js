@@ -793,7 +793,7 @@ function mergeArrays(x, y) {
           scaleColors: ['#C8EEFF', '#006491'],
           onRegionOver: function(event, code, region)
           {
-            console.log(code);
+            // console.log(code);
             // console.log(region);
           },
           onLabelShow: function(event, label, code)
@@ -826,7 +826,7 @@ function mergeArrays(x, y) {
           scaleColors: ['#C8EEFF', '#006491'],
           onRegionOver: function(event, code, region)
           {
-            console.log(code);
+            // console.log(code);
             // console.log(region);
           },
           onLabelShow: function(event, label, code)
@@ -974,7 +974,7 @@ function mergeArrays(x, y) {
           scaleColors: ['#C8EEFF', '#006491'],
           onRegionOver: function(event, code, region)
           {
-            console.log(code);
+            // console.log(code);
             // console.log(region);
           },
           onLabelShow: function(event, label, code)
@@ -1006,7 +1006,7 @@ function mergeArrays(x, y) {
           scaleColors: ['#C8EEFF', '#006491'],
           onRegionOver: function(event, code, region)
           {
-            console.log(code);
+            // console.log(code);
             // console.log(region);
           },
           onLabelShow: function(event, label, code)
