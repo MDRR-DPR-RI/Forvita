@@ -526,7 +526,7 @@
   document.getElementById('capture').addEventListener('click', function () {
       const content = document.getElementById('main');
 
-      html2canvas(content, { scale: 5, logging: true }).then(function (canvas) {asd
+      html2canvas(content, { scale: 5, logging: true }).then(function (canvas) {
           // Convert the canvas to an image
           const image = new Image();
           image.src = canvas.toDataURL('image/png');
