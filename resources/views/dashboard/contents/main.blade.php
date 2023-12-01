@@ -526,7 +526,7 @@
   document.getElementById('capture').addEventListener('click', function () {
       const content = document.getElementById('main');
 
-      html2canvas(content, { scale: 5, logging: true }).then(function (canvas) {
+      html2canvas(content, { scale: 2, logging: true }).then(function (canvas) {
           // Convert the canvas to an image
           const image = new Image();
           image.src = canvas.toDataURL('image/png');
@@ -541,6 +541,7 @@
           link.click();
       });
   });
+
 </script>
 
 <script src="/lib/jqvmap/jquery.vmap.min.js"></script>
