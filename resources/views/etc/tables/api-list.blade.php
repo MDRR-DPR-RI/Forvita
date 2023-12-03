@@ -26,7 +26,7 @@
         @can('admin')
         <div class="d-flex gap-2 mt-3 mt-md-0">
                 <a href="#importAPIModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
-                    <i class="bi bi-link-45deg"></i>Import RESTful API
+                    <i class="bi bi-link-45deg"></i>Impor RESTful API
                 </a>
         </div>
         <div class="mt-3">
@@ -66,7 +66,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="importModalLabel">Import from RESTful API</h5>
+                    <h5 class="modal-title" id="importModalLabel">Impor dari RESTful API</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -78,14 +78,14 @@
                               <li class="list-group-item">https://catfact.ninja/fact</li>
                               <li class="list-group-item">https://www.dpr.go.id/rest/?method=getAgendaPerBulan&tahun=2015&bulan=02&tipe=json</li>
                             </ol>
-                            <label for="tableName" class="form-label">Table Name</label>
+                            <label for="tableName" class="form-label">Name Tabel</label>
                             <input class="form-control" type="text" id="tableName" name="tableName" required>
                         </div>
                         <div class="mb-3">
-                            <label for="api_url" class="form-label">Enter URL</label>
+                            <label for="api_url" class="form-label">Masukan URL</label>
                             <input class="form-control" type="text" id="api_url" name="api_url" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Import</button>
+                        <button type="submit" class="btn btn-primary">Impor</button>
                     </form>
                 </div>
             </div>

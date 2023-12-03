@@ -26,7 +26,7 @@
         @can('admin')
         <div class="d-flex gap-2 mt-3 mt-md-0">
                 <a href="#importCSVModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
-                    <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import CSV
+                    <i class="ri-file-excel-2-line fs-18 lh-1"></i>Impor CSV
                 </a>
         </div>
         <div class="mt-3">
@@ -66,21 +66,21 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="importModalLabel">Import CSV File</h5>
+                    <h5 class="modal-title" id="importModalLabel">Impor CSV File</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('import.csv') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="tableName" class="form-label">Table Name</label>
+                            <label for="tableName" class="form-label">Nama Tabel</label>
                             <input class="form-control" type="text" id="tableName" name="tableName" required>
                         </div>
                         <div class="mb-3">
-                            <label for="csvFile" class="form-label">Choose CSV File</label>
+                            <label for="csvFile" class="form-label">Pilih File CSV</label>
                             <input class="form-control" type="file" id="csvFile" name="csvFile" accept=".csv" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Import CSV</button>
+                        <button type="submit" class="btn btn-primary">Impor CSV</button>
                     </form>
                 </div>
             </div>
