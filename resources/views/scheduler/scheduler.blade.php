@@ -9,6 +9,16 @@
 @section('page_content')
     <link href="/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <div class="main main-app p-3 p-lg-4">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         @if (session('warning'))
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 {{ session('warning') }}
