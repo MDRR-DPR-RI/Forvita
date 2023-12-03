@@ -2,10 +2,10 @@
 
 namespace App\Livewire\DataTable;
 
+use App\Models\Database;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -15,13 +15,16 @@ class DataTableListing extends Component
     use WithPagination;
     public string $searchSchemaQuery;
     public string $searchTableQuery;
+    public collection $databases;
 
     public function searchDatatable(string $schema, string $table): Builder
     {
+        // localhost's mysql only for now
         $blacklistSchema = [
             'information_schema', 'mysql', 'performance_schema', 'phpmyadmin'
         ];
-        return DB::table('information_schema.tables')
+
+        return DB::connection('mysql')->table('information_schema.tables')
             ->select('tables.TABLE_SCHEMA', 'tables.TABLE_NAME')
             ->whereNotIn('tables.TABLE_SCHEMA', $blacklistSchema)
             ->whereNot(function (Builder $query) {
@@ -41,6 +44,7 @@ class DataTableListing extends Component
     {
         $this->searchSchemaQuery = "";
         $this->searchTableQuery = "";
+        $this->databases = Database::all();
     }
 
     public function search(): void
@@ -50,8 +54,9 @@ class DataTableListing extends Component
 
     public function render(): view
     {
+        $result = $this->searchDatatable($this->searchSchemaQuery, $this->searchTableQuery);
         return view('livewire.data-table.data-table-listing', [
-            'datatables' => $this->searchDatatable($this->searchSchemaQuery, $this->searchTableQuery)
+            'datatables' => $result
                 ->paginate(25),
         ]);
     }

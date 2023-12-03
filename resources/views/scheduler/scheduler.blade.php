@@ -81,7 +81,7 @@
                     <td>{{ $scheduler->status }}</td>
                     <td class="d-flex justify-content-start">
                         {{--Execute Scheduler Query--}}
-                        <a href="/scheduler/execute?schedulerID={{ $scheduler->id }}" class="btn btn-success btn-icon">
+                        <a href="/scheduler/execute?schedulerID={{ $scheduler->id }}" class="btn btn-success btn-icon mx-1">
                             <i class="bi bi-gear" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jalankan"></i>
                         </a>
 
@@ -94,7 +94,7 @@
 {{--                           @isset($scheduler->database_id)--}}
 {{--                               data-bs-schedulerDatabaseName="{{$scheduler->database->name}}"--}}
 {{--                           @endisset--}}
-                           class="btn btn-primary btn-icon">
+                           class="btn btn-primary btn-icon mx-1">
                                 <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah" class="ri-pencil-fill"></i>
                            </a>
 
@@ -103,7 +103,7 @@
                             @method('delete')
                             @csrf
                             <input type="hidden" name="schedulerID" value="{{ $scheduler->id }}">
-                            <button type="submit" class="btn btn-danger btn-icon">
+                            <button type="submit" class="btn btn-danger btn-icon mx-1">
                                 <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus" class="bi bi-trash3"></i>
                             </button>
                         </form>

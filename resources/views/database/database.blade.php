@@ -53,7 +53,7 @@
                         <td>{{ $database->status }}</td>
                         <td class="d-flex justify-content-start">
                             {{--Test Database Connection--}}
-                            <a href="/database/test-connection?databaseID={{ $database->id }}" class="btn btn-success btn-icon">
+                            <a href="/database/test-connection?databaseID={{ $database->id }}" class="btn btn-success btn-icon mx-1">
                                 <i class="bi bi-database-fill-up" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tes Koneksi"></i>
                             </a>
 
@@ -69,7 +69,7 @@
                             data-bs-databaseDatabase="{{ $database->database }}"
                             data-bs-databaseUsername="{{ $database->username }}"
                             data-bs-databasePassword="{{ $database->password }}"
-                            class="btn btn-primary btn-icon">
+                            class="btn btn-primary btn-icon mx-1">
                                 <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah" class="ri-pencil-fill"></i>
                             </a>
 
@@ -78,7 +78,7 @@
                                 @method('delete')
                                 @csrf
                                 <input type="hidden" name="databaseID" value="{{ $database->id }}">
-                                <button type="submit" class="btn btn-danger btn-icon" >
+                                <button type="submit" class="btn btn-danger btn-icon mx-1">
                                     <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus" class="bi bi-trash3"></i>
                                 </button>
                             </form>
