@@ -1,22 +1,34 @@
 <div>
     {{--    Initialize livewire modals--}}
     @livewire('wire-elements-modal')
-    <label for="searchSchemaQuery">Cari Skema</label>
     <form wire:submit="search">
-        <div class="form-search">
-            <i class="ri-search-line"></i>
-            <input type="text" class="form-control" id="searchSchemaQuery"
-                   wire:model="searchSchemaQuery"
-                   placeholder="Masukkan nama skema">
+        <div class="row">
+            <div class="col">
+                <label for="searchSchemaQuery">
+                    Cari Skema
+                    <div class="form-search">
+                        <i class="ri-search-line"></i>
+                        <input type="text" class="form-control" id="searchSchemaQuery"
+                               wire:model="searchSchemaQuery"
+                               placeholder="Masukkan nama skema">
+                    </div>
+                </label>
+                <label for="searchTableQuery">
+                    Cari Tabel
+                    <div class="form-search">
+                        <i class="ri-search-line"></i>
+                        <input type="text" class="form-control" id="searchTableQuery"
+                               wire:model="searchTableQuery"
+                               placeholder="Masukkan nama tabel">
+                    </div>
+                </label>
+                <button type="submit" class="btn btn-outline-primary"> Cari </button>
+                <button wire:click="$dispatch('openModal', { component: 'data-table.execute-query',
+                                            arguments: {}})"
+                        class="btn btn-outline-primary"> Query </button>
+            </div>
         </div>
-        <label for="searchTableQuery">Cari Tabel</label>
-        <div class="form-search">
-            <i class="ri-search-line"></i>
-            <input type="text" class="form-control" id="searchTableQuery"
-                   wire:model="searchTableQuery"
-                   placeholder="Masukkan nama tabel">
-        </div>
-        <button type="submit" class="btn btn-outline-primary"> Search </button>
+
     </form>
     <div class="row">
         <table class="table">
