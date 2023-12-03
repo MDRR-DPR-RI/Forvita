@@ -46,7 +46,7 @@
             @if ($content->chart->id == 20)
                 <label for="card_description" class="form-label">Hasil Analisis AI</label>
                 <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Belum ada hasil analisis AI." disabled>{{ $content->card_description }}</textarea>
-            @elseif($content->chart->id == 20)
+            @elseif($content->chart->id == 20 || $content->chart->id == 21)
                 <label for="card_description" class="form-label">Deskripsi Kartu</label>
                 <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Kartu ini tidak memiliki deskripsi" disabled></textarea>
             @else
@@ -94,60 +94,62 @@
                     @endforeach
                   </select>
                 </div>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                        <th scope="col">
-                            <div class="form-check">
-                            @if ( isset($x_value_decodedArray[$i]) && $x_value_decodedArray[$i] !== "" && count($x_value_decodedArray[$i]) == count($value) )
-                              <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" checked>
-                            @else
-                              <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" >
-                            @endif
-                            <label class="form-check-label" for="selectAllCheckbox{{ $i }}">Pilih Semua</label>
-                            </div>
-                        </th>
-                        <th scope="col">Judul</th>
-                        <th scope="col">Status Data</th>
-                        <th scope="col">Jumlah</th>
-                        @if (in_array($content->chart->id, [16, 17, 19, 24, 25]))
-                          <th scope="col">Warna</th>
-                        @endif
-                        </tr>
-                    </thead>
-                    <tbody id="table_body{{ $i }}">
-                      @foreach ($value as $clean)
-                        <tr class="table-row{{ $i }}" data-judul="Item 1">
-                          <td scope="row">
-                            @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
-                                <input class="checkbox-item{{ $i }}" type="checkbox" value="{{ $clean->keterangan }}" name="xValue{{ $i }}[]" checked >
-                            @else
-                              <input class="checkbox-item{{ $i }}" type="checkbox" value="{{ $clean->keterangan }}" name="xValue{{ $i }}[]" >
-                            @endif
-                            {{ $clean->keterangan }}
-                              
-                            <input type="hidden" name="selectedJudul{{ $i }}" value="{{ $clean->judul }}">
-                          </td>
-                          <td>{{ $clean->judul }}</td>
-                         <td>{{ ($clean->newest == 1) ? "Terbaru" : ($clean->created_at)}}</td>
-
-                          <td>{{ $clean->jumlah }}</td>
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                      <thead>
+                          <tr>
+                          <th scope="col">
+                              <div class="form-check">
+                              @if ( isset($x_value_decodedArray[$i]) && $x_value_decodedArray[$i] !== "" && count($x_value_decodedArray[$i]) == count($value) )
+                                <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" checked>
+                              @else
+                                <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" >
+                              @endif
+                              <label class="form-check-label" for="selectAllCheckbox{{ $i }}">Keterangan</label>
+                              </div>
+                          </th>
+                          <th scope="col">Judul</th>
+                          <th scope="col">Status Data</th>
+                          <th scope="col">Jumlah</th>
                           @if (in_array($content->chart->id, [16, 17, 19, 24, 25]))
-                            <td>
-                            @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
-                              <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker{{ $i }}[]" value="{{ $colors_decodedArray[$loops] }}">
-                              @php
-                                  $loops++
-                              @endphp
-                            @else
-                              <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker{{ $i }}[]" value="#506fd9" disabled style="display: none">
-                            @endif
-                            </td>
+                            <th scope="col">Warna</th>
                           @endif
-                        </tr>
-                      @endforeach
-                    </tbody>
-                </table>    
+                          </tr>
+                      </thead>
+                      <tbody id="table_body{{ $i }}">
+                        @foreach ($value as $clean)
+                          <tr class="table-row{{ $i }}" data-judul="Item 1">
+                            <td scope="row">
+                              @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
+                                  <input class="checkbox-item{{ $i }}" type="checkbox" value="{{ $clean->keterangan }}" name="xValue{{ $i }}[]" checked >
+                              @else
+                                <input class="checkbox-item{{ $i }}" type="checkbox" value="{{ $clean->keterangan }}" name="xValue{{ $i }}[]" >
+                              @endif
+                              {{ $clean->keterangan }}
+                                
+                              <input type="hidden" name="selectedJudul{{ $i }}" value="{{ $clean->judul }}">
+                            </td>
+                            <td>{{ $clean->judul }}</td>
+                          <td>{{ ($clean->newest == 1) ? "Terbaru" : ($clean->created_at)}}</td>
+
+                            <td>{{ $clean->jumlah }}</td>
+                            @if (in_array($content->chart->id, [16, 17, 19, 24, 25]))
+                              <td>
+                              @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
+                                <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker{{ $i }}[]" value="{{ $colors_decodedArray[$loops] }}">
+                                @php
+                                    $loops++
+                                @endphp
+                              @else
+                                <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker{{ $i }}[]" value="#506fd9" disabled style="display: none">
+                              @endif
+                              </td>
+                            @endif
+                          </tr>
+                        @endforeach
+                      </tbody>
+                  </table>    
+                </div>
             @endfor
             @if ($content->chart_id == 20)
                 <div class="text-center">

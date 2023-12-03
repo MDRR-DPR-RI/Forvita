@@ -6,7 +6,7 @@
 </style>
   <div class="sidebar">
     <div class="sidebar-header">
-      <a href="/cluster" class="sidebar-logo">SATUDATA</a>
+      <a href="/cluster" class="sidebar-logo">FORVITA</a>
     </div><!-- sidebar-header -->
         
     <div id="sidebarMenu" class="sidebar-body">
@@ -76,7 +76,7 @@
           <img src="{{ auth()->user()->getProfilePhotoURL() }}" alt="">
         </div><!-- sidebar-footer-thumb -->
         <div class="sidebar-footer-body">
-          <h6><a href="../pages/profile.html">{{ auth()->user()->name }}</a></h6>
+          <h6><a href="/profile">{{ auth()->user()->name }}</a></h6>
           <p>{{ auth()->user()->role->name }}</p>
         </div><!-- sidebar-footer-body -->
         <a id="sidebarFooterMenu" href="" class="dropdown-link"><i class="ri-arrow-down-s-line"></i></a>

@@ -74,62 +74,64 @@
                    data-bs-toggle="modal"><i class="ri-add-line"></i>
                     <span class="d-none d-sm-inline">Tambahkan Query</span></a>
         </div>
-        <table class="table table-hover" class="table" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-            <tr>
-                <th scope="col">No</th>
-                <th scope="col">Nama</th>
-                <th scope="col">Query</th>
-                <th scope="col">Database</th>
-                <th scope="col">Status</th>
-                <th scope="col">Aksi</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach ($schedulers as $scheduler)
+        <div class="table-responsive">
+            <table class="table table-hover" class="table" id="dataTable" width="100%" cellspacing="0">
+                <thead>
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $scheduler->name }}</td>
-                    <td>{{ $scheduler->query }}</td>
-                    @isset($scheduler->database_id)
-                        <td>{{ $scheduler->database->name }}</td>
-                    @else
-                        <td>localhost</td>
-                    @endisset
-                    <td>{{ $scheduler->status }}</td>
-                    <td class="d-flex justify-content-start">
-                        {{--Execute Scheduler Query--}}
-                        <a href="/scheduler/execute?schedulerID={{ $scheduler->id }}" class="btn btn-success btn-icon">
-                            <i class="bi bi-gear" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jalankan"></i>
-                        </a>
-
-                        {{--Edit Scheduler--}}
-                        <a data-bs-toggle="modal" data-bs-target="#editSchedulerModal"
-                           data-bs-schedulerID="{{ $scheduler->id }}"
-                           data-bs-schedulerName="{{ $scheduler->name }}"
-                           data-bs-schedulerQuery="{{ $scheduler->query }}"
-                           data-bs-schedulerDatabaseID="{{ $scheduler->database_id }}"
-{{--                           @isset($scheduler->database_id)--}}
-{{--                               data-bs-schedulerDatabaseName="{{$scheduler->database->name}}"--}}
-{{--                           @endisset--}}
-                           class="btn btn-primary btn-icon">
-                                <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah" class="ri-pencil-fill"></i>
-                           </a>
-
-                        {{--Delete Scheduler--}}
-                        <form action="/scheduler" method="post">
-                            @method('delete')
-                            @csrf
-                            <input type="hidden" name="schedulerID" value="{{ $scheduler->id }}">
-                            <button type="submit" class="btn btn-danger btn-icon">
-                                <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus" class="bi bi-trash3"></i>
-                            </button>
-                        </form>
-                    </td>
+                    <th scope="col">No</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Query</th>
+                    <th scope="col">Database</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Aksi</th>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach ($schedulers as $scheduler)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $scheduler->name }}</td>
+                        <td>{{ $scheduler->query }}</td>
+                        @isset($scheduler->database_id)
+                            <td>{{ $scheduler->database->name }}</td>
+                        @else
+                            <td>localhost</td>
+                        @endisset
+                        <td>{{ $scheduler->status }}</td>
+                        <td class="d-flex justify-content-start">
+                            {{--Execute Scheduler Query--}}
+                            <a href="/scheduler/execute?schedulerID={{ $scheduler->id }}" class="btn btn-success btn-icon">
+                                <i class="bi bi-gear" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jalankan"></i>
+                            </a>
+
+                            {{--Edit Scheduler--}}
+                            <a data-bs-toggle="modal" data-bs-target="#editSchedulerModal"
+                            data-bs-schedulerID="{{ $scheduler->id }}"
+                            data-bs-schedulerName="{{ $scheduler->name }}"
+                            data-bs-schedulerQuery="{{ $scheduler->query }}"
+                            data-bs-schedulerDatabaseID="{{ $scheduler->database_id }}"
+    {{--                           @isset($scheduler->database_id)--}}
+    {{--                               data-bs-schedulerDatabaseName="{{$scheduler->database->name}}"--}}
+    {{--                           @endisset--}}
+                            class="btn btn-primary btn-icon">
+                                    <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah" class="ri-pencil-fill"></i>
+                            </a>
+
+                            {{--Delete Scheduler--}}
+                            <form action="/scheduler" method="post">
+                                @method('delete')
+                                @csrf
+                                <input type="hidden" name="schedulerID" value="{{ $scheduler->id }}">
+                                <button type="submit" class="btn btn-danger btn-icon">
+                                    <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus" class="bi bi-trash3"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 
 {{--Add Scheduler Modal--}}
@@ -140,13 +142,13 @@
             <div class="modal-content">
                 <!-- modal-header -->
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambahkan Penjadwal</h5>
+                    <h5 class="modal-title">Tambahkan Query</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <!-- modal-body -->
-                <div class="modal-body container text-center">
+                <div class="modal-body container ">
                     <div class="form-group">
-                        <label for="schedulerName">Nama Penjadwal</label>
+                        <label for="schedulerName">Nama Query</label>
                         <input type="text" id="schedulerName" name="schedulerName" class="form-control" required>
                     </div>
                     <div class="form-group">
@@ -186,19 +188,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <!-- modal-body -->
-                <div class="modal-body container text-center">
+                <div class="modal-body container m-1">
                     <input type="hidden" id="schedulerID" name="schedulerID">
-                    <div class="form-group">
+                    <div class="form-group m-1">
                         <label for="schedulerName">Scheduler Name</label>
                         <input type="text" id="schedulerName" name="schedulerName" class="form-control"
                                required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group m-1">
                         <label for="schedulerQuery">Query</label>
                         <textarea id="schedulerQuery" name="schedulerQuery" class="form-control"
                                   required></textarea>
                     </div>
-                    <div id="schedulerDatabaseSelectGroup" class="form-group">
+                    <div id="schedulerDatabaseSelectGroup" class="form-group m-1">
                         <label for="schedulerDatabaseID">Database</label>
                         <select id="schedulerDatabaseID" name="schedulerDatabaseID" class="form-select" aria-label="Select Database Scheduler">
                             <option value="">Localhost</option>

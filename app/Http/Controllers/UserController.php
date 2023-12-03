@@ -24,7 +24,7 @@ class UserController extends Controller
 
     $data = $request->validate([
       'password' => ['nullable', 'string', 'min:5', 'max:255', 'confirmed'],
-      'profile_photo' => ['image'],
+      'profile_photo' => ['image', 'mimes:jpeg,png,jpg', 'max:1024'],
     ]);
 
     $updated_fields = array();

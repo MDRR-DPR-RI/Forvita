@@ -82,36 +82,40 @@ class ContentController extends Controller
                 'cleans' => $cleans,
             ]);
         }
-        // NEXT_EDIT_CHART(PAGE2 AFTER SELECT JUDUL)>>
-        $arr_selected_judul = explode(",", $request->selected_judul);
-        // dd($arr_selected_judul);
-        $data = [
-            'dashboard' => $content->dashboard,
-            'content' => $content,
-            'selected_judul' => $arr_selected_judul
-        ];
-        $stackCount = 0;
-        for ($i = 0; $i < count($arr_selected_judul); $i++) {
-            $content_judul = json_decode($content->judul, true);
-            if (isset($content_judul[$i]) && $arr_selected_judul[$i] == $content_judul[$i]) {
-                $data['clean' . $i] = Clean::where('judul', $arr_selected_judul[$i])
-                    ->where('created_at', json_decode($content->clean_created_at)[$i])
+        try {
+            // NEXT_EDIT_CHART(PAGE2 AFTER SELECT JUDUL)>>
+            $arr_selected_judul = explode(",", $request->selected_judul);
+            // dd($arr_selected_judul);
+            $data = [
+                'dashboard' => $content->dashboard,
+                'content' => $content,
+                'selected_judul' => $arr_selected_judul
+            ];
+            $stackCount = 0;
+            for ($i = 0; $i < count($arr_selected_judul); $i++) {
+                $content_judul = json_decode($content->judul, true);
+                if (isset($content_judul[$i]) && $arr_selected_judul[$i] == $content_judul[$i]) {
+                    $data['clean' . $i] = Clean::where('judul', $arr_selected_judul[$i])
+                        ->where('created_at', json_decode($content->clean_created_at)[$i])
+                        ->get();
+                } else {
+                    $data['clean' . $i] = Clean::where('judul', $arr_selected_judul[$i])
+                        ->where('newest', true)
+                        ->get();
+                }
+                $data['date' . $i] = Clean::select('newest', 'created_at', 'judul')
+                    ->orderBy('created_at', 'desc') // Order by the latest created_at
+                    ->where('judul', $arr_selected_judul[$i])
+                    ->distinct('created_at')
                     ->get();
-            } else {
-                $data['clean' . $i] = Clean::where('judul', $arr_selected_judul[$i])
-                    ->where('newest', true)
-                    ->get();
+                $stackCount++;
             }
-            $data['date' . $i] = Clean::select('newest', 'created_at', 'judul')
-                ->orderBy('created_at', 'desc') // Order by the latest created_at
-                ->where('judul', $arr_selected_judul[$i])
-                ->distinct('created_at')
-                ->get();
-            $stackCount++;
+            $data['stackCount'] = $stackCount;
+            // dd($data);
+            return view('dashboard.contents.next-edit-chart', $data);
+        } catch (\Throwable $th) {
+            return redirect('/dashboard/' . $content->dashboard->id)->with('error', "Coba Lagi!");
         }
-        $data['stackCount'] = $stackCount;
-        // dd($data);
-        return view('dashboard.contents.next-edit-chart', $data);
     }
 
     /**
