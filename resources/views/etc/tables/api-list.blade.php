@@ -73,12 +73,12 @@
                     <form action="{{ route('import.api') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                          Example url
+                          Contoh URL
                             <ol class="list-group list-group-numbered">
                               <li class="list-group-item">https://catfact.ninja/fact</li>
                               <li class="list-group-item">https://www.dpr.go.id/rest/?method=getAgendaPerBulan&tahun=2015&bulan=02&tipe=json</li>
                             </ol>
-                            <label for="tableName" class="form-label">Name Tabel</label>
+                            <label for="tableName" class="form-label">Nama Tabel</label>
                             <input class="form-control" type="text" id="tableName" name="tableName" required>
                         </div>
                         <div class="mb-3">
@@ -161,13 +161,13 @@
         columns: [
             {
             field: 'name',
-            title: 'Name',
+            title: 'Nama Tabel',
             sortable: true,
             align: 'center'
             },
             {
             field: 'file',
-            title: 'File URL',
+            title: 'URL',
             sortable: true,
             align: 'center'
             },
@@ -179,7 +179,7 @@
             },
             {
             field: 'action',
-            title: 'Action',
+            title: 'Aksi',
             sortable: true,
             align: 'center'
             }
