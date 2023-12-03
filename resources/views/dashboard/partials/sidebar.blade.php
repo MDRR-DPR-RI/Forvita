@@ -162,7 +162,7 @@
                     <td>{{ $share->dashboard->cluster->name }}</td>
                     <td>{{ $share->dashboard->name }}</td>
                     <td>
-                      <a href="https://172.18.25.16/public/dashboard/{{ $share->link }}" target="_blank">https://172.18.25.16/public/dashboard/{{ $share->link }}</a>
+                      <a href="{{isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http'}}://{{$_SERVER['HTTP_HOST']}}/public/dashboard/{{ $share->link }}" target="_blank">{{isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http'}}://{{$_SERVER['HTTP_HOST']}}/public/dashboard/{{ $share->link }}</a>
                     </td>
                     <td>{{ $share->expired }}</td>
                     <td>
