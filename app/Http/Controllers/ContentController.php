@@ -71,7 +71,6 @@ class ContentController extends Controller
 
         $cleans = Clean::select('kelompok', 'data', 'judul', DB::raw('MAX(created_at) as created_at'))
             ->groupBy('kelompok', 'data', 'judul')  // Include all selected columns in GROUP BY
-            ->orderBy('kelompok')
             ->get();
 
 

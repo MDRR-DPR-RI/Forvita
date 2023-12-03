@@ -137,7 +137,9 @@ class CsvImportController extends Controller
         $data = ListImport::find($idImport);
         if ($data) {
             return view('etc.view.csv-view', [
-                'dataCSV' => $data
+                'dataCSV' => $data,
+                'pageCsv' => true
+
             ]);
         } else {
             return redirect()->back()->with('deleted', 'Error melihat Data!');
