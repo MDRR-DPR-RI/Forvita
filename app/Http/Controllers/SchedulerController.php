@@ -28,12 +28,13 @@ class SchedulerController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $scheduler_name = $request->input('schedulerName');
         Scheduler::create([
-            'name' => $request->input('schedulerName'),
+            'name' => $scheduler_name,
             'query' => $request->input('schedulerQuery'),
             'database_id' => $request->input('schedulerDatabaseID'),
         ]);
-        return redirect('scheduler');
+        return redirect('scheduler')->with('success', "Query $scheduler_name berhasil ditambahkan!");
     }
 
     public function update(Request $request): RedirectResponse
@@ -47,14 +48,15 @@ class SchedulerController extends Controller
         $scheduler->save();
 
         error_log("Updated scheduler with id $updateSchedulerID");
-        return redirect('scheduler');
+        return redirect('scheduler')->with('success', "Query $scheduler->name berhasil ditambahkan!");
     }
     public function destroy(Request $request): RedirectResponse
     {
         $deleteSchedulerID = $request->input('schedulerID');
+        $scheduler = Scheduler::where('id', $deleteSchedulerID)->first();
         Scheduler::destroy($deleteSchedulerID);
         error_log("deleted scheduler with id $deleteSchedulerID");
-        return redirect('scheduler');
+        return redirect('scheduler')->with('deleted', "Query $scheduler->name berhasil dihapus!");
     }
     public function execute(Request $request)
     {
@@ -92,11 +94,15 @@ class SchedulerController extends Controller
             error_log("Failed to execute query: " . $errorMessage);
             $scheduler->status = "Failed to run: " . $errorMessage;
             $scheduler->save();
-            return redirect('scheduler');
+            return redirect('scheduler')->with('warning', "Query $scheduler->name tidak berhasil dijalankan!");
         }
-
         $scheduler->status = "Ran successfully!";
         $scheduler->save();
-        return redirect('scheduler');
+        return redirect('scheduler')->with('success', "Query $scheduler->name berhasil dijalankan!");
+    }
+    public function remove_cleans(Request $request)
+    {
+        Clean::where('judul', $request->judul_data)->delete();
+        return redirect()->back()->with('deleted', "Data $request->judul_data berhasil dihapus!");
     }
 }

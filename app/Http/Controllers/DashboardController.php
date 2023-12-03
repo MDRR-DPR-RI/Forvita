@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dashboard;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Models\Content;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
@@ -38,7 +40,22 @@ class DashboardController extends Controller
       'icon_name' => $request->input('icon'),
       'cluster_id' => $cluster_id,
     ]);
-    return redirect('/dashboard/' . $dashboard->id)->with('success', "Berhasil Membuat Dashboard Baru: $dashboard->name");
+
+    if (auth()->user()->role->name == 'User') {
+      Permission::create([
+        'user_id' => auth()->user()->id,
+        'dashboard_id' => $dashboard->id
+      ]);
+      // Retrieve the existing array from the session
+      $dashboardIds = session('dashboard_ids', []);
+
+      // Append a new value to the array
+      $dashboardIds[] = $dashboard->id;
+
+      // Store the modified array back into the session
+      session(['dashboard_ids' => $dashboardIds]);
+    }
+    return redirect('/dashboard/' . $dashboard->id)->with('success', "Berhasil Membuat Dashboard baru: $dashboard->name");
   }
 
   /**
@@ -125,6 +142,7 @@ class DashboardController extends Controller
    */
   public function destroy(Dashboard $dashboard, Request $request)
   {
+    Content::where('dashboard_id', $dashboard->id)->delete(); // remove all dashboard in this dashboard
     // Delete the dashboard with the given ID
     $is_deleted = Dashboard::destroy($dashboard->id);
 

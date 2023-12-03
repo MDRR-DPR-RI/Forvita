@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cluster;
 use App\Models\Dashboard;
+use App\Models\Share;
+use App\Models\Content;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Jobs\RedisJob;
@@ -20,33 +22,46 @@ class ClusterController extends Controller
         Session::forget('cluster_id');
 
         /*
-        |--------------------------------------------------------------------------
-        | This is user's permission to see which clusters they can see based on dashboard permission
-        |--------------------------------------------------------------------------
-        |
-        | ex: if they only have permission to see dashboard C (dashboard in cluster 2),
-        | they can only see/select cluster 2 after they log-in
-        | 
-        */
-        $user_role = auth()->user()->role->name;
-        $clusters = [];
-        if ($user_role == 'Admin') {
-            $clusters = Cluster::all(); // if admin, they can see all clusters
-        } else {
-            $cluster_ids = [];
-            $dashboard_ids = [];
-            $permissions = Permission::where('user_id', auth()->user()->id)->get(); // get all permissions based on user's id
-            foreach ($permissions as $index) { // loop the permissions to take take the cluster_id then push into array
-                array_push($cluster_ids, $index->dashboard->cluster_id); // push the cluser_Id into array
-                array_push($dashboard_ids, $index->dashboard->id); // push the cluser_Id into array
+    |--------------------------------------------------------------------------
+    | This is user's permission to see which clusters they can see based on dashboard permission
+    |--------------------------------------------------------------------------
+    |
+    | ex: if they only have permission to see dashboard C (dashboard in cluster 2),
+    | they can only see/select cluster 2 after they log-in
+    | 
+    */
+        $user = auth()->user();
+
+        if ($user && $user->role) {
+            $user_role = $user->role->name;
+            $clusters = [];
+
+            if ($user_role == 'Admin') {
+                $clusters = Cluster::all(); // if admin, they can see all clusters
+            } else {
+                $cluster_ids = [];
+                $dashboard_ids = [];
+                $permissions = Permission::where('user_id', $user->id)->get(); // get all permissions based on user's id
+
+                foreach ($permissions as $index) { // loop the permissions to take take the cluster_id then push into array
+                    array_push($cluster_ids, $index->dashboard->cluster_id); // push the cluster_Id into array
+                    array_push($dashboard_ids, $index->dashboard->id); // push the cluster_Id into array
+                }
+
                 $clusters = Cluster::whereIn('id', $cluster_ids)->get(); // use whereIn method to get clusters based on id in an array
+                $request->session()->put('dashboard_ids', $dashboard_ids); // store dashboard_ids into sessions to use in DashboardController
             }
-            $request->session()->put('dashboard_ids', $dashboard_ids); // store dashboard_ids into sessions to use in DashboardController 
+
+            return view('dashboard.contents.cluster', [
+                'clusters' => $clusters,
+            ]);
+        } else {
+            // Tindakan yang sesuai jika user atau rolenya null
+            // Misalnya, Anda bisa memberikan nilai default atau mengembalikan kesalahan.
+            return redirect()->back()->with('error', "User atau role tidak valid.");
         }
-        return view('dashboard.contents.cluster', [
-            'clusters' => $clusters,
-        ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -130,7 +145,14 @@ class ClusterController extends Controller
      */
     public function destroy(Cluster $cluster)
     {
-        Cluster::destroy($cluster->id);
-        return redirect()->back()->with('deleted', "Cluster $cluster->name berhasil dihapus!");
+        Cluster::destroy($cluster->id); // remove all cluster
+        $dashboards = Dashboard::where('cluster_id', $cluster->id)->get();
+        foreach ($dashboards as $dashboard) {
+            Share::where('dashboard_id', $dashboard->id)->delete(); // remove all shares that have dashboard_id
+            Content::where('dashboard_id', $dashboard->id)->delete(); // remove all contents that have dashboard_id
+        }
+        Dashboard::where('cluster_id', $cluster->id)->delete(); // remove all dashboard in the cluster
+
+        return redirect()->back()->with('deleted', "Cluster $cluster->name berhasil dihapus !");
     }
 }

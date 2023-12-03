@@ -10,6 +10,14 @@
 @method('put')
 @csrf
   <div class="main main-app p-3 p-lg-4">
+    <div class="container mt-5 mb-5">
+      <div>
+        <ol class="breadcrumb fs-sm mb-0">
+          <li class="breadcrumb-item"><p>{{ $dashboard->name }}</p></li>
+          <li class="breadcrumb-item active" aria-current="page">{{ $content->chart->name }}</li>
+        </ol> 
+        <h4 class="main-title mb-0">Konfigurasi Untuk Kartu {{ $content->chart->name }}</h4>
+      </div> <hr>
       <div class="row">
           <div class="col-8">
               <label for="card_title" class="form-label">Judul Kartu</label>
@@ -17,7 +25,7 @@
               {{-- id for chart=card --}}
                 <input type="text" class="form-control" placeholder="Kartu ini tidak memiliki judul" aria-label="card_title" name="card_title" disabled>
               @else
-                <input type="text" class="form-control" placeholder="Judul" aria-label="card_title" name="card_title" value="{{ $content->card_title }}" required>
+                <input type="text" class="form-control" placeholder="Masukan judul kartu disini..." aria-label="card_title" name="card_title" value="{{ $content->card_title }}" required>
               @endif
           </div>
           <div class="col">
@@ -34,11 +42,15 @@
           </div>
           </div><br>
           <div>
-            <label for="card_description" class="form-label">Deskripsi Kartu</label>
               {{-- id for chart=card --}}
-            @if ($content->chart->id == 21 || $content->chart->id == 20)
+            @if ($content->chart->id == 20)
+                <label for="card_description" class="form-label">Hasil Analisis AI</label>
+                <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Belum ada hasil analisis AI." disabled>{{ $content->card_description }}</textarea>
+            @elseif($content->chart->id == 20 || $content->chart->id == 21)
+                <label for="card_description" class="form-label">Deskripsi Kartu</label>
                 <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Kartu ini tidak memiliki deskripsi" disabled></textarea>
             @else
+                <label for="card_description" class="form-label">Deskripsi Kartu</label>
                 <textarea class="form-control" id="card_description" name="card_description" rows="3" placeholder="Masukan deskripsi kartu disini..." required>{{ $content->card_description }}</textarea>
             @endif
           </div>
@@ -52,6 +64,7 @@
                     $variableName2 = 'date' . $i;
                     $value2 = $$variableName2;
 
+                    $judul_decodedArray = json_decode($content->judul, true);
                     $x_value_decodedArray = json_decode($content->x_value, true);
                     $content_clean_created_at = json_decode($content->clean_created_at, true);
                     $colors_decodedArray = json_decode($content->color, true);
@@ -81,60 +94,62 @@
                     @endforeach
                   </select>
                 </div>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                        <th scope="col">
-                            <div class="form-check">
-                            <label class="form-check-label" for="selectAllCheckbox{{ $i }}">Pilih Semua</label>
-                            @if ( isset($x_value_decodedArray[$i]) && $x_value_decodedArray[$i] !== "" && count($x_value_decodedArray[$i]) == count($value) )
-                              <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" checked>
-                            @else
-                              <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" >
-                            @endif
-                            </div>
-                        </th>
-                        <th scope="col">Judul</th>
-                        <th scope="col">Status Data</th>
-                        <th scope="col">Jumlah</th>
-                        @if (in_array($content->chart->id, [16, 17, 19, 24, 25]))
-                          <th scope="col">Warna</th>
-                        @endif
-                        </tr>
-                    </thead>
-                    <tbody id="table_body{{ $i }}">
-                      @foreach ($value as $clean)
-                        <tr class="table-row{{ $i }}" data-judul="Item 1">
-                          <td scope="row">
-                            @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
-                                <input class="checkbox-item{{ $i }}" type="checkbox" value="{{ $clean->keterangan }}" name="xValue{{ $i }}[]" checked >
-                            @else
-                              <input class="checkbox-item{{ $i }}" type="checkbox" value="{{ $clean->keterangan }}" name="xValue{{ $i }}[]" >
-                            @endif
-                            {{ $clean->keterangan }}
-                              
-                            <input type="hidden" name="selectedJudul{{ $i }}" value="{{ $clean->judul }}">
-                          </td>
-                          <td>{{ $clean->judul }}</td>
-                         <td>{{ ($clean->newest == 1) ? "Terbaru" : ($clean->created_at)}}</td>
-
-                          <td>{{ $clean->jumlah }}</td>
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                      <thead>
+                          <tr>
+                          <th scope="col">
+                              <div class="form-check">
+                              @if ( isset($x_value_decodedArray[$i]) && $x_value_decodedArray[$i] !== "" && count($x_value_decodedArray[$i]) == count($value) )
+                                <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" checked>
+                              @else
+                                <input class="form-check-input" type="checkbox" id="selectAllCheckbox{{ $i }}" >
+                              @endif
+                              <label class="form-check-label" for="selectAllCheckbox{{ $i }}">Keterangan</label>
+                              </div>
+                          </th>
+                          <th scope="col">Judul</th>
+                          <th scope="col">Status Data</th>
+                          <th scope="col">Jumlah</th>
                           @if (in_array($content->chart->id, [16, 17, 19, 24, 25]))
-                            <td>
-                            @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
-                              <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker{{ $i }}[]" value="{{ $colors_decodedArray[$loops] }}">
-                              @php
-                                  $loops++
-                              @endphp
-                            @else
-                              <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker{{ $i }}[]" value="#506fd9" disabled style="display: none">
-                            @endif
-                            </td>
+                            <th scope="col">Warna</th>
                           @endif
-                        </tr>
-                      @endforeach
-                    </tbody>
-                </table>    
+                          </tr>
+                      </thead>
+                      <tbody id="table_body{{ $i }}">
+                        @foreach ($value as $clean)
+                          <tr class="table-row{{ $i }}" data-judul="Item 1">
+                            <td scope="row">
+                              @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
+                                  <input class="checkbox-item{{ $i }}" type="checkbox" value="{{ $clean->keterangan }}" name="xValue{{ $i }}[]" checked >
+                              @else
+                                <input class="checkbox-item{{ $i }}" type="checkbox" value="{{ $clean->keterangan }}" name="xValue{{ $i }}[]" >
+                              @endif
+                              {{ $clean->keterangan }}
+                                
+                              <input type="hidden" name="selectedJudul{{ $i }}" value="{{ $clean->judul }}">
+                            </td>
+                            <td>{{ $clean->judul }}</td>
+                          <td>{{ ($clean->newest == 1) ? "Terbaru" : ($clean->created_at)}}</td>
+
+                            <td>{{ $clean->jumlah }}</td>
+                            @if (in_array($content->chart->id, [16, 17, 19, 24, 25]))
+                              <td>
+                              @if (isset($x_value_decodedArray[$i]) && in_array($clean->keterangan, $x_value_decodedArray[$i]))
+                                <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker{{ $i }}[]" value="{{ $colors_decodedArray[$loops] }}">
+                                @php
+                                    $loops++
+                                @endphp
+                              @else
+                                <input type="color" id="colorPicker{{ $loop->iteration }}" name="color_picker{{ $i }}[]" value="#506fd9" disabled style="display: none">
+                              @endif
+                              </td>
+                            @endif
+                          </tr>
+                        @endforeach
+                      </tbody>
+                  </table>    
+                </div>
             @endfor
             @if ($content->chart_id == 20)
                 <div class="text-center">
@@ -146,10 +161,10 @@
                     {{-- set on change function, when user add new prompt, then will show INPUT FIELD to enter new prompt --}}
                     <select id="selectPrompt" class="form-select" name="selectPrompt" onchange="checkForNewPrompt()">
                       @foreach ($prompts as $prompt)
-                        @if ($prompt->id == $content->prompt->id) <!-- IMPORTANT: UPDATE THIS IF $prompt->id is EQUAL with the prompt_id in table contents -->
-                          <option value="{{ $prompt->id }}" selected>{{ $prompt->body }}</option>
+                        @if ($prompt->id == $content->prompt->id)
+                          <option value="{{ $prompt->body }}" selected>{{ $prompt->body }}</option>
                         @else
-                          <option value="{{ $prompt->id }}">{{ $prompt->body }}</option>
+                          <option value="{{ $prompt->body }}">{{ $prompt->body }}</option>
                         @endif
                       
                       @endforeach
@@ -186,14 +201,14 @@
                   </div><!-- modal-body -->
                 </form>
               </div>
+              <br>
             @endif
          
           <input type="hidden" value="{{ $stackCount }}" name="stackCount">
           <input type="hidden" value="{{ $content->dashboard->id }}" name="dashboard_id">
           <div class="col d-flex justify-content-end">
-          
           {{-- BUG: when user edit chart and change the stack. the button is not disabled. make it disabled --}}
-            @if ( $stackCount == count($x_value_decodedArray))
+            @if ( $x_value_decodedArray[0][0] !== "" && $stackCount == count($x_value_decodedArray) && $judul_decodedArray == $selected_judul )
               <button type="submit" class="btn btn-primary" id="selesaiBtn">Selesai</button>
             @else
               <button type="submit" class="btn btn-secondary" id="selesaiBtn" disabled>Selesai</button>
@@ -203,6 +218,7 @@
     {{-- <div class="main-footer mt-5">
       <span>&copy; 2023. DPR RI</span>
     </div><!-- main-footer --> --}}
+    </div><!-- main-app -->
   </div><!-- main-app -->
 </form>
 
@@ -375,7 +391,7 @@
             // Get the "selesai" button element
             const selesaiBtn = document.getElementById('selesaiBtn');
             // Check if all counters have the same value
-            if (counters.every(count => count === counters[0]) && counters[0] > 0) {
+            if (counters.every(count => count > 0) && counters[0] > 0) {
                 // Enable the "selesai" button and change its class to primary
                 selesaiBtn.disabled = false;
                 selesaiBtn.className = 'btn btn-primary';

@@ -6,7 +6,7 @@
 </style>
   <div class="sidebar">
     <div class="sidebar-header">
-      <a href="/cluster" class="sidebar-logo">SATUDATA</a>
+      <a href="/cluster" class="sidebar-logo">FORVITA</a>
     </div><!-- sidebar-header -->
         
     <div id="sidebarMenu" class="sidebar-body">
@@ -22,10 +22,10 @@
                 <a href="/scheduler" class="nav-link @isset($schedulers)  active  @endisset"><i class="bi bi-gear-wide-connected"></i> <span>Queries</span></a>
             </li>
             <li class="nav-item">
-                <a href="/csv" class="nav-link @isset($csvFiles) active @endisset"><i class="ri-file-excel-2-line fs-18 lh-1"></i> <span>CSV List</span></a>
+                <a href="/csv" class="nav-link @isset($pageCsv) active @endisset"><i class="ri-file-excel-2-line fs-18 lh-1"></i> <span>Impor CSV</span></a>
             </li>
             <li class="nav-item">
-                <a href="/restapi" class="nav-link @isset($apiList) active @endisset"><i class="bi bi-link-45deg"></i> <span>API List</span></a>
+                <a href="/restapi" class="nav-link @isset($pageApi) active @endisset"><i class="bi bi-link-45deg"></i> <span>Impor API</span></a>
             </li>
             <li class="nav-item">
               <a href="/user-management" class="nav-link @isset($initialUsers) active @endisset"><i class="bi bi-person-fill-gear"></i> <span>Manajemen Pengguna</span></a>
@@ -47,18 +47,22 @@
             @endif
             </li>
           @endforeach
-          @can('admin')
+          @can('user')
             <li class="nav-item">
-              <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-secondary btn-sm"></i>+ Dashboard</span></a>
+              <a href="#newDashboard" data-bs-toggle="modal" class="nav-link "><span class="btn btn-secondary btn-sm"></i>Tambah Dashboard</span></a>
             </li>
           @endcan
         </ul>
     @endif
     @can('admin')
-      <hr>
+    @if(session()->has('cluster_id'))
+        <hr>
+      @else
+        <br>
+      @endif
       <ul class="nav nav-sidebar">
         <li class="nav-item">
-            <a href="#share-list" class="nav-link" data-bs-toggle="modal"><i class="ri-global-line"></i> <span>Dashboard Publik</span></a>
+            <a href="#share-list" class="nav-link @isset($share) active @endisset" data-bs-toggle="modal" ><i class="ri-global-line"></i> <span>Dashboard Publik</span></a>
           </li>
         </ul>
     @endcan
@@ -72,7 +76,7 @@
           <img src="{{ auth()->user()->getProfilePhotoURL() }}" alt="">
         </div><!-- sidebar-footer-thumb -->
         <div class="sidebar-footer-body">
-          <h6><a href="../pages/profile.html">{{ auth()->user()->name }}</a></h6>
+          <h6><a href="/profile">{{ auth()->user()->name }}</a></h6>
           <p>{{ auth()->user()->role->name }}</p>
         </div><!-- sidebar-footer-body -->
         <a id="sidebarFooterMenu" href="" class="dropdown-link"><i class="ri-arrow-down-s-line"></i></a>
@@ -93,7 +97,7 @@
     </div><!-- sidebar-footer -->
   </div><!-- sidebar -->
 
-@can('admin')    
+@can('user')    
     {{-- MODAL NEW DASHBOARD --}}
     <div class="modal fade" id="newDashboard" tabindex="-1">
       <div class="modal-dialog">
@@ -157,7 +161,9 @@
                     <td scope="row">{{ $key+1 }}</td>
                     <td>{{ $share->dashboard->cluster->name }}</td>
                     <td>{{ $share->dashboard->name }}</td>
-                    <td>https://172.18.25.16/public/dashboard/{{ $share->link }}</td>
+                    <td>
+                      <a href="{{isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http'}}://{{$_SERVER['HTTP_HOST']}}/public/dashboard/{{ $share->link }}" target="_blank">{{isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http'}}://{{$_SERVER['HTTP_HOST']}}/public/dashboard/{{ $share->link }}</a>
+                    </td>
                     <td>{{ $share->expired }}</td>
                     <td>
                       @if ($share->expired > now())
@@ -172,7 +178,7 @@
                         <form action="/share/{{ $share->id }}" method="post">
                           @method('delete')
                           @csrf
-                          <button type="submit" class="btn btn-danger btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>
+                          <button type="submit" class="btn btn-danger btn-icon mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>
                         </form>
                       </div>
                     </td>
@@ -203,6 +209,9 @@ $("#tableListPublic").Grid({
     table: 'table table-hover'
   },
   search: true,
+  pagination: true,
+  pagination: true,
+  sort: true,
 });
  (async () => {
     const response = await fetch('https://unpkg.com/codethereal-iconpicker@1.2.1/dist/iconsets/bootstrap5.json')

@@ -26,13 +26,13 @@
         @can('admin')
         <div class="d-flex gap-2 mt-3 mt-md-0">
                 <a href="#importCSVModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
-                    <i class="ri-file-excel-2-line fs-18 lh-1"></i>Import CSV
+                    <i class="ri-file-excel-2-line fs-18 lh-1"></i>Impor CSV
                 </a>
         </div>
         <div class="mt-3">
             @if (session()->has('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success!</strong> {{ session('success') }}.
+                <strong>Sukses!</strong> {{ session('success') }}.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             @elseif (session()->has('deleted'))
@@ -66,21 +66,21 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="importModalLabel">Import CSV File</h5>
+                    <h5 class="modal-title" id="importModalLabel">Impor File CSV</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('import.csv') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="tableName" class="form-label">Table Name</label>
+                            <label for="tableName" class="form-label">Nama Tabel</label>
                             <input class="form-control" type="text" id="tableName" name="tableName" required>
                         </div>
                         <div class="mb-3">
-                            <label for="csvFile" class="form-label">Choose CSV File</label>
+                            <label for="csvFile" class="form-label">Pilih File CSV</label>
                             <input class="form-control" type="file" id="csvFile" name="csvFile" accept=".csv" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Import CSV</button>
+                        <button type="submit" class="btn btn-primary">Impor CSV</button>
                     </form>
                 </div>
             </div>
@@ -127,8 +127,24 @@
             {
                 name: "{{$csvFile->name}}", 
                 file: "{{$csvFile->file}}",
-                status: `{!! $csvFile->action ? "<span class='btn btn-success w-50'>Berhasil Dibuat</span>" : "<span class='btn btn-danger w-50'>Belum Dijalankan</span>" !!}`, 
-                action: `{!! $csvFile->action ? "<a href='". route('csv.delete',['id'=> $csvFile->id ]) ."' class='btn btn-warning w-50'>Hapus Tabel</a>" : "<a href='". route('csv.create',['id'=> $csvFile->id ]) ."' class='btn btn-primary w-50'>Buat Tabel</a>" !!} <br/><a href='{{ route("csv.remove",['id'=>$csvFile->id]) }}' class="mt-2 btn btn-danger w-50">Hapus File</a>`},
+                status: `{!! $csvFile->action ? "<span class='btn-sm btn btn-success'>Berhasil Dibuat</span>" : "<span class='btn btn-danger btn-sm'>Belum Dijalankan</span>" !!}`, 
+                action: `<div class='d-flex justify-content-center p-2'>
+                            {!! $csvFile->action ? 
+                                "<a href='". route('csv.delete',['id'=> $csvFile->id ]) ."' class='btn-icon mx-1 btn btn-warning' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Hapus Tabel'>
+                                    <i class='bi bi-file-earmark-excel'></i>
+                                </a>" : 
+                                "<a href='". route('csv.create',['id'=> $csvFile->id ]) ."' class='btn-icon mx-1 btn btn-success' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Jalankan \/ Buat Tabel'>
+                                    <i class='bi bi-gear'></i>
+                                </a>" !!} 
+                                
+                                <a href='{{ route("csv.remove",['id'=>$csvFile->id]) }}' class="btn-icon mx-1 btn btn-danger" data-bs-toggle='tooltip' data-bs-placement='bottom' title='Hapus List'>
+                                    <i class='bi bi-trash-fill'></i>
+                                </a>
+                                <a href='{{ route("csv.view",['id'=>$csvFile->id]) }}' class="btn-icon mx-1 btn btn-secondary" data-bs-toggle='tooltip' data-bs-placement='bottom' title='Lihat'>
+                                    <i class='bi bi-eye-fill'></i>
+                                </a>
+                            </div>`
+            },
         @endforeach
     ];
 

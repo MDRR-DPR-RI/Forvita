@@ -26,7 +26,7 @@
         @can('admin')
         <div class="d-flex gap-2 mt-3 mt-md-0">
                 <a href="#importAPIModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
-                    <i class="bi bi-link-45deg"></i>Import RESTful API
+                    <i class="bi bi-link-45deg"></i>Impor RESTful API
                 </a>
         </div>
         <div class="mt-3">
@@ -66,26 +66,26 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="importModalLabel">Import from RESTful API</h5>
+                    <h5 class="modal-title" id="importModalLabel">Impor dari RESTful API</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('import.api') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                          Example url
+                          Contoh URL
                             <ol class="list-group list-group-numbered">
                               <li class="list-group-item">https://catfact.ninja/fact</li>
                               <li class="list-group-item">https://www.dpr.go.id/rest/?method=getAgendaPerBulan&tahun=2015&bulan=02&tipe=json</li>
                             </ol>
-                            <label for="tableName" class="form-label">Table Name</label>
+                            <label for="tableName" class="form-label">Nama Tabel</label>
                             <input class="form-control" type="text" id="tableName" name="tableName" required>
                         </div>
                         <div class="mb-3">
-                            <label for="api_url" class="form-label">Enter URL</label>
+                            <label for="api_url" class="form-label">Masukan URL</label>
                             <input class="form-control" type="text" id="api_url" name="api_url" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Import</button>
+                        <button type="submit" class="btn btn-primary">Impor</button>
                     </form>
                 </div>
             </div>
@@ -132,8 +132,24 @@
             {
                 name: "{{$apiList->name}}", 
                 file: "{{$apiList->file}}",
-                status: `{!! $apiList->action ? "<span class='btn btn-success w-80'>Berhasil Dibuat</span>" : "<span class='btn btn-danger w-80'>Belum Dijalankan</span>" !!}`, 
-                action: `{!! $apiList->action ? "<a href='". route('restapi.delete',['id'=> $apiList->id ]) ."' class='btn btn-warning w-50'>Hapus Tabel</a>" : "<a href='". route('restapi.create',['id'=> $apiList->id ]) ."' class='btn btn-primary w-50'>Buat Tabel</a>" !!} <br/><a href='{{ route("restapi.remove",['id'=>$apiList->id]) }}' class="mt-2 btn btn-danger w-50">Hapus List</a>`},
+                status: `{!! $apiList->action ? "<span class='btn btn-success btn-sm'>Berhasil Dibuat</span>" : "<span class='btn btn-danger btn-sm'>Belum Dijalankan</span>" !!}`, 
+                action: `<div class='d-flex justify-content-center p-2'>
+                            {!! $apiList->action ?
+                                "<a href='". route('restapi.delete',['id'=> $apiList->id ]) ."' class='btn-icon mx-1 btn btn-warning' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Hapus Tabel'>
+                                    <i class='bi bi-file-earmark-excel'></i>
+                                </a>" :
+                                "<a href='". route('restapi.create',['id'=> $apiList->id ]) ."' class='btn-icon mx-1 btn btn-success' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Jalankan \/ Buat Tabel'>
+                                    <i class='bi bi-gear'></i>
+                                </a>" !!} 
+                                
+                                <a href='{{ route("restapi.remove",['id'=>$apiList->id]) }}' class="btn-icon mx-1 btn btn-danger" data-bs-toggle='tooltip' data-bs-placement='bottom' title='Hapus List'>
+                                    <i class='bi bi-trash-fill'></i>
+                                </a>
+                                <a href='{{ route("restapi.view",['id'=>$apiList->id]) }}' class="btn-icon mx-1 btn btn-secondary" data-bs-toggle='tooltip' data-bs-placement='bottom' title='Lihat'>
+                                    <i class='bi bi-eye-fill'></i>
+                                </a>
+                            </div>`
+            },
         @endforeach
     ];
 
@@ -145,13 +161,13 @@
         columns: [
             {
             field: 'name',
-            title: 'Name',
+            title: 'Nama Tabel',
             sortable: true,
             align: 'center'
             },
             {
             field: 'file',
-            title: 'File URL',
+            title: 'URL',
             sortable: true,
             align: 'center'
             },
@@ -163,7 +179,7 @@
             },
             {
             field: 'action',
-            title: 'Action',
+            title: 'Aksi',
             sortable: true,
             align: 'center'
             }

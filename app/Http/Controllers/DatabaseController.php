@@ -38,7 +38,7 @@ class DatabaseController extends Controller
             'password' => $request->password,
         ]);
 
-        return redirect('database');
+        return redirect('database')->with('success', "Database $database->name berhasil ditambahkan!");
     }
 
     public function update(Request $request): RedirectResponse
@@ -60,19 +60,20 @@ class DatabaseController extends Controller
         $database->password = $request->password;
 
         $database->save();
-
-        return redirect('database');
+        return redirect('database')->with('success', "Database $database->name berhasil diubah!");
     }
 
     public function destroy(Request $request): RedirectResponse
     {
         $deleteDatabaseID = $request->input('databaseID');
+        $database = Database::where('id', $deleteDatabaseID)->first();
         Database::destroy($deleteDatabaseID);
-        return redirect('database');
+        return redirect('database')->with('deleted', "Database $database->name berhasil dihapus!");
     }
 
     // Function to change a database connection and config (should probably move this to services)
-    public function changeDatabaseConnection(String $connectionName, Database $database): void {
+    public function changeDatabaseConnection(String $connectionName, Database $database): void
+    {
         DB::purge($connectionName); // Kill DB connection and purge cache first
 
         Config::set('database.connections.' . $connectionName, [
@@ -90,7 +91,8 @@ class DatabaseController extends Controller
         ]);
     }
 
-    public function testConnection(Request $request): RedirectResponse {
+    public function testConnection(Request $request): RedirectResponse
+    {
         $databaseID = $request->query('databaseID');
         $database = Database::find($databaseID);
 
@@ -99,14 +101,12 @@ class DatabaseController extends Controller
             $connectionStatus = DB::connection($database->name)->getPdo()->getAttribute(PDO::ATTR_CONNECTION_STATUS);
             $database->status = $connectionStatus;
             $database->save();
-
-        } catch(Exception $ex){
+        } catch (Exception $ex) {
             $errorMessage = substr($ex, 0, 200);
             $database->status = "Gagal untuk konek: " . $errorMessage;
             $database->save();
-            return redirect('database');
+            return redirect('database')->with('warning', "Database $database->name tidak berhasil terhubung!");
         }
-        return redirect('database');
+        return redirect('database')->with('success', "Database $database->name berhasil terhubung!");
     }
 }
-

@@ -16,7 +16,6 @@ return new class extends Migration
       $table->foreignId('chart_id');
       $table->foreignId('dashboard_id');
       $table->foreignId('prompt_id')->default(1);
-      $table->string('result_prompt')->nullable();
       $table->string('judul')->default('[""]');
       $table->string('card_title')->nullable();
       $table->string('card_description', 10000)->nullable();

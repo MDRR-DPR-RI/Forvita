@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 
 class ShareController extends Controller
 {
-
   public function index(Dashboard $dashboard, $link)
   {
 
@@ -90,7 +89,11 @@ class ShareController extends Controller
       'link' => $link
     ]);
 
-    return back()->with('status', 'Link Berhasil Dibuat!, https://172.18.25.16/public/dashboard/' . $link);
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'];
+    $hostUrl = $protocol . '://' . $host . '/';
+
+    return back()->with('status', 'Link Berhasil Dibuat!, '.$hostUrl.'public/dashboard/' . $link);
   }
 
   public function destroy($id)

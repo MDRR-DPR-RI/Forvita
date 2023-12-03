@@ -301,16 +301,7 @@ let htmlStructures = {
             </nav>
             </div><!-- card-header -->
             <div class="card-body p-4">
-                <div class="d-flex">
-                  <div>
-                    <p class="fs-sm text-secondary mb-0" id="aiAnalysis">
-                      <p class="card-text placeholder-glow" id="placeholder">
-                        <span class="placeholder col-12">.............................................................</span>
-                        <span class="placeholder col-18">.............................................................</span>
-                      </p>
-                    </p>
-                  </div><!-- div -->
-                </div><!-- d-flex -->
+              <div id="description"></div><!-- card-description -->
             </div><!-- card-body -->
             
           </div><!-- card -->

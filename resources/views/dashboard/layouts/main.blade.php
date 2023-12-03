@@ -55,6 +55,7 @@
           @yield('page_content')
 
   {{-- script for all contents --}}
+ 
   <script src="/lib/jquery/jquery.min.js"></script>
   <script src="/lib/gridjs-jquery/gridjs.production.min.js"></script>
   <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -65,6 +66,21 @@
   <script src="/js/script.js"></script>
 
   @yield('custom_script')
+   <script>
+   $(document).ready(function () {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+    $('a[data-bs-toggle="modal"]').on('click', function () {
+
+      // Update the form action attribute with the content ID
+      var formAction = '/dashboard/content/' + contentId;
+      $('#contentForm').attr('action', formAction);
+    });
+  });
+  
+  </script>
   @stack('addon-script')
 
 </body>
