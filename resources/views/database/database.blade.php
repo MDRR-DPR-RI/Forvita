@@ -34,77 +34,79 @@
                 data-action="add" data-bs-toggle="modal"><i class="ri-add-line"></i>
                  <span class="d-none d-sm-inline">Tambah Database</span></a>
             </div>
-            <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">URL</th>
-                    <th scope="col">Driver</th>
-                    <th scope="col">Host</th>
-                    <th scope="col">Port</th>
-                    <th scope="col">Database</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Aksi</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($databases as $database)
+            <div class="table-responsive">
+                <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $database->name }}</td>
-                        <td>{{ $database->url }}</td>
-                        <td>{{ $database->driver }}</td>
-                        <td>{{ $database->host }}</td>
-                        <td>{{ $database->port }}</td>
-                        <td>{{ $database->database }}</td>
-                        <td>{{ $database->username }}</td>
-                        <td>{{ $database->status }}</td>
-                        <td class="d-flex justify-content-start">
-                            {{--Test Database Connection--}}
-                            <a href="/database/test-connection?databaseID={{ $database->id }}" class="btn btn-success btn-icon">
-                                <i class="bi bi-database-fill-up" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tes Koneksi"></i>
-                            </a>
-
-                            {{--Edit Database--}}
-                            <a data-bs-toggle="modal" data-bs-target="#databaseModal"
-                            data-action="edit"
-                            data-bs-databaseID="{{ $database->id }}"
-                            data-bs-databaseName="{{ $database->name }}"
-                            data-bs-databaseUrl="{{ $database->url }}"
-                            data-bs-databaseDriver="{{ $database->driver }}"
-                            data-bs-databaseHost="{{ $database->host }}"
-                            data-bs-databasePort="{{ $database->port }}"
-                            data-bs-databaseDatabase="{{ $database->database }}"
-                            data-bs-databaseUsername="{{ $database->username }}"
-                            data-bs-databasePassword="{{ $database->password }}"
-                            class="btn btn-primary btn-icon">
-                                <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah" class="ri-pencil-fill"></i>
-                            </a>
-
-                            {{--Delete Database--}}
-                            <form action="/database" method="post">
-                                @method('delete')
-                                @csrf
-                                <input type="hidden" name="databaseID" value="{{ $database->id }}">
-                                <button type="submit" class="btn btn-danger btn-icon" >
-                                    <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus" class="bi bi-trash3"></i>
-                                </button>
-                            </form>
-                        </td>
+                        <th scope="col">No</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">URL</th>
+                        <th scope="col">Driver</th>
+                        <th scope="col">Host</th>
+                        <th scope="col">Port</th>
+                        <th scope="col">Database</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Aksi</th>
                     </tr>
-                @endforeach
-                {{-- <tr>
-                    <td colspan="8"></td>
-                    <td colspan="2">
-                        <a href="#databaseModal" class="btn btn-primary d-flex align-items-center gap-2"
-                           data-action="add" data-bs-toggle="modal"><i class="ri-add-line"></i>
-                            <span class="d-none d-sm-inline">Tambah Database</span></a>
-                    </td>
-                </tr> --}}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach ($databases as $database)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $database->name }}</td>
+                            <td>{{ $database->url }}</td>
+                            <td>{{ $database->driver }}</td>
+                            <td>{{ $database->host }}</td>
+                            <td>{{ $database->port }}</td>
+                            <td>{{ $database->database }}</td>
+                            <td>{{ $database->username }}</td>
+                            <td>{{ $database->status }}</td>
+                            <td class="d-flex justify-content-start">
+                                {{--Test Database Connection--}}
+                                <a href="/database/test-connection?databaseID={{ $database->id }}" class="btn btn-success btn-icon">
+                                    <i class="bi bi-database-fill-up" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tes Koneksi"></i>
+                                </a>
+
+                                {{--Edit Database--}}
+                                <a data-bs-toggle="modal" data-bs-target="#databaseModal"
+                                data-action="edit"
+                                data-bs-databaseID="{{ $database->id }}"
+                                data-bs-databaseName="{{ $database->name }}"
+                                data-bs-databaseUrl="{{ $database->url }}"
+                                data-bs-databaseDriver="{{ $database->driver }}"
+                                data-bs-databaseHost="{{ $database->host }}"
+                                data-bs-databasePort="{{ $database->port }}"
+                                data-bs-databaseDatabase="{{ $database->database }}"
+                                data-bs-databaseUsername="{{ $database->username }}"
+                                data-bs-databasePassword="{{ $database->password }}"
+                                class="btn btn-primary btn-icon">
+                                    <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah" class="ri-pencil-fill"></i>
+                                </a>
+
+                                {{--Delete Database--}}
+                                <form action="/database" method="post">
+                                    @method('delete')
+                                    @csrf
+                                    <input type="hidden" name="databaseID" value="{{ $database->id }}">
+                                    <button type="submit" class="btn btn-danger btn-icon" >
+                                        <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus" class="bi bi-trash3"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                    {{-- <tr>
+                        <td colspan="8"></td>
+                        <td colspan="2">
+                            <a href="#databaseModal" class="btn btn-primary d-flex align-items-center gap-2"
+                            data-action="add" data-bs-toggle="modal"><i class="ri-add-line"></i>
+                                <span class="d-none d-sm-inline">Tambah Database</span></a>
+                        </td>
+                    </tr> --}}
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         {{--Add/Edit Database Modal (Default ADD)--}}
@@ -119,17 +121,17 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <!-- modal-body -->
-                        <div class="modal-body container text-center">
+                        <div class="modal-body container">
                             <input type="hidden" id="databaseID" name="databaseID">
-                            <div class="form-group">
+                            <div class="form-group m-1">
                                 <label for="databaseName">Nama Database</label>
                                 <input type="text" id="databaseName" name="databaseName" class="form-control" required>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group m-1">
                                 <label for="databaseUrl">URL Database (Akan Menggantikan Pengaturan Lain)</label>
                                 <input type="text" id="databaseUrl" name="databaseUrl" class="form-control">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group m-1">
                                 <label for="databaseDriver">Database Driver</label>
                                 <div class="input-group width-150px">
                                     <input type="text" id="databaseDriver" name="databaseDriver" class="form-control">
@@ -145,23 +147,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group m-1">
                                 <label for="databaseHost">Database Host</label>
                                 <input type="text" id="databaseHost" name="databaseHost" class="form-control">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group m-1">
                                 <label for="databasePort">Database Port</label>
                                 <input type="text" id="databasePort" name="databasePort" class="form-control">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group m-1">
                                 <label for="databaseDatabase">Database Database</label>
                                 <input type="text" id="databaseDatabase" name="databaseDatabase" class="form-control">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group m-1">
                                 <label for="databaseUsername">Database Username</label>
                                 <input type="text" id="databaseUsername" name="databaseUsername" class="form-control">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group m-1">
                                 <label for="databasePassword">Database Password</label>
                                 <input type="password" id="databasePassword" name="databasePassword" class="form-control">
                             </div>

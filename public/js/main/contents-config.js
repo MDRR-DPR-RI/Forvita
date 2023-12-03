@@ -866,8 +866,8 @@ function mergeArrays(x, y) {
         newElement.innerHTML = `
           <div class="card card-one">
             <div class="card-body p-3">
-              <h1 class="card-value mb-0 ls--1 fs-32" id="card-val">${xAxis[j]}</h1>
-              <label class="d-block mb-1 fw-medium text-dark">${yAxis[0][j]}</label>
+              <h1 class="card-value mb-0 ls--1 fs-32" id="card-val">${yAxis[0][j]}</h1>
+              <label class="d-block mb-1 fw-medium text-dark">${xAxis[j]}</label>
             </div>
           </div>
         `;

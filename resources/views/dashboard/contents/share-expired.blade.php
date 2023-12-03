@@ -9,7 +9,7 @@
 <div class="page-error">
   <div class="header">
     <div class="container">
-      <a href="/cluster" class="sidebar-logo">SATUDATA</a>
+      <a href="/cluster" class="sidebar-logo">FORVITA</a>
     </div><!-- container -->
   </div><!-- header -->
 
