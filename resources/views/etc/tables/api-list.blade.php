@@ -10,13 +10,14 @@
     <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/extensions/export/bootstrap-table-export.min.js"></script>
 
     <style>
-    .select,
-    #locale {
-        width: 100%;
-    }
-    .like {
-        margin-right: 10px;
-    }
+        .select,
+        #locale {
+            width: 100%;
+        }
+
+        .like {
+            margin-right: 10px;
+        }
     </style>
 @endsection
 @parent
@@ -24,41 +25,30 @@
 @section('page_content')
     <div class="main main-app p-3 p-lg-4">
         @can('admin')
-        <div class="d-flex gap-2 mt-3 mt-md-0">
+            <div class="d-flex gap-2 mt-3 mt-md-0">
                 <a href="#importAPIModal" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal">
                     <i class="bi bi-link-45deg"></i>Import RESTful API
                 </a>
-        </div>
-        <div class="mt-3">
-            @if (session()->has('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success!</strong> {{ session('success') }}.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            @elseif (session()->has('deleted'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Deleted!</strong> {{ session('deleted') }}.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="mt-3">
+                @if (session()->has('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{ session('success') }}.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @elseif (session()->has('deleted'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Deleted!</strong> {{ session('deleted') }}.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
             </div>
-            @endif
-        </div>
 
-        <table
-            id="table"
-            data-search="true"
-            data-show-refresh="true"
-            data-show-toggle="true"
-            data-show-fullscreen="true"
-            data-detail-view="true"
-            data-click-to-select="true"
-            data-detail-formatter="detailFormatter"
-            data-minimum-count-columns="2"
-            data-show-pagination-switch="true"
-            data-pagination="true"
-            data-id-field="id"
-            data-page-list="[5,10, 25, 50, 100, all]"
-            data-show-footer="true">
-        </table>
+            <table id="table" data-search="true" data-show-refresh="true" data-show-toggle="true"
+                data-show-fullscreen="true" data-detail-view="true" data-click-to-select="true"
+                data-detail-formatter="detailFormatter" data-minimum-count-columns="2" data-show-pagination-switch="true"
+                data-pagination="true" data-id-field="id" data-page-list="[5,10, 25, 50, 100, all]" data-show-footer="true">
+            </table>
         @endcan
     </div>
     {{-- Modal untuk Impor From RESTful API --}}
@@ -73,10 +63,11 @@
                     <form action="{{ route('import.api') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                          Example url
+                            Example url
                             <ol class="list-group list-group-numbered">
-                              <li class="list-group-item">https://catfact.ninja/fact</li>
-                              <li class="list-group-item">https://www.dpr.go.id/rest/?method=getAgendaPerBulan&tahun=2015&bulan=02&tipe=json</li>
+                                <li class="list-group-item">https://catfact.ninja/fact</li>
+                                <li class="list-group-item">
+                                    https://www.dpr.go.id/rest/?method=getAgendaPerBulan&tahun=2015&bulan=02&tipe=json</li>
                             </ol>
                             <label for="tableName" class="form-label">Table Name</label>
                             <input class="form-control" type="text" id="tableName" name="tableName" required>
@@ -94,88 +85,96 @@
 
     <!-- table script -->
     <script>
-    var $table = $('#table')
-    var selections = []
+        var $table = $('#table')
+        var selections = []
 
-    function getIdSelections() {
-        return $.map($table.bootstrapTable('getSelections'), function (row) {
-        return row.id
-        })
-    }
+        function getIdSelections() {
+            return $.map($table.bootstrapTable('getSelections'), function(row) {
+                return row.id
+            })
+        }
 
-    function responseHandler(res) {
-        $.each(res.rows, function (i, row) {
-        row.state = $.inArray(row.id, selections) !== -1
-        })
-        return res
-    }
+        function responseHandler(res) {
+            $.each(res.rows, function(i, row) {
+                row.state = $.inArray(row.id, selections) !== -1
+            })
+            return res
+        }
 
-    function detailFormatter(index, row) {
-        var html = []
-        $.each(row, function (key, value) {
-        html.push('<p><b>' + key + ':</b> ' + value + '</p>')
-        })
-        return html.join('')
-    }
+        function detailFormatter(index, row) {
+            var html = []
+            $.each(row, function(key, value) {
+                html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+            })
+            return html.join('')
+        }
 
-    function tombolBelum(value, row, index) {
-        return [
-        '<button class="btn btn-danger" data-id="' + row.id + '">',
-        'not create',
-        '</button>'
-        ].join('');
-    }
+        function tombolBelum(value, row, index) {
+            return [
+                '<button class="btn btn-danger" data-id="' + row.id + '">',
+                'not create',
+                '</button>'
+            ].join('');
+        }
 
-    //   data
-    var localData = [
-        @foreach($apiLists as $apiList)
-            {
-                name: "{{$apiList->name}}", 
-                file: "{{$apiList->file}}",
-                status: `{!! $apiList->action ? "<span class='btn btn-success w-80'>Berhasil Dibuat</span>" : "<span class='btn btn-danger w-80'>Belum Dijalankan</span>" !!}`, 
-                action: `<div class='d-flex justify-content-center p-2'>{!! $apiList->action ? "<a href='". route('restapi.delete',['id'=> $apiList->id ]) ."' class='btn-icon mx-1 btn btn-warning'><i class='bi bi-trash-fill'></i></a>" : "<a href='". route('restapi.create',['id'=> $apiList->id ]) ."' class='btn-icon mx-1 btn btn-primary'><i class='bi bi-plus-square-fill'></i></a>" !!} <a href='{{ route("restapi.remove",['id'=>$apiList->id]) }}' class="btn-icon mx-1 btn btn-danger"><i class='bi bi-file-earmark-excel'></i></a><a href='{{ route("restapi.view",['id'=>$apiList->id]) }}' class="btn-icon mx-1 btn btn-secondary"><i class='bi bi-eye-fill'></i></a></div>`
-            },
-        @endforeach
-    ];
+        //   data
+        var localData = [
+            @foreach ($apiLists as $apiList)
+                {
+                    name: "{{ $apiList->name }}",
+                    file: "{{ $apiList->file }}",
+                    status: `{!! $apiList->action
+                        ? "<span class='btn btn-success w-80'>Berhasil Dibuat</span>"
+                        : "<span class='btn btn-danger w-80'>Belum Dijalankan</span>" !!}`,
+                    action: `<div class='d-flex justify-content-center p-2'>{!! $apiList->action
+                        ? "<a href='" .
+                            route('restapi.delete', ['id' => $apiList->id]) .
+                            "' class='btn-icon mx-1 btn btn-warning'><i class='bi bi-trash-fill'></i></a>"
+                        : "<a href='" .
+                            route('restapi.create', ['id' => $apiList->id]) .
+                            "' class='btn-icon mx-1 btn btn-primary'><i class='bi bi-plus-square-fill'></i></a>" !!} <a href='{{ route('restapi.remove', ['id' => $apiList->id]) }}' class="btn-icon mx-1 btn btn-danger"><i class='bi bi-file-earmark-excel'></i></a>
+                            <a href='{{ route('restapi.view', ['id' => $apiList->id]) }}' class="btn-icon mx-1 btn btn-secondary"><i class='bi bi-eye-fill'></i></a></div>`
+                },
+            @endforeach
+        ];
 
-    function initTable() {
-        $table.bootstrapTable('destroy').bootstrapTable({
-        data: localData, // Use local data instead of data-url
-        locale:"en-US",
-        height: 900,
-        columns: [
-            {
-            field: 'name',
-            title: 'Name',
-            sortable: true,
-            align: 'center'
-            },
-            {
-            field: 'file',
-            title: 'File URL',
-            sortable: true,
-            align: 'center'
-            },
-            {
-            field: 'status',
-            title: 'Status',
-            sortable: true,
-            align: 'center'
-            },
-            {
-            field: 'action',
-            title: 'Action',
-            sortable: true,
-            align: 'center'
-            }
-        ]
+        function initTable() {
+            $table.bootstrapTable('destroy').bootstrapTable({
+                data: localData, // Use local data instead of data-url
+                locale: "en-US",
+                height: 900,
+                columns: [{
+                        field: 'name',
+                        title: 'Name',
+                        sortable: true,
+                        align: 'center'
+                    },
+                    {
+                        field: 'file',
+                        title: 'File URL',
+                        sortable: true,
+                        align: 'center'
+                    },
+                    {
+                        field: 'status',
+                        title: 'Status',
+                        sortable: true,
+                        align: 'center'
+                    },
+                    {
+                        field: 'action',
+                        title: 'Action',
+                        sortable: true,
+                        align: 'center'
+                    }
+                ]
+            });
+
+            //... (rest of the code remains unchanged)
+        }
+
+        $(function() {
+            initTable();
         });
-
-        //... (rest of the code remains unchanged)
-    }
-
-    $(function() {
-        initTable();
-    });
     </script>
 @endsection

@@ -11,8 +11,9 @@ use App\Models\ListImport;
 
 class ApiImportController extends Controller
 {
-    public function show(){
-        return view('etc.tables.api-list', ['apiLists'=> ListImport::where('type','api')->get()]);
+    public function show()
+    {
+        return view('etc.tables.api-list', ['apiLists' => ListImport::where('type', 'api')->get()]);
     }
 
     public function import(Request $request)
@@ -20,18 +21,18 @@ class ApiImportController extends Controller
         $url = $request->input('api_url');
         $tableName = $request->input('tableName') . '_' . time();
 
-        if(Schema::hasTable($tableName)){
+        if (Schema::hasTable($tableName)) {
             return redirect()->back()->with('deleted', 'Failed to import! The name is exits from tables!');
         }
 
         $isExists = ListImport::where('name', $tableName)->exists();
-        if($isExists){
+        if ($isExists) {
             return redirect()->back()->with('deleted', 'API imported failed because name is exits!');
-        }else{
+        } else {
             DB::table('list_imports')->insert([
-                'name'=>$tableName,
-                'file'=>$url,
-                'type'=>'api',
+                'name' => $tableName,
+                'file' => $url,
+                'type' => 'api',
             ]);
 
             return redirect()->back()->with('success', 'API imported successfully with name : ' . $tableName);
@@ -43,7 +44,7 @@ class ApiImportController extends Controller
         $request->validate(['id' => 'required']);
         $idImport = $request->query('id');
         $data = ListImport::find($idImport);
-        if($data){
+        if ($data) {
             $tableName = $data->name;
             $url = $data->file;
             // Fetch JSON data from the API
@@ -88,14 +89,36 @@ class ApiImportController extends Controller
                     }
                 }
             }
-            $data->action=1;
+            $data->action = 1;
             $data->save();
 
             // Redirect back to the previous page with a success message
             return redirect()->back()->with('success', 'Import successful, and a new table created: ' . $tableName);
-        }else{
+        } else {
             return redirect()->back()->with('deleted', 'Data not valid!');
         }
+    }
+
+    public function handleFile(Request $request)
+    {
+        // Coba membuat tabel baru
+        $request->validate(['id' => 'required']);
+        $idImport = $request->query('id');
+        $data = ListImport::find($idImport);
+        if ($data) {
+            $tableName = $data->name;
+            $fileName = $data->file;
+            $filePath = storage_path("app/api/{$fileName}");
+            if (file_exists($filePath)) {
+                $content = file_get_contents($filePath);
+
+                return response($content)
+                    ->header('Content-Type', 'text/api')
+                    ->header('Content-Disposition', 'attachment; filename="' . $fileName . '"');
+            }
+        }
+
+        abort(404, 'API file not found');
     }
 
 
@@ -109,7 +132,6 @@ class ApiImportController extends Controller
             return view('etc.view.api-view', [
                 'dataAPI' => $data
             ]);
-            
         } else {
             return redirect()->back()->with('deleted', 'Error to view Data!');
         }
@@ -131,35 +153,37 @@ class ApiImportController extends Controller
         }
     }
 
-    public function deleteList(Request $request){
+    public function deleteList(Request $request)
+    {
         // Coba membuat tabel baru
         $request->validate(['id' => 'required']);
         $idImport = $request->query('id');
         $data = ListImport::find($idImport);
-        if($data){
+        if ($data) {
             $data->delete();
             return redirect()->back()->with('success', 'API list success deleted!');
-        }else{
-            return redirect()->back()->with('deleted', 'Data not valid!');            
+        } else {
+            return redirect()->back()->with('deleted', 'Data not valid!');
         }
     }
 
-    public function deleteTable(Request $request){
+    public function deleteTable(Request $request)
+    {
         // Coba membuat tabel baru
         $request->validate(['id' => 'required']);
         $idImport = $request->query('id');
         $data = ListImport::find($idImport);
-        if($data){
-            try{
+        if ($data) {
+            try {
                 Schema::dropIfExists($data->name);
-                $data->action=0;
+                $data->action = 0;
                 $data->save();
                 return redirect()->back()->with('success', 'API table success deleted!');
             } catch (\Exception $e) {
                 return redirect()->back()->with('success', 'API table error deleted!');
             }
-        }else{
-            return redirect()->back()->with('deleted', 'Data not valid!');            
+        } else {
+            return redirect()->back()->with('deleted', 'Data not valid!');
         }
     }
 }
