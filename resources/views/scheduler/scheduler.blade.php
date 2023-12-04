@@ -163,7 +163,7 @@
                     </div>
                     <div class="form-group">
                         <label for="schedulerQuery">Query</label>
-                        <textarea id="schedulerQuery" name="schedulerQuery" class="form-control" required></textarea>
+                        <textarea id="schedulerQuery" rows="20" name="schedulerQuery" class="form-control" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="schedulerDatabaseID">Database</label>
@@ -207,7 +207,7 @@
                     </div>
                     <div class="form-group m-1">
                         <label for="schedulerQuery">Query</label>
-                        <textarea id="schedulerQuery" name="schedulerQuery" class="form-control"
+                        <textarea id="schedulerQuery" rows="20" name="schedulerQuery" class="form-control"
                                   required></textarea>
                     </div>
                     <div id="schedulerDatabaseSelectGroup" class="form-group m-1">
