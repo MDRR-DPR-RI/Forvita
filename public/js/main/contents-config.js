@@ -308,17 +308,25 @@ function appendTitleToCard(containerSelector, card_title) {
 }
 
 // function to append card description to the card
-function appendDescriptionToCard(containerSelector, card_description) {
+function appendDescriptionToCard(containerSelector, card_description, chart_id) {
   const judulContainer = document.querySelector(containerSelector);
 
   // empty the content if any
   judulContainer.innerHTML = '';
 
-  // apend card_description to the card
-  const newElement = document.createElement('p');
-  newElement.className = 'fs-xs text-secondary mb-0 lh-4';
-  newElement.innerHTML = `${card_description}`;
-  judulContainer.appendChild(newElement);// asign the element to the content
+  if (chart_id == 20) { // ai analysisy make the desc bigger to show the ai result
+    // apend card_description to the card
+    const newElement = document.createElement('h3');
+    newElement.className = 'mb-0 lh-4';
+    newElement.innerHTML = `${card_description}`;
+    judulContainer.appendChild(newElement);// asign the element to the content
+  } else {
+    // apend card_description to the card
+    const newElement = document.createElement('p');
+    newElement.className = 'fs-xs text-secondary mb-0 lh-4';
+    newElement.innerHTML = `${card_description}`;
+    judulContainer.appendChild(newElement);// asign the element to the content
+  }
 }
 
 function mergeArrays(x, y) {
@@ -353,8 +361,8 @@ function mergeArrays(x, y) {
       appendTitleToCard(`#judulcontent${contents[i].id}`, contents[i].card_title);
       appendTitleToCard(`#title_card_zoom${contents[i].id}`, contents[i].card_title);
 
-      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description);
-      appendDescriptionToCard(`#desc_card_zoom${contents[i].id}`, contents[i].card_description);
+      appendDescriptionToCard(`#descriptioncontent${contents[i].id}`, contents[i].card_description, contents[i].chart_id);
+      appendDescriptionToCard(`#desc_card_zoom${contents[i].id}`, contents[i].card_description, contents[i].chart_id);
       
     }
     

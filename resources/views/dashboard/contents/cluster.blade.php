@@ -66,7 +66,10 @@
                           <label class="d-block fw-medium text-dark">Dibuat oleh : {{ $cluster->user->name }}</label>  
                           @can('admin')
                             <div class="d-flex">
-                              <a data-id="{{ $cluster->id }}" data-name="{{ $cluster->name }}" href="#delete_cluster" class="modalDelete btn btn-danger" data-bs-toggle="modal">
+                              <a data-id="{{ $cluster->id }}" data-name="{{ $cluster->name }}" href="#editCluster" class="btn btn-primary btn-icon mx-1" data-bs-toggle="modal" onclick="fillEditModal('{{ $cluster->id }}', '{{ $cluster->name }}',  '{{ $cluster->icon_name }}')">
+                                  <i data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Cluster" class="ri-pencil-fill"></i>
+                              </a>
+                              <a data-id="{{ $cluster->id }}" data-name="{{ $cluster->name }}" href="#delete_cluster" class="modalDelete btn btn-danger btn-icon" data-bs-toggle="modal">
                                 <i data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Cluster" class="bi bi-trash3"></i>
                               </a>
                             </div>
@@ -102,7 +105,7 @@
                 <input required type="text" class="form-control" name="cluster_name"><br>
               <label>Pilih Ikon</label> 
               <div class="input-group">
-                <label class="iconOutput input-group-text " for="iconInput" >Ikon</label>
+                <label class="selected-icon input-group-text" for="iconInput" >Ikon</label>
                 <input type="text" name="icon"  class="iconInput form-control iconpickers" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" />
               </div>
             </div>
@@ -114,6 +117,36 @@
         </div>
       </div>
     </div>
+    {{-- MODAL NEW CLUSTER --}}
+    <div class="modal fade" id="editCluster" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="editClusterTitle" class="modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editForm" method="post">
+                    @method('put')
+                    @csrf
+                    <div class="modal-body text-center">
+                        <input type="hidden" id="clusterId" name="cluster_id">
+                        <label>Masukkan Nama Cluster Baru:</label>
+                        <input required type="text" class="form-control" id="clusterName" name="cluster_name"><br>
+                        <label>Pilih Ikon</label>
+                        <div class="input-group">
+                          <label class="selected-icon-edit input-group-text" for="iconInput" >Ikon</label>
+                          <input type="text" name="icon"  class="iconInput form-control iconpickers2" placeholder="Icon Picker" aria-label="Icone Picker" aria-describedby="basic-addon1" id="clusterIcon"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Selesai</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
         {{-- Modal delete dashboard --}}
         <div class="modal" id="delete_cluster" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -141,9 +174,10 @@
 
 @push('addon-script')
 <script>
+let result
 (async () => {
     const response = await fetch('https://unpkg.com/codethereal-iconpicker@1.2.1/dist/iconsets/bootstrap5.json')
-    const result = await response.json()
+    result = await response.json()
 
     const iconpicker = new Iconpicker(document.querySelector(".iconpickers"), {
         icons: result,
@@ -157,12 +191,9 @@
         valueFormat: val => `bi ${val}`
     });
 
+
     iconpicker.set() // Set as empty
     iconpicker.set('bi-alarm') // Reset with a value
-
-    $(".iconpicker-dropdown").on("click", function() {
-      $(".iconOutput").html(`<i class="${$(".iconInput").val()}" ></i>`)
-    });
 })()  
   
   $(document).on("click", ".modalDelete", function () {
@@ -180,4 +211,34 @@
     $("#deleteClusterForm").attr("action", formAction);
   });
 </script>
+<script>
+    function fillEditModal(id, name, icon) {
+        // Fill the modal values based on the data
+        document.getElementById('editClusterTitle').innerText = 'Edit Cluster';
+        document.getElementById('clusterId').value = id;
+        document.getElementById('clusterName').value = name;
+        document.getElementById('clusterIcon').value = icon;
+
+        var formAction = "/cluster/" + id;
+        console.log(formAction);
+        $("#editForm").attr("action", formAction);
+
+        const iconpicker_edit = new Iconpicker(document.querySelector(".iconpickers2"), {
+        icons: result,
+        showSelectedIn: document.querySelector(".selected-icon-edit"),
+        searchable: true,
+        selectedClass: "selected",
+        containerClass: "my-picker",
+        hideOnSelect: true,
+        fade: true,
+        defaultValue: icon,
+        valueFormat: val => `bi ${val}`
+    });
+        iconpicker_edit.set() // Set as empty
+        iconpicker_edit.set(icon) // Set as empty
+
+        // Add more lines to fill other fields if needed
+    }
+</script>
+
 @endpush

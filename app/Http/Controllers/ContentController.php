@@ -131,6 +131,7 @@ class ContentController extends Controller
     public function update(Request $request, Content $content)
     {
         try {
+            dd("hey");
             // update content data x/y value
             $x_value = [];
             $y_value = [];

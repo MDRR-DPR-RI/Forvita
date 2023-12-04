@@ -14,7 +14,13 @@
   <!-- Favicon -->
   <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
 
-  <title>Satu Data</title>
+<title>
+  @if (null !== session('cluster_name'))
+      {{ session('cluster_name') }} - 
+  @endif
+  FORIVTA
+</title>
+
  
     <!-- Vendor CSS -->
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"/>
@@ -72,12 +78,6 @@
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       return new bootstrap.Tooltip(tooltipTriggerEl)
     })
-    $('a[data-bs-toggle="modal"]').on('click', function () {
-
-      // Update the form action attribute with the content ID
-      var formAction = '/dashboard/content/' + contentId;
-      $('#contentForm').attr('action', formAction);
-    });
   });
   
   </script>

@@ -20,6 +20,7 @@ class ClusterController extends Controller
     public function index(Request $request)
     {
         Session::forget('cluster_id');
+        Session::forget('cluster_name');
 
         /*
     |--------------------------------------------------------------------------
@@ -137,7 +138,11 @@ class ClusterController extends Controller
      */
     public function update(Request $request, Cluster $cluster)
     {
-        //
+        $cluster->update([
+            'name' => $request->cluster_name,
+            'icon_name' => $request->icon
+        ]);
+        return redirect()->back()->with('success', "Berhasil Memperbaharui Cluster: $request->cluster_name");
     }
 
     /**

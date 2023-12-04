@@ -14,7 +14,7 @@
   <!-- Favicon -->
   <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
 
-  <title>Satu Data</title>
+  <title>Forvita</title>
  
     <!-- Vendor CSS -->
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"/>

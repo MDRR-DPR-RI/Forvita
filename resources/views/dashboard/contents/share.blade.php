@@ -108,15 +108,6 @@
     containerContent = document.getElementById('main');
     containerContent.innerHTML += htmlContent;
   @endforeach
-  $(document).ready(function () {
-    $('a[data-bs-toggle="modal"]').on('click', function () {
-
-      // Update the form action attribute with the content ID
-      var formAction = '/dashboard/content/' + contentId;
-      $('#contentForm').attr('action', formAction);
-    });
-  });
-
 </script>
 
 {{-- script for save dashboard content into an image  --}}

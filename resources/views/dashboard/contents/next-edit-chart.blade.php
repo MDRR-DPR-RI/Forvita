@@ -153,9 +153,6 @@
             @endfor
             @if ($content->chart_id == 20)
                 <div class="text-center">
-                <form id="contentForm" action="/dashboard/content/" method="post">
-                  @method('put')
-                  @csrf
                   <div class="modal-body container text-center">
                     <label for="judul">Pilih Perintah:</label>
                     {{-- set on change function, when user add new prompt, then will show INPUT FIELD to enter new prompt --}}
@@ -199,7 +196,6 @@
                       }
                     </script>
                   </div><!-- modal-body -->
-                </form>
               </div>
               <br>
             @endif
