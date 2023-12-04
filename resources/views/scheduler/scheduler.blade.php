@@ -9,6 +9,16 @@
 @section('page_content')
     <link href="/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <div class="main main-app p-3 p-lg-4">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         @if (session('warning'))
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 {{ session('warning') }}
@@ -153,7 +163,7 @@
                     </div>
                     <div class="form-group">
                         <label for="schedulerQuery">Query</label>
-                        <textarea id="schedulerQuery" name="schedulerQuery" class="form-control" required></textarea>
+                        <textarea id="schedulerQuery" rows="20" name="schedulerQuery" class="form-control" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="schedulerDatabaseID">Database</label>
@@ -197,7 +207,7 @@
                     </div>
                     <div class="form-group m-1">
                         <label for="schedulerQuery">Query</label>
-                        <textarea id="schedulerQuery" name="schedulerQuery" class="form-control"
+                        <textarea id="schedulerQuery" rows="20" name="schedulerQuery" class="form-control"
                                   required></textarea>
                     </div>
                     <div id="schedulerDatabaseSelectGroup" class="form-group m-1">

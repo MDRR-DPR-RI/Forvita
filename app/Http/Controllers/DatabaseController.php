@@ -13,7 +13,7 @@ use PDO;
 
 class DatabaseController extends Controller
 {
-
+    public array $blacklist = ['sqlite', 'mysql', 'pgsql', 'sqlsrv'];
     public function show(Request $request): View
     {
         return view('database.database', [
@@ -23,15 +23,19 @@ class DatabaseController extends Controller
     }
     public function store(Request $request): RedirectResponse
     {
+        $validated = $request->validate([
+            'name' => 'required|unique:databases|max:255|not_in:'.implode(',', $this->blacklist),
+        ]);
+
         $database = Database::create([
-            'name' => $request->input('databaseName'),
-            'url' => $request->input('databaseUrl'),
-            'driver' => $request->input('databaseDriver'),
-            'host' => $request->input('databaseHost'),
-            'port' => $request->input('databasePort'),
-            'database' => $request->input('databaseDatabase'),
-            'username' => $request->input('databaseUsername'),
-            'password' => $request->input('databasePassword'),
+            'name' => $request->name,
+            'url' => $request->url,
+            'driver' => $request->driver,
+            'host' => $request->host,
+            'port' => $request->port,
+            'database' => $request->database,
+            'username' => $request->username,
+            'password' => $request->password,
         ]);
 
         return redirect('database')->with('success', "Database $database->name berhasil ditambahkan!");
@@ -40,16 +44,20 @@ class DatabaseController extends Controller
     public function update(Request $request): RedirectResponse
     {
         $updateDatabaseID = $request->input('databaseID');
+        $validated = $request->validate([
+            'name' => 'required|unique:databases,name,'.$updateDatabaseID.'|max:255|not_in:'.implode(',', $this->blacklist),
+        ]);
+
         $database = Database::find($updateDatabaseID);
 
-        $database->name = $request->input('databaseName');
-        $database->url = $request->input('databaseUrl');
-        $database->driver = $request->input('databaseDriver');
-        $database->host = $request->input('databaseHost');
-        $database->port = $request->input('databasePort');
-        $database->database = $request->input('databaseDatabase');
-        $database->username = $request->input('databaseUsername');
-        $database->password = $request->input('databasePassword');
+        $database->name = $request->name;
+        $database->url = $request->url;
+        $database->driver = $request->driver;
+        $database->host = $request->host;
+        $database->port = $request->port;
+        $database->database = $request->database;
+        $database->username = $request->username;
+        $database->password = $request->password;
 
         $database->save();
         return redirect('database')->with('success', "Database $database->name berhasil diubah!");
@@ -76,6 +84,10 @@ class DatabaseController extends Controller
             'database' => $database->database,
             'username' => $database->username,
             'password' => $database->password,
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
         ]);
     }
 
@@ -85,8 +97,8 @@ class DatabaseController extends Controller
         $database = Database::find($databaseID);
 
         try {
-            $this->changeDatabaseConnection('scheduler', $database);
-            $connectionStatus = DB::connection('scheduler')->getPdo()->getAttribute(PDO::ATTR_CONNECTION_STATUS);
+            $this->changeDatabaseConnection($database->name, $database);
+            $connectionStatus = DB::connection($database->name)->getPdo()->getAttribute(PDO::ATTR_CONNECTION_STATUS);
             $database->status = $connectionStatus;
             $database->save();
         } catch (Exception $ex) {

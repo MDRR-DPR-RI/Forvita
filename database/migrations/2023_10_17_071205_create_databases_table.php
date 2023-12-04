@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('databases', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('url')->nullable();
             $table->string('driver')->nullable();
             $table->string('host')->nullable();
