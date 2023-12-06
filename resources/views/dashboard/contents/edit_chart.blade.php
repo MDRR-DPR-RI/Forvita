@@ -18,9 +18,10 @@
   <div class="container mt-5 mb-5">
     <div>
       <ol class="breadcrumb fs-sm mb-0">
-        <li class="breadcrumb-item"><p>{{ $dashboard->name }}</p></li>
+        <li class="breadcrumb-item"><a href="/dashboard/{{ $dashboard->id }}">{{ $dashboard->name }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ $content->chart->name }}</li>
       </ol> 
+      <br>
       <h4 class="main-title mb-0">Pilih Judul Untuk Kartu {{ $content->chart->name }}</h4>
     </div> <hr>
       <div class=" text-center d-flex align-items-start flex-column">

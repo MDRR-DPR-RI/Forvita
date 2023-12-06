@@ -20,7 +20,7 @@ class SchedulerController extends Controller
     public function show(Request $request): View
     {
         return view('scheduler.scheduler', [
-            'schedulers' => Scheduler::all(),
+            'schedulers' => Scheduler::orderBy('created_at', 'desc')->get(),
             'databases' => Database::all(),
             'currentParentPage' => 'Admin',
         ]);

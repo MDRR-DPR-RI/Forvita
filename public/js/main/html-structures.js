@@ -1,6 +1,6 @@
 // HERE IS WHERE U PUT UR HTML CONTENT. THEN ADD NEW CHART IN DATABASE (table->charts)
 let htmlStructures = {
-  1: [`<div class="col-xl-">
+  1: [`<div class="col-xl-" id="">
         <div class="card card-one">
           <div class="card-header">
             <div id="judul"></div>
@@ -16,7 +16,7 @@ let htmlStructures = {
           </div><!-- card-body -->
         </div><!-- card -->
       </div><!-- col -->`,],
-  2: [`<div class="col-xl-">
+  2: [`<div class="col-xl-" id="">
         <div class="card card-one">
           <div class="card-header">
             <div id="judul"></div>
@@ -32,7 +32,7 @@ let htmlStructures = {
           </div><!-- card-body -->
         </div><!-- card -->
       </div><!-- col -->`,],
-  3: [`<div class="col-xl-">
+  3: [`<div class="col-xl-" id="">
         <div class="card card-one">
           <div class="card-header">
             <div id="judul"></div>
@@ -48,7 +48,7 @@ let htmlStructures = {
           </div><!-- card-body -->
         </div><!-- card -->
       </div><!-- col -->`,],
-  4: [`<div class="col-xl-">
+  4: [`<div class="col-xl-" id="">
         <div class="card card-one">
           <div class="card-header">
             <div id="judul"></div>
@@ -64,7 +64,7 @@ let htmlStructures = {
           </div><!-- card-body -->
         </div><!-- card -->
       </div><!-- col -->`,],
-  5: [`<div class="col-xl-">
+  5: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>
@@ -80,7 +80,7 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  6: [`<div class="col-xl-">
+  6: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>
@@ -96,7 +96,7 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  7: [`<div class="col-xl-">
+  7: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>
@@ -112,7 +112,7 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  8: [`<div class="col-xl-">
+  8: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>
@@ -128,7 +128,7 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  9: [`<div class="col-xl-">
+  9: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>
@@ -144,7 +144,7 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  10: [`<div class="col-xl-">
+  10: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>
@@ -160,7 +160,7 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  11: [`<div class="col-xl-">
+  11: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>
@@ -176,7 +176,7 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  12: [`<div class="col-xl-">
+  12: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>
@@ -192,7 +192,7 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  13: [`<div class="col-xl-">
+  13: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>
@@ -208,7 +208,7 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  14: [`<div class="col-xl-">
+  14: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>
@@ -224,7 +224,7 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  15: [`<div class="col-xl-">
+  15: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>
@@ -240,7 +240,7 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  16: [`<div class="col-xl-">
+  16: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>
@@ -256,7 +256,7 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  17: [`<div class="col-xl-">
+  17: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>
@@ -272,9 +272,9 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  18: [`<div class="col-xl-" id="content">
+  18: [`<div class="col-xl-" id="" id="content">
         </div>`],
-  19: [`<div class="col-xl-">
+  19: [`<div class="col-xl-" id="">
     <div class="card card-one">
       <div class="card-header">
         <div id="judul"></div>
@@ -290,7 +290,7 @@ let htmlStructures = {
       </div><!-- card-body -->
     </div><!-- card -->
   </div><!-- col -->`],
-  20: [`<div class="col-xl-">
+  20: [`<div class="col-xl-" id="">
           <div class="card card-one">
             <div class="card-header" >
               <div id="judul"></div>
@@ -306,11 +306,11 @@ let htmlStructures = {
             
           </div><!-- card -->
         </div><!-- col -->`],
-    21: [`<div class="col-xl-" >
+    21: [`<div class="col-xl-" id="" >
           <div class="row g-3" id="content">
           </div>
         </div>`],
-    22: [`<div class="col-xl-">
+    22: [`<div class="col-xl-" id="">
           <div class="card card-one">
             <div class="card-header">
               <div id="judul"></div>
@@ -333,7 +333,7 @@ let htmlStructures = {
                 </div><!-- card-body -->
           </div>
         </div>`],
-    23: [`<div class="col-xl-">
+    23: [`<div class="col-xl-" id="">
           <div class="card card-one">
             <div class="card-header">
               <div id="judul"></div>
@@ -346,7 +346,7 @@ let htmlStructures = {
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`],
-    24: [`<div class="col-xl-">
+    24: [`<div class="col-xl-" id="">
           <div class="card card-one">
             <div class="card-header">
               <div id="judul"></div>
@@ -362,7 +362,7 @@ let htmlStructures = {
             </div><!-- card-body -->
           </div><!-- card -->
         </div><!-- col -->`],
-    25: [`<div class="col-xl-">
+    25: [`<div class="col-xl-" id="">
       <div class="card card-one">
         <div class="card-header">
           <div id="judul"></div>

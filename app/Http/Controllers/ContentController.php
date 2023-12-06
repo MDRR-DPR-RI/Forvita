@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dashboard;
+use App\Models\Chart;
 use App\Models\Content;
 use App\Models\Clean;
 use App\Models\Prompt;
@@ -45,6 +45,7 @@ class ContentController extends Controller
                 'username_tableau' => $request->username_tableau,
                 'card_description' => $request->tableau_link, // store tableau url in the content_description coloumn
             ]);
+            $content->update(['position' => $content->id]); // set the default value for position to content_id
             return redirect()->back()->with('success', 'Berhasil untuk embed Tableau');
         }
 
@@ -54,6 +55,8 @@ class ContentController extends Controller
             'dashboard_id' => $request->dashboard_id, // input hidden
             'card_grid' => $request->card_grid, // input hidden
         ]);
+        $content->update(['position' => $content->id]); // set the default value for position to content_id
+
 
         // Retrieve the ID of the newly created content
         $contentId = $content->id;
@@ -88,7 +91,8 @@ class ContentController extends Controller
             $data = [
                 'dashboard' => $content->dashboard,
                 'content' => $content,
-                'selected_judul' => $arr_selected_judul
+                'selected_judul' => $arr_selected_judul,
+                'charts' => Chart::all()
             ];
             $stackCount = 0;
             for ($i = 0; $i < count($arr_selected_judul); $i++) {
@@ -113,7 +117,8 @@ class ContentController extends Controller
             // dd($data);
             return view('dashboard.contents.next-edit-chart', $data);
         } catch (\Throwable $th) {
-            return redirect('/dashboard/' . $content->dashboard->id)->with('error', "Coba Lagi!");
+            $dashboard_id = $content->dashboard->id;
+            return redirect('/dashboard/' . $dashboard_id)->with('error', "Coba Lagi!");
         }
     }
 
@@ -131,7 +136,6 @@ class ContentController extends Controller
     public function update(Request $request, Content $content)
     {
         try {
-            dd("hey");
             // update content data x/y value
             $x_value = [];
             $y_value = [];
@@ -170,6 +174,7 @@ class ContentController extends Controller
                 $created_at[] = $carbonDate->format('Y-m-d H:i:s');
             }
             $content->update([
+                'chart_id' => $request->chart_type,
                 'judul' => $judul_array,
                 'card_title' => $request->card_title,
                 'card_description' => $request->card_description,
@@ -230,5 +235,14 @@ class ContentController extends Controller
         $cName = $content->chart->name;
         // redirect with send dashboard_id variable to the dashboard routes
         return redirect('/dashboard/' . $content->dashboard->id)->with('deleted', "Kartu $cName Berhasil Dihapus!");
+    }
+
+    public function update_card_position(Request $request)
+    {
+        $content_ids = $request->input('content_ids');
+        for ($i = 0; $i < count($content_ids); $i++) {
+            Content::where('id', $content_ids[$i])->update(['position' => $i]);
+        }
+        return response()->json(['success' => ($content_ids)]);
     }
 }

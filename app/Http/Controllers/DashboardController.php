@@ -71,7 +71,9 @@ class DashboardController extends Controller
       abort(403);
     }
 
-    $contents = Content::where('dashboard_id', $dashboard->id)->get();
+    $contents = Content::where('dashboard_id', $dashboard->id)
+      ->orderBy('position')
+      ->get();
     $usernames = Content::where('chart_id', 18)->pluck('username_tableau')->unique();
 
     // Initialize an associative array to store tickets for each username

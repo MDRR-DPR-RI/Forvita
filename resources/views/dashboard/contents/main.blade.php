@@ -20,6 +20,7 @@
 <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
 <link rel="stylesheet" href="/lib/jqvmap/jqvmap.min.css">
 <link href="/lib/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 
     <div class="main main-app p-3 p-lg-4">
         <div class="d-md-flex align-items-center justify-content-between mb-4">
@@ -158,7 +159,7 @@
                   <thead>
                     <tr>
                       <th scope="col">Kartu ID</th>
-                      <th scope="col">Nama</th>
+                      <th scope="col">Tipe</th>
                       <th scope="col">Aksi</th>
                     </tr>
                   </thead>
@@ -235,7 +236,7 @@
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">Kartu ID</th>
-                      <th scope="col">Nama</th>
+                      <th scope="col">Tipe</th>
                       <th scope="col">Panjang</th>
                       <th scope="col">Aksi</th>
                     </tr>
@@ -514,6 +515,7 @@
     htmlContent = htmlContent.replace('data-content-id="id"', `data-content-id="${contentId}"`); // set the data-content-id with its id to send into a modal
     htmlContent = htmlContent.replace('class="col-xl-"', `class="col-xl-${content_grid}"`); 
     htmlContent = htmlContent.replace('href="#modal_card_zoom"', `href="#modal_card_zoom${contentId}"`); // set the unique id for each content
+    htmlContent = htmlContent.replace('id=""', `id="${contentId}"`); 
 
     // Create a containerContent element and set its innerHTML
     containerContent = document.getElementById('main');
@@ -641,6 +643,35 @@ var table = document.getElementById('tablePilihKontent');
 
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var sortable = new Sortable(document.getElementById('main'), {
+            animation: 750,
+            	onEnd: function (/**Event*/evt) {
+              const mainDiv = evt.to;
+              const elements = (document.querySelectorAll('#main [class^="col-xl-"]'));
+              // Log the id values
+
+              let array_content_ids = []
+              elements.forEach(element => {
+                  array_content_ids.push(element.id)
+              });
+              console.log(array_content_ids);
+               axios.post('/update-card-position', { content_ids: array_content_ids })
+                    .then(response => {
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+        });
+    });
+</script>
 
 @endsection
 

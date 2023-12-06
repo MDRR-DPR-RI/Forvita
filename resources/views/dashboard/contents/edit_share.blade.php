@@ -12,9 +12,9 @@
   <div class="container mt-3 mb-5">
        <div>
           <ol class="breadcrumb fs-sm mb-0">
-            <li class="breadcrumb-item"><p>{{ $share->dashboard->cluster->name }}</p></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ $share->dashboard->name }}</li>
-          </ol> 
+            <li class="breadcrumb-item"><a href="/dashboard/{{ $share->dashboard->id }}">{{ $share->dashboard->name }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Publik Dashboard</li>
+          </ol> <br>
           <h4 class="main-title mb-0">Publik Dashboard {{ $share->dashboard->name }}</h4>
       </div>
       <div class="mt-3">

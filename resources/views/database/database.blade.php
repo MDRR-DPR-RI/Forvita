@@ -72,37 +72,39 @@
                             <td>{{ $database->database }}</td>
                             <td>{{ $database->username }}</td>
                             <td>{{ $database->status }}</td>
-                            <td class="d-flex justify-content-start">
-                                {{--Test Database Connection--}}
-                                <a href="/database/test-connection?databaseID={{ $database->id }}" class="btn btn-success btn-icon">
-                                    <i class="bi bi-database-fill-up" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tes Koneksi"></i>
-                                </a>
+                            <td >
+                                <div class="d-flex justify-content-start">
+                                    {{--Test Database Connection--}}
+                                    <a href="/database/test-connection?databaseID={{ $database->id }}" class="btn btn-success btn-icon mx-1">
+                                        <i class="bi bi-database-fill-up" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tes Koneksi"></i>
+                                    </a>
 
-                                {{--Edit Database--}}
-                                <a data-bs-toggle="modal" data-bs-target="#databaseModal"
-                                data-action="edit"
-                                data-bs-databaseID="{{ $database->id }}"
-                                data-bs-databaseName="{{ $database->name }}"
-                                data-bs-databaseUrl="{{ $database->url }}"
-                                data-bs-databaseDriver="{{ $database->driver }}"
-                                data-bs-databaseHost="{{ $database->host }}"
-                                data-bs-databasePort="{{ $database->port }}"
-                                data-bs-databaseDatabase="{{ $database->database }}"
-                                data-bs-databaseUsername="{{ $database->username }}"
-                                data-bs-databasePassword="{{ $database->password }}"
-                                class="btn btn-primary btn-icon">
-                                    <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah" class="ri-pencil-fill"></i>
-                                </a>
+                                    {{--Edit Database--}}
+                                    <a data-bs-toggle="modal" data-bs-target="#databaseModal"
+                                    data-action="edit"
+                                    data-bs-databaseID="{{ $database->id }}"
+                                    data-bs-databaseName="{{ $database->name }}"
+                                    data-bs-databaseUrl="{{ $database->url }}"
+                                    data-bs-databaseDriver="{{ $database->driver }}"
+                                    data-bs-databaseHost="{{ $database->host }}"
+                                    data-bs-databasePort="{{ $database->port }}"
+                                    data-bs-databaseDatabase="{{ $database->database }}"
+                                    data-bs-databaseUsername="{{ $database->username }}"
+                                    data-bs-databasePassword="{{ $database->password }}"
+                                    class="btn btn-primary btn-icon">
+                                        <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah" class="ri-pencil-fill"></i>
+                                    </a>
 
-                                {{--Delete Database--}}
-                                <form action="/database" method="post">
-                                    @method('delete')
-                                    @csrf
-                                    <input type="hidden" name="databaseID" value="{{ $database->id }}">
-                                    <button type="submit" class="btn btn-danger btn-icon" >
-                                        <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus" class="bi bi-trash3"></i>
-                                    </button>
-                                </form>
+                                    {{--Delete Database--}}
+                                    <form action="/database" method="post">
+                                        @method('delete')
+                                        @csrf
+                                        <input type="hidden" name="databaseID" value="{{ $database->id }}">
+                                        <button type="submit" class="btn btn-danger btn-icon mx-1" >
+                                            <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus" class="bi bi-trash3"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

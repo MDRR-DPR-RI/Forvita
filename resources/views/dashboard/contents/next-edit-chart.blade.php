@@ -13,13 +13,14 @@
     <div class="container mt-5 mb-5">
       <div>
         <ol class="breadcrumb fs-sm mb-0">
-          <li class="breadcrumb-item"><p>{{ $dashboard->name }}</p></li>
+          <li class="breadcrumb-item"><a href="/dashboard/{{ $dashboard->id }}">{{ $dashboard->name }}</a></li>
           <li class="breadcrumb-item active" aria-current="page">{{ $content->chart->name }}</li>
         </ol> 
+        <br>
         <h4 class="main-title mb-0">Konfigurasi Untuk Kartu {{ $content->chart->name }}</h4>
       </div> <hr>
       <div class="row">
-          <div class="col-8">
+          <div class="col-xl-6">
               <label for="card_title" class="form-label">Judul Kartu</label>
               @if ($content->chart->id == 21) 
               {{-- id for chart=card --}}
@@ -28,7 +29,21 @@
                 <input type="text" class="form-control" placeholder="Masukan judul kartu disini..." aria-label="card_title" name="card_title" value="{{ $content->card_title }}" required>
               @endif
           </div>
-          <div class="col">
+          <div class="col-xl-4">
+              <label for="chart_type" class="form-label">Tipe Kartu</label>
+              <select id="chart_type" name="chart_type" class="form-select" @if (in_array($content->chart->id, [18,19,20,21,22,23,24,25,26])) disabled @endif>
+              @foreach ($charts as $chart)
+                @if ($chart->name == $content->chart->name)
+                    <option value="{{ $chart->id }}" selected>{{ $chart->name }}</option>
+                @else
+                  @if (!in_array($chart->id, [18,19,20,21,22,23,24,25,26]))
+                    <option value="{{ $chart->id }}">{{ $chart->name }}</option>
+                  @endif
+                @endif
+              @endforeach
+              </select>
+          </div>
+          <div class="col-xl-2">
               <label for="card_grid" class="form-label">Panjang Kartu</label>
               <select id="card_grid" name="card_grid" class="form-select">
               @for ($a = 1; $a <= 12; $a++)
@@ -152,13 +167,13 @@
                 </div>
             @endfor
             @if ($content->chart_id == 20)
-                <div class="text-center">
+              <div class="text-center" >
                   <div class="modal-body container text-center">
                     <label for="judul">Pilih Perintah:</label>
                     {{-- set on change function, when user add new prompt, then will show INPUT FIELD to enter new prompt --}}
                     <select id="selectPrompt" class="form-select" name="selectPrompt" onchange="checkForNewPrompt()">
                       @foreach ($prompts as $prompt)
-                        @if ($prompt->id == $content->prompt->id)
+                        @if ($prompt->id == $content->prompt->id) 
                           <option value="{{ $prompt->body }}" selected>{{ $prompt->body }}</option>
                         @else
                           <option value="{{ $prompt->body }}">{{ $prompt->body }}</option>

@@ -36,48 +36,125 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         @endif
-        <h1> Queries </h1>
-        <div class="row">
-            <div class="col">
-                {{--Query Format Card--}}
-                <div class="card" id="queryFormatCard" style="width: 22rem; margin-left: auto; margin-right: 0;">
+        <div class="container">
+            <h1 class="mt-4 mb-4">Queries</h1>
+            <div class="row">
+                <div class="col">
+                    <!-- Query Format Card -->
+                    <div class="card" id="queryFormatCard">
+                        <div class="card-body">
+                            <h5 class="card-title">Format Query</h5>
+                            <p class="card-text">
+                                <strong>Aturan:</strong>
+                                <ol>
+                                    <li>Hasil query <b> harus </b> memiliki lima kolom dengan urutan: <b> kelompok, data, judul, keterangan, jumlah.</b></li>
+                                    <li>Pengguna <b>menentukan</b> nama <b> kelompok, data, dan judul</b>. Sementara itu, <b> keterangan dan jumlah </b> merupakan data yang diambil dari database yang dituju.</li>
+                                    <li>Hasil query <b> harus </b> memiliki nilai <b> kelompok </b> yang sama, nilai <b> data </b> yang sama, dan nilai <b> judul </b> yang sama.</li>
+                                    <li><b>Tidak boleh </b> ada nilai <b> NULL </b> atau <b> string kosong </b> di kolom manapun.</li>
+                                    <li>Tiap driver database mungkin memiliki sintaks yang berbeda.</li>
+                                </ol>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <br>
+        <div class="row g-3">
+            <div class="col-xl-6">
+                {{--Query Example Card--}}
+                <div class="card" id="queryExampleCard">
                     <div class="card-body">
-                        <h5 class="card-title">Format Query</h5>
+                        <h5 class="card-title">Contoh Query</h5>
+                        <pre class="card-text">
+
+        SELECT * 
+        FROM (
+            SELECT 'MINANGWAN' as kelompok, 
+                'Agama' as data, 
+                'Agama Dari database MINANGWAN' as judul, 
+                agama as keterangan, 
+                COUNT(*) as jumlah 
+            FROM db_minangwan.anggota 
+            WHERE status = 1 AND agama IS NOT NULL 
+            GROUP BY agama 
+            ORDER BY agama DESC
+        ) AS query;
+                            {{-- SELECT * <br>
+                            FROM ( <br>
+                            select 'dummy' as kelompok, 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'a' as 'keterangan', sum(a) as 'jumlah' <br>
+                            from dummy_data <br>
+                            UNION <br>
+                            select 'dummy' as kelompok, 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'b' as 'keterangan', sum(b) as 'jumlah' <br>
+                            from dummy_data <br>
+                            UNION <br>
+                            select 'dummy' as kelompok, 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'c' as 'keterangan', sum(c) as 'jumlah' <br>
+                            from dummy_data <br>
+                            ) as query; --}}
+                        </pre>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                {{--Query Example Card--}}
+                <div class="card" id="queryExampleCard" >
+                    <div class="card-body">
+                        <h5 class="card-title">Contoh Hasil Query</h5>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                <th scope="col">kelompok</th>
+                                <th scope="col">data</th>
+                                <th scope="col">judul</th>
+                                <th scope="col">keterangan</th>
+                                <th scope="col">jumlah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <tD>MINANGWAN</td>
+                                    <td>Agama</td>
+                                    <td>Agama Dari Database MINANGWAN</td>
+                                    <td>Kristen</td>
+                                    <td>56</td>
+                                </tr>
+                                <tr>
+                                    <tD>MINANGWAN</td>
+                                    <td>Agama</td>
+                                    <td>Agama Dari Database MINANGWAN</td>
+                                    <td>Katolik</td>
+                                    <td>26</td>
+                                </tr>
+                                <tr>
+                                    <tD>MINANGWAN</td>
+                                    <td>Agama</td>
+                                    <td>Agama Dari Database MINANGWAN</td>
+                                    <td>Islam</td>
+                                    <td>473</td>
+                                </tr>
+                                <tr>
+                                    <tD>MINANGWAN</td>
+                                    <td>Agama</td>
+                                    <td>Agama Dari Database MINANGWAN</td>
+                                    <td>Hindu</td>
+                                    <td>11</td>
+                                </tr>
+                                <tr>
+                                    <tD>MINANGWAN</td>
+                                    <td>Agama</td>
+                                    <td>Agama Dari Database MINANGWAN</td>
+                                    <td>Budha</td>
+                                    <td>4</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p><strong>Penjelasan:</strong></p>
                         <p class="card-text">
-                            Aturan: <br>
-                            1. Lima kolom dengan urutan: <br>kelompok, data, judul, keterangan, jumlah (case sensitive!)<br>
-                            2. Kelompok data harus memiliki kelompok, data, dan judul yang sama dengan keterangan untuk menjelaskan perbedaannya.<br>
-                            3. Tidak mempunyai nilai string null atau kosong di tiap kolomnya.<br>
-                            4. Tiap driver database mempunyai sintaks yang berbeda.
-                            {{-- Rules:
-                            1. Five columns in order: group, data, judul, keterangan, jumlah (Case sensitive!)
-                            2. Groups of data needs to have the same group, data, and judul with keterangan to describe the differences.
-                            3. Don't have any null or empty string values in any columns.
-                            4. Different database drivers have different syntaxes. --}}
+                        Ini adalah contoh hasil query yang dapat diterima. 
+                            Pengguna menentukan kelompok, data, dan judul. Sementara itu, keterangan dan jumlah merupakan data yang diambil dari database yang dituju.
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                {{--Query Example Card--}}
-                    <div class="card" id="queryExampleCard" style="width: 50rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Contoh Query</h5>
-                            <p class="card-text">
-                                SELECT * <br>
-                                FROM ( <br>
-                                select 'dummy' as kelompok, 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'a' as 'keterangan', sum(a) as 'jumlah' <br>
-                                from dummy_data <br>
-                                UNION <br>
-                                select 'dummy' as kelompok, 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'b' as 'keterangan', sum(b) as 'jumlah' <br>
-                                from dummy_data <br>
-                                UNION <br>
-                                select 'dummy' as kelompok, 'arithmetic dummies' as 'data','total dummy data' as 'judul', 'c' as 'keterangan', sum(c) as 'jumlah' <br>
-                                from dummy_data <br>
-                                ) as query;
-                            </p>
-                        </div>
-                    </div>
         </div>
         <div class="d-flex justify-content-end gap-2 mt-3 mb-3">
                 <a href="#addSchedulerModal" class="btn btn-primary d-flex align-items-center gap-2"
@@ -85,7 +162,7 @@
                     <span class="d-none d-sm-inline">Tambahkan Query</span></a>
         </div>
         <div class="table-responsive">
-            <table class="table table-hover" class="table" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-hover" id="dataTable">
                 <thead>
                 <tr>
                     <th scope="col">No</th>
@@ -101,41 +178,43 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $scheduler->name }}</td>
-                        <td>{{ $scheduler->query }}</td>
+                        <td><pre>{{ $scheduler->query }}</pre></td>
                         @isset($scheduler->database_id)
                             <td>{{ $scheduler->database->name }}</td>
                         @else
                             <td>localhost</td>
                         @endisset
                         <td>{{ $scheduler->status }}</td>
-                        <td class="d-flex justify-content-start">
-                            {{--Execute Scheduler Query--}}
-                            <a href="/scheduler/execute?schedulerID={{ $scheduler->id }}" class="btn btn-success btn-icon">
-                                <i class="bi bi-gear" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jalankan"></i>
-                            </a>
+                        <td>
+                            <div class="d-flex justify-content-start">
+                                {{--Execute Scheduler Query--}}
+                                <a href="/scheduler/execute?schedulerID={{ $scheduler->id }}" class="btn btn-success btn-icon mx-1">
+                                    <i class="bi bi-gear" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jalankan"></i>
+                                </a>
 
-                            {{--Edit Scheduler--}}
-                            <a data-bs-toggle="modal" data-bs-target="#editSchedulerModal"
-                            data-bs-schedulerID="{{ $scheduler->id }}"
-                            data-bs-schedulerName="{{ $scheduler->name }}"
-                            data-bs-schedulerQuery="{{ $scheduler->query }}"
-                            data-bs-schedulerDatabaseID="{{ $scheduler->database_id }}"
-    {{--                           @isset($scheduler->database_id)--}}
-    {{--                               data-bs-schedulerDatabaseName="{{$scheduler->database->name}}"--}}
-    {{--                           @endisset--}}
-                            class="btn btn-primary btn-icon">
-                                    <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah" class="ri-pencil-fill"></i>
-                            </a>
+                                {{--Edit Scheduler--}}
+                                <a data-bs-toggle="modal" data-bs-target="#editSchedulerModal"
+                                data-bs-schedulerID="{{ $scheduler->id }}"
+                                data-bs-schedulerName="{{ $scheduler->name }}"
+                                data-bs-schedulerQuery="{{ $scheduler->query }}"
+                                data-bs-schedulerDatabaseID="{{ $scheduler->database_id }}"
+        {{--                           @isset($scheduler->database_id)--}}
+        {{--                               data-bs-schedulerDatabaseName="{{$scheduler->database->name}}"--}}
+        {{--                           @endisset--}}
+                                class="btn btn-primary btn-icon">
+                                        <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah" class="ri-pencil-fill"></i>
+                                </a>
 
-                            {{--Delete Scheduler--}}
-                            <form action="/scheduler" method="post">
-                                @method('delete')
-                                @csrf
-                                <input type="hidden" name="schedulerID" value="{{ $scheduler->id }}">
-                                <button type="submit" class="btn btn-danger btn-icon">
-                                    <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus" class="bi bi-trash3"></i>
-                                </button>
-                            </form>
+                                {{--Delete Scheduler--}}
+                                <form action="/scheduler" method="post">
+                                    @method('delete')
+                                    @csrf
+                                    <input type="hidden" name="schedulerID" value="{{ $scheduler->id }}">
+                                    <button type="submit" class="btn btn-danger btn-icon mx-1y">
+                                        <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus" class="bi bi-trash3"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

@@ -13,6 +13,7 @@ return new class extends Migration
   {
     Schema::create('contents', function (Blueprint $table) {
       $table->id();
+      $table->integer('position')->default(0);
       $table->foreignId('chart_id');
       $table->foreignId('dashboard_id');
       $table->foreignId('prompt_id')->default(1);
