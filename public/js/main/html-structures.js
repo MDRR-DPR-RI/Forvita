@@ -272,7 +272,8 @@ let htmlStructures = {
         </div><!-- card-body -->
       </div><!-- card -->
     </div><!-- col -->`,],
-  18: [`<div class="col-xl-" id="" id="content">
+  18: [`<div class="col-xl-" id="">
+          <div id="content"></div>
         </div>`],
   19: [`<div class="col-xl-" id="">
     <div class="card card-one">
