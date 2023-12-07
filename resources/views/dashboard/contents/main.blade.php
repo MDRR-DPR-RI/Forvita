@@ -642,36 +642,38 @@ var table = document.getElementById('tablePilihKontent');
   });
 
 </script>
+{{-- only admin & user can change the card position --}}
+@can('user')
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+      
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          var sortable = new Sortable(document.getElementById('main'), {
+              animation: 750,
+                onEnd: function (/**Event*/evt) {
+                const mainDiv = evt.to;
+                const elements = (document.querySelectorAll('#main [class^="col-xl-"]'));
+                // Log the id values
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var sortable = new Sortable(document.getElementById('main'), {
-            animation: 750,
-            	onEnd: function (/**Event*/evt) {
-              const mainDiv = evt.to;
-              const elements = (document.querySelectorAll('#main [class^="col-xl-"]'));
-              // Log the id values
-
-              let array_content_ids = []
-              elements.forEach(element => {
-                  array_content_ids.push(element.id)
-              });
-              console.log(array_content_ids);
-               axios.post('/update-card-position', { content_ids: array_content_ids })
-                    .then(response => {
-                        console.log(response.data);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            }
-        });
-    });
-</script>
+                let array_content_ids = []
+                elements.forEach(element => {
+                    array_content_ids.push(element.id)
+                });
+                console.log(array_content_ids);
+                axios.post('/update-card-position', { content_ids: array_content_ids })
+                      // .then(response => {
+                          // console.log(response.data);
+                      // })
+                      .catch(error => {
+                          console.error(error);
+                      });
+              }
+          });
+      });
+  </script>
+@endcan
 
 @endsection
 
