@@ -192,8 +192,11 @@
                       <label for="newPrompt">Masukkan Perintah Baru:</label>
                       <input type="text" id="newPrompt" name="newPrompt" class="form-control">
                     </div>
-                    <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" >
-
+                    <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" > <br>
+                    <div>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Masukan perintah disini...">Please perform data analysis based on $selectedPrompt on the following data: I have '$x_value_str' each with respective totals of '$y_value_str'. . Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start with kalimat =  Data menunjukkan bahwa..... 
+                      </textarea>
+                    </div>
                     {{-- SCRIPT TO SHOW INPUT FIELD IF USER WANT TO ADD THEIR OWN/NEW PROMPT --}}
                       <script>
                       function checkForNewPrompt() {

@@ -134,7 +134,7 @@
                                     <i class='bi bi-file-earmark-excel'></i>
                                 </a>" : 
                                 "<a href='". route('csv.create',['id'=> $csvFile->id ]) ."' class='btn-icon mx-1 btn btn-success' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Jalankan \/ Buat Tabel'>
-                                    <i class='bi bi-gear'></i>
+                                    <i class='bi bi-triangle-fill'></i>
                                 </a>" !!} 
                                 
                                 <a href='{{ route("csv.remove",['id'=>$csvFile->id]) }}' class="btn-icon mx-1 btn btn-danger" data-bs-toggle='tooltip' data-bs-placement='bottom' title='Hapus List'>

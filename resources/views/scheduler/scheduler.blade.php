@@ -189,7 +189,7 @@
                             <div class="d-flex justify-content-start">
                                 {{--Execute Scheduler Query--}}
                                 <a href="/scheduler/execute?schedulerID={{ $scheduler->id }}" class="btn btn-success btn-icon mx-1">
-                                    <i class="bi bi-gear" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jalankan"></i>
+                                    <i class="bi bi-triangle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jalankan"></i>
                                 </a>
 
                                 {{--Edit Scheduler--}}
@@ -210,7 +210,7 @@
                                     @method('delete')
                                     @csrf
                                     <input type="hidden" name="schedulerID" value="{{ $scheduler->id }}">
-                                    <button type="submit" class="btn btn-danger btn-icon mx-1y">
+                                    <button type="submit" class="btn btn-danger btn-icon mx-1">
                                         <i data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus" class="bi bi-trash3"></i>
                                     </button>
                                 </form>

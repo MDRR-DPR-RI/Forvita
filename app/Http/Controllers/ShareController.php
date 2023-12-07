@@ -20,7 +20,9 @@ class ShareController extends Controller
       ->firstOrFail();
 
     // Fetch all contents that in the dashboard
-    $contents = Content::where('dashboard_id', $item->dashboard_id)->get();
+    $contents = Content::where('dashboard_id', $dashboard->id)
+      ->orderBy('position')
+      ->get();
 
     $usernames = Content::where('chart_id', 18)->pluck('username_tableau')->unique();
 
@@ -93,7 +95,7 @@ class ShareController extends Controller
     $host = $_SERVER['HTTP_HOST'];
     $hostUrl = $protocol . '://' . $host . '/';
 
-    return back()->with('status', 'Link Berhasil Dibuat!, '.$hostUrl.'public/dashboard/' . $link);
+    return back()->with('status', 'Link Berhasil Dibuat!, ' . $hostUrl . 'public/dashboard/' . $link);
   }
 
   public function destroy($id)
