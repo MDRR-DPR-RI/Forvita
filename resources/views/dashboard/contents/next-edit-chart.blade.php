@@ -223,7 +223,7 @@
           <div class="col d-flex justify-content-end">
           {{-- BUG: when user edit chart and change the stack. the button is not disabled. make it disabled --}}
             @if ( $x_value_decodedArray[0][0] !== "" && $stackCount == count($x_value_decodedArray) && $judul_decodedArray == $selected_judul )
-              <button type="submit" class="btn btn-primary" id="selesaiBtn">Selesai</button>
+              <button type="submit" class="btn btn-primary" id="selesaiBtn" >Selesai</button>
             @else
               <button type="submit" class="btn btn-secondary" id="selesaiBtn" disabled>Selesai</button>
             @endif
@@ -240,8 +240,22 @@
 
 @section('custom_script')
   <script>
+      var selesaiBtn = document.getElementById("selesaiBtn");
+
+      function enableSelectBeforeSubmit() {
+        console.log("hey");
+          // Enable the select element before submitting the form
+          document.getElementById("chart_type").disabled = false;
+      }
+
+      // Attach the handleClick function to the button's onclick event
+      selesaiBtn.onclick = enableSelectBeforeSubmit;
+
+  </script>
+
+  <script>
     $(document).ready(function() {
-        
+
         let stackCount = {{ $stackCount }};
         // Create an array to keep track of checkbox counts for each group, initialize to 0
         const counters = new Array(stackCount).fill(0);
