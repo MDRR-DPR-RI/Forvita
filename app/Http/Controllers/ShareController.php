@@ -20,7 +20,7 @@ class ShareController extends Controller
       ->firstOrFail();
 
     // Fetch all contents that in the dashboard
-    $contents = Content::where('dashboard_id', $dashboard->id)
+    $contents = Content::where('dashboard_id', $item->dashboard->id)
       ->orderBy('position')
       ->get();
 

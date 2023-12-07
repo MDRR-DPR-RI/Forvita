@@ -164,33 +164,6 @@
   @endforeach
 </script>
 
-{{-- TABLE CUSTOMIZE DASHBOARD CONFIG --}}
-<script src="/lib/gridjs-jquery/gridjs.production.min.js"></script>
-<script>
-
-$("#tablePilihKontent").Grid({
-  className: {
-    table: 'table table-hover'
-  },
-  pagination: true,
-  search: true,
-  sort: true,
-  resizable: true
-});
-
-$("#tableContent").Grid({
-  className: {
-    table: 'table table-hover'
-  },
-  pagination: true,
-  search: true,
-  sort: true,
-  resizable: true
-});
-
-</script>
-
-
 
 
 @endsection
