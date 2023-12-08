@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('clusters', function (Blueprint $table) {
             $table->id();
+            $table->integer('position')->default(0);
             $table->foreignId('user_id'); // cluster creator
             $table->string('name');
             $table->string('icon_name')->default('bi bi-alarm');

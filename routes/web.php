@@ -49,6 +49,7 @@ Route::get('/profile', [UserController::class, 'show'])->middleware('auth');
 Route::post('/profile', [UserController::class, 'update'])->middleware('auth');
 
 Route::resource('/cluster', ClusterController::class)->middleware('auth');
+Route::post('/update-cluster-position', [ClusterController::class, 'update_cluster_position'])->middleware('auth');
 Route::resource('/dashboard', DashboardController::class)->middleware('auth');
 Route::resource('/dashboard/content', ContentController::class)->middleware('auth');
 Route::post('/update-card-position', [ContentController::class, 'update_card_position'])->middleware('auth');

@@ -6,6 +6,7 @@
 @endsection
 
 @section('page_content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 <style>
   .iconpicker-dropdown ul{
     width: 500px;
@@ -32,9 +33,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     @endif
-        <div class="row g-3">
+        <div class="row g-3" id="sortable">
           @can ('admin')
-            <div class="col-xl-3">
+            <div class="col-xl-3" id="0">
               <a href="#newCluster" data-bs-toggle="modal">
                   <div class="card card-one">
                       <div class="card card-one d-flex justify-content-center align-items-center">
@@ -49,13 +50,14 @@
             <i class="ri-information-line"></i> Belum ada cluster yang tersedia. Silakan hubungi admin untuk mengakses dashboard.
           </div>
           @else
+          {{-- <div > --}}
               @foreach ($clusters as $cluster)
-                <div class="col-xl-3">
+                <div class="col-xl-3 cardSearchable" id="{{ $cluster->id }}">
                   <a href="/cluster/{{ $cluster->id }}">
-                    <div class="card card-one">
-                      <div class="card-body p-3 text-center">
+                    <div class="card card-one ">
+                      <div class="card-body p-3 text-center ">
                         <div class="d-block fs-40 lh-1 text-primary my-1 mt-3"><i class="{{ $cluster->icon_name }}"></i></div>
-                        <h1 class="text-dark">{{ $cluster->name }}</h1>
+                        <h1 class="text-dark cluster_name">{{ $cluster->name }}</h1>
                         @can('admin')
                           <i class="mb-0 fw-medium text-dark">{{ $cluster->dashboard->count() }} Dashboard</i>
                         @endcan
@@ -81,6 +83,7 @@
                   </a>
                 </div>
             @endforeach
+          {{-- </div> --}}
           @endif
         </div><!-- row -->
         <div class="main-footer mt-5">
@@ -241,4 +244,48 @@ let result
     }
 </script>
 
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function () {
+            var searchValue = this.value.toLowerCase();
+            var cards = document.querySelectorAll('.cardSearchable');
+            cards.forEach(function (card) {
+                var clusterName = card.querySelector('.cluster_name').innerText.toLowerCase();
+                if (clusterName.includes(searchValue)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+ <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+      
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          var sortable = new Sortable(document.getElementById('sortable'), {
+              animation: 750,
+                onEnd: function (/**Event*/evt) {
+                const mainDiv = evt.to;
+                const elements = (document.querySelectorAll('#sortable [class^="col-xl-"]'));
+                // Log the id values
+
+                let array_cluster_ids = []
+                elements.forEach(element => {
+                    array_cluster_ids.push(element.id)
+                });
+                console.log(array_cluster_ids);
+                axios.post('/update-cluster-position', { cluster_ids: array_cluster_ids })
+                      .then(response => {
+                          console.log(response.data);
+                      })
+                      .catch(error => {
+                          console.error(error);
+                      });
+              }
+          });
+      });
+  </script>
 @endpush

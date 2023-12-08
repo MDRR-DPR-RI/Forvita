@@ -193,7 +193,8 @@
                       <input type="text" id="newPrompt" name="newPrompt" class="form-control">
                     </div>
                     <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" > <br>
-                    <div>
+                    <div> 
+                    {{-- make the text are responsive based on selecting data above. --}}
                       {{-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Masukan perintah disini...">Please perform data analysis based on $selectedPrompt on the following data: I have '$x_value_str' each with respective totals of '$y_value_str'. . Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start with kalimat =  Data menunjukkan bahwa..... 
                       </textarea> --}}
                     </div>
@@ -243,7 +244,6 @@
       var selesaiBtn = document.getElementById("selesaiBtn");
 
       function enableSelectBeforeSubmit() {
-        console.log("hey");
           // Enable the select element before submitting the form
           document.getElementById("chart_type").disabled = false;
       }

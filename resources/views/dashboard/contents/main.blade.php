@@ -207,7 +207,15 @@
                         </tr>
                     @endif
                         <tr>
-                          <td>{{ $chart->id }}</td>
+                          <td>
+                          <div class="d-flex justify-content-between">
+                            {{ $chart->id }}
+                            <div data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                                title="<img src='https://drive.google.com/file/d/1K_xcv-Q-BFzUC2NQMbIc5rb6pYZFOoPx/view?usp=drive_link' alt='Image Alt Text'>">
+                                <i class="bi bi-info-circle"></i>
+                            </div>                          
+                          </div>
+                          </td>
                           <td ">{{ $chart->name }}</td>
                           <td>
                             @if ($chart->id != 18)
@@ -676,5 +684,3 @@ var table = document.getElementById('tablePilihKontent');
 @endcan
 
 @endsection
-
-

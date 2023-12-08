@@ -38,11 +38,13 @@ class ClusterController extends Controller
             $clusters = [];
 
             if ($user_role == 'Admin') {
-                $clusters = Cluster::all(); // if admin, they can see all clusters
+                $clusters = Cluster::orderBy('position')->get();
             } else {
                 $cluster_ids = [];
                 $dashboard_ids = [];
-                $permissions = Permission::where('user_id', $user->id)->get(); // get all permissions based on user's id
+                $permissions = Permission::where('user_id', $user->id)
+                    ->orderBy('position')
+                    ->get(); // get all permissions based on user's id
 
                 foreach ($permissions as $index) { // loop the permissions to take take the cluster_id then push into array
                     array_push($cluster_ids, $index->dashboard->cluster_id); // push the cluster_Id into array
@@ -81,6 +83,9 @@ class ClusterController extends Controller
             'user_id' => Auth()->user()->id, // cluster creator
             'name' => $request->input('cluster_name'),
             'icon_name' => $request->input('icon'),
+        ]);
+        $cluster->update([
+            'position' => $cluster->id
         ]);
         $clusterId = $cluster->id;
         Dashboard::create([
@@ -159,5 +164,13 @@ class ClusterController extends Controller
         Dashboard::where('cluster_id', $cluster->id)->delete(); // remove all dashboard in the cluster
 
         return redirect()->back()->with('deleted', "Cluster $cluster->name berhasil dihapus !");
+    }
+    public function update_cluster_position(Request $request)
+    {
+        $cluster_ids = $request->input('cluster_ids');
+        for ($i = 0; $i < count($cluster_ids); $i++) {
+            Cluster::where('id', $cluster_ids[$i])->update(['position' => $i]);
+        }
+        return response()->json(['success' => true]);
     }
 }

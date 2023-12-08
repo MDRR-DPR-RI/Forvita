@@ -14,12 +14,14 @@ class ClusterSeeder extends Seeder
     public function run(): void
     {
         Cluster::create([
+            'position' => 1,
             'user_id' => 2,
             'name' => "Komisi",
             'icon_name' => "bi bi-pie-chart",
         ]);
 
         Cluster::create([
+            'position' => 2,
             'user_id' => 1,
             'name' => "Pustekinfo",
             'icon_name' => "bi bi-pie-chart",

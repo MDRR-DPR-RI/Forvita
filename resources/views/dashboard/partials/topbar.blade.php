@@ -1,13 +1,17 @@
 
   <div class="header-main px-3 px-lg-4">
     <a id="menuSidebar" href="#" class="menu-link me-3 me-lg-4"><i class="ri-menu-2-fill"></i></a>
-
-    {{-- <div class="form-search me-auto"> --}}
-    <div class="me-auto">
-      {{-- <input type="text" class="form-control" placeholder="Search">
-      <i class="ri-search-line"></i> --}}
+{{-- if in cluster.blade (no cluster_name stored in session) --}}
+@if (null === session('cluster_name')) 
+    <div class="form-search me-auto">
+    {{-- <div class="me-auto"> --}}
+      <input type="text" id="searchInput" class="form-control" placeholder="Search">
+      <i class="ri-search-line"></i>
     </div><!-- form-search -->
-
+@else 
+    <div class="me-auto">
+    </div><!-- form-search -->
+@endif
 
     <div class="dropdown dropdown-skin">
       <a href="" class="dropdown-link" data-bs-toggle="dropdown" data-bs-auto-close="outside"><i class="ri-settings-3-line"></i></a>
