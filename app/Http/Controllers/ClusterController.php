@@ -43,7 +43,6 @@ class ClusterController extends Controller
                 $cluster_ids = [];
                 $dashboard_ids = [];
                 $permissions = Permission::where('user_id', $user->id)
-                    ->orderBy('position')
                     ->get(); // get all permissions based on user's id
 
                 foreach ($permissions as $index) { // loop the permissions to take take the cluster_id then push into array
@@ -51,7 +50,9 @@ class ClusterController extends Controller
                     array_push($dashboard_ids, $index->dashboard->id); // push the cluster_Id into array
                 }
 
-                $clusters = Cluster::whereIn('id', $cluster_ids)->get(); // use whereIn method to get clusters based on id in an array
+                $clusters = Cluster::whereIn('id', $cluster_ids)
+                    ->orderBy('position')
+                    ->get(); // use whereIn method to get clusters based on id in an array
                 $request->session()->put('dashboard_ids', $dashboard_ids); // store dashboard_ids into sessions to use in DashboardController
             }
 

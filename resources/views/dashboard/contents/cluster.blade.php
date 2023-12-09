@@ -278,9 +278,9 @@ let result
                 });
                 console.log(array_cluster_ids);
                 axios.post('/update-cluster-position', { cluster_ids: array_cluster_ids })
-                      .then(response => {
-                          console.log(response.data);
-                      })
+                      // .then(response => {
+                      //     console.log(response.data);
+                      // })
                       .catch(error => {
                           console.error(error);
                       });

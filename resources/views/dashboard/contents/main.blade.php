@@ -210,10 +210,10 @@
                           <td>
                           <div class="d-flex justify-content-between">
                             {{ $chart->id }}
-                            <div data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
-                                title="<img src='https://drive.google.com/file/d/1K_xcv-Q-BFzUC2NQMbIc5rb6pYZFOoPx/view?usp=drive_link' alt='Image Alt Text'>">
+                            {{-- <div data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                                title="<img src='https://srv.carbonads.net/static/30242/2ba64892272a689daf5cc473b26b988461df56e7' alt='Image Alt Text'>">
                                 <i class="bi bi-info-circle"></i>
-                            </div>                          
+                            </div>                           --}}
                           </div>
                           </td>
                           <td ">{{ $chart->name }}</td>
@@ -587,6 +587,13 @@
 
 {{-- TABLE CUSTOMIZE DASHBOARD CONFIG --}}
 <script>
+ function initTooltips() {
+  console.log("heysdkfjo");
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  }
 
 var gridInstance =  $("#tablePilihKontent").Grid({
   className: {
@@ -646,7 +653,8 @@ var table = document.getElementById('tablePilihKontent');
       sort: true,
       resizable: true
     });
-
+    // After pagination is applied, reinitialize tooltips
+    initTooltips();
   });
 
 </script>
