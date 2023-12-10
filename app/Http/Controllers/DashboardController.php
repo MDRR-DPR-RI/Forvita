@@ -78,23 +78,23 @@ class DashboardController extends Controller
 
     // Initialize an associative array to store tickets for each username
     $tickets = [];
+    if ($usernames) {
+      foreach ($usernames as $username) {
+        // Check if username is not null before making the POST request
+        if ($username !== null) {
+          // Make a POST request
+          $response = Http::post('https://visualisasi.dpr.go.id/trusted?username=' . $username);
 
-    foreach ($usernames as $username) {
-      // Check if username is not null before making the POST request
-      if ($username !== null) {
-        // Make a POST request
-        $response = Http::post('https://visualisasi.dpr.go.id/trusted?username=' . $username);
+          // Check if the request was successful before accessing the response body
+          if ($response->successful()) {
+            $responseBody = $response->body();
 
-        // Check if the request was successful before accessing the response body
-        if ($response->successful()) {
-          $responseBody = $response->body();
-
-          // Assuming $responseBody is a string, you might concatenate it if it's an array or handle it accordingly
-          // Store the ticket information in the associative array
-          $tickets[$username] = $responseBody;
-        } else {
-          // Handle the case where the request was not successful
-          // You might want to log an error or take other appropriate action
+            // Assuming $responseBody is a string, you might concatenate it if it's an array or handle it accordingly
+            // Store the ticket information in the associative array
+            $tickets[$username] = $responseBody;
+          } else {
+            return redirect()->back()->with('error', "Coba Lagi!");
+          }
         }
       }
     }

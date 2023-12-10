@@ -19,6 +19,11 @@
         <strong>Sukses!</strong> {{ session('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
+    @elseif (session()->has('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
     @elseif (session()->has('google'))
     <div class="col-xl-5 alert alert-success" role="alert">
       <h4 class="alert-heading">Login Berhasil!</h4>

@@ -215,7 +215,6 @@ class ContentController extends Controller
         }
         $cName = $content->chart->name;
         return redirect('/dashboard/' . $request->dashboard_id)->with('success', "Berhasil mengkonfigurasi kartu $cName");
-        return redirect('/dashboard/' . $request->dashboard_id)->with('error', "Coba Lagi!");
     }
 
     /**
