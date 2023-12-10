@@ -78,7 +78,7 @@ class DashboardController extends Controller
 
     // Initialize an associative array to store tickets for each username
     $tickets = [];
-    if ($usernames) {
+    if (!$usernames->isEmpty()) {
       foreach ($usernames as $username) {
         // Check if username is not null before making the POST request
         if ($username !== null) {
@@ -98,6 +98,7 @@ class DashboardController extends Controller
         }
       }
     }
+
 
     // Iterate through the $contents collection and update each model with the corresponding ticket
     foreach ($contents as $content) {
