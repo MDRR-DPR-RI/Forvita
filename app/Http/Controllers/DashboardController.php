@@ -97,18 +97,16 @@ class DashboardController extends Controller
           }
         }
       }
-    }
+      // Iterate through the $contents collection and update each model with the corresponding ticket
+      foreach ($contents as $content) {
+        // Assuming $content->username_tableau exists and is not null
+        $username = $content->username_tableau;
 
-
-    // Iterate through the $contents collection and update each model with the corresponding ticket
-    foreach ($contents as $content) {
-      // Assuming $content->username_tableau exists and is not null
-      $username = $content->username_tableau;
-
-      // Check if the username has a corresponding ticket in the $tickets array
-      if (isset($tickets[$username])) {
-        // Add the ticket information to the model
-        $content->ticket = $tickets[$username];
+        // Check if the username has a corresponding ticket in the $tickets array
+        if (isset($tickets[$username])) {
+          // Add the ticket information to the model
+          $content->ticket = $tickets[$username];
+        }
       }
     }
 
