@@ -193,10 +193,9 @@
                       <input type="text" id="newPrompt" name="newPrompt" class="form-control">
                     </div>
                     <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" > <br>
-                    <div> 
-                    {{-- make the text are responsive based on selecting data above. --}}
-                      {{-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Masukan perintah disini...">Please perform data analysis based on $selectedPrompt on the following data: I have '$x_value_str' each with respective totals of '$y_value_str'. . Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start with kalimat =  Data menunjukkan bahwa..... 
-                      </textarea> --}}
+                    <div>
+                      <textarea class="form-control" id="textArea" name="text_area_prompt" rows="3" placeholder="Masukan perintah disini...">Tolong lakukan analisis data berdasarkan {{ $content->prompt->body }}. Mohon berikan analisis dan wawasan Anda dalam satu paragraf dan dimulai dengan kalimat = Data menunjukkan bahwa.....
+                      </textarea>
                     </div>
                     {{-- SCRIPT TO SHOW INPUT FIELD IF USER WANT TO ADD THEIR OWN/NEW PROMPT --}}
                       <script>
@@ -213,7 +212,34 @@
                           newPrompt.required = false; // Make the new prompt field not required
                         }
                       }
+                      
+                      // Get the content-editable div and prompt select elements
+                      var contentEditableDiv = document.getElementById("exampleFormControlTextarea1");
+                      var promptSelect = document.getElementById("selectPrompt");
+                      var prompt = "{{ $content->prompt->body }}";
+                      // Attach the onchange event listener to the prompt select
+                      promptSelect.onchange = function() {
+                          var selectedValue = promptSelect.value;
+                          // Update $selectedPrompt variable in the textarea content
+                          var textareaElement = document.getElementById("textArea");
+                          textareaElement.value = textareaElement.value.replace(prompt, selectedValue);
+                          prompt = selectedValue
+                      };
                     </script>
+                    <script>
+        // Get the textarea element
+        var textArea = document.getElementById("textArea");
+
+        // Set the contenteditable attribute for the specific part you want to allow editing
+        textArea.addEventListener("input", function () {
+
+            // Find the index of {{ $content->prompt->body }} in the content
+            var index = textArea.value.indexOf(prompt);
+            console.log(index);
+            // Set the contenteditable attribute accordingly
+            textArea.setAttribute("contenteditable", index === -1 ? "true" : "false");
+        });
+    </script>
                   </div><!-- modal-body -->
               </div>
               <br>
