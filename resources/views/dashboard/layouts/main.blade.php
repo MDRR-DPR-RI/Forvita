@@ -18,7 +18,7 @@
   @if (null !== session('cluster_name'))
       {{ session('cluster_name') }} - 
   @endif
-  FORIVTA
+  FORVITA
 </title>
 
  
