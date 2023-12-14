@@ -193,17 +193,16 @@
                       <input type="text" id="newPrompt" name="newPrompt" class="form-control">
                     </div>
                     <input type="hidden" name="dashboard_id" value="{{ $dashboard->id }}" > <br>
-                    <div>
+                    {{-- <div>
                       <textarea class="form-control" id="textArea" name="text_area_prompt" rows="3" placeholder="Masukan perintah disini...">Tolong lakukan analisis data berdasarkan {{ $content->prompt->body }}. Mohon berikan analisis dan wawasan Anda dalam satu paragraf dan dimulai dengan kalimat = Data menunjukkan bahwa.....
                       </textarea>
-                    </div>
+                    </div> --}}
                     {{-- SCRIPT TO SHOW INPUT FIELD IF USER WANT TO ADD THEIR OWN/NEW PROMPT --}}
                       <script>
                       function checkForNewPrompt() {
                         const select = document.getElementById('selectPrompt');
                         const newPromptInput = document.getElementById('newPromptInput');
                         const newPrompt = document.getElementById('newPrompt');
-
                         if (select.value == {{ $nextId }}) {
                           newPromptInput.style.display = 'block'; // Show the new prompt input
                           newPrompt.required = true; // Make the new prompt field required
@@ -213,33 +212,19 @@
                         }
                       }
                       
-                      // Get the content-editable div and prompt select elements
-                      var contentEditableDiv = document.getElementById("exampleFormControlTextarea1");
-                      var promptSelect = document.getElementById("selectPrompt");
-                      var prompt = "{{ $content->prompt->body }}";
-                      // Attach the onchange event listener to the prompt select
-                      promptSelect.onchange = function() {
-                          var selectedValue = promptSelect.value;
-                          // Update $selectedPrompt variable in the textarea content
-                          var textareaElement = document.getElementById("textArea");
-                          textareaElement.value = textareaElement.value.replace(prompt, selectedValue);
-                          prompt = selectedValue
-                      };
+                      // // Get the content-editable div and prompt select elements
+                      // var contentEditableDiv = document.getElementById("exampleFormControlTextarea1");
+                      // var promptSelect = document.getElementById("selectPrompt");
+                      // var prompt = "{{ $content->prompt->body }}";
+                      // // Attach the onchange event listener to the prompt select
+                      // promptSelect.onchange = function() {
+                      //     var selectedValue = promptSelect.value;
+                      //     // Update $selectedPrompt variable in the textarea content
+                      //     var textareaElement = document.getElementById("textArea");
+                      //     textareaElement.value = textareaElement.value.replace(prompt, selectedValue);
+                      //     prompt = selectedValue
+                      // };
                     </script>
-                    <script>
-        // Get the textarea element
-        var textArea = document.getElementById("textArea");
-
-        // Set the contenteditable attribute for the specific part you want to allow editing
-        textArea.addEventListener("input", function () {
-
-            // Find the index of {{ $content->prompt->body }} in the content
-            var index = textArea.value.indexOf(prompt);
-            console.log(index);
-            // Set the contenteditable attribute accordingly
-            textArea.setAttribute("contenteditable", index === -1 ? "true" : "false");
-        });
-    </script>
                   </div><!-- modal-body -->
               </div>
               <br>
