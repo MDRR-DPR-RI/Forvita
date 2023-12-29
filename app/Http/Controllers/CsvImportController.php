@@ -42,12 +42,12 @@ class CsvImportController extends Controller
         $tableName = str_replace(' ', '_', $tableName);
 
         if (Schema::hasTable($tableName)) {
-            return redirect()->back()->with('deleted', 'Gagal mengimpor CSV karena data sudah ada!');
+            return redirect()->back()->with('error', 'Gagal mengimpor CSV karena data sudah ada!');
         }
 
         $isExists = ListImport::where('name', $tableName)->exists();
         if ($isExists) {
-            return redirect()->back()->with('deleted', 'CSV imported failed because data is exits!');
+            return redirect()->back()->with('error', 'Gagal mengimpor CSV karena data sudah ada!');
         } else {
             DB::table('list_imports')->insert([
                 'name' => $tableName,
@@ -76,7 +76,7 @@ class CsvImportController extends Controller
                 // Buat tabel baru dengan nama dari input pengguna
                 Schema::create($tableName, function ($table) use ($headers) {
                     foreach ($headers as $header) {
-                        $table->string($header, 5000)->nullable();
+                        $table->string($header)->nullable();
                     }
                 });
 
@@ -100,10 +100,10 @@ class CsvImportController extends Controller
                 // unlink($filePath); // Hapus file CSV karena tidak digunakan
                 $data->action = 1;
                 $data->save();
-                return redirect()->back()->with('success', 'CSV berhasil diimpor dan tabel baru dibuat: ' . $e);
+                return redirect()->back()->with('error', 'Terjadi kesalahan saat membuat tabel: ' . $e);
             }
         } else {
-            return redirect()->back()->with('deleted', 'Data tidak valid!');
+            return redirect()->back()->with('error', 'Data tidak valid!');
         }
     }
 
@@ -142,7 +142,7 @@ class CsvImportController extends Controller
 
             ]);
         } else {
-            return redirect()->back()->with('deleted', 'Error melihat Data!');
+            return redirect()->back()->with('error', 'Error melihat Data!');
         }
     }
 
@@ -159,7 +159,7 @@ class CsvImportController extends Controller
             $data->delete();
             return redirect()->back()->with('deleted', 'File CSV berhasil dihapus!');
         } else {
-            return redirect()->back()->with('deleted', 'Data tidak valid!');
+            return redirect()->back()->with('error', 'Data tidak valid!');
         }
     }
 
@@ -176,10 +176,10 @@ class CsvImportController extends Controller
                 $data->save();
                 return redirect()->back()->with('deleted', 'Tabel CSV berhasil dihapus!');
             } catch (\Exception $e) {
-                return redirect()->back()->with('deleted', 'Terjadi kesalahan saat menghapus tabel CSV!');
+                return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus tabel CSV!');
             }
         } else {
-            return redirect()->back()->with('deleted', 'Data tidak valid!');
+            return redirect()->back()->with('error', 'Data tidak valid!');
         }
     }
 }

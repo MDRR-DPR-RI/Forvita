@@ -31,20 +31,7 @@
                 
             @endif
         </div>
-        <div class="mt-3">
-            @if (session()->has('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success!</strong> {{ session('success') }}.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            @elseif (session()->has('deleted'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Deleted!</strong> {{ session('deleted') }}.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            @endif
-        </div>
-
+        
         <script src="{{ asset('js/papaparse.min.js') }}"></script>
         <div id="csv-container"></div>
 

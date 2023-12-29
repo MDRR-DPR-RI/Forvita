@@ -25,12 +25,12 @@ class ApiImportController extends Controller
         $tableName = $request->input('tableName') . '_' . time();
 
         if (Schema::hasTable($tableName)) {
-            return redirect()->back()->with('deleted', 'Gagal mengimpor! Nama sudah ada dalam tabel!');
+            return redirect()->back()->with('error', 'Gagal mengimpor! Nama sudah ada dalam tabel!');
         }
 
         $isExists = ListImport::where('name', $tableName)->exists();
         if ($isExists) {
-            return redirect()->back()->with('deleted', 'Gagal mengimpor API karena nama sudah ada!');
+            return redirect()->back()->with('error', 'Gagal mengimpor API karena nama sudah ada!');
         } else {
             DB::table('list_imports')->insert([
                 'name' => $tableName,
@@ -98,7 +98,7 @@ class ApiImportController extends Controller
             // Redirect kembali ke halaman sebelumnya dengan pesan keberhasilan
             return redirect()->back()->with('success', 'Import berhasil, dan tabel baru dibuat: ' . $tableName);
         } else {
-            return redirect()->back()->with('deleted', 'Data tidak valid!');
+            return redirect()->back()->with('error', 'Data tidak valid!');
         }
     }
 
@@ -112,7 +112,7 @@ class ApiImportController extends Controller
                 'dataAPI' => $data
             ]);
         } else {
-            return redirect()->back()->with('deleted', 'Error melihat Data!');
+            return redirect()->back()->with('error', 'Error melihat Data!');
         }
     }
 
@@ -141,7 +141,7 @@ class ApiImportController extends Controller
             $data->delete();
             return redirect()->back()->with('deleted', 'Daftar API berhasil dihapus!');
         } else {
-            return redirect()->back()->with('deleted', 'Data tidak valid!');
+            return redirect()->back()->with('error', 'Data tidak valid!');
         }
     }
 
@@ -160,7 +160,7 @@ class ApiImportController extends Controller
                 return redirect()->back()->with('success', 'Tabel API error dihapus!');
             }
         } else {
-            return redirect()->back()->with('deleted', 'Data tidak valid!');
+            return redirect()->back()->with('error', 'Data tidak valid!');
         }
     }
 }
