@@ -188,7 +188,6 @@ class ContentController extends Controller
             // Assuming $x_value and $y_value are arrays
             $x_value_str = implode(', ', ($x_value[0])); // Convert array to comma-separated string
             $y_value_str = implode(', ', ($y_value[0])); // Convert array to comma-separated string
-            dd($request->text_area_prompt);
             $inputString = "Please perform data analysis based on $selectedPrompt on the following data: I have '$x_value_str' each with respective totals of '$y_value_str'. Kindly provide your analysis and insights in one paragraph. and in bahasa Indonesia and start with kalimat =  Data menunjukkan bahwa..... ";
             $response = Http::post($ask_url, [
                 'prompt' => $inputString, // Your request parameters
